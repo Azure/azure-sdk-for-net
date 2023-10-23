@@ -99,22 +99,22 @@ namespace Azure.ResourceManager.DefenderEasm
 }
 namespace Azure.ResourceManager.DefenderEasm.Mocking
 {
-    public partial class DefenderEasmArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDefenderEasmArmClient : Azure.ResourceManager.ArmResource
     {
-        protected DefenderEasmArmClientMockingExtension() { }
+        protected MockableDefenderEasmArmClient() { }
         public virtual Azure.ResourceManager.DefenderEasm.EasmLabelResource GetEasmLabelResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource GetEasmWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DefenderEasmResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDefenderEasmResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected DefenderEasmResourceGroupMockingExtension() { }
+        protected MockableDefenderEasmResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource> GetEasmWorkspace(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource>> GetEasmWorkspaceAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DefenderEasm.EasmWorkspaceCollection GetEasmWorkspaces() { throw null; }
     }
-    public partial class DefenderEasmSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDefenderEasmSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected DefenderEasmSubscriptionMockingExtension() { }
+        protected MockableDefenderEasmSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource> GetEasmWorkspaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DefenderEasm.EasmWorkspaceResource> GetEasmWorkspacesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

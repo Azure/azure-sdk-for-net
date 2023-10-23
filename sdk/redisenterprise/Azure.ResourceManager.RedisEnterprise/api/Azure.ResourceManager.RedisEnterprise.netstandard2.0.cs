@@ -171,23 +171,23 @@ namespace Azure.ResourceManager.RedisEnterprise
 }
 namespace Azure.ResourceManager.RedisEnterprise.Mocking
 {
-    public partial class RedisEnterpriseArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableRedisEnterpriseArmClient : Azure.ResourceManager.ArmResource
     {
-        protected RedisEnterpriseArmClientMockingExtension() { }
+        protected MockableRedisEnterpriseArmClient() { }
         public virtual Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterResource GetRedisEnterpriseClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.RedisEnterprise.RedisEnterpriseDatabaseResource GetRedisEnterpriseDatabaseResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionResource GetRedisEnterprisePrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class RedisEnterpriseResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableRedisEnterpriseResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected RedisEnterpriseResourceGroupMockingExtension() { }
+        protected MockableRedisEnterpriseResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterResource> GetRedisEnterpriseCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterResource>> GetRedisEnterpriseClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterCollection GetRedisEnterpriseClusters() { throw null; }
     }
-    public partial class RedisEnterpriseSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableRedisEnterpriseSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected RedisEnterpriseSubscriptionMockingExtension() { }
+        protected MockableRedisEnterpriseSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterResource> GetRedisEnterpriseClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterResource> GetRedisEnterpriseClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseOperationStatus> GetRedisEnterpriseOperationsStatus(Azure.Core.AzureLocation location, string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

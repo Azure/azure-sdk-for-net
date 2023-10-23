@@ -536,9 +536,9 @@ namespace Azure.ResourceManager.Kusto
 }
 namespace Azure.ResourceManager.Kusto.Mocking
 {
-    public partial class KustoArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableKustoArmClient : Azure.ResourceManager.ArmResource
     {
-        protected KustoArmClientMockingExtension() { }
+        protected MockableKustoArmClient() { }
         public virtual Azure.ResourceManager.Kusto.KustoAttachedDatabaseConfigurationResource GetKustoAttachedDatabaseConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Kusto.KustoClusterPrincipalAssignmentResource GetKustoClusterPrincipalAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Kusto.KustoClusterResource GetKustoClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -550,16 +550,16 @@ namespace Azure.ResourceManager.Kusto.Mocking
         public virtual Azure.ResourceManager.Kusto.KustoPrivateLinkResource GetKustoPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Kusto.KustoScriptResource GetKustoScriptResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class KustoResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableKustoResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected KustoResourceGroupMockingExtension() { }
+        protected MockableKustoResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Kusto.KustoClusterResource> GetKustoCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.KustoClusterResource>> GetKustoClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Kusto.KustoClusterCollection GetKustoClusters() { throw null; }
     }
-    public partial class KustoSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableKustoSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected KustoSubscriptionMockingExtension() { }
+        protected MockableKustoSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult> CheckKustoClusterNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.Kusto.Models.KustoClusterNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kusto.Models.KustoNameAvailabilityResult>> CheckKustoClusterNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.Kusto.Models.KustoClusterNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Kusto.KustoClusterResource> GetKustoClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

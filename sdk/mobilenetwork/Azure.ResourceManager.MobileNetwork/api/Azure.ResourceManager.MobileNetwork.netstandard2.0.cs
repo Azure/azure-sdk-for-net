@@ -730,9 +730,9 @@ namespace Azure.ResourceManager.MobileNetwork
 }
 namespace Azure.ResourceManager.MobileNetwork.Mocking
 {
-    public partial class MobileNetworkArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMobileNetworkArmClient : Azure.ResourceManager.ArmResource
     {
-        protected MobileNetworkArmClientMockingExtension() { }
+        protected MockableMobileNetworkArmClient() { }
         public virtual Azure.ResourceManager.MobileNetwork.MobileAttachedDataNetworkResource GetMobileAttachedDataNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MobileNetwork.MobileDataNetworkResource GetMobileDataNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkDiagnosticsPackageResource GetMobileNetworkDiagnosticsPackageResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -749,9 +749,9 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         public virtual Azure.ResourceManager.MobileNetwork.SubscriptionPacketCoreControlPlaneVersionResource GetSubscriptionPacketCoreControlPlaneVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MobileNetwork.TenantPacketCoreControlPlaneVersionResource GetTenantPacketCoreControlPlaneVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class MobileNetworkResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMobileNetworkResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected MobileNetworkResourceGroupMockingExtension() { }
+        protected MockableMobileNetworkResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkResource> GetMobileNetwork(string mobileNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.MobileNetworkResource>> GetMobileNetworkAsync(string mobileNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MobileNetwork.MobileNetworkCollection GetMobileNetworks() { throw null; }
@@ -762,9 +762,9 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneResource>> GetPacketCoreControlPlaneAsync(string packetCoreControlPlaneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneCollection GetPacketCoreControlPlanes() { throw null; }
     }
-    public partial class MobileNetworkSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMobileNetworkSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected MobileNetworkSubscriptionMockingExtension() { }
+        protected MockableMobileNetworkSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.MobileNetwork.MobileNetworkResource> GetMobileNetworks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MobileNetwork.MobileNetworkResource> GetMobileNetworksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MobileNetwork.MobileNetworkSimGroupResource> GetMobileNetworkSimGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -775,9 +775,9 @@ namespace Azure.ResourceManager.MobileNetwork.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.SubscriptionPacketCoreControlPlaneVersionResource>> GetSubscriptionPacketCoreControlPlaneVersionAsync(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MobileNetwork.SubscriptionPacketCoreControlPlaneVersionCollection GetSubscriptionPacketCoreControlPlaneVersions() { throw null; }
     }
-    public partial class MobileNetworkTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMobileNetworkTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected MobileNetworkTenantMockingExtension() { }
+        protected MockableMobileNetworkTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.MobileNetwork.TenantPacketCoreControlPlaneVersionResource> GetTenantPacketCoreControlPlaneVersion(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MobileNetwork.TenantPacketCoreControlPlaneVersionResource>> GetTenantPacketCoreControlPlaneVersionAsync(string versionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MobileNetwork.TenantPacketCoreControlPlaneVersionCollection GetTenantPacketCoreControlPlaneVersions() { throw null; }

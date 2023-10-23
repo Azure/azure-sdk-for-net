@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.Hci
     /// <summary> A class to add extension methods to Azure.ResourceManager.Hci. </summary>
     public static partial class HciExtensions
     {
-        private static HciArmClientMockingExtension GetHciArmClientMockingExtension(ArmClient client)
+        private static MockableHciArmClient GetMockableHciArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new HciArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableHciArmClient(client0));
         }
 
-        private static HciResourceGroupMockingExtension GetHciResourceGroupMockingExtension(ArmResource resource)
+        private static MockableHciResourceGroupResource GetMockableHciResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new HciResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableHciResourceGroupResource(client, resource.Id));
         }
 
-        private static HciSubscriptionMockingExtension GetHciSubscriptionMockingExtension(ArmResource resource)
+        private static MockableHciSubscriptionResource GetMockableHciSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new HciSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableHciSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Hci
         /// You can use <see cref="ArcSettingResource.CreateResourceIdentifier" /> to create an <see cref="ArcSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HciArmClientMockingExtension.GetArcSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetArcSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="ArcSettingResource" /> object. </returns>
         public static ArcSettingResource GetArcSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHciArmClientMockingExtension(client).GetArcSettingResource(id);
+            return GetMockableHciArmClient(client).GetArcSettingResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Hci
         /// You can use <see cref="HciClusterResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HciArmClientMockingExtension.GetHciClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetHciClusterResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="HciClusterResource" /> object. </returns>
         public static HciClusterResource GetHciClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHciArmClientMockingExtension(client).GetHciClusterResource(id);
+            return GetMockableHciArmClient(client).GetHciClusterResource(id);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Hci
         /// You can use <see cref="ArcExtensionResource.CreateResourceIdentifier" /> to create an <see cref="ArcExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HciArmClientMockingExtension.GetArcExtensionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetArcExtensionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="ArcExtensionResource" /> object. </returns>
         public static ArcExtensionResource GetArcExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHciArmClientMockingExtension(client).GetArcExtensionResource(id);
+            return GetMockableHciArmClient(client).GetArcExtensionResource(id);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci
         /// You can use <see cref="OfferResource.CreateResourceIdentifier" /> to create an <see cref="OfferResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HciArmClientMockingExtension.GetOfferResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetOfferResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="OfferResource" /> object. </returns>
         public static OfferResource GetOfferResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHciArmClientMockingExtension(client).GetOfferResource(id);
+            return GetMockableHciArmClient(client).GetOfferResource(id);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Hci
         /// You can use <see cref="PublisherResource.CreateResourceIdentifier" /> to create a <see cref="PublisherResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HciArmClientMockingExtension.GetPublisherResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetPublisherResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="PublisherResource" /> object. </returns>
         public static PublisherResource GetPublisherResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHciArmClientMockingExtension(client).GetPublisherResource(id);
+            return GetMockableHciArmClient(client).GetPublisherResource(id);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci
         /// You can use <see cref="HciSkuResource.CreateResourceIdentifier" /> to create a <see cref="HciSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HciArmClientMockingExtension.GetHciSkuResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetHciSkuResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="HciSkuResource" /> object. </returns>
         public static HciSkuResource GetHciSkuResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHciArmClientMockingExtension(client).GetHciSkuResource(id);
+            return GetMockableHciArmClient(client).GetHciSkuResource(id);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Hci
         /// You can use <see cref="UpdateRunResource.CreateResourceIdentifier" /> to create an <see cref="UpdateRunResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HciArmClientMockingExtension.GetUpdateRunResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetUpdateRunResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="UpdateRunResource" /> object. </returns>
         public static UpdateRunResource GetUpdateRunResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHciArmClientMockingExtension(client).GetUpdateRunResource(id);
+            return GetMockableHciArmClient(client).GetUpdateRunResource(id);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Hci
         /// You can use <see cref="UpdateSummaryResource.CreateResourceIdentifier" /> to create an <see cref="UpdateSummaryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HciArmClientMockingExtension.GetUpdateSummaryResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetUpdateSummaryResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="UpdateSummaryResource" /> object. </returns>
         public static UpdateSummaryResource GetUpdateSummaryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHciArmClientMockingExtension(client).GetUpdateSummaryResource(id);
+            return GetMockableHciArmClient(client).GetUpdateSummaryResource(id);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Hci
         /// You can use <see cref="UpdateResource.CreateResourceIdentifier" /> to create an <see cref="UpdateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HciArmClientMockingExtension.GetUpdateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciArmClient.GetUpdateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -175,21 +175,21 @@ namespace Azure.ResourceManager.Hci
         /// <returns> Returns a <see cref="UpdateResource" /> object. </returns>
         public static UpdateResource GetUpdateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHciArmClientMockingExtension(client).GetUpdateResource(id);
+            return GetMockableHciArmClient(client).GetUpdateResource(id);
         }
 
         /// <summary>
         /// Gets a collection of HciClusterResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HciResourceGroupMockingExtension.GetHciClusters()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciResourceGroupResource.GetHciClusters()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of HciClusterResources and their operations over a HciClusterResource. </returns>
         public static HciClusterCollection GetHciClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetHciResourceGroupMockingExtension(resourceGroupResource).GetHciClusters();
+            return GetMockableHciResourceGroupResource(resourceGroupResource).GetHciClusters();
         }
 
         /// <summary>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HciResourceGroupMockingExtension.GetHciClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciResourceGroupResource.GetHciClusterAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static async Task<Response<HciClusterResource>> GetHciClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await GetHciResourceGroupMockingExtension(resourceGroupResource).GetHciClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHciResourceGroupResource(resourceGroupResource).GetHciClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HciResourceGroupMockingExtension.GetHciCluster(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciResourceGroupResource.GetHciCluster(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Hci
         [ForwardsClientCalls]
         public static Response<HciClusterResource> GetHciCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return GetHciResourceGroupMockingExtension(resourceGroupResource).GetHciCluster(clusterName, cancellationToken);
+            return GetMockableHciResourceGroupResource(resourceGroupResource).GetHciCluster(clusterName, cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HciSubscriptionMockingExtension.GetHciClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciSubscriptionResource.GetHciClusters(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An async collection of <see cref="HciClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HciClusterResource> GetHciClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetHciSubscriptionMockingExtension(subscriptionResource).GetHciClustersAsync(cancellationToken);
+            return GetMockableHciSubscriptionResource(subscriptionResource).GetHciClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Hci
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HciSubscriptionMockingExtension.GetHciClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHciSubscriptionResource.GetHciClusters(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> A collection of <see cref="HciClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HciClusterResource> GetHciClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetHciSubscriptionMockingExtension(subscriptionResource).GetHciClusters(cancellationToken);
+            return GetMockableHciSubscriptionResource(subscriptionResource).GetHciClusters(cancellationToken);
         }
     }
 }

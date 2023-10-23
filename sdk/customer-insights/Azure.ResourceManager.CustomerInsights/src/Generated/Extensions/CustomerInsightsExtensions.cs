@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.CustomerInsights
     /// <summary> A class to add extension methods to Azure.ResourceManager.CustomerInsights. </summary>
     public static partial class CustomerInsightsExtensions
     {
-        private static CustomerInsightsArmClientMockingExtension GetCustomerInsightsArmClientMockingExtension(ArmClient client)
+        private static MockableCustomerInsightsArmClient GetMockableCustomerInsightsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new CustomerInsightsArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableCustomerInsightsArmClient(client0));
         }
 
-        private static CustomerInsightsResourceGroupMockingExtension GetCustomerInsightsResourceGroupMockingExtension(ArmResource resource)
+        private static MockableCustomerInsightsResourceGroupResource GetMockableCustomerInsightsResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new CustomerInsightsResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableCustomerInsightsResourceGroupResource(client, resource.Id));
         }
 
-        private static CustomerInsightsSubscriptionMockingExtension GetCustomerInsightsSubscriptionMockingExtension(ArmResource resource)
+        private static MockableCustomerInsightsSubscriptionResource GetMockableCustomerInsightsSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new CustomerInsightsSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableCustomerInsightsSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// You can use <see cref="HubResource.CreateResourceIdentifier" /> to create a <see cref="HubResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsArmClientMockingExtension.GetHubResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsArmClient.GetHubResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="HubResource" /> object. </returns>
         public static HubResource GetHubResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCustomerInsightsArmClientMockingExtension(client).GetHubResource(id);
+            return GetMockableCustomerInsightsArmClient(client).GetHubResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// You can use <see cref="ProfileResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="ProfileResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsArmClientMockingExtension.GetProfileResourceFormatResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsArmClient.GetProfileResourceFormatResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="ProfileResourceFormatResource" /> object. </returns>
         public static ProfileResourceFormatResource GetProfileResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCustomerInsightsArmClientMockingExtension(client).GetProfileResourceFormatResource(id);
+            return GetMockableCustomerInsightsArmClient(client).GetProfileResourceFormatResource(id);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// You can use <see cref="InteractionResourceFormatResource.CreateResourceIdentifier" /> to create an <see cref="InteractionResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsArmClientMockingExtension.GetInteractionResourceFormatResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsArmClient.GetInteractionResourceFormatResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="InteractionResourceFormatResource" /> object. </returns>
         public static InteractionResourceFormatResource GetInteractionResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCustomerInsightsArmClientMockingExtension(client).GetInteractionResourceFormatResource(id);
+            return GetMockableCustomerInsightsArmClient(client).GetInteractionResourceFormatResource(id);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// You can use <see cref="RelationshipResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="RelationshipResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsArmClientMockingExtension.GetRelationshipResourceFormatResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsArmClient.GetRelationshipResourceFormatResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="RelationshipResourceFormatResource" /> object. </returns>
         public static RelationshipResourceFormatResource GetRelationshipResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCustomerInsightsArmClientMockingExtension(client).GetRelationshipResourceFormatResource(id);
+            return GetMockableCustomerInsightsArmClient(client).GetRelationshipResourceFormatResource(id);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// You can use <see cref="RelationshipLinkResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="RelationshipLinkResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsArmClientMockingExtension.GetRelationshipLinkResourceFormatResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsArmClient.GetRelationshipLinkResourceFormatResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="RelationshipLinkResourceFormatResource" /> object. </returns>
         public static RelationshipLinkResourceFormatResource GetRelationshipLinkResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCustomerInsightsArmClientMockingExtension(client).GetRelationshipLinkResourceFormatResource(id);
+            return GetMockableCustomerInsightsArmClient(client).GetRelationshipLinkResourceFormatResource(id);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// You can use <see cref="AuthorizationPolicyResourceFormatResource.CreateResourceIdentifier" /> to create an <see cref="AuthorizationPolicyResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsArmClientMockingExtension.GetAuthorizationPolicyResourceFormatResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsArmClient.GetAuthorizationPolicyResourceFormatResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="AuthorizationPolicyResourceFormatResource" /> object. </returns>
         public static AuthorizationPolicyResourceFormatResource GetAuthorizationPolicyResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCustomerInsightsArmClientMockingExtension(client).GetAuthorizationPolicyResourceFormatResource(id);
+            return GetMockableCustomerInsightsArmClient(client).GetAuthorizationPolicyResourceFormatResource(id);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// You can use <see cref="ConnectorResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="ConnectorResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsArmClientMockingExtension.GetConnectorResourceFormatResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsArmClient.GetConnectorResourceFormatResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="ConnectorResourceFormatResource" /> object. </returns>
         public static ConnectorResourceFormatResource GetConnectorResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCustomerInsightsArmClientMockingExtension(client).GetConnectorResourceFormatResource(id);
+            return GetMockableCustomerInsightsArmClient(client).GetConnectorResourceFormatResource(id);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// You can use <see cref="ConnectorMappingResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="ConnectorMappingResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsArmClientMockingExtension.GetConnectorMappingResourceFormatResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsArmClient.GetConnectorMappingResourceFormatResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="ConnectorMappingResourceFormatResource" /> object. </returns>
         public static ConnectorMappingResourceFormatResource GetConnectorMappingResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCustomerInsightsArmClientMockingExtension(client).GetConnectorMappingResourceFormatResource(id);
+            return GetMockableCustomerInsightsArmClient(client).GetConnectorMappingResourceFormatResource(id);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// You can use <see cref="KpiResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="KpiResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsArmClientMockingExtension.GetKpiResourceFormatResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsArmClient.GetKpiResourceFormatResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="KpiResourceFormatResource" /> object. </returns>
         public static KpiResourceFormatResource GetKpiResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCustomerInsightsArmClientMockingExtension(client).GetKpiResourceFormatResource(id);
+            return GetMockableCustomerInsightsArmClient(client).GetKpiResourceFormatResource(id);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// You can use <see cref="WidgetTypeResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="WidgetTypeResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsArmClientMockingExtension.GetWidgetTypeResourceFormatResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsArmClient.GetWidgetTypeResourceFormatResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="WidgetTypeResourceFormatResource" /> object. </returns>
         public static WidgetTypeResourceFormatResource GetWidgetTypeResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCustomerInsightsArmClientMockingExtension(client).GetWidgetTypeResourceFormatResource(id);
+            return GetMockableCustomerInsightsArmClient(client).GetWidgetTypeResourceFormatResource(id);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// You can use <see cref="ViewResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="ViewResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsArmClientMockingExtension.GetViewResourceFormatResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsArmClient.GetViewResourceFormatResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="ViewResourceFormatResource" /> object. </returns>
         public static ViewResourceFormatResource GetViewResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCustomerInsightsArmClientMockingExtension(client).GetViewResourceFormatResource(id);
+            return GetMockableCustomerInsightsArmClient(client).GetViewResourceFormatResource(id);
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// You can use <see cref="LinkResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="LinkResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsArmClientMockingExtension.GetLinkResourceFormatResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsArmClient.GetLinkResourceFormatResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="LinkResourceFormatResource" /> object. </returns>
         public static LinkResourceFormatResource GetLinkResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCustomerInsightsArmClientMockingExtension(client).GetLinkResourceFormatResource(id);
+            return GetMockableCustomerInsightsArmClient(client).GetLinkResourceFormatResource(id);
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// You can use <see cref="RoleAssignmentResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="RoleAssignmentResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsArmClientMockingExtension.GetRoleAssignmentResourceFormatResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsArmClient.GetRoleAssignmentResourceFormatResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="RoleAssignmentResourceFormatResource" /> object. </returns>
         public static RoleAssignmentResourceFormatResource GetRoleAssignmentResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCustomerInsightsArmClientMockingExtension(client).GetRoleAssignmentResourceFormatResource(id);
+            return GetMockableCustomerInsightsArmClient(client).GetRoleAssignmentResourceFormatResource(id);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// You can use <see cref="PredictionResourceFormatResource.CreateResourceIdentifier" /> to create a <see cref="PredictionResourceFormatResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsArmClientMockingExtension.GetPredictionResourceFormatResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsArmClient.GetPredictionResourceFormatResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -255,21 +255,21 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> Returns a <see cref="PredictionResourceFormatResource" /> object. </returns>
         public static PredictionResourceFormatResource GetPredictionResourceFormatResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCustomerInsightsArmClientMockingExtension(client).GetPredictionResourceFormatResource(id);
+            return GetMockableCustomerInsightsArmClient(client).GetPredictionResourceFormatResource(id);
         }
 
         /// <summary>
         /// Gets a collection of HubResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsResourceGroupMockingExtension.GetHubs()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsResourceGroupResource.GetHubs()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of HubResources and their operations over a HubResource. </returns>
         public static HubCollection GetHubs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetCustomerInsightsResourceGroupMockingExtension(resourceGroupResource).GetHubs();
+            return GetMockableCustomerInsightsResourceGroupResource(resourceGroupResource).GetHubs();
         }
 
         /// <summary>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsResourceGroupMockingExtension.GetHubAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsResourceGroupResource.GetHubAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.CustomerInsights
         [ForwardsClientCalls]
         public static async Task<Response<HubResource>> GetHubAsync(this ResourceGroupResource resourceGroupResource, string hubName, CancellationToken cancellationToken = default)
         {
-            return await GetCustomerInsightsResourceGroupMockingExtension(resourceGroupResource).GetHubAsync(hubName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCustomerInsightsResourceGroupResource(resourceGroupResource).GetHubAsync(hubName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsResourceGroupMockingExtension.GetHub(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsResourceGroupResource.GetHub(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.CustomerInsights
         [ForwardsClientCalls]
         public static Response<HubResource> GetHub(this ResourceGroupResource resourceGroupResource, string hubName, CancellationToken cancellationToken = default)
         {
-            return GetCustomerInsightsResourceGroupMockingExtension(resourceGroupResource).GetHub(hubName, cancellationToken);
+            return GetMockableCustomerInsightsResourceGroupResource(resourceGroupResource).GetHub(hubName, cancellationToken);
         }
 
         /// <summary>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsSubscriptionMockingExtension.GetHubs(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsSubscriptionResource.GetHubs(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> An async collection of <see cref="HubResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HubResource> GetHubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCustomerInsightsSubscriptionMockingExtension(subscriptionResource).GetHubsAsync(cancellationToken);
+            return GetMockableCustomerInsightsSubscriptionResource(subscriptionResource).GetHubsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CustomerInsightsSubscriptionMockingExtension.GetHubs(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCustomerInsightsSubscriptionResource.GetHubs(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <returns> A collection of <see cref="HubResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HubResource> GetHubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCustomerInsightsSubscriptionMockingExtension(subscriptionResource).GetHubs(cancellationToken);
+            return GetMockableCustomerInsightsSubscriptionResource(subscriptionResource).GetHubs(cancellationToken);
         }
     }
 }

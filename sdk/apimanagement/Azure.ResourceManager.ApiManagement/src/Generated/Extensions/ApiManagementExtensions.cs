@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ApiManagement
     /// <summary> A class to add extension methods to Azure.ResourceManager.ApiManagement. </summary>
     public static partial class ApiManagementExtensions
     {
-        private static ApiManagementArmClientMockingExtension GetApiManagementArmClientMockingExtension(ArmClient client)
+        private static MockableApiManagementArmClient GetMockableApiManagementArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ApiManagementArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableApiManagementArmClient(client0));
         }
 
-        private static ApiManagementResourceGroupMockingExtension GetApiManagementResourceGroupMockingExtension(ArmResource resource)
+        private static MockableApiManagementResourceGroupResource GetMockableApiManagementResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ApiManagementResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableApiManagementResourceGroupResource(client, resource.Id));
         }
 
-        private static ApiManagementSubscriptionMockingExtension GetApiManagementSubscriptionMockingExtension(ArmResource resource)
+        private static MockableApiManagementSubscriptionResource GetMockableApiManagementSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ApiManagementSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableApiManagementSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiResource.CreateResourceIdentifier" /> to create an <see cref="ApiResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiResource" /> object. </returns>
         public static ApiResource GetApiResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiReleaseResource.CreateResourceIdentifier" /> to create an <see cref="ApiReleaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiReleaseResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiReleaseResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiReleaseResource" /> object. </returns>
         public static ApiReleaseResource GetApiReleaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiReleaseResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiReleaseResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiOperationResource.CreateResourceIdentifier" /> to create an <see cref="ApiOperationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiOperationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiOperationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiOperationResource" /> object. </returns>
         public static ApiOperationResource GetApiOperationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiOperationResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiOperationResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiOperationPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApiOperationPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiOperationPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiOperationPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiOperationPolicyResource" /> object. </returns>
         public static ApiOperationPolicyResource GetApiOperationPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiOperationPolicyResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiOperationPolicyResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApiPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiPolicyResource" /> object. </returns>
         public static ApiPolicyResource GetApiPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiPolicyResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiPolicyResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPolicyResource" /> object. </returns>
         public static ApiManagementPolicyResource GetApiManagementPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementPolicyResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementPolicyResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementProductPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementProductPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementProductPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementProductPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementProductPolicyResource" /> object. </returns>
         public static ApiManagementProductPolicyResource GetApiManagementProductPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementProductPolicyResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementProductPolicyResource(id);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiOperationTagResource.CreateResourceIdentifier" /> to create an <see cref="ApiOperationTagResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiOperationTagResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiOperationTagResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiOperationTagResource" /> object. </returns>
         public static ApiOperationTagResource GetApiOperationTagResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiOperationTagResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiOperationTagResource(id);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiTagResource.CreateResourceIdentifier" /> to create an <see cref="ApiTagResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiTagResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiTagResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiTagResource" /> object. </returns>
         public static ApiTagResource GetApiTagResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiTagResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiTagResource(id);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementProductTagResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementProductTagResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementProductTagResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementProductTagResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementProductTagResource" /> object. </returns>
         public static ApiManagementProductTagResource GetApiManagementProductTagResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementProductTagResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementProductTagResource(id);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementTagResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementTagResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementTagResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementTagResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementTagResource" /> object. </returns>
         public static ApiManagementTagResource GetApiManagementTagResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementTagResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementTagResource(id);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiSchemaResource.CreateResourceIdentifier" /> to create an <see cref="ApiSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiSchemaResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiSchemaResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiSchemaResource" /> object. </returns>
         public static ApiSchemaResource GetApiSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiSchemaResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiSchemaResource(id);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiDiagnosticResource.CreateResourceIdentifier" /> to create an <see cref="ApiDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiDiagnosticResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiDiagnosticResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiDiagnosticResource" /> object. </returns>
         public static ApiDiagnosticResource GetApiDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiDiagnosticResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiDiagnosticResource(id);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementDiagnosticResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementDiagnosticResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementDiagnosticResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementDiagnosticResource" /> object. </returns>
         public static ApiManagementDiagnosticResource GetApiManagementDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementDiagnosticResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementDiagnosticResource(id);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiIssueResource.CreateResourceIdentifier" /> to create an <see cref="ApiIssueResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiIssueResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiIssueResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiIssueResource" /> object. </returns>
         public static ApiIssueResource GetApiIssueResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiIssueResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiIssueResource(id);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementIssueResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementIssueResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementIssueResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementIssueResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementIssueResource" /> object. </returns>
         public static ApiManagementIssueResource GetApiManagementIssueResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementIssueResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementIssueResource(id);
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiIssueCommentResource.CreateResourceIdentifier" /> to create an <see cref="ApiIssueCommentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiIssueCommentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiIssueCommentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiIssueCommentResource" /> object. </returns>
         public static ApiIssueCommentResource GetApiIssueCommentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiIssueCommentResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiIssueCommentResource(id);
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiIssueAttachmentResource.CreateResourceIdentifier" /> to create an <see cref="ApiIssueAttachmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiIssueAttachmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiIssueAttachmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiIssueAttachmentResource" /> object. </returns>
         public static ApiIssueAttachmentResource GetApiIssueAttachmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiIssueAttachmentResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiIssueAttachmentResource(id);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiTagDescriptionResource.CreateResourceIdentifier" /> to create an <see cref="ApiTagDescriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiTagDescriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiTagDescriptionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiTagDescriptionResource" /> object. </returns>
         public static ApiTagDescriptionResource GetApiTagDescriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiTagDescriptionResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiTagDescriptionResource(id);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiVersionSetResource.CreateResourceIdentifier" /> to create an <see cref="ApiVersionSetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiVersionSetResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiVersionSetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiVersionSetResource" /> object. </returns>
         public static ApiVersionSetResource GetApiVersionSetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiVersionSetResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiVersionSetResource(id);
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementAuthorizationServerResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementAuthorizationServerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementAuthorizationServerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementAuthorizationServerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementAuthorizationServerResource" /> object. </returns>
         public static ApiManagementAuthorizationServerResource GetApiManagementAuthorizationServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementAuthorizationServerResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementAuthorizationServerResource(id);
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementBackendResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementBackendResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementBackendResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementBackendResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementBackendResource" /> object. </returns>
         public static ApiManagementBackendResource GetApiManagementBackendResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementBackendResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementBackendResource(id);
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementCacheResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementCacheResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementCacheResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementCacheResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementCacheResource" /> object. </returns>
         public static ApiManagementCacheResource GetApiManagementCacheResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementCacheResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementCacheResource(id);
         }
 
         /// <summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementCertificateResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementCertificateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementCertificateResource" /> object. </returns>
         public static ApiManagementCertificateResource GetApiManagementCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementCertificateResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementCertificateResource(id);
         }
 
         /// <summary>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementDeletedServiceResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementDeletedServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementDeletedServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementDeletedServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementDeletedServiceResource" /> object. </returns>
         public static ApiManagementDeletedServiceResource GetApiManagementDeletedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementDeletedServiceResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementDeletedServiceResource(id);
         }
 
         /// <summary>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementServiceResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementServiceResource" /> object. </returns>
         public static ApiManagementServiceResource GetApiManagementServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementServiceResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementServiceResource(id);
         }
 
         /// <summary>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementEmailTemplateResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementEmailTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementEmailTemplateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementEmailTemplateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementEmailTemplateResource" /> object. </returns>
         public static ApiManagementEmailTemplateResource GetApiManagementEmailTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementEmailTemplateResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementEmailTemplateResource(id);
         }
 
         /// <summary>
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementGatewayResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementGatewayResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementGatewayResource" /> object. </returns>
         public static ApiManagementGatewayResource GetApiManagementGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementGatewayResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementGatewayResource(id);
         }
 
         /// <summary>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementGatewayHostnameConfigurationResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGatewayHostnameConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementGatewayHostnameConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementGatewayHostnameConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementGatewayHostnameConfigurationResource" /> object. </returns>
         public static ApiManagementGatewayHostnameConfigurationResource GetApiManagementGatewayHostnameConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementGatewayHostnameConfigurationResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementGatewayHostnameConfigurationResource(id);
         }
 
         /// <summary>
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementGatewayCertificateAuthorityResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGatewayCertificateAuthorityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementGatewayCertificateAuthorityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementGatewayCertificateAuthorityResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementGatewayCertificateAuthorityResource" /> object. </returns>
         public static ApiManagementGatewayCertificateAuthorityResource GetApiManagementGatewayCertificateAuthorityResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementGatewayCertificateAuthorityResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementGatewayCertificateAuthorityResource(id);
         }
 
         /// <summary>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementGroupResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementGroupResource" /> object. </returns>
         public static ApiManagementGroupResource GetApiManagementGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementGroupResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementGroupResource(id);
         }
 
         /// <summary>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementIdentityProviderResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementIdentityProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementIdentityProviderResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementIdentityProviderResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementIdentityProviderResource" /> object. </returns>
         public static ApiManagementIdentityProviderResource GetApiManagementIdentityProviderResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementIdentityProviderResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementIdentityProviderResource(id);
         }
 
         /// <summary>
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementLoggerResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementLoggerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementLoggerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementLoggerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementLoggerResource" /> object. </returns>
         public static ApiManagementLoggerResource GetApiManagementLoggerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementLoggerResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementLoggerResource(id);
         }
 
         /// <summary>
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementNamedValueResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementNamedValueResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementNamedValueResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementNamedValueResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementNamedValueResource" /> object. </returns>
         public static ApiManagementNamedValueResource GetApiManagementNamedValueResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementNamedValueResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementNamedValueResource(id);
         }
 
         /// <summary>
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementNotificationResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementNotificationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementNotificationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementNotificationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementNotificationResource" /> object. </returns>
         public static ApiManagementNotificationResource GetApiManagementNotificationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementNotificationResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementNotificationResource(id);
         }
 
         /// <summary>
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementOpenIdConnectProviderResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementOpenIdConnectProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementOpenIdConnectProviderResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementOpenIdConnectProviderResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementOpenIdConnectProviderResource" /> object. </returns>
         public static ApiManagementOpenIdConnectProviderResource GetApiManagementOpenIdConnectProviderResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementOpenIdConnectProviderResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementOpenIdConnectProviderResource(id);
         }
 
         /// <summary>
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementPortalRevisionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPortalRevisionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementPortalRevisionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementPortalRevisionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPortalRevisionResource" /> object. </returns>
         public static ApiManagementPortalRevisionResource GetApiManagementPortalRevisionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementPortalRevisionResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementPortalRevisionResource(id);
         }
 
         /// <summary>
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementPortalSignInSettingResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPortalSignInSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementPortalSignInSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementPortalSignInSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPortalSignInSettingResource" /> object. </returns>
         public static ApiManagementPortalSignInSettingResource GetApiManagementPortalSignInSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementPortalSignInSettingResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementPortalSignInSettingResource(id);
         }
 
         /// <summary>
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementPortalSignUpSettingResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPortalSignUpSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementPortalSignUpSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementPortalSignUpSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPortalSignUpSettingResource" /> object. </returns>
         public static ApiManagementPortalSignUpSettingResource GetApiManagementPortalSignUpSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementPortalSignUpSettingResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementPortalSignUpSettingResource(id);
         }
 
         /// <summary>
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementPortalDelegationSettingResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPortalDelegationSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementPortalDelegationSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementPortalDelegationSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPortalDelegationSettingResource" /> object. </returns>
         public static ApiManagementPortalDelegationSettingResource GetApiManagementPortalDelegationSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementPortalDelegationSettingResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementPortalDelegationSettingResource(id);
         }
 
         /// <summary>
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPrivateEndpointConnectionResource" /> object. </returns>
         public static ApiManagementPrivateEndpointConnectionResource GetApiManagementPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementPrivateEndpointConnectionResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementPrivateLinkResource" /> object. </returns>
         public static ApiManagementPrivateLinkResource GetApiManagementPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementPrivateLinkResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementPrivateLinkResource(id);
         }
 
         /// <summary>
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementProductResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementProductResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementProductResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementProductResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementProductResource" /> object. </returns>
         public static ApiManagementProductResource GetApiManagementProductResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementProductResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementProductResource(id);
         }
 
         /// <summary>
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementGlobalSchemaResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementGlobalSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementGlobalSchemaResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementGlobalSchemaResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementGlobalSchemaResource" /> object. </returns>
         public static ApiManagementGlobalSchemaResource GetApiManagementGlobalSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementGlobalSchemaResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementGlobalSchemaResource(id);
         }
 
         /// <summary>
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementTenantSettingResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementTenantSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementTenantSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementTenantSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementTenantSettingResource" /> object. </returns>
         public static ApiManagementTenantSettingResource GetApiManagementTenantSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementTenantSettingResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementTenantSettingResource(id);
         }
 
         /// <summary>
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementSubscriptionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementSubscriptionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementSubscriptionResource" /> object. </returns>
         public static ApiManagementSubscriptionResource GetApiManagementSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementSubscriptionResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementSubscriptionResource(id);
         }
 
         /// <summary>
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementUserSubscriptionResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementUserSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementUserSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementUserSubscriptionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementUserSubscriptionResource" /> object. </returns>
         public static ApiManagementUserSubscriptionResource GetApiManagementUserSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementUserSubscriptionResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementUserSubscriptionResource(id);
         }
 
         /// <summary>
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="TenantAccessInfoResource.CreateResourceIdentifier" /> to create a <see cref="TenantAccessInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetTenantAccessInfoResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetTenantAccessInfoResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="TenantAccessInfoResource" /> object. </returns>
         public static TenantAccessInfoResource GetTenantAccessInfoResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetTenantAccessInfoResource(id);
+            return GetMockableApiManagementArmClient(client).GetTenantAccessInfoResource(id);
         }
 
         /// <summary>
@@ -808,7 +808,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// You can use <see cref="ApiManagementUserResource.CreateResourceIdentifier" /> to create an <see cref="ApiManagementUserResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementArmClientMockingExtension.GetApiManagementUserResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementArmClient.GetApiManagementUserResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -816,21 +816,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> Returns a <see cref="ApiManagementUserResource" /> object. </returns>
         public static ApiManagementUserResource GetApiManagementUserResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApiManagementArmClientMockingExtension(client).GetApiManagementUserResource(id);
+            return GetMockableApiManagementArmClient(client).GetApiManagementUserResource(id);
         }
 
         /// <summary>
         /// Gets a collection of ApiManagementServiceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementResourceGroupMockingExtension.GetApiManagementServices()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementServices()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ApiManagementServiceResources and their operations over a ApiManagementServiceResource. </returns>
         public static ApiManagementServiceCollection GetApiManagementServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetApiManagementResourceGroupMockingExtension(resourceGroupResource).GetApiManagementServices();
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementServices();
         }
 
         /// <summary>
@@ -847,7 +847,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementResourceGroupMockingExtension.GetApiManagementServiceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementServiceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public static async Task<Response<ApiManagementServiceResource>> GetApiManagementServiceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return await GetApiManagementResourceGroupMockingExtension(resourceGroupResource).GetApiManagementServiceAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementServiceAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -875,7 +875,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementResourceGroupMockingExtension.GetApiManagementService(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementResourceGroupResource.GetApiManagementService(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -886,21 +886,21 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public static Response<ApiManagementServiceResource> GetApiManagementService(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementResourceGroupMockingExtension(resourceGroupResource).GetApiManagementService(serviceName, cancellationToken);
+            return GetMockableApiManagementResourceGroupResource(resourceGroupResource).GetApiManagementService(serviceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ApiManagementDeletedServiceResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementSubscriptionMockingExtension.GetApiManagementDeletedServices()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementDeletedServices()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ApiManagementDeletedServiceResources and their operations over a ApiManagementDeletedServiceResource. </returns>
         public static ApiManagementDeletedServiceCollection GetApiManagementDeletedServices(this SubscriptionResource subscriptionResource)
         {
-            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementDeletedServices();
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedServices();
         }
 
         /// <summary>
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementSubscriptionMockingExtension.GetApiManagementDeletedServiceAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementDeletedServiceAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -929,7 +929,7 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public static async Task<Response<ApiManagementDeletedServiceResource>> GetApiManagementDeletedServiceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
-            return await GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementDeletedServiceAsync(location, serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedServiceAsync(location, serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -946,7 +946,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementSubscriptionMockingExtension.GetApiManagementDeletedService(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementDeletedService(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -958,7 +958,7 @@ namespace Azure.ResourceManager.ApiManagement
         [ForwardsClientCalls]
         public static Response<ApiManagementDeletedServiceResource> GetApiManagementDeletedService(this SubscriptionResource subscriptionResource, AzureLocation location, string serviceName, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementDeletedService(location, serviceName, cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedService(location, serviceName, cancellationToken);
         }
 
         /// <summary>
@@ -975,7 +975,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementSubscriptionMockingExtension.GetApiManagementDeletedServices(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementDeletedServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementDeletedServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementDeletedServicesAsync(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1000,7 +1000,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementSubscriptionMockingExtension.GetApiManagementDeletedServices(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementDeletedServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementDeletedServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiManagementDeletedServiceResource> GetApiManagementDeletedServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementDeletedServices(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementDeletedServices(cancellationToken);
         }
 
         /// <summary>
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementSubscriptionMockingExtension.GetApiManagementServices(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1033,7 +1033,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiManagementServiceResource> GetApiManagementServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementServicesAsync(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1050,7 +1050,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementSubscriptionMockingExtension.GetApiManagementServices(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1058,7 +1058,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiManagementServiceResource> GetApiManagementServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementServices(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServices(cancellationToken);
         }
 
         /// <summary>
@@ -1075,7 +1075,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementSubscriptionMockingExtension.CheckApiManagementServiceNameAvailability(ApiManagementServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.CheckApiManagementServiceNameAvailability(ApiManagementServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1084,7 +1084,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<ApiManagementServiceNameAvailabilityResult>> CheckApiManagementServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ApiManagementServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetApiManagementSubscriptionMockingExtension(subscriptionResource).CheckApiManagementServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).CheckApiManagementServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementSubscriptionMockingExtension.CheckApiManagementServiceNameAvailability(ApiManagementServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.CheckApiManagementServiceNameAvailability(ApiManagementServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1110,7 +1110,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<ApiManagementServiceNameAvailabilityResult> CheckApiManagementServiceNameAvailability(this SubscriptionResource subscriptionResource, ApiManagementServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).CheckApiManagementServiceNameAvailability(content, cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).CheckApiManagementServiceNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -1127,14 +1127,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementSubscriptionMockingExtension.GetApiManagementServiceDomainOwnershipIdentifier(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementServiceDomainOwnershipIdentifier(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ApiManagementServiceGetDomainOwnershipIdentifierResult>> GetApiManagementServiceDomainOwnershipIdentifierAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementServiceDomainOwnershipIdentifierAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServiceDomainOwnershipIdentifierAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1151,14 +1151,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementSubscriptionMockingExtension.GetApiManagementServiceDomainOwnershipIdentifier(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementServiceDomainOwnershipIdentifier(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ApiManagementServiceGetDomainOwnershipIdentifierResult> GetApiManagementServiceDomainOwnershipIdentifier(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementServiceDomainOwnershipIdentifier(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementServiceDomainOwnershipIdentifier(cancellationToken);
         }
 
         /// <summary>
@@ -1175,7 +1175,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementSubscriptionMockingExtension.GetApiManagementSkus(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementSkus(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1183,7 +1183,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> An async collection of <see cref="ApiManagementSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApiManagementSku> GetApiManagementSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementSkusAsync(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1200,7 +1200,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApiManagementSubscriptionMockingExtension.GetApiManagementSkus(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiManagementSubscriptionResource.GetApiManagementSkus(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1208,7 +1208,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <returns> A collection of <see cref="ApiManagementSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApiManagementSku> GetApiManagementSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetApiManagementSubscriptionMockingExtension(subscriptionResource).GetApiManagementSkus(cancellationToken);
+            return GetMockableApiManagementSubscriptionResource(subscriptionResource).GetApiManagementSkus(cancellationToken);
         }
     }
 }

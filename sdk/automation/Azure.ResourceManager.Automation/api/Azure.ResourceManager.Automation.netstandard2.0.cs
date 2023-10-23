@@ -1226,9 +1226,9 @@ namespace Azure.ResourceManager.Automation
 }
 namespace Azure.ResourceManager.Automation.Mocking
 {
-    public partial class AutomationArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAutomationArmClient : Azure.ResourceManager.ArmResource
     {
-        protected AutomationArmClientMockingExtension() { }
+        protected MockableAutomationArmClient() { }
         public virtual Azure.ResourceManager.Automation.AutomationAccountModuleResource GetAutomationAccountModuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.AutomationAccountPython2PackageResource GetAutomationAccountPython2PackageResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.AutomationAccountResource GetAutomationAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1253,16 +1253,16 @@ namespace Azure.ResourceManager.Automation.Mocking
         public virtual Azure.ResourceManager.Automation.HybridRunbookWorkerResource GetHybridRunbookWorkerResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automation.SoftwareUpdateConfigurationResource GetSoftwareUpdateConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class AutomationResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAutomationResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected AutomationResourceGroupMockingExtension() { }
+        protected MockableAutomationResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Automation.AutomationAccountResource> GetAutomationAccount(string automationAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automation.AutomationAccountResource>> GetAutomationAccountAsync(string automationAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Automation.AutomationAccountCollection GetAutomationAccounts() { throw null; }
     }
-    public partial class AutomationSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAutomationSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected AutomationSubscriptionMockingExtension() { }
+        protected MockableAutomationSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.AutomationAccountResource> GetAutomationAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automation.AutomationAccountResource> GetAutomationAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Automation.Models.DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscription(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

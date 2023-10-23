@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.GuestConfiguration
     /// <summary> A class to add extension methods to Azure.ResourceManager.GuestConfiguration. </summary>
     public static partial class GuestConfigurationExtensions
     {
-        private static GuestConfigurationArmClientMockingExtension GetGuestConfigurationArmClientMockingExtension(ArmClient client)
+        private static MockableGuestConfigurationArmClient GetMockableGuestConfigurationArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new GuestConfigurationArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableGuestConfigurationArmClient(client0));
         }
 
-        private static GuestConfigurationResourceGroupMockingExtension GetGuestConfigurationResourceGroupMockingExtension(ArmResource resource)
+        private static MockableGuestConfigurationResourceGroupResource GetMockableGuestConfigurationResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new GuestConfigurationResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableGuestConfigurationResourceGroupResource(client, resource.Id));
         }
 
-        private static GuestConfigurationSubscriptionMockingExtension GetGuestConfigurationSubscriptionMockingExtension(ArmResource resource)
+        private static MockableGuestConfigurationSubscriptionResource GetMockableGuestConfigurationSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new GuestConfigurationSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableGuestConfigurationSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
         /// Gets a collection of GuestConfigurationVmAssignmentResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GuestConfigurationArmClientMockingExtension.GetGuestConfigurationVmAssignments(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationVmAssignments(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <returns> An object representing collection of GuestConfigurationVmAssignmentResources and their operations over a GuestConfigurationVmAssignmentResource. </returns>
         public static GuestConfigurationVmAssignmentCollection GetGuestConfigurationVmAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationVmAssignments(scope);
+            return GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationVmAssignments(scope);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GuestConfigurationArmClientMockingExtension.GetGuestConfigurationVmAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationVmAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         [ForwardsClientCalls]
         public static async Task<Response<GuestConfigurationVmAssignmentResource>> GetGuestConfigurationVmAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            return await GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationVmAssignmentAsync(scope, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationVmAssignmentAsync(scope, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GuestConfigurationArmClientMockingExtension.GetGuestConfigurationVmAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationVmAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         [ForwardsClientCalls]
         public static Response<GuestConfigurationVmAssignmentResource> GetGuestConfigurationVmAssignment(this ArmClient client, ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationVmAssignment(scope, guestConfigurationAssignmentName, cancellationToken);
+            return GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationVmAssignment(scope, guestConfigurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of GuestConfigurationHcrpAssignmentResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GuestConfigurationArmClientMockingExtension.GetGuestConfigurationHcrpAssignments(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationHcrpAssignments(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <returns> An object representing collection of GuestConfigurationHcrpAssignmentResources and their operations over a GuestConfigurationHcrpAssignmentResource. </returns>
         public static GuestConfigurationHcrpAssignmentCollection GetGuestConfigurationHcrpAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationHcrpAssignments(scope);
+            return GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationHcrpAssignments(scope);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GuestConfigurationArmClientMockingExtension.GetGuestConfigurationHcrpAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationHcrpAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         [ForwardsClientCalls]
         public static async Task<Response<GuestConfigurationHcrpAssignmentResource>> GetGuestConfigurationHcrpAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            return await GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationHcrpAssignmentAsync(scope, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationHcrpAssignmentAsync(scope, guestConfigurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GuestConfigurationArmClientMockingExtension.GetGuestConfigurationHcrpAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationHcrpAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -177,14 +177,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         [ForwardsClientCalls]
         public static Response<GuestConfigurationHcrpAssignmentResource> GetGuestConfigurationHcrpAssignment(this ArmClient client, ResourceIdentifier scope, string guestConfigurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationHcrpAssignment(scope, guestConfigurationAssignmentName, cancellationToken);
+            return GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationHcrpAssignment(scope, guestConfigurationAssignmentName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of GuestConfigurationVmssAssignmentResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GuestConfigurationArmClientMockingExtension.GetGuestConfigurationVmssAssignments(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationVmssAssignments(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <returns> An object representing collection of GuestConfigurationVmssAssignmentResources and their operations over a GuestConfigurationVmssAssignmentResource. </returns>
         public static GuestConfigurationVmssAssignmentCollection GetGuestConfigurationVmssAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationVmssAssignments(scope);
+            return GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationVmssAssignments(scope);
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GuestConfigurationArmClientMockingExtension.GetGuestConfigurationVmssAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationVmssAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         [ForwardsClientCalls]
         public static async Task<Response<GuestConfigurationVmssAssignmentResource>> GetGuestConfigurationVmssAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return await GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationVmssAssignmentAsync(scope, name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationVmssAssignmentAsync(scope, name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GuestConfigurationArmClientMockingExtension.GetGuestConfigurationVmssAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationVmssAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         [ForwardsClientCalls]
         public static Response<GuestConfigurationVmssAssignmentResource> GetGuestConfigurationVmssAssignment(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationVmssAssignment(scope, name, cancellationToken);
+            return GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationVmssAssignment(scope, name, cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// You can use <see cref="GuestConfigurationVmAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationVmAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GuestConfigurationArmClientMockingExtension.GetGuestConfigurationVmAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationVmAssignmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <returns> Returns a <see cref="GuestConfigurationVmAssignmentResource" /> object. </returns>
         public static GuestConfigurationVmAssignmentResource GetGuestConfigurationVmAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationVmAssignmentResource(id);
+            return GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationVmAssignmentResource(id);
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// You can use <see cref="GuestConfigurationHcrpAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationHcrpAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GuestConfigurationArmClientMockingExtension.GetGuestConfigurationHcrpAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationHcrpAssignmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <returns> Returns a <see cref="GuestConfigurationHcrpAssignmentResource" /> object. </returns>
         public static GuestConfigurationHcrpAssignmentResource GetGuestConfigurationHcrpAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationHcrpAssignmentResource(id);
+            return GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationHcrpAssignmentResource(id);
         }
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// You can use <see cref="GuestConfigurationVmssAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="GuestConfigurationVmssAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GuestConfigurationArmClientMockingExtension.GetGuestConfigurationVmssAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGuestConfigurationArmClient.GetGuestConfigurationVmssAssignmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <returns> Returns a <see cref="GuestConfigurationVmssAssignmentResource" /> object. </returns>
         public static GuestConfigurationVmssAssignmentResource GetGuestConfigurationVmssAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetGuestConfigurationArmClientMockingExtension(client).GetGuestConfigurationVmssAssignmentResource(id);
+            return GetMockableGuestConfigurationArmClient(client).GetGuestConfigurationVmssAssignmentResource(id);
         }
     }
 }

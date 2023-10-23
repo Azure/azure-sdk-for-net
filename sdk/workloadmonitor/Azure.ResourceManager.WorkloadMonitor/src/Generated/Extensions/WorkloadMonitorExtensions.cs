@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
     /// <summary> A class to add extension methods to Azure.ResourceManager.WorkloadMonitor. </summary>
     public static partial class WorkloadMonitorExtensions
     {
-        private static WorkloadMonitorArmClientMockingExtension GetWorkloadMonitorArmClientMockingExtension(ArmClient client)
+        private static MockableWorkloadMonitorArmClient GetMockableWorkloadMonitorArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new WorkloadMonitorArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableWorkloadMonitorArmClient(client0));
         }
 
-        private static WorkloadMonitorResourceGroupMockingExtension GetWorkloadMonitorResourceGroupMockingExtension(ArmResource resource)
+        private static MockableWorkloadMonitorResourceGroupResource GetMockableWorkloadMonitorResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new WorkloadMonitorResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableWorkloadMonitorResourceGroupResource(client, resource.Id));
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// You can use <see cref="HealthMonitorResource.CreateResourceIdentifier" /> to create a <see cref="HealthMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadMonitorArmClientMockingExtension.GetHealthMonitorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadMonitorArmClient.GetHealthMonitorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <returns> Returns a <see cref="HealthMonitorResource" /> object. </returns>
         public static HealthMonitorResource GetHealthMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetWorkloadMonitorArmClientMockingExtension(client).GetHealthMonitorResource(id);
+            return GetMockableWorkloadMonitorArmClient(client).GetHealthMonitorResource(id);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// You can use <see cref="HealthMonitorStateChangeResource.CreateResourceIdentifier" /> to create a <see cref="HealthMonitorStateChangeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadMonitorArmClientMockingExtension.GetHealthMonitorStateChangeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadMonitorArmClient.GetHealthMonitorStateChangeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <returns> Returns a <see cref="HealthMonitorStateChangeResource" /> object. </returns>
         public static HealthMonitorStateChangeResource GetHealthMonitorStateChangeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetWorkloadMonitorArmClientMockingExtension(client).GetHealthMonitorStateChangeResource(id);
+            return GetMockableWorkloadMonitorArmClient(client).GetHealthMonitorStateChangeResource(id);
         }
 
         /// <summary>
         /// Gets a collection of HealthMonitorResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadMonitorResourceGroupMockingExtension.GetHealthMonitors(string,string,string)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadMonitorResourceGroupResource.GetHealthMonitors(string,string,string)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <returns> An object representing collection of HealthMonitorResources and their operations over a HealthMonitorResource. </returns>
         public static HealthMonitorCollection GetHealthMonitors(this ResourceGroupResource resourceGroupResource, string providerName, string resourceCollectionName, string resourceName)
         {
-            return GetWorkloadMonitorResourceGroupMockingExtension(resourceGroupResource).GetHealthMonitors(providerName, resourceCollectionName, resourceName);
+            return GetMockableWorkloadMonitorResourceGroupResource(resourceGroupResource).GetHealthMonitors(providerName, resourceCollectionName, resourceName);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadMonitorResourceGroupMockingExtension.GetHealthMonitorAsync(string,string,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadMonitorResourceGroupResource.GetHealthMonitorAsync(string,string,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         [ForwardsClientCalls]
         public static async Task<Response<HealthMonitorResource>> GetHealthMonitorAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetWorkloadMonitorResourceGroupMockingExtension(resourceGroupResource).GetHealthMonitorAsync(providerName, resourceCollectionName, resourceName, monitorId, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWorkloadMonitorResourceGroupResource(resourceGroupResource).GetHealthMonitorAsync(providerName, resourceCollectionName, resourceName, monitorId, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadMonitorResourceGroupMockingExtension.GetHealthMonitor(string,string,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadMonitorResourceGroupResource.GetHealthMonitor(string,string,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         [ForwardsClientCalls]
         public static Response<HealthMonitorResource> GetHealthMonitor(this ResourceGroupResource resourceGroupResource, string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetWorkloadMonitorResourceGroupMockingExtension(resourceGroupResource).GetHealthMonitor(providerName, resourceCollectionName, resourceName, monitorId, expand, cancellationToken);
+            return GetMockableWorkloadMonitorResourceGroupResource(resourceGroupResource).GetHealthMonitor(providerName, resourceCollectionName, resourceName, monitorId, expand, cancellationToken);
         }
     }
 }

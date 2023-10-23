@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.Attestation
     /// <summary> A class to add extension methods to Azure.ResourceManager.Attestation. </summary>
     public static partial class AttestationExtensions
     {
-        private static AttestationArmClientMockingExtension GetAttestationArmClientMockingExtension(ArmClient client)
+        private static MockableAttestationArmClient GetMockableAttestationArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new AttestationArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableAttestationArmClient(client0));
         }
 
-        private static AttestationResourceGroupMockingExtension GetAttestationResourceGroupMockingExtension(ArmResource resource)
+        private static MockableAttestationResourceGroupResource GetMockableAttestationResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AttestationResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAttestationResourceGroupResource(client, resource.Id));
         }
 
-        private static AttestationSubscriptionMockingExtension GetAttestationSubscriptionMockingExtension(ArmResource resource)
+        private static MockableAttestationSubscriptionResource GetMockableAttestationSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AttestationSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAttestationSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Attestation
         /// You can use <see cref="AttestationProviderResource.CreateResourceIdentifier" /> to create an <see cref="AttestationProviderResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AttestationArmClientMockingExtension.GetAttestationProviderResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAttestationArmClient.GetAttestationProviderResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Attestation
         /// <returns> Returns a <see cref="AttestationProviderResource" /> object. </returns>
         public static AttestationProviderResource GetAttestationProviderResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAttestationArmClientMockingExtension(client).GetAttestationProviderResource(id);
+            return GetMockableAttestationArmClient(client).GetAttestationProviderResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Attestation
         /// You can use <see cref="AttestationPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AttestationPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AttestationArmClientMockingExtension.GetAttestationPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAttestationArmClient.GetAttestationPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,21 +63,21 @@ namespace Azure.ResourceManager.Attestation
         /// <returns> Returns a <see cref="AttestationPrivateEndpointConnectionResource" /> object. </returns>
         public static AttestationPrivateEndpointConnectionResource GetAttestationPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAttestationArmClientMockingExtension(client).GetAttestationPrivateEndpointConnectionResource(id);
+            return GetMockableAttestationArmClient(client).GetAttestationPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
         /// Gets a collection of AttestationProviderResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AttestationResourceGroupMockingExtension.GetAttestationProviders()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAttestationResourceGroupResource.GetAttestationProviders()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AttestationProviderResources and their operations over a AttestationProviderResource. </returns>
         public static AttestationProviderCollection GetAttestationProviders(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAttestationResourceGroupMockingExtension(resourceGroupResource).GetAttestationProviders();
+            return GetMockableAttestationResourceGroupResource(resourceGroupResource).GetAttestationProviders();
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AttestationResourceGroupMockingExtension.GetAttestationProviderAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAttestationResourceGroupResource.GetAttestationProviderAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Attestation
         [ForwardsClientCalls]
         public static async Task<Response<AttestationProviderResource>> GetAttestationProviderAsync(this ResourceGroupResource resourceGroupResource, string providerName, CancellationToken cancellationToken = default)
         {
-            return await GetAttestationResourceGroupMockingExtension(resourceGroupResource).GetAttestationProviderAsync(providerName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAttestationResourceGroupResource(resourceGroupResource).GetAttestationProviderAsync(providerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AttestationResourceGroupMockingExtension.GetAttestationProvider(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAttestationResourceGroupResource.GetAttestationProvider(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Attestation
         [ForwardsClientCalls]
         public static Response<AttestationProviderResource> GetAttestationProvider(this ResourceGroupResource resourceGroupResource, string providerName, CancellationToken cancellationToken = default)
         {
-            return GetAttestationResourceGroupMockingExtension(resourceGroupResource).GetAttestationProvider(providerName, cancellationToken);
+            return GetMockableAttestationResourceGroupResource(resourceGroupResource).GetAttestationProvider(providerName, cancellationToken);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AttestationSubscriptionMockingExtension.GetAttestationProviders(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetAttestationProviders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Attestation
         /// <returns> An async collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AttestationProviderResource> GetAttestationProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAttestationSubscriptionMockingExtension(subscriptionResource).GetAttestationProvidersAsync(cancellationToken);
+            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetAttestationProvidersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AttestationSubscriptionMockingExtension.GetAttestationProviders(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetAttestationProviders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Attestation
         /// <returns> A collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AttestationProviderResource> GetAttestationProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAttestationSubscriptionMockingExtension(subscriptionResource).GetAttestationProviders(cancellationToken);
+            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetAttestationProviders(cancellationToken);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AttestationSubscriptionMockingExtension.GetAttestationProvidersByDefaultProvider(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetAttestationProvidersByDefaultProvider(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Attestation
         /// <returns> An async collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AttestationProviderResource> GetAttestationProvidersByDefaultProviderAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAttestationSubscriptionMockingExtension(subscriptionResource).GetAttestationProvidersByDefaultProviderAsync(cancellationToken);
+            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetAttestationProvidersByDefaultProviderAsync(cancellationToken);
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AttestationSubscriptionMockingExtension.GetAttestationProvidersByDefaultProvider(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetAttestationProvidersByDefaultProvider(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Attestation
         /// <returns> A collection of <see cref="AttestationProviderResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AttestationProviderResource> GetAttestationProvidersByDefaultProvider(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAttestationSubscriptionMockingExtension(subscriptionResource).GetAttestationProvidersByDefaultProvider(cancellationToken);
+            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetAttestationProvidersByDefaultProvider(cancellationToken);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AttestationSubscriptionMockingExtension.GetDefaultByLocationAttestationProvider(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetDefaultByLocationAttestationProvider(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<AttestationProviderResource>> GetDefaultByLocationAttestationProviderAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetAttestationSubscriptionMockingExtension(subscriptionResource).GetDefaultByLocationAttestationProviderAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultByLocationAttestationProviderAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Attestation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AttestationSubscriptionMockingExtension.GetDefaultByLocationAttestationProvider(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAttestationSubscriptionResource.GetDefaultByLocationAttestationProvider(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<AttestationProviderResource> GetDefaultByLocationAttestationProvider(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetAttestationSubscriptionMockingExtension(subscriptionResource).GetDefaultByLocationAttestationProvider(location, cancellationToken);
+            return GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultByLocationAttestationProvider(location, cancellationToken);
         }
     }
 }

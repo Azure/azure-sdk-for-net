@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.NetworkFunction
     /// <summary> A class to add extension methods to Azure.ResourceManager.NetworkFunction. </summary>
     public static partial class NetworkFunctionExtensions
     {
-        private static NetworkFunctionArmClientMockingExtension GetNetworkFunctionArmClientMockingExtension(ArmClient client)
+        private static MockableNetworkFunctionArmClient GetMockableNetworkFunctionArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new NetworkFunctionArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableNetworkFunctionArmClient(client0));
         }
 
-        private static NetworkFunctionResourceGroupMockingExtension GetNetworkFunctionResourceGroupMockingExtension(ArmResource resource)
+        private static MockableNetworkFunctionResourceGroupResource GetMockableNetworkFunctionResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new NetworkFunctionResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableNetworkFunctionResourceGroupResource(client, resource.Id));
         }
 
-        private static NetworkFunctionSubscriptionMockingExtension GetNetworkFunctionSubscriptionMockingExtension(ArmResource resource)
+        private static MockableNetworkFunctionSubscriptionResource GetMockableNetworkFunctionSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new NetworkFunctionSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableNetworkFunctionSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// You can use <see cref="AzureTrafficCollectorResource.CreateResourceIdentifier" /> to create an <see cref="AzureTrafficCollectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetworkFunctionArmClientMockingExtension.GetAzureTrafficCollectorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkFunctionArmClient.GetAzureTrafficCollectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <returns> Returns a <see cref="AzureTrafficCollectorResource" /> object. </returns>
         public static AzureTrafficCollectorResource GetAzureTrafficCollectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNetworkFunctionArmClientMockingExtension(client).GetAzureTrafficCollectorResource(id);
+            return GetMockableNetworkFunctionArmClient(client).GetAzureTrafficCollectorResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// You can use <see cref="CollectorPolicyResource.CreateResourceIdentifier" /> to create a <see cref="CollectorPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetworkFunctionArmClientMockingExtension.GetCollectorPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkFunctionArmClient.GetCollectorPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,21 +63,21 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <returns> Returns a <see cref="CollectorPolicyResource" /> object. </returns>
         public static CollectorPolicyResource GetCollectorPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNetworkFunctionArmClientMockingExtension(client).GetCollectorPolicyResource(id);
+            return GetMockableNetworkFunctionArmClient(client).GetCollectorPolicyResource(id);
         }
 
         /// <summary>
         /// Gets a collection of AzureTrafficCollectorResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetworkFunctionResourceGroupMockingExtension.GetAzureTrafficCollectors()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkFunctionResourceGroupResource.GetAzureTrafficCollectors()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AzureTrafficCollectorResources and their operations over a AzureTrafficCollectorResource. </returns>
         public static AzureTrafficCollectorCollection GetAzureTrafficCollectors(this ResourceGroupResource resourceGroupResource)
         {
-            return GetNetworkFunctionResourceGroupMockingExtension(resourceGroupResource).GetAzureTrafficCollectors();
+            return GetMockableNetworkFunctionResourceGroupResource(resourceGroupResource).GetAzureTrafficCollectors();
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetworkFunctionResourceGroupMockingExtension.GetAzureTrafficCollectorAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkFunctionResourceGroupResource.GetAzureTrafficCollectorAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.NetworkFunction
         [ForwardsClientCalls]
         public static async Task<Response<AzureTrafficCollectorResource>> GetAzureTrafficCollectorAsync(this ResourceGroupResource resourceGroupResource, string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
-            return await GetNetworkFunctionResourceGroupMockingExtension(resourceGroupResource).GetAzureTrafficCollectorAsync(azureTrafficCollectorName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetworkFunctionResourceGroupResource(resourceGroupResource).GetAzureTrafficCollectorAsync(azureTrafficCollectorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetworkFunctionResourceGroupMockingExtension.GetAzureTrafficCollector(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkFunctionResourceGroupResource.GetAzureTrafficCollector(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.NetworkFunction
         [ForwardsClientCalls]
         public static Response<AzureTrafficCollectorResource> GetAzureTrafficCollector(this ResourceGroupResource resourceGroupResource, string azureTrafficCollectorName, CancellationToken cancellationToken = default)
         {
-            return GetNetworkFunctionResourceGroupMockingExtension(resourceGroupResource).GetAzureTrafficCollector(azureTrafficCollectorName, cancellationToken);
+            return GetMockableNetworkFunctionResourceGroupResource(resourceGroupResource).GetAzureTrafficCollector(azureTrafficCollectorName, cancellationToken);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetworkFunctionSubscriptionMockingExtension.GetAzureTrafficCollectors(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkFunctionSubscriptionResource.GetAzureTrafficCollectors(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <returns> An async collection of <see cref="AzureTrafficCollectorResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AzureTrafficCollectorResource> GetAzureTrafficCollectorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetNetworkFunctionSubscriptionMockingExtension(subscriptionResource).GetAzureTrafficCollectorsAsync(cancellationToken);
+            return GetMockableNetworkFunctionSubscriptionResource(subscriptionResource).GetAzureTrafficCollectorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetworkFunctionSubscriptionMockingExtension.GetAzureTrafficCollectors(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetworkFunctionSubscriptionResource.GetAzureTrafficCollectors(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NetworkFunction
         /// <returns> A collection of <see cref="AzureTrafficCollectorResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AzureTrafficCollectorResource> GetAzureTrafficCollectors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetNetworkFunctionSubscriptionMockingExtension(subscriptionResource).GetAzureTrafficCollectors(cancellationToken);
+            return GetMockableNetworkFunctionSubscriptionResource(subscriptionResource).GetAzureTrafficCollectors(cancellationToken);
         }
     }
 }

@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.EdgeOrder
     /// <summary> A class to add extension methods to Azure.ResourceManager.EdgeOrder. </summary>
     public static partial class EdgeOrderExtensions
     {
-        private static EdgeOrderArmClientMockingExtension GetEdgeOrderArmClientMockingExtension(ArmClient client)
+        private static MockableEdgeOrderArmClient GetMockableEdgeOrderArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new EdgeOrderArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableEdgeOrderArmClient(client0));
         }
 
-        private static EdgeOrderResourceGroupMockingExtension GetEdgeOrderResourceGroupMockingExtension(ArmResource resource)
+        private static MockableEdgeOrderResourceGroupResource GetMockableEdgeOrderResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new EdgeOrderResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableEdgeOrderResourceGroupResource(client, resource.Id));
         }
 
-        private static EdgeOrderSubscriptionMockingExtension GetEdgeOrderSubscriptionMockingExtension(ArmResource resource)
+        private static MockableEdgeOrderSubscriptionResource GetMockableEdgeOrderSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new EdgeOrderSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableEdgeOrderSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// You can use <see cref="EdgeOrderAddressResource.CreateResourceIdentifier" /> to create an <see cref="EdgeOrderAddressResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderArmClientMockingExtension.GetEdgeOrderAddressResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderArmClient.GetEdgeOrderAddressResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> Returns a <see cref="EdgeOrderAddressResource" /> object. </returns>
         public static EdgeOrderAddressResource GetEdgeOrderAddressResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetEdgeOrderArmClientMockingExtension(client).GetEdgeOrderAddressResource(id);
+            return GetMockableEdgeOrderArmClient(client).GetEdgeOrderAddressResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// You can use <see cref="EdgeOrderResource.CreateResourceIdentifier" /> to create an <see cref="EdgeOrderResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderArmClientMockingExtension.GetEdgeOrderResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderArmClient.GetEdgeOrderResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> Returns a <see cref="EdgeOrderResource" /> object. </returns>
         public static EdgeOrderResource GetEdgeOrderResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetEdgeOrderArmClientMockingExtension(client).GetEdgeOrderResource(id);
+            return GetMockableEdgeOrderArmClient(client).GetEdgeOrderResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// You can use <see cref="EdgeOrderItemResource.CreateResourceIdentifier" /> to create an <see cref="EdgeOrderItemResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderArmClientMockingExtension.GetEdgeOrderItemResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderArmClient.GetEdgeOrderItemResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,21 +80,21 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> Returns a <see cref="EdgeOrderItemResource" /> object. </returns>
         public static EdgeOrderItemResource GetEdgeOrderItemResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetEdgeOrderArmClientMockingExtension(client).GetEdgeOrderItemResource(id);
+            return GetMockableEdgeOrderArmClient(client).GetEdgeOrderItemResource(id);
         }
 
         /// <summary>
         /// Gets a collection of EdgeOrderAddressResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderResourceGroupMockingExtension.GetEdgeOrderAddresses()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetEdgeOrderAddresses()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of EdgeOrderAddressResources and their operations over a EdgeOrderAddressResource. </returns>
         public static EdgeOrderAddressCollection GetEdgeOrderAddresses(this ResourceGroupResource resourceGroupResource)
         {
-            return GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrderAddresses();
+            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrderAddresses();
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderResourceGroupMockingExtension.GetEdgeOrderAddressAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetEdgeOrderAddressAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EdgeOrder
         [ForwardsClientCalls]
         public static async Task<Response<EdgeOrderAddressResource>> GetEdgeOrderAddressAsync(this ResourceGroupResource resourceGroupResource, string addressName, CancellationToken cancellationToken = default)
         {
-            return await GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrderAddressAsync(addressName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrderAddressAsync(addressName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderResourceGroupMockingExtension.GetEdgeOrderAddress(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetEdgeOrderAddress(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -150,21 +150,21 @@ namespace Azure.ResourceManager.EdgeOrder
         [ForwardsClientCalls]
         public static Response<EdgeOrderAddressResource> GetEdgeOrderAddress(this ResourceGroupResource resourceGroupResource, string addressName, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrderAddress(addressName, cancellationToken);
+            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrderAddress(addressName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of EdgeOrderResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderResourceGroupMockingExtension.GetEdgeOrders()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetEdgeOrders()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of EdgeOrderResources and their operations over a EdgeOrderResource. </returns>
         public static EdgeOrderCollection GetEdgeOrders(this ResourceGroupResource resourceGroupResource)
         {
-            return GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrders();
+            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrders();
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderResourceGroupMockingExtension.GetEdgeOrderAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetEdgeOrderAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.EdgeOrder
         [ForwardsClientCalls]
         public static async Task<Response<EdgeOrderResource>> GetEdgeOrderAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string orderName, CancellationToken cancellationToken = default)
         {
-            return await GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrderAsync(location, orderName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrderAsync(location, orderName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderResourceGroupMockingExtension.GetEdgeOrder(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetEdgeOrder(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -222,21 +222,21 @@ namespace Azure.ResourceManager.EdgeOrder
         [ForwardsClientCalls]
         public static Response<EdgeOrderResource> GetEdgeOrder(this ResourceGroupResource resourceGroupResource, AzureLocation location, string orderName, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrder(location, orderName, cancellationToken);
+            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrder(location, orderName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of EdgeOrderItemResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderResourceGroupMockingExtension.GetEdgeOrderItems()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetEdgeOrderItems()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of EdgeOrderItemResources and their operations over a EdgeOrderItemResource. </returns>
         public static EdgeOrderItemCollection GetEdgeOrderItems(this ResourceGroupResource resourceGroupResource)
         {
-            return GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrderItems();
+            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrderItems();
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderResourceGroupMockingExtension.GetEdgeOrderItemAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetEdgeOrderItemAsync(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.EdgeOrder
         [ForwardsClientCalls]
         public static async Task<Response<EdgeOrderItemResource>> GetEdgeOrderItemAsync(this ResourceGroupResource resourceGroupResource, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrderItemAsync(orderItemName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrderItemAsync(orderItemName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderResourceGroupMockingExtension.GetEdgeOrderItem(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetEdgeOrderItem(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.EdgeOrder
         [ForwardsClientCalls]
         public static Response<EdgeOrderItemResource> GetEdgeOrderItem(this ResourceGroupResource resourceGroupResource, string orderItemName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrderItem(orderItemName, expand, cancellationToken);
+            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrderItem(orderItemName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderResourceGroupMockingExtension.GetEdgeOrders(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetEdgeOrders(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="EdgeOrderResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(this ResourceGroupResource resourceGroupResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrdersAsync(skipToken, cancellationToken);
+            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrdersAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderResourceGroupMockingExtension.GetEdgeOrders(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderResourceGroupResource.GetEdgeOrders(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="EdgeOrderResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EdgeOrderResource> GetEdgeOrders(this ResourceGroupResource resourceGroupResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderResourceGroupMockingExtension(resourceGroupResource).GetEdgeOrders(skipToken, cancellationToken);
+            return GetMockableEdgeOrderResourceGroupResource(resourceGroupResource).GetEdgeOrders(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderSubscriptionMockingExtension.GetEdgeOrderAddresses(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetEdgeOrderAddresses(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="EdgeOrderAddressResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EdgeOrderAddressResource> GetEdgeOrderAddressesAsync(this SubscriptionResource subscriptionResource, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetEdgeOrderAddressesAsync(filter, skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrderAddressesAsync(filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderSubscriptionMockingExtension.GetEdgeOrderAddresses(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetEdgeOrderAddresses(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="EdgeOrderAddressResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EdgeOrderAddressResource> GetEdgeOrderAddresses(this SubscriptionResource subscriptionResource, string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetEdgeOrderAddresses(filter, skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrderAddresses(filter, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderSubscriptionMockingExtension.GetProductFamilies(ProductFamiliesContent,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetProductFamilies(ProductFamiliesContent,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProductFamily> GetProductFamiliesAsync(this SubscriptionResource subscriptionResource, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetProductFamiliesAsync(content, expand, skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetProductFamiliesAsync(content, expand, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderSubscriptionMockingExtension.GetProductFamilies(ProductFamiliesContent,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetProductFamilies(ProductFamiliesContent,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="ProductFamily" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProductFamily> GetProductFamilies(this SubscriptionResource subscriptionResource, ProductFamiliesContent content, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetProductFamilies(content, expand, skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetProductFamilies(content, expand, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderSubscriptionMockingExtension.GetConfigurations(ConfigurationsContent,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetConfigurations(ConfigurationsContent,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProductConfiguration> GetConfigurationsAsync(this SubscriptionResource subscriptionResource, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetConfigurationsAsync(content, skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetConfigurationsAsync(content, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderSubscriptionMockingExtension.GetConfigurations(ConfigurationsContent,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetConfigurations(ConfigurationsContent,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="ProductConfiguration" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProductConfiguration> GetConfigurations(this SubscriptionResource subscriptionResource, ConfigurationsContent content, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetConfigurations(content, skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetConfigurations(content, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderSubscriptionMockingExtension.GetProductFamiliesMetadata(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="ProductFamiliesMetadata" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProductFamiliesMetadata> GetProductFamiliesMetadataAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetProductFamiliesMetadataAsync(skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetProductFamiliesMetadataAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderSubscriptionMockingExtension.GetProductFamiliesMetadata(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="ProductFamiliesMetadata" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProductFamiliesMetadata> GetProductFamiliesMetadata(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetProductFamiliesMetadata(skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetProductFamiliesMetadata(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderSubscriptionMockingExtension.GetEdgeOrders(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetEdgeOrders(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="EdgeOrderResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EdgeOrderResource> GetEdgeOrdersAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetEdgeOrdersAsync(skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrdersAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderSubscriptionMockingExtension.GetEdgeOrders(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetEdgeOrders(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="EdgeOrderResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EdgeOrderResource> GetEdgeOrders(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetEdgeOrders(skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrders(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderSubscriptionMockingExtension.GetEdgeOrderItems(string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetEdgeOrderItems(string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> An async collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EdgeOrderItemResource> GetEdgeOrderItemsAsync(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetEdgeOrderItemsAsync(filter, expand, skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrderItemsAsync(filter, expand, skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EdgeOrderSubscriptionMockingExtension.GetEdgeOrderItems(string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEdgeOrderSubscriptionResource.GetEdgeOrderItems(string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <returns> A collection of <see cref="EdgeOrderItemResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EdgeOrderItemResource> GetEdgeOrderItems(this SubscriptionResource subscriptionResource, string filter = null, string expand = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetEdgeOrderSubscriptionMockingExtension(subscriptionResource).GetEdgeOrderItems(filter, expand, skipToken, cancellationToken);
+            return GetMockableEdgeOrderSubscriptionResource(subscriptionResource).GetEdgeOrderItems(filter, expand, skipToken, cancellationToken);
         }
     }
 }

@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.MobileNetwork
     /// <summary> A class to add extension methods to Azure.ResourceManager.MobileNetwork. </summary>
     public static partial class MobileNetworkExtensions
     {
-        private static MobileNetworkArmClientMockingExtension GetMobileNetworkArmClientMockingExtension(ArmClient client)
+        private static MockableMobileNetworkArmClient GetMockableMobileNetworkArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MobileNetworkArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableMobileNetworkArmClient(client0));
         }
 
-        private static MobileNetworkResourceGroupMockingExtension GetMobileNetworkResourceGroupMockingExtension(ArmResource resource)
+        private static MockableMobileNetworkResourceGroupResource GetMockableMobileNetworkResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MobileNetworkResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMobileNetworkResourceGroupResource(client, resource.Id));
         }
 
-        private static MobileNetworkSubscriptionMockingExtension GetMobileNetworkSubscriptionMockingExtension(ArmResource resource)
+        private static MockableMobileNetworkSubscriptionResource GetMockableMobileNetworkSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MobileNetworkSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMobileNetworkSubscriptionResource(client, resource.Id));
         }
 
-        private static MobileNetworkTenantMockingExtension GetMobileNetworkTenantMockingExtension(ArmResource resource)
+        private static MockableMobileNetworkTenantResource GetMockableMobileNetworkTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MobileNetworkTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMobileNetworkTenantResource(client, resource.Id));
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// You can use <see cref="MobileAttachedDataNetworkResource.CreateResourceIdentifier" /> to create a <see cref="MobileAttachedDataNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileAttachedDataNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkArmClient.GetMobileAttachedDataNetworkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileAttachedDataNetworkResource" /> object. </returns>
         public static MobileAttachedDataNetworkResource GetMobileAttachedDataNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMobileNetworkArmClientMockingExtension(client).GetMobileAttachedDataNetworkResource(id);
+            return GetMockableMobileNetworkArmClient(client).GetMobileAttachedDataNetworkResource(id);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// You can use <see cref="MobileDataNetworkResource.CreateResourceIdentifier" /> to create a <see cref="MobileDataNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileDataNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkArmClient.GetMobileDataNetworkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileDataNetworkResource" /> object. </returns>
         public static MobileDataNetworkResource GetMobileDataNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMobileNetworkArmClientMockingExtension(client).GetMobileDataNetworkResource(id);
+            return GetMockableMobileNetworkArmClient(client).GetMobileDataNetworkResource(id);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// You can use <see cref="MobileNetworkDiagnosticsPackageResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkDiagnosticsPackageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkDiagnosticsPackageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkArmClient.GetMobileNetworkDiagnosticsPackageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkDiagnosticsPackageResource" /> object. </returns>
         public static MobileNetworkDiagnosticsPackageResource GetMobileNetworkDiagnosticsPackageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMobileNetworkArmClientMockingExtension(client).GetMobileNetworkDiagnosticsPackageResource(id);
+            return GetMockableMobileNetworkArmClient(client).GetMobileNetworkDiagnosticsPackageResource(id);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// You can use <see cref="MobileNetworkResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkArmClient.GetMobileNetworkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkResource" /> object. </returns>
         public static MobileNetworkResource GetMobileNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMobileNetworkArmClientMockingExtension(client).GetMobileNetworkResource(id);
+            return GetMockableMobileNetworkArmClient(client).GetMobileNetworkResource(id);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// You can use <see cref="MobileNetworkPacketCaptureResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkPacketCaptureResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkPacketCaptureResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkArmClient.GetMobileNetworkPacketCaptureResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkPacketCaptureResource" /> object. </returns>
         public static MobileNetworkPacketCaptureResource GetMobileNetworkPacketCaptureResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMobileNetworkArmClientMockingExtension(client).GetMobileNetworkPacketCaptureResource(id);
+            return GetMockableMobileNetworkArmClient(client).GetMobileNetworkPacketCaptureResource(id);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// You can use <see cref="PacketCoreControlPlaneResource.CreateResourceIdentifier" /> to create a <see cref="PacketCoreControlPlaneResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetPacketCoreControlPlaneResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkArmClient.GetPacketCoreControlPlaneResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="PacketCoreControlPlaneResource" /> object. </returns>
         public static PacketCoreControlPlaneResource GetPacketCoreControlPlaneResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMobileNetworkArmClientMockingExtension(client).GetPacketCoreControlPlaneResource(id);
+            return GetMockableMobileNetworkArmClient(client).GetPacketCoreControlPlaneResource(id);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// You can use <see cref="TenantPacketCoreControlPlaneVersionResource.CreateResourceIdentifier" /> to create a <see cref="TenantPacketCoreControlPlaneVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetTenantPacketCoreControlPlaneVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkArmClient.GetTenantPacketCoreControlPlaneVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="TenantPacketCoreControlPlaneVersionResource" /> object. </returns>
         public static TenantPacketCoreControlPlaneVersionResource GetTenantPacketCoreControlPlaneVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMobileNetworkArmClientMockingExtension(client).GetTenantPacketCoreControlPlaneVersionResource(id);
+            return GetMockableMobileNetworkArmClient(client).GetTenantPacketCoreControlPlaneVersionResource(id);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// You can use <see cref="SubscriptionPacketCoreControlPlaneVersionResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetSubscriptionPacketCoreControlPlaneVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkArmClient.GetSubscriptionPacketCoreControlPlaneVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> object. </returns>
         public static SubscriptionPacketCoreControlPlaneVersionResource GetSubscriptionPacketCoreControlPlaneVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMobileNetworkArmClientMockingExtension(client).GetSubscriptionPacketCoreControlPlaneVersionResource(id);
+            return GetMockableMobileNetworkArmClient(client).GetSubscriptionPacketCoreControlPlaneVersionResource(id);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// You can use <see cref="PacketCoreDataPlaneResource.CreateResourceIdentifier" /> to create a <see cref="PacketCoreDataPlaneResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetPacketCoreDataPlaneResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkArmClient.GetPacketCoreDataPlaneResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="PacketCoreDataPlaneResource" /> object. </returns>
         public static PacketCoreDataPlaneResource GetPacketCoreDataPlaneResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMobileNetworkArmClientMockingExtension(client).GetPacketCoreDataPlaneResource(id);
+            return GetMockableMobileNetworkArmClient(client).GetPacketCoreDataPlaneResource(id);
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// You can use <see cref="MobileNetworkServiceResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkArmClient.GetMobileNetworkServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkServiceResource" /> object. </returns>
         public static MobileNetworkServiceResource GetMobileNetworkServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMobileNetworkArmClientMockingExtension(client).GetMobileNetworkServiceResource(id);
+            return GetMockableMobileNetworkArmClient(client).GetMobileNetworkServiceResource(id);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// You can use <see cref="MobileNetworkSimResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSimResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkSimResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkArmClient.GetMobileNetworkSimResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkSimResource" /> object. </returns>
         public static MobileNetworkSimResource GetMobileNetworkSimResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMobileNetworkArmClientMockingExtension(client).GetMobileNetworkSimResource(id);
+            return GetMockableMobileNetworkArmClient(client).GetMobileNetworkSimResource(id);
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// You can use <see cref="MobileNetworkSimGroupResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSimGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkSimGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkArmClient.GetMobileNetworkSimGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkSimGroupResource" /> object. </returns>
         public static MobileNetworkSimGroupResource GetMobileNetworkSimGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMobileNetworkArmClientMockingExtension(client).GetMobileNetworkSimGroupResource(id);
+            return GetMockableMobileNetworkArmClient(client).GetMobileNetworkSimGroupResource(id);
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// You can use <see cref="MobileNetworkSimPolicyResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSimPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkSimPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkArmClient.GetMobileNetworkSimPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkSimPolicyResource" /> object. </returns>
         public static MobileNetworkSimPolicyResource GetMobileNetworkSimPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMobileNetworkArmClientMockingExtension(client).GetMobileNetworkSimPolicyResource(id);
+            return GetMockableMobileNetworkArmClient(client).GetMobileNetworkSimPolicyResource(id);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// You can use <see cref="MobileNetworkSiteResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkSiteResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkArmClient.GetMobileNetworkSiteResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkSiteResource" /> object. </returns>
         public static MobileNetworkSiteResource GetMobileNetworkSiteResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMobileNetworkArmClientMockingExtension(client).GetMobileNetworkSiteResource(id);
+            return GetMockableMobileNetworkArmClient(client).GetMobileNetworkSiteResource(id);
         }
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// You can use <see cref="MobileNetworkSliceResource.CreateResourceIdentifier" /> to create a <see cref="MobileNetworkSliceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkArmClientMockingExtension.GetMobileNetworkSliceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkArmClient.GetMobileNetworkSliceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -276,21 +276,21 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkSliceResource" /> object. </returns>
         public static MobileNetworkSliceResource GetMobileNetworkSliceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMobileNetworkArmClientMockingExtension(client).GetMobileNetworkSliceResource(id);
+            return GetMockableMobileNetworkArmClient(client).GetMobileNetworkSliceResource(id);
         }
 
         /// <summary>
         /// Gets a collection of MobileNetworkResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetMobileNetworks()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkResourceGroupResource.GetMobileNetworks()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MobileNetworkResources and their operations over a MobileNetworkResource. </returns>
         public static MobileNetworkCollection GetMobileNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetMobileNetworks();
+            return GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetMobileNetworks();
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetMobileNetworkAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkResourceGroupResource.GetMobileNetworkAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static async Task<Response<MobileNetworkResource>> GetMobileNetworkAsync(this ResourceGroupResource resourceGroupResource, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
-            return await GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetMobileNetworkAsync(mobileNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetMobileNetworkAsync(mobileNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetMobileNetwork(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkResourceGroupResource.GetMobileNetwork(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -346,21 +346,21 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static Response<MobileNetworkResource> GetMobileNetwork(this ResourceGroupResource resourceGroupResource, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
-            return GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetMobileNetwork(mobileNetworkName, cancellationToken);
+            return GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetMobileNetwork(mobileNetworkName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of PacketCoreControlPlaneResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetPacketCoreControlPlanes()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkResourceGroupResource.GetPacketCoreControlPlanes()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PacketCoreControlPlaneResources and their operations over a PacketCoreControlPlaneResource. </returns>
         public static PacketCoreControlPlaneCollection GetPacketCoreControlPlanes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetPacketCoreControlPlanes();
+            return GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetPacketCoreControlPlanes();
         }
 
         /// <summary>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetPacketCoreControlPlaneAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkResourceGroupResource.GetPacketCoreControlPlaneAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static async Task<Response<PacketCoreControlPlaneResource>> GetPacketCoreControlPlaneAsync(this ResourceGroupResource resourceGroupResource, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
-            return await GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetPacketCoreControlPlaneAsync(packetCoreControlPlaneName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetPacketCoreControlPlaneAsync(packetCoreControlPlaneName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetPacketCoreControlPlane(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkResourceGroupResource.GetPacketCoreControlPlane(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -416,21 +416,21 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static Response<PacketCoreControlPlaneResource> GetPacketCoreControlPlane(this ResourceGroupResource resourceGroupResource, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
-            return GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetPacketCoreControlPlane(packetCoreControlPlaneName, cancellationToken);
+            return GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetPacketCoreControlPlane(packetCoreControlPlaneName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of MobileNetworkSimGroupResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetMobileNetworkSimGroups()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkResourceGroupResource.GetMobileNetworkSimGroups()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MobileNetworkSimGroupResources and their operations over a MobileNetworkSimGroupResource. </returns>
         public static MobileNetworkSimGroupCollection GetMobileNetworkSimGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetMobileNetworkSimGroups();
+            return GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetMobileNetworkSimGroups();
         }
 
         /// <summary>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetMobileNetworkSimGroupAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkResourceGroupResource.GetMobileNetworkSimGroupAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static async Task<Response<MobileNetworkSimGroupResource>> GetMobileNetworkSimGroupAsync(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
         {
-            return await GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetMobileNetworkSimGroupAsync(simGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetMobileNetworkSimGroupAsync(simGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkResourceGroupMockingExtension.GetMobileNetworkSimGroup(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkResourceGroupResource.GetMobileNetworkSimGroup(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -486,21 +486,21 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static Response<MobileNetworkSimGroupResource> GetMobileNetworkSimGroup(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
         {
-            return GetMobileNetworkResourceGroupMockingExtension(resourceGroupResource).GetMobileNetworkSimGroup(simGroupName, cancellationToken);
+            return GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetMobileNetworkSimGroup(simGroupName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of SubscriptionPacketCoreControlPlaneVersionResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetSubscriptionPacketCoreControlPlaneVersions()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkSubscriptionResource.GetSubscriptionPacketCoreControlPlaneVersions()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SubscriptionPacketCoreControlPlaneVersionResources and their operations over a SubscriptionPacketCoreControlPlaneVersionResource. </returns>
         public static SubscriptionPacketCoreControlPlaneVersionCollection GetSubscriptionPacketCoreControlPlaneVersions(this SubscriptionResource subscriptionResource)
         {
-            return GetMobileNetworkSubscriptionMockingExtension(subscriptionResource).GetSubscriptionPacketCoreControlPlaneVersions();
+            return GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetSubscriptionPacketCoreControlPlaneVersions();
         }
 
         /// <summary>
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetSubscriptionPacketCoreControlPlaneVersionAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkSubscriptionResource.GetSubscriptionPacketCoreControlPlaneVersionAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static async Task<Response<SubscriptionPacketCoreControlPlaneVersionResource>> GetSubscriptionPacketCoreControlPlaneVersionAsync(this SubscriptionResource subscriptionResource, string versionName, CancellationToken cancellationToken = default)
         {
-            return await GetMobileNetworkSubscriptionMockingExtension(subscriptionResource).GetSubscriptionPacketCoreControlPlaneVersionAsync(versionName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetSubscriptionPacketCoreControlPlaneVersionAsync(versionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetSubscriptionPacketCoreControlPlaneVersion(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkSubscriptionResource.GetSubscriptionPacketCoreControlPlaneVersion(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static Response<SubscriptionPacketCoreControlPlaneVersionResource> GetSubscriptionPacketCoreControlPlaneVersion(this SubscriptionResource subscriptionResource, string versionName, CancellationToken cancellationToken = default)
         {
-            return GetMobileNetworkSubscriptionMockingExtension(subscriptionResource).GetSubscriptionPacketCoreControlPlaneVersion(versionName, cancellationToken);
+            return GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetSubscriptionPacketCoreControlPlaneVersion(versionName, cancellationToken);
         }
 
         /// <summary>
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetMobileNetworks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkSubscriptionResource.GetMobileNetworks(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MobileNetworkResource> GetMobileNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMobileNetworkSubscriptionMockingExtension(subscriptionResource).GetMobileNetworksAsync(cancellationToken);
+            return GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetMobileNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetMobileNetworks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkSubscriptionResource.GetMobileNetworks(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="MobileNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MobileNetworkResource> GetMobileNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMobileNetworkSubscriptionMockingExtension(subscriptionResource).GetMobileNetworks(cancellationToken);
+            return GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetMobileNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetPacketCoreControlPlanes(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkSubscriptionResource.GetPacketCoreControlPlanes(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMobileNetworkSubscriptionMockingExtension(subscriptionResource).GetPacketCoreControlPlanesAsync(cancellationToken);
+            return GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetPacketCoreControlPlanesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetPacketCoreControlPlanes(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkSubscriptionResource.GetPacketCoreControlPlanes(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="PacketCoreControlPlaneResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMobileNetworkSubscriptionMockingExtension(subscriptionResource).GetPacketCoreControlPlanes(cancellationToken);
+            return GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetPacketCoreControlPlanes(cancellationToken);
         }
 
         /// <summary>
@@ -673,7 +673,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetMobileNetworkSimGroups(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkSubscriptionResource.GetMobileNetworkSimGroups(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="MobileNetworkSimGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MobileNetworkSimGroupResource> GetMobileNetworkSimGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMobileNetworkSubscriptionMockingExtension(subscriptionResource).GetMobileNetworkSimGroupsAsync(cancellationToken);
+            return GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetMobileNetworkSimGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkSubscriptionMockingExtension.GetMobileNetworkSimGroups(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkSubscriptionResource.GetMobileNetworkSimGroups(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -706,21 +706,21 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="MobileNetworkSimGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MobileNetworkSimGroupResource> GetMobileNetworkSimGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMobileNetworkSubscriptionMockingExtension(subscriptionResource).GetMobileNetworkSimGroups(cancellationToken);
+            return GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetMobileNetworkSimGroups(cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of TenantPacketCoreControlPlaneVersionResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkTenantMockingExtension.GetTenantPacketCoreControlPlaneVersions()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkTenantResource.GetTenantPacketCoreControlPlaneVersions()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of TenantPacketCoreControlPlaneVersionResources and their operations over a TenantPacketCoreControlPlaneVersionResource. </returns>
         public static TenantPacketCoreControlPlaneVersionCollection GetTenantPacketCoreControlPlaneVersions(this TenantResource tenantResource)
         {
-            return GetMobileNetworkTenantMockingExtension(tenantResource).GetTenantPacketCoreControlPlaneVersions();
+            return GetMockableMobileNetworkTenantResource(tenantResource).GetTenantPacketCoreControlPlaneVersions();
         }
 
         /// <summary>
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkTenantMockingExtension.GetTenantPacketCoreControlPlaneVersionAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkTenantResource.GetTenantPacketCoreControlPlaneVersionAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static async Task<Response<TenantPacketCoreControlPlaneVersionResource>> GetTenantPacketCoreControlPlaneVersionAsync(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
         {
-            return await GetMobileNetworkTenantMockingExtension(tenantResource).GetTenantPacketCoreControlPlaneVersionAsync(versionName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMobileNetworkTenantResource(tenantResource).GetTenantPacketCoreControlPlaneVersionAsync(versionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MobileNetworkTenantMockingExtension.GetTenantPacketCoreControlPlaneVersion(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkTenantResource.GetTenantPacketCoreControlPlaneVersion(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static Response<TenantPacketCoreControlPlaneVersionResource> GetTenantPacketCoreControlPlaneVersion(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
         {
-            return GetMobileNetworkTenantMockingExtension(tenantResource).GetTenantPacketCoreControlPlaneVersion(versionName, cancellationToken);
+            return GetMockableMobileNetworkTenantResource(tenantResource).GetTenantPacketCoreControlPlaneVersion(versionName, cancellationToken);
         }
     }
 }

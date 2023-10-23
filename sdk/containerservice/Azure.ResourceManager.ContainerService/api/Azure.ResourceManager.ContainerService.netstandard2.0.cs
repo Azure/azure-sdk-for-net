@@ -625,9 +625,9 @@ namespace Azure.ResourceManager.ContainerService
 }
 namespace Azure.ResourceManager.ContainerService.Mocking
 {
-    public partial class ContainerServiceArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableContainerServiceArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ContainerServiceArmClientMockingExtension() { }
+        protected MockableContainerServiceArmClient() { }
         public virtual Azure.ResourceManager.ContainerService.AgentPoolSnapshotResource GetAgentPoolSnapshotResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerService.AgentPoolUpgradeProfileResource GetAgentPoolUpgradeProfileResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerService.ContainerServiceAgentPoolResource GetContainerServiceAgentPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -641,9 +641,9 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         public virtual Azure.ResourceManager.ContainerService.ManagedClusterUpgradeProfileResource GetManagedClusterUpgradeProfileResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerService.OSOptionProfileResource GetOSOptionProfileResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ContainerServiceResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableContainerServiceResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ContainerServiceResourceGroupMockingExtension() { }
+        protected MockableContainerServiceResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ContainerService.AgentPoolSnapshotResource> GetAgentPoolSnapshot(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerService.AgentPoolSnapshotResource>> GetAgentPoolSnapshotAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ContainerService.AgentPoolSnapshotCollection GetAgentPoolSnapshots() { throw null; }
@@ -657,9 +657,9 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerService.ManagedClusterSnapshotResource>> GetManagedClusterSnapshotAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ContainerService.ManagedClusterSnapshotCollection GetManagedClusterSnapshots() { throw null; }
     }
-    public partial class ContainerServiceSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableContainerServiceSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ContainerServiceSubscriptionMockingExtension() { }
+        protected MockableContainerServiceSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ContainerService.AgentPoolSnapshotResource> GetAgentPoolSnapshots(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ContainerService.AgentPoolSnapshotResource> GetAgentPoolSnapshotsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ContainerService.ContainerServiceFleetResource> GetContainerServiceFleets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

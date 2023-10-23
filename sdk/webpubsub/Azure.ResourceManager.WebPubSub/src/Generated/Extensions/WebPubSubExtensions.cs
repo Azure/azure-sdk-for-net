@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.WebPubSub
     /// <summary> A class to add extension methods to Azure.ResourceManager.WebPubSub. </summary>
     public static partial class WebPubSubExtensions
     {
-        private static WebPubSubArmClientMockingExtension GetWebPubSubArmClientMockingExtension(ArmClient client)
+        private static MockableWebPubSubArmClient GetMockableWebPubSubArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new WebPubSubArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableWebPubSubArmClient(client0));
         }
 
-        private static WebPubSubResourceGroupMockingExtension GetWebPubSubResourceGroupMockingExtension(ArmResource resource)
+        private static MockableWebPubSubResourceGroupResource GetMockableWebPubSubResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new WebPubSubResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableWebPubSubResourceGroupResource(client, resource.Id));
         }
 
-        private static WebPubSubSubscriptionMockingExtension GetWebPubSubSubscriptionMockingExtension(ArmResource resource)
+        private static MockableWebPubSubSubscriptionResource GetMockableWebPubSubSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new WebPubSubSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableWebPubSubSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// You can use <see cref="WebPubSubResource.CreateResourceIdentifier" /> to create a <see cref="WebPubSubResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WebPubSubArmClientMockingExtension.GetWebPubSubResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWebPubSubArmClient.GetWebPubSubResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> Returns a <see cref="WebPubSubResource" /> object. </returns>
         public static WebPubSubResource GetWebPubSubResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetWebPubSubArmClientMockingExtension(client).GetWebPubSubResource(id);
+            return GetMockableWebPubSubArmClient(client).GetWebPubSubResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// You can use <see cref="WebPubSubHubResource.CreateResourceIdentifier" /> to create a <see cref="WebPubSubHubResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WebPubSubArmClientMockingExtension.GetWebPubSubHubResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWebPubSubArmClient.GetWebPubSubHubResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> Returns a <see cref="WebPubSubHubResource" /> object. </returns>
         public static WebPubSubHubResource GetWebPubSubHubResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetWebPubSubArmClientMockingExtension(client).GetWebPubSubHubResource(id);
+            return GetMockableWebPubSubArmClient(client).GetWebPubSubHubResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// You can use <see cref="WebPubSubPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="WebPubSubPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WebPubSubArmClientMockingExtension.GetWebPubSubPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWebPubSubArmClient.GetWebPubSubPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> Returns a <see cref="WebPubSubPrivateEndpointConnectionResource" /> object. </returns>
         public static WebPubSubPrivateEndpointConnectionResource GetWebPubSubPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetWebPubSubArmClientMockingExtension(client).GetWebPubSubPrivateEndpointConnectionResource(id);
+            return GetMockableWebPubSubArmClient(client).GetWebPubSubPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// You can use <see cref="WebPubSubSharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="WebPubSubSharedPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WebPubSubArmClientMockingExtension.GetWebPubSubSharedPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWebPubSubArmClient.GetWebPubSubSharedPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,21 +96,21 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> Returns a <see cref="WebPubSubSharedPrivateLinkResource" /> object. </returns>
         public static WebPubSubSharedPrivateLinkResource GetWebPubSubSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetWebPubSubArmClientMockingExtension(client).GetWebPubSubSharedPrivateLinkResource(id);
+            return GetMockableWebPubSubArmClient(client).GetWebPubSubSharedPrivateLinkResource(id);
         }
 
         /// <summary>
         /// Gets a collection of WebPubSubResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WebPubSubResourceGroupMockingExtension.GetWebPubSubs()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWebPubSubResourceGroupResource.GetWebPubSubs()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of WebPubSubResources and their operations over a WebPubSubResource. </returns>
         public static WebPubSubCollection GetWebPubSubs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetWebPubSubResourceGroupMockingExtension(resourceGroupResource).GetWebPubSubs();
+            return GetMockableWebPubSubResourceGroupResource(resourceGroupResource).GetWebPubSubs();
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WebPubSubResourceGroupMockingExtension.GetWebPubSubAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWebPubSubResourceGroupResource.GetWebPubSubAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.WebPubSub
         [ForwardsClientCalls]
         public static async Task<Response<WebPubSubResource>> GetWebPubSubAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetWebPubSubResourceGroupMockingExtension(resourceGroupResource).GetWebPubSubAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWebPubSubResourceGroupResource(resourceGroupResource).GetWebPubSubAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WebPubSubResourceGroupMockingExtension.GetWebPubSub(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWebPubSubResourceGroupResource.GetWebPubSub(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.WebPubSub
         [ForwardsClientCalls]
         public static Response<WebPubSubResource> GetWebPubSub(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetWebPubSubResourceGroupMockingExtension(resourceGroupResource).GetWebPubSub(resourceName, cancellationToken);
+            return GetMockableWebPubSubResourceGroupResource(resourceGroupResource).GetWebPubSub(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WebPubSubSubscriptionMockingExtension.CheckWebPubSubNameAvailability(AzureLocation,WebPubSubNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.CheckWebPubSubNameAvailability(AzureLocation,WebPubSubNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetWebPubSubSubscriptionMockingExtension(subscriptionResource).CheckWebPubSubNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWebPubSubSubscriptionResource(subscriptionResource).CheckWebPubSubNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WebPubSubSubscriptionMockingExtension.CheckWebPubSubNameAvailability(AzureLocation,WebPubSubNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.CheckWebPubSubNameAvailability(AzureLocation,WebPubSubNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<WebPubSubNameAvailability> CheckWebPubSubNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, WebPubSubNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetWebPubSubSubscriptionMockingExtension(subscriptionResource).CheckWebPubSubNameAvailability(location, content, cancellationToken);
+            return GetMockableWebPubSubSubscriptionResource(subscriptionResource).CheckWebPubSubNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WebPubSubSubscriptionMockingExtension.GetWebPubSubs(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.GetWebPubSubs(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An async collection of <see cref="WebPubSubResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebPubSubResource> GetWebPubSubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetWebPubSubSubscriptionMockingExtension(subscriptionResource).GetWebPubSubsAsync(cancellationToken);
+            return GetMockableWebPubSubSubscriptionResource(subscriptionResource).GetWebPubSubsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WebPubSubSubscriptionMockingExtension.GetWebPubSubs(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.GetWebPubSubs(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> A collection of <see cref="WebPubSubResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebPubSubResource> GetWebPubSubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetWebPubSubSubscriptionMockingExtension(subscriptionResource).GetWebPubSubs(cancellationToken);
+            return GetMockableWebPubSubSubscriptionResource(subscriptionResource).GetWebPubSubs(cancellationToken);
         }
 
         /// <summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WebPubSubSubscriptionMockingExtension.GetUsages(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.GetUsages(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> An async collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SignalRServiceUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetWebPubSubSubscriptionMockingExtension(subscriptionResource).GetUsagesAsync(location, cancellationToken);
+            return GetMockableWebPubSubSubscriptionResource(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WebPubSubSubscriptionMockingExtension.GetUsages(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWebPubSubSubscriptionResource.GetUsages(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.WebPubSub
         /// <returns> A collection of <see cref="SignalRServiceUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SignalRServiceUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetWebPubSubSubscriptionMockingExtension(subscriptionResource).GetUsages(location, cancellationToken);
+            return GetMockableWebPubSubSubscriptionResource(subscriptionResource).GetUsages(location, cancellationToken);
         }
     }
 }

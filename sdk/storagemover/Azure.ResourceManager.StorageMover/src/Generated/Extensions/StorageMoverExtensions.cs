@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.StorageMover
     /// <summary> A class to add extension methods to Azure.ResourceManager.StorageMover. </summary>
     public static partial class StorageMoverExtensions
     {
-        private static StorageMoverArmClientMockingExtension GetStorageMoverArmClientMockingExtension(ArmClient client)
+        private static MockableStorageMoverArmClient GetMockableStorageMoverArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new StorageMoverArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableStorageMoverArmClient(client0));
         }
 
-        private static StorageMoverResourceGroupMockingExtension GetStorageMoverResourceGroupMockingExtension(ArmResource resource)
+        private static MockableStorageMoverResourceGroupResource GetMockableStorageMoverResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new StorageMoverResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableStorageMoverResourceGroupResource(client, resource.Id));
         }
 
-        private static StorageMoverSubscriptionMockingExtension GetStorageMoverSubscriptionMockingExtension(ArmResource resource)
+        private static MockableStorageMoverSubscriptionResource GetMockableStorageMoverSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new StorageMoverSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableStorageMoverSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.StorageMover
         /// You can use <see cref="StorageMoverResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StorageMoverArmClientMockingExtension.GetStorageMoverResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverArmClient.GetStorageMoverResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="StorageMoverResource" /> object. </returns>
         public static StorageMoverResource GetStorageMoverResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetStorageMoverArmClientMockingExtension(client).GetStorageMoverResource(id);
+            return GetMockableStorageMoverArmClient(client).GetStorageMoverResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.StorageMover
         /// You can use <see cref="StorageMoverAgentResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverAgentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StorageMoverArmClientMockingExtension.GetStorageMoverAgentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverArmClient.GetStorageMoverAgentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="StorageMoverAgentResource" /> object. </returns>
         public static StorageMoverAgentResource GetStorageMoverAgentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetStorageMoverArmClientMockingExtension(client).GetStorageMoverAgentResource(id);
+            return GetMockableStorageMoverArmClient(client).GetStorageMoverAgentResource(id);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.StorageMover
         /// You can use <see cref="StorageMoverEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StorageMoverArmClientMockingExtension.GetStorageMoverEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverArmClient.GetStorageMoverEndpointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="StorageMoverEndpointResource" /> object. </returns>
         public static StorageMoverEndpointResource GetStorageMoverEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetStorageMoverArmClientMockingExtension(client).GetStorageMoverEndpointResource(id);
+            return GetMockableStorageMoverArmClient(client).GetStorageMoverEndpointResource(id);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.StorageMover
         /// You can use <see cref="StorageMoverProjectResource.CreateResourceIdentifier" /> to create a <see cref="StorageMoverProjectResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StorageMoverArmClientMockingExtension.GetStorageMoverProjectResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverArmClient.GetStorageMoverProjectResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="StorageMoverProjectResource" /> object. </returns>
         public static StorageMoverProjectResource GetStorageMoverProjectResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetStorageMoverArmClientMockingExtension(client).GetStorageMoverProjectResource(id);
+            return GetMockableStorageMoverArmClient(client).GetStorageMoverProjectResource(id);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.StorageMover
         /// You can use <see cref="JobDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="JobDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StorageMoverArmClientMockingExtension.GetJobDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverArmClient.GetJobDefinitionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="JobDefinitionResource" /> object. </returns>
         public static JobDefinitionResource GetJobDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetStorageMoverArmClientMockingExtension(client).GetJobDefinitionResource(id);
+            return GetMockableStorageMoverArmClient(client).GetJobDefinitionResource(id);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.StorageMover
         /// You can use <see cref="JobRunResource.CreateResourceIdentifier" /> to create a <see cref="JobRunResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StorageMoverArmClientMockingExtension.GetJobRunResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverArmClient.GetJobRunResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -127,21 +127,21 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> Returns a <see cref="JobRunResource" /> object. </returns>
         public static JobRunResource GetJobRunResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetStorageMoverArmClientMockingExtension(client).GetJobRunResource(id);
+            return GetMockableStorageMoverArmClient(client).GetJobRunResource(id);
         }
 
         /// <summary>
         /// Gets a collection of StorageMoverResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StorageMoverResourceGroupMockingExtension.GetStorageMovers()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverResourceGroupResource.GetStorageMovers()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of StorageMoverResources and their operations over a StorageMoverResource. </returns>
         public static StorageMoverCollection GetStorageMovers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetStorageMoverResourceGroupMockingExtension(resourceGroupResource).GetStorageMovers();
+            return GetMockableStorageMoverResourceGroupResource(resourceGroupResource).GetStorageMovers();
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StorageMoverResourceGroupMockingExtension.GetStorageMoverAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverResourceGroupResource.GetStorageMoverAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.StorageMover
         [ForwardsClientCalls]
         public static async Task<Response<StorageMoverResource>> GetStorageMoverAsync(this ResourceGroupResource resourceGroupResource, string storageMoverName, CancellationToken cancellationToken = default)
         {
-            return await GetStorageMoverResourceGroupMockingExtension(resourceGroupResource).GetStorageMoverAsync(storageMoverName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStorageMoverResourceGroupResource(resourceGroupResource).GetStorageMoverAsync(storageMoverName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StorageMoverResourceGroupMockingExtension.GetStorageMover(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverResourceGroupResource.GetStorageMover(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.StorageMover
         [ForwardsClientCalls]
         public static Response<StorageMoverResource> GetStorageMover(this ResourceGroupResource resourceGroupResource, string storageMoverName, CancellationToken cancellationToken = default)
         {
-            return GetStorageMoverResourceGroupMockingExtension(resourceGroupResource).GetStorageMover(storageMoverName, cancellationToken);
+            return GetMockableStorageMoverResourceGroupResource(resourceGroupResource).GetStorageMover(storageMoverName, cancellationToken);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StorageMoverSubscriptionMockingExtension.GetStorageMovers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverSubscriptionResource.GetStorageMovers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> An async collection of <see cref="StorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageMoverResource> GetStorageMoversAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetStorageMoverSubscriptionMockingExtension(subscriptionResource).GetStorageMoversAsync(cancellationToken);
+            return GetMockableStorageMoverSubscriptionResource(subscriptionResource).GetStorageMoversAsync(cancellationToken);
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.StorageMover
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StorageMoverSubscriptionMockingExtension.GetStorageMovers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStorageMoverSubscriptionResource.GetStorageMovers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <returns> A collection of <see cref="StorageMoverResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageMoverResource> GetStorageMovers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetStorageMoverSubscriptionMockingExtension(subscriptionResource).GetStorageMovers(cancellationToken);
+            return GetMockableStorageMoverSubscriptionResource(subscriptionResource).GetStorageMovers(cancellationToken);
         }
     }
 }

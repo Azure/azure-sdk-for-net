@@ -381,9 +381,9 @@ namespace Azure.ResourceManager.Relay
 }
 namespace Azure.ResourceManager.Relay.Mocking
 {
-    public partial class RelayArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableRelayArmClient : Azure.ResourceManager.ArmResource
     {
-        protected RelayArmClientMockingExtension() { }
+        protected MockableRelayArmClient() { }
         public virtual Azure.ResourceManager.Relay.RelayHybridConnectionAuthorizationRuleResource GetRelayHybridConnectionAuthorizationRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Relay.RelayHybridConnectionResource GetRelayHybridConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Relay.RelayNamespaceAuthorizationRuleResource GetRelayNamespaceAuthorizationRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -394,16 +394,16 @@ namespace Azure.ResourceManager.Relay.Mocking
         public virtual Azure.ResourceManager.Relay.WcfRelayAuthorizationRuleResource GetWcfRelayAuthorizationRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Relay.WcfRelayResource GetWcfRelayResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class RelayResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableRelayResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected RelayResourceGroupMockingExtension() { }
+        protected MockableRelayResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceResource> GetRelayNamespace(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.RelayNamespaceResource>> GetRelayNamespaceAsync(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Relay.RelayNamespaceCollection GetRelayNamespaces() { throw null; }
     }
-    public partial class RelaySubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableRelaySubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected RelaySubscriptionMockingExtension() { }
+        protected MockableRelaySubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult> CheckRelayNamespaceNameAvailability(Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Relay.Models.RelayNameAvailabilityResult>> CheckRelayNamespaceNameAvailabilityAsync(Azure.ResourceManager.Relay.Models.RelayNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Relay.RelayNamespaceResource> GetRelayNamespaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

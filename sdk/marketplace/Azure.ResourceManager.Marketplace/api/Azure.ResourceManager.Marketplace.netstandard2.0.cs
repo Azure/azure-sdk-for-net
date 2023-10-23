@@ -294,18 +294,18 @@ namespace Azure.ResourceManager.Marketplace
 }
 namespace Azure.ResourceManager.Marketplace.Mocking
 {
-    public partial class MarketplaceArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMarketplaceArmClient : Azure.ResourceManager.ArmResource
     {
-        protected MarketplaceArmClientMockingExtension() { }
+        protected MockableMarketplaceArmClient() { }
         public virtual Azure.ResourceManager.Marketplace.MarketplaceAdminApprovalRequestResource GetMarketplaceAdminApprovalRequestResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Marketplace.MarketplaceApprovalRequestResource GetMarketplaceApprovalRequestResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Marketplace.PrivateStoreCollectionInfoResource GetPrivateStoreCollectionInfoResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Marketplace.PrivateStoreOfferResource GetPrivateStoreOfferResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Marketplace.PrivateStoreResource GetPrivateStoreResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class MarketplaceTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMarketplaceTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected MarketplaceTenantMockingExtension() { }
+        protected MockableMarketplaceTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreResource> GetPrivateStore(System.Guid privateStoreId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Marketplace.PrivateStoreResource>> GetPrivateStoreAsync(System.Guid privateStoreId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Marketplace.PrivateStoreCollection GetPrivateStores() { throw null; }

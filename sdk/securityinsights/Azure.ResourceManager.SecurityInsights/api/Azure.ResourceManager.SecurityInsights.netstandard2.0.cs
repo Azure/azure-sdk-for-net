@@ -656,9 +656,9 @@ namespace Azure.ResourceManager.SecurityInsights
 }
 namespace Azure.ResourceManager.SecurityInsights.Mocking
 {
-    public partial class SecurityInsightsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSecurityInsightsArmClient : Azure.ResourceManager.ArmResource
     {
-        protected SecurityInsightsArmClientMockingExtension() { }
+        protected MockableSecurityInsightsArmClient() { }
         public virtual Azure.ResourceManager.SecurityInsights.OperationalInsightsWorkspaceSecurityInsightsResource GetOperationalInsightsWorkspaceSecurityInsightsResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleActionResource GetSecurityInsightsAlertRuleActionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsAlertRuleResource GetSecurityInsightsAlertRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -675,9 +675,9 @@ namespace Azure.ResourceManager.SecurityInsights.Mocking
         public virtual Azure.ResourceManager.SecurityInsights.SecurityInsightsWatchlistResource GetSecurityInsightsWatchlistResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SecurityInsights.SecurityMLAnalyticsSettingResource GetSecurityMLAnalyticsSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class SecurityInsightsResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSecurityInsightsResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected SecurityInsightsResourceGroupMockingExtension() { }
+        protected MockableSecurityInsightsResourceGroupResource() { }
     }
 }
 namespace Azure.ResourceManager.SecurityInsights.Models

@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.DataBox
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataBox. </summary>
     public static partial class DataBoxExtensions
     {
-        private static DataBoxArmClientMockingExtension GetDataBoxArmClientMockingExtension(ArmClient client)
+        private static MockableDataBoxArmClient GetMockableDataBoxArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new DataBoxArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableDataBoxArmClient(client0));
         }
 
-        private static DataBoxResourceGroupMockingExtension GetDataBoxResourceGroupMockingExtension(ArmResource resource)
+        private static MockableDataBoxResourceGroupResource GetMockableDataBoxResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DataBoxResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDataBoxResourceGroupResource(client, resource.Id));
         }
 
-        private static DataBoxSubscriptionMockingExtension GetDataBoxSubscriptionMockingExtension(ArmResource resource)
+        private static MockableDataBoxSubscriptionResource GetMockableDataBoxSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DataBoxSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDataBoxSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBox
         /// You can use <see cref="DataBoxJobResource.CreateResourceIdentifier" /> to create a <see cref="DataBoxJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxArmClientMockingExtension.GetDataBoxJobResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxArmClient.GetDataBoxJobResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,21 +48,21 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> Returns a <see cref="DataBoxJobResource" /> object. </returns>
         public static DataBoxJobResource GetDataBoxJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataBoxArmClientMockingExtension(client).GetDataBoxJobResource(id);
+            return GetMockableDataBoxArmClient(client).GetDataBoxJobResource(id);
         }
 
         /// <summary>
         /// Gets a collection of DataBoxJobResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxResourceGroupMockingExtension.GetDataBoxJobs()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.GetDataBoxJobs()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataBoxJobResources and their operations over a DataBoxJobResource. </returns>
         public static DataBoxJobCollection GetDataBoxJobs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetDataBoxResourceGroupMockingExtension(resourceGroupResource).GetDataBoxJobs();
+            return GetMockableDataBoxResourceGroupResource(resourceGroupResource).GetDataBoxJobs();
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBox
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxResourceGroupMockingExtension.GetDataBoxJobAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.GetDataBoxJobAsync(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataBox
         [ForwardsClientCalls]
         public static async Task<Response<DataBoxJobResource>> GetDataBoxJobAsync(this ResourceGroupResource resourceGroupResource, string jobName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetDataBoxResourceGroupMockingExtension(resourceGroupResource).GetDataBoxJobAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataBoxResourceGroupResource(resourceGroupResource).GetDataBoxJobAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataBox
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxResourceGroupMockingExtension.GetDataBoxJob(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.GetDataBoxJob(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataBox
         [ForwardsClientCalls]
         public static Response<DataBoxJobResource> GetDataBoxJob(this ResourceGroupResource resourceGroupResource, string jobName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetDataBoxResourceGroupMockingExtension(resourceGroupResource).GetDataBoxJob(jobName, expand, cancellationToken);
+            return GetMockableDataBoxResourceGroupResource(resourceGroupResource).GetDataBoxJob(jobName, expand, cancellationToken);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataBox
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxResourceGroupMockingExtension.GetAvailableSkus(AzureLocation,AvailableSkusContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.GetAvailableSkus(AzureLocation,AvailableSkusContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> An async collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataBoxSkuInformation> GetAvailableSkusAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
-            return GetDataBoxResourceGroupMockingExtension(resourceGroupResource).GetAvailableSkusAsync(location, content, cancellationToken);
+            return GetMockableDataBoxResourceGroupResource(resourceGroupResource).GetAvailableSkusAsync(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataBox
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxResourceGroupMockingExtension.GetAvailableSkus(AzureLocation,AvailableSkusContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.GetAvailableSkus(AzureLocation,AvailableSkusContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> A collection of <see cref="DataBoxSkuInformation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataBoxSkuInformation> GetAvailableSkus(this ResourceGroupResource resourceGroupResource, AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
-            return GetDataBoxResourceGroupMockingExtension(resourceGroupResource).GetAvailableSkus(location, content, cancellationToken);
+            return GetMockableDataBoxResourceGroupResource(resourceGroupResource).GetAvailableSkus(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataBox
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxResourceGroupMockingExtension.ValidateInputs(AzureLocation,DataBoxValidationContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.ValidateInputs(AzureLocation,DataBoxValidationContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
-            return await GetDataBoxResourceGroupMockingExtension(resourceGroupResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataBoxResourceGroupResource(resourceGroupResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.DataBox
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxResourceGroupMockingExtension.ValidateInputs(AzureLocation,DataBoxValidationContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.ValidateInputs(AzureLocation,DataBoxValidationContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<DataBoxValidationResult> ValidateInputs(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
-            return GetDataBoxResourceGroupMockingExtension(resourceGroupResource).ValidateInputs(location, content, cancellationToken);
+            return GetMockableDataBoxResourceGroupResource(resourceGroupResource).ValidateInputs(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataBox
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxResourceGroupMockingExtension.GetRegionConfiguration(AzureLocation,RegionConfigurationContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.GetRegionConfiguration(AzureLocation,RegionConfigurationContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<RegionConfigurationResult>> GetRegionConfigurationAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            return await GetDataBoxResourceGroupMockingExtension(resourceGroupResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataBoxResourceGroupResource(resourceGroupResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.DataBox
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxResourceGroupMockingExtension.GetRegionConfiguration(AzureLocation,RegionConfigurationContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxResourceGroupResource.GetRegionConfiguration(AzureLocation,RegionConfigurationContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<RegionConfigurationResult> GetRegionConfiguration(this ResourceGroupResource resourceGroupResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            return GetDataBoxResourceGroupMockingExtension(resourceGroupResource).GetRegionConfiguration(location, content, cancellationToken);
+            return GetMockableDataBoxResourceGroupResource(resourceGroupResource).GetRegionConfiguration(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.DataBox
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxSubscriptionMockingExtension.GetDataBoxJobs(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxSubscriptionResource.GetDataBoxJobs(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> An async collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataBoxJobResource> GetDataBoxJobsAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetDataBoxSubscriptionMockingExtension(subscriptionResource).GetDataBoxJobsAsync(skipToken, cancellationToken);
+            return GetMockableDataBoxSubscriptionResource(subscriptionResource).GetDataBoxJobsAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DataBox
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxSubscriptionMockingExtension.GetDataBoxJobs(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxSubscriptionResource.GetDataBoxJobs(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.DataBox
         /// <returns> A collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataBoxJobResource> GetDataBoxJobs(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetDataBoxSubscriptionMockingExtension(subscriptionResource).GetDataBoxJobs(skipToken, cancellationToken);
+            return GetMockableDataBoxSubscriptionResource(subscriptionResource).GetDataBoxJobs(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.DataBox
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxSubscriptionMockingExtension.ValidateAddress(AzureLocation,DataBoxValidateAddressContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxSubscriptionResource.ValidateAddress(AzureLocation,DataBoxValidateAddressContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<AddressValidationOutput>> ValidateAddressAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
         {
-            return await GetDataBoxSubscriptionMockingExtension(subscriptionResource).ValidateAddressAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataBoxSubscriptionResource(subscriptionResource).ValidateAddressAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.DataBox
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxSubscriptionMockingExtension.ValidateAddress(AzureLocation,DataBoxValidateAddressContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxSubscriptionResource.ValidateAddress(AzureLocation,DataBoxValidateAddressContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<AddressValidationOutput> ValidateAddress(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidateAddressContent content, CancellationToken cancellationToken = default)
         {
-            return GetDataBoxSubscriptionMockingExtension(subscriptionResource).ValidateAddress(location, content, cancellationToken);
+            return GetMockableDataBoxSubscriptionResource(subscriptionResource).ValidateAddress(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.DataBox
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxSubscriptionMockingExtension.ValidateInputs(AzureLocation,DataBoxValidationContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxSubscriptionResource.ValidateInputs(AzureLocation,DataBoxValidationContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
-            return await GetDataBoxSubscriptionMockingExtension(subscriptionResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataBoxSubscriptionResource(subscriptionResource).ValidateInputsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.DataBox
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxSubscriptionMockingExtension.ValidateInputs(AzureLocation,DataBoxValidationContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxSubscriptionResource.ValidateInputs(AzureLocation,DataBoxValidationContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<DataBoxValidationResult> ValidateInputs(this SubscriptionResource subscriptionResource, AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
-            return GetDataBoxSubscriptionMockingExtension(subscriptionResource).ValidateInputs(location, content, cancellationToken);
+            return GetMockableDataBoxSubscriptionResource(subscriptionResource).ValidateInputs(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.DataBox
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxSubscriptionMockingExtension.GetRegionConfiguration(AzureLocation,RegionConfigurationContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxSubscriptionResource.GetRegionConfiguration(AzureLocation,RegionConfigurationContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<RegionConfigurationResult>> GetRegionConfigurationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            return await GetDataBoxSubscriptionMockingExtension(subscriptionResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataBoxSubscriptionResource(subscriptionResource).GetRegionConfigurationAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.DataBox
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataBoxSubscriptionMockingExtension.GetRegionConfiguration(AzureLocation,RegionConfigurationContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataBoxSubscriptionResource.GetRegionConfiguration(AzureLocation,RegionConfigurationContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.DataBox
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<RegionConfigurationResult> GetRegionConfiguration(this SubscriptionResource subscriptionResource, AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            return GetDataBoxSubscriptionMockingExtension(subscriptionResource).GetRegionConfiguration(location, content, cancellationToken);
+            return GetMockableDataBoxSubscriptionResource(subscriptionResource).GetRegionConfiguration(location, content, cancellationToken);
         }
     }
 }

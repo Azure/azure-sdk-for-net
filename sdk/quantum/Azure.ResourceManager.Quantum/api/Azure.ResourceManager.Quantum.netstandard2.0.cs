@@ -63,21 +63,21 @@ namespace Azure.ResourceManager.Quantum
 }
 namespace Azure.ResourceManager.Quantum.Mocking
 {
-    public partial class QuantumArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableQuantumArmClient : Azure.ResourceManager.ArmResource
     {
-        protected QuantumArmClientMockingExtension() { }
+        protected MockableQuantumArmClient() { }
         public virtual Azure.ResourceManager.Quantum.QuantumWorkspaceResource GetQuantumWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class QuantumResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableQuantumResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected QuantumResourceGroupMockingExtension() { }
+        protected MockableQuantumResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Quantum.QuantumWorkspaceResource> GetQuantumWorkspace(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quantum.QuantumWorkspaceResource>> GetQuantumWorkspaceAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Quantum.QuantumWorkspaceCollection GetQuantumWorkspaces() { throw null; }
     }
-    public partial class QuantumSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableQuantumSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected QuantumSubscriptionMockingExtension() { }
+        protected MockableQuantumSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityResult> CheckNameAvailabilityWorkspace(string locationName, Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityResult>> CheckNameAvailabilityWorkspaceAsync(string locationName, Azure.ResourceManager.Quantum.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Quantum.Models.ProviderDescription> GetOfferings(string locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -229,33 +229,33 @@ namespace Azure.ResourceManager.AgFoodPlatform
 }
 namespace Azure.ResourceManager.AgFoodPlatform.Mocking
 {
-    public partial class AgFoodPlatformArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAgFoodPlatformArmClient : Azure.ResourceManager.ArmResource
     {
-        protected AgFoodPlatformArmClientMockingExtension() { }
+        protected MockableAgFoodPlatformArmClient() { }
         public virtual Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateEndpointConnectionResource GetAgFoodPlatformPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AgFoodPlatform.AgFoodPlatformPrivateLinkResource GetAgFoodPlatformPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AgFoodPlatform.ExtensionResource GetExtensionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AgFoodPlatform.FarmBeatResource GetFarmBeatResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionResource GetFarmBeatsExtensionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class AgFoodPlatformResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAgFoodPlatformResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected AgFoodPlatformResourceGroupMockingExtension() { }
+        protected MockableAgFoodPlatformResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.AgFoodPlatform.FarmBeatResource> GetFarmBeat(string farmBeatsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AgFoodPlatform.FarmBeatResource>> GetFarmBeatAsync(string farmBeatsResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AgFoodPlatform.FarmBeatCollection GetFarmBeats() { throw null; }
     }
-    public partial class AgFoodPlatformSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAgFoodPlatformSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected AgFoodPlatformSubscriptionMockingExtension() { }
+        protected MockableAgFoodPlatformSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityResponse> CheckNameAvailabilityLocation(Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityResponse>> CheckNameAvailabilityLocationAsync(Azure.ResourceManager.AgFoodPlatform.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AgFoodPlatform.FarmBeatResource> GetFarmBeats(int? maxPageSize = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AgFoodPlatform.FarmBeatResource> GetFarmBeatsAsync(int? maxPageSize = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AgFoodPlatformTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAgFoodPlatformTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected AgFoodPlatformTenantMockingExtension() { }
+        protected MockableAgFoodPlatformTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionResource> GetFarmBeatsExtension(string farmBeatsExtensionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionResource>> GetFarmBeatsExtensionAsync(string farmBeatsExtensionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AgFoodPlatform.FarmBeatsExtensionCollection GetFarmBeatsExtensions() { throw null; }

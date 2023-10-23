@@ -212,24 +212,24 @@ namespace Azure.ResourceManager.WebPubSub
 }
 namespace Azure.ResourceManager.WebPubSub.Mocking
 {
-    public partial class WebPubSubArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableWebPubSubArmClient : Azure.ResourceManager.ArmResource
     {
-        protected WebPubSubArmClientMockingExtension() { }
+        protected MockableWebPubSubArmClient() { }
         public virtual Azure.ResourceManager.WebPubSub.WebPubSubHubResource GetWebPubSubHubResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.WebPubSub.WebPubSubPrivateEndpointConnectionResource GetWebPubSubPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.WebPubSub.WebPubSubResource GetWebPubSubResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.WebPubSub.WebPubSubSharedPrivateLinkResource GetWebPubSubSharedPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class WebPubSubResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableWebPubSubResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected WebPubSubResourceGroupMockingExtension() { }
+        protected MockableWebPubSubResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.WebPubSub.WebPubSubResource> GetWebPubSub(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WebPubSub.WebPubSubResource>> GetWebPubSubAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.WebPubSub.WebPubSubCollection GetWebPubSubs() { throw null; }
     }
-    public partial class WebPubSubSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableWebPubSubSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected WebPubSubSubscriptionMockingExtension() { }
+        protected MockableWebPubSubSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailability> CheckWebPubSubNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailability>> CheckWebPubSubNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.WebPubSub.Models.WebPubSubNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.WebPubSub.Models.SignalRServiceUsage> GetUsages(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

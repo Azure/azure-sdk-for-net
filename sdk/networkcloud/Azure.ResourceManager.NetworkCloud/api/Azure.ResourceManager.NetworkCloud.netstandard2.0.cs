@@ -1103,9 +1103,9 @@ namespace Azure.ResourceManager.NetworkCloud
 }
 namespace Azure.ResourceManager.NetworkCloud.Mocking
 {
-    public partial class NetworkCloudArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNetworkCloudArmClient : Azure.ResourceManager.ArmResource
     {
-        protected NetworkCloudArmClientMockingExtension() { }
+        protected MockableNetworkCloudArmClient() { }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource GetNetworkCloudAgentPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource GetNetworkCloudBareMetalMachineKeySetResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource GetNetworkCloudBareMetalMachineResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1125,9 +1125,9 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource GetNetworkCloudVirtualMachineResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource GetNetworkCloudVolumeResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class NetworkCloudResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNetworkCloudResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected NetworkCloudResourceGroupMockingExtension() { }
+        protected MockableNetworkCloudResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachine(string bareMetalMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource>> GetNetworkCloudBareMetalMachineAsync(string bareMetalMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineCollection GetNetworkCloudBareMetalMachines() { throw null; }
@@ -1165,9 +1165,9 @@ namespace Azure.ResourceManager.NetworkCloud.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>> GetNetworkCloudVolumeAsync(string volumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeCollection GetNetworkCloudVolumes() { throw null; }
     }
-    public partial class NetworkCloudSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNetworkCloudSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected NetworkCloudSubscriptionMockingExtension() { }
+        protected MockableNetworkCloudSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Dns
     /// <summary> A class to add extension methods to Azure.ResourceManager.Dns. </summary>
     public static partial class DnsExtensions
     {
-        private static DnsArmClientMockingExtension GetDnsArmClientMockingExtension(ArmClient client)
+        private static MockableDnsArmClient GetMockableDnsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new DnsArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableDnsArmClient(client0));
         }
 
-        private static DnsResourceGroupMockingExtension GetDnsResourceGroupMockingExtension(ArmResource resource)
+        private static MockableDnsResourceGroupResource GetMockableDnsResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DnsResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDnsResourceGroupResource(client, resource.Id));
         }
 
-        private static DnsSubscriptionMockingExtension GetDnsSubscriptionMockingExtension(ArmResource resource)
+        private static MockableDnsSubscriptionResource GetMockableDnsSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DnsSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDnsSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Dns
         /// You can use <see cref="DnsARecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsARecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsArmClientMockingExtension.GetDnsARecordResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsARecordResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsARecordResource" /> object. </returns>
         public static DnsARecordResource GetDnsARecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsArmClientMockingExtension(client).GetDnsARecordResource(id);
+            return GetMockableDnsArmClient(client).GetDnsARecordResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Dns
         /// You can use <see cref="DnsAaaaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsAaaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsArmClientMockingExtension.GetDnsAaaaRecordResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsAaaaRecordResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsAaaaRecordResource" /> object. </returns>
         public static DnsAaaaRecordResource GetDnsAaaaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsArmClientMockingExtension(client).GetDnsAaaaRecordResource(id);
+            return GetMockableDnsArmClient(client).GetDnsAaaaRecordResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Dns
         /// You can use <see cref="DnsCaaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsCaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsArmClientMockingExtension.GetDnsCaaRecordResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsCaaRecordResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsCaaRecordResource" /> object. </returns>
         public static DnsCaaRecordResource GetDnsCaaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsArmClientMockingExtension(client).GetDnsCaaRecordResource(id);
+            return GetMockableDnsArmClient(client).GetDnsCaaRecordResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Dns
         /// You can use <see cref="DnsCnameRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsCnameRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsArmClientMockingExtension.GetDnsCnameRecordResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsCnameRecordResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsCnameRecordResource" /> object. </returns>
         public static DnsCnameRecordResource GetDnsCnameRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsArmClientMockingExtension(client).GetDnsCnameRecordResource(id);
+            return GetMockableDnsArmClient(client).GetDnsCnameRecordResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Dns
         /// You can use <see cref="DnsMXRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsMXRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsArmClientMockingExtension.GetDnsMXRecordResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsMXRecordResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsMXRecordResource" /> object. </returns>
         public static DnsMXRecordResource GetDnsMXRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsArmClientMockingExtension(client).GetDnsMXRecordResource(id);
+            return GetMockableDnsArmClient(client).GetDnsMXRecordResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Dns
         /// You can use <see cref="DnsNSRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsNSRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsArmClientMockingExtension.GetDnsNSRecordResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsNSRecordResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsNSRecordResource" /> object. </returns>
         public static DnsNSRecordResource GetDnsNSRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsArmClientMockingExtension(client).GetDnsNSRecordResource(id);
+            return GetMockableDnsArmClient(client).GetDnsNSRecordResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Dns
         /// You can use <see cref="DnsPtrRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsPtrRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsArmClientMockingExtension.GetDnsPtrRecordResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsPtrRecordResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsPtrRecordResource" /> object. </returns>
         public static DnsPtrRecordResource GetDnsPtrRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsArmClientMockingExtension(client).GetDnsPtrRecordResource(id);
+            return GetMockableDnsArmClient(client).GetDnsPtrRecordResource(id);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Dns
         /// You can use <see cref="DnsSoaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsSoaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsArmClientMockingExtension.GetDnsSoaRecordResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsSoaRecordResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsSoaRecordResource" /> object. </returns>
         public static DnsSoaRecordResource GetDnsSoaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsArmClientMockingExtension(client).GetDnsSoaRecordResource(id);
+            return GetMockableDnsArmClient(client).GetDnsSoaRecordResource(id);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Dns
         /// You can use <see cref="DnsSrvRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsSrvRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsArmClientMockingExtension.GetDnsSrvRecordResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsSrvRecordResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsSrvRecordResource" /> object. </returns>
         public static DnsSrvRecordResource GetDnsSrvRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsArmClientMockingExtension(client).GetDnsSrvRecordResource(id);
+            return GetMockableDnsArmClient(client).GetDnsSrvRecordResource(id);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Dns
         /// You can use <see cref="DnsTxtRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsTxtRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsArmClientMockingExtension.GetDnsTxtRecordResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsTxtRecordResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsTxtRecordResource" /> object. </returns>
         public static DnsTxtRecordResource GetDnsTxtRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsArmClientMockingExtension(client).GetDnsTxtRecordResource(id);
+            return GetMockableDnsArmClient(client).GetDnsTxtRecordResource(id);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Dns
         /// You can use <see cref="DnsZoneResource.CreateResourceIdentifier" /> to create a <see cref="DnsZoneResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsArmClientMockingExtension.GetDnsZoneResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsZoneResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -208,21 +208,21 @@ namespace Azure.ResourceManager.Dns
         /// <returns> Returns a <see cref="DnsZoneResource" /> object. </returns>
         public static DnsZoneResource GetDnsZoneResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsArmClientMockingExtension(client).GetDnsZoneResource(id);
+            return GetMockableDnsArmClient(client).GetDnsZoneResource(id);
         }
 
         /// <summary>
         /// Gets a collection of DnsZoneResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResourceGroupMockingExtension.GetDnsZones()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResourceGroupResource.GetDnsZones()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DnsZoneResources and their operations over a DnsZoneResource. </returns>
         public static DnsZoneCollection GetDnsZones(this ResourceGroupResource resourceGroupResource)
         {
-            return GetDnsResourceGroupMockingExtension(resourceGroupResource).GetDnsZones();
+            return GetMockableDnsResourceGroupResource(resourceGroupResource).GetDnsZones();
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Dns
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResourceGroupMockingExtension.GetDnsZoneAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResourceGroupResource.GetDnsZoneAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Dns
         [ForwardsClientCalls]
         public static async Task<Response<DnsZoneResource>> GetDnsZoneAsync(this ResourceGroupResource resourceGroupResource, string zoneName, CancellationToken cancellationToken = default)
         {
-            return await GetDnsResourceGroupMockingExtension(resourceGroupResource).GetDnsZoneAsync(zoneName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDnsResourceGroupResource(resourceGroupResource).GetDnsZoneAsync(zoneName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Dns
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResourceGroupMockingExtension.GetDnsZone(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResourceGroupResource.GetDnsZone(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Dns
         [ForwardsClientCalls]
         public static Response<DnsZoneResource> GetDnsZone(this ResourceGroupResource resourceGroupResource, string zoneName, CancellationToken cancellationToken = default)
         {
-            return GetDnsResourceGroupMockingExtension(resourceGroupResource).GetDnsZone(zoneName, cancellationToken);
+            return GetMockableDnsResourceGroupResource(resourceGroupResource).GetDnsZone(zoneName, cancellationToken);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Dns
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsSubscriptionMockingExtension.GetDnsZones(int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsSubscriptionResource.GetDnsZones(int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> An async collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DnsZoneResource> GetDnsZonesAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetDnsSubscriptionMockingExtension(subscriptionResource).GetDnsZonesAsync(top, cancellationToken);
+            return GetMockableDnsSubscriptionResource(subscriptionResource).GetDnsZonesAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Dns
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsSubscriptionMockingExtension.GetDnsZones(int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsSubscriptionResource.GetDnsZones(int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Dns
         /// <returns> A collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DnsZoneResource> GetDnsZones(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetDnsSubscriptionMockingExtension(subscriptionResource).GetDnsZones(top, cancellationToken);
+            return GetMockableDnsSubscriptionResource(subscriptionResource).GetDnsZones(top, cancellationToken);
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Dns
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsSubscriptionMockingExtension.GetDnsResourceReferencesByTargetResources(DnsResourceReferenceContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsSubscriptionResource.GetDnsResourceReferencesByTargetResources(DnsResourceReferenceContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<DnsResourceReferenceResult>> GetDnsResourceReferencesByTargetResourcesAsync(this SubscriptionResource subscriptionResource, DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
-            return await GetDnsSubscriptionMockingExtension(subscriptionResource).GetDnsResourceReferencesByTargetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDnsSubscriptionResource(subscriptionResource).GetDnsResourceReferencesByTargetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Dns
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsSubscriptionMockingExtension.GetDnsResourceReferencesByTargetResources(DnsResourceReferenceContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsSubscriptionResource.GetDnsResourceReferencesByTargetResources(DnsResourceReferenceContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Dns
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<DnsResourceReferenceResult> GetDnsResourceReferencesByTargetResources(this SubscriptionResource subscriptionResource, DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
-            return GetDnsSubscriptionMockingExtension(subscriptionResource).GetDnsResourceReferencesByTargetResources(content, cancellationToken);
+            return GetMockableDnsSubscriptionResource(subscriptionResource).GetDnsResourceReferencesByTargetResources(content, cancellationToken);
         }
     }
 }

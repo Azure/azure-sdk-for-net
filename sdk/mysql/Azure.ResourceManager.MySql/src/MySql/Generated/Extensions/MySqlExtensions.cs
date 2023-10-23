@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.MySql
     /// <summary> A class to add extension methods to Azure.ResourceManager.MySql. </summary>
     public static partial class MySqlExtensions
     {
-        private static MySqlArmClientMockingExtension GetMySqlArmClientMockingExtension(ArmClient client)
+        private static MockableMySqlArmClient GetMockableMySqlArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MySqlArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableMySqlArmClient(client0));
         }
 
-        private static MySqlResourceGroupMockingExtension GetMySqlResourceGroupMockingExtension(ArmResource resource)
+        private static MockableMySqlResourceGroupResource GetMockableMySqlResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MySqlResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMySqlResourceGroupResource(client, resource.Id));
         }
 
-        private static MySqlSubscriptionMockingExtension GetMySqlSubscriptionMockingExtension(ArmResource resource)
+        private static MockableMySqlSubscriptionResource GetMockableMySqlSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MySqlSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMySqlSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MySql
         /// You can use <see cref="MySqlServerResource.CreateResourceIdentifier" /> to create a <see cref="MySqlServerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlArmClientMockingExtension.GetMySqlServerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlArmClient.GetMySqlServerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlServerResource" /> object. </returns>
         public static MySqlServerResource GetMySqlServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMySqlArmClientMockingExtension(client).GetMySqlServerResource(id);
+            return GetMockableMySqlArmClient(client).GetMySqlServerResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MySql
         /// You can use <see cref="MySqlFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="MySqlFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlArmClientMockingExtension.GetMySqlFirewallRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlArmClient.GetMySqlFirewallRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlFirewallRuleResource" /> object. </returns>
         public static MySqlFirewallRuleResource GetMySqlFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMySqlArmClientMockingExtension(client).GetMySqlFirewallRuleResource(id);
+            return GetMockableMySqlArmClient(client).GetMySqlFirewallRuleResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MySql
         /// You can use <see cref="MySqlVirtualNetworkRuleResource.CreateResourceIdentifier" /> to create a <see cref="MySqlVirtualNetworkRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlArmClientMockingExtension.GetMySqlVirtualNetworkRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlArmClient.GetMySqlVirtualNetworkRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlVirtualNetworkRuleResource" /> object. </returns>
         public static MySqlVirtualNetworkRuleResource GetMySqlVirtualNetworkRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMySqlArmClientMockingExtension(client).GetMySqlVirtualNetworkRuleResource(id);
+            return GetMockableMySqlArmClient(client).GetMySqlVirtualNetworkRuleResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MySql
         /// You can use <see cref="MySqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="MySqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlArmClientMockingExtension.GetMySqlDatabaseResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlArmClient.GetMySqlDatabaseResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlDatabaseResource" /> object. </returns>
         public static MySqlDatabaseResource GetMySqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMySqlArmClientMockingExtension(client).GetMySqlDatabaseResource(id);
+            return GetMockableMySqlArmClient(client).GetMySqlDatabaseResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MySql
         /// You can use <see cref="MySqlConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="MySqlConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlArmClientMockingExtension.GetMySqlConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlArmClient.GetMySqlConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlConfigurationResource" /> object. </returns>
         public static MySqlConfigurationResource GetMySqlConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMySqlArmClientMockingExtension(client).GetMySqlConfigurationResource(id);
+            return GetMockableMySqlArmClient(client).GetMySqlConfigurationResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MySql
         /// You can use <see cref="MySqlServerAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="MySqlServerAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlArmClientMockingExtension.GetMySqlServerAdministratorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlArmClient.GetMySqlServerAdministratorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlServerAdministratorResource" /> object. </returns>
         public static MySqlServerAdministratorResource GetMySqlServerAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMySqlArmClientMockingExtension(client).GetMySqlServerAdministratorResource(id);
+            return GetMockableMySqlArmClient(client).GetMySqlServerAdministratorResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MySql
         /// You can use <see cref="MySqlServerSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="MySqlServerSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlArmClientMockingExtension.GetMySqlServerSecurityAlertPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlArmClient.GetMySqlServerSecurityAlertPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlServerSecurityAlertPolicyResource" /> object. </returns>
         public static MySqlServerSecurityAlertPolicyResource GetMySqlServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMySqlArmClientMockingExtension(client).GetMySqlServerSecurityAlertPolicyResource(id);
+            return GetMockableMySqlArmClient(client).GetMySqlServerSecurityAlertPolicyResource(id);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.MySql
         /// You can use <see cref="MySqlQueryTextResource.CreateResourceIdentifier" /> to create a <see cref="MySqlQueryTextResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlArmClientMockingExtension.GetMySqlQueryTextResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlArmClient.GetMySqlQueryTextResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlQueryTextResource" /> object. </returns>
         public static MySqlQueryTextResource GetMySqlQueryTextResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMySqlArmClientMockingExtension(client).GetMySqlQueryTextResource(id);
+            return GetMockableMySqlArmClient(client).GetMySqlQueryTextResource(id);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.MySql
         /// You can use <see cref="MySqlQueryStatisticResource.CreateResourceIdentifier" /> to create a <see cref="MySqlQueryStatisticResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlArmClientMockingExtension.GetMySqlQueryStatisticResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlArmClient.GetMySqlQueryStatisticResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlQueryStatisticResource" /> object. </returns>
         public static MySqlQueryStatisticResource GetMySqlQueryStatisticResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMySqlArmClientMockingExtension(client).GetMySqlQueryStatisticResource(id);
+            return GetMockableMySqlArmClient(client).GetMySqlQueryStatisticResource(id);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MySql
         /// You can use <see cref="MySqlWaitStatisticResource.CreateResourceIdentifier" /> to create a <see cref="MySqlWaitStatisticResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlArmClientMockingExtension.GetMySqlWaitStatisticResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlArmClient.GetMySqlWaitStatisticResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlWaitStatisticResource" /> object. </returns>
         public static MySqlWaitStatisticResource GetMySqlWaitStatisticResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMySqlArmClientMockingExtension(client).GetMySqlWaitStatisticResource(id);
+            return GetMockableMySqlArmClient(client).GetMySqlWaitStatisticResource(id);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.MySql
         /// You can use <see cref="MySqlAdvisorResource.CreateResourceIdentifier" /> to create a <see cref="MySqlAdvisorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlArmClientMockingExtension.GetMySqlAdvisorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlArmClient.GetMySqlAdvisorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlAdvisorResource" /> object. </returns>
         public static MySqlAdvisorResource GetMySqlAdvisorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMySqlArmClientMockingExtension(client).GetMySqlAdvisorResource(id);
+            return GetMockableMySqlArmClient(client).GetMySqlAdvisorResource(id);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.MySql
         /// You can use <see cref="MySqlRecommendationActionResource.CreateResourceIdentifier" /> to create a <see cref="MySqlRecommendationActionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlArmClientMockingExtension.GetMySqlRecommendationActionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlArmClient.GetMySqlRecommendationActionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlRecommendationActionResource" /> object. </returns>
         public static MySqlRecommendationActionResource GetMySqlRecommendationActionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMySqlArmClientMockingExtension(client).GetMySqlRecommendationActionResource(id);
+            return GetMockableMySqlArmClient(client).GetMySqlRecommendationActionResource(id);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.MySql
         /// You can use <see cref="MySqlPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MySqlPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlArmClientMockingExtension.GetMySqlPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlArmClient.GetMySqlPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlPrivateEndpointConnectionResource" /> object. </returns>
         public static MySqlPrivateEndpointConnectionResource GetMySqlPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMySqlArmClientMockingExtension(client).GetMySqlPrivateEndpointConnectionResource(id);
+            return GetMockableMySqlArmClient(client).GetMySqlPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.MySql
         /// You can use <see cref="MySqlPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MySqlPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlArmClientMockingExtension.GetMySqlPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlArmClient.GetMySqlPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlPrivateLinkResource" /> object. </returns>
         public static MySqlPrivateLinkResource GetMySqlPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMySqlArmClientMockingExtension(client).GetMySqlPrivateLinkResource(id);
+            return GetMockableMySqlArmClient(client).GetMySqlPrivateLinkResource(id);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.MySql
         /// You can use <see cref="MySqlServerKeyResource.CreateResourceIdentifier" /> to create a <see cref="MySqlServerKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlArmClientMockingExtension.GetMySqlServerKeyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlArmClient.GetMySqlServerKeyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -272,21 +272,21 @@ namespace Azure.ResourceManager.MySql
         /// <returns> Returns a <see cref="MySqlServerKeyResource" /> object. </returns>
         public static MySqlServerKeyResource GetMySqlServerKeyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMySqlArmClientMockingExtension(client).GetMySqlServerKeyResource(id);
+            return GetMockableMySqlArmClient(client).GetMySqlServerKeyResource(id);
         }
 
         /// <summary>
         /// Gets a collection of MySqlServerResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlResourceGroupMockingExtension.GetMySqlServers()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlResourceGroupResource.GetMySqlServers()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MySqlServerResources and their operations over a MySqlServerResource. </returns>
         public static MySqlServerCollection GetMySqlServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMySqlResourceGroupMockingExtension(resourceGroupResource).GetMySqlServers();
+            return GetMockableMySqlResourceGroupResource(resourceGroupResource).GetMySqlServers();
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.MySql
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlResourceGroupMockingExtension.GetMySqlServerAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlResourceGroupResource.GetMySqlServerAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.MySql
         [ForwardsClientCalls]
         public static async Task<Response<MySqlServerResource>> GetMySqlServerAsync(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            return await GetMySqlResourceGroupMockingExtension(resourceGroupResource).GetMySqlServerAsync(serverName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMySqlResourceGroupResource(resourceGroupResource).GetMySqlServerAsync(serverName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.MySql
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlResourceGroupMockingExtension.GetMySqlServer(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlResourceGroupResource.GetMySqlServer(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.MySql
         [ForwardsClientCalls]
         public static Response<MySqlServerResource> GetMySqlServer(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            return GetMySqlResourceGroupMockingExtension(resourceGroupResource).GetMySqlServer(serverName, cancellationToken);
+            return GetMockableMySqlResourceGroupResource(resourceGroupResource).GetMySqlServer(serverName, cancellationToken);
         }
 
         /// <summary>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.MySql
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlSubscriptionMockingExtension.GetMySqlServers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlSubscriptionResource.GetMySqlServers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An async collection of <see cref="MySqlServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MySqlServerResource> GetMySqlServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMySqlSubscriptionMockingExtension(subscriptionResource).GetMySqlServersAsync(cancellationToken);
+            return GetMockableMySqlSubscriptionResource(subscriptionResource).GetMySqlServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.MySql
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlSubscriptionMockingExtension.GetMySqlServers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlSubscriptionResource.GetMySqlServers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> A collection of <see cref="MySqlServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MySqlServerResource> GetMySqlServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMySqlSubscriptionMockingExtension(subscriptionResource).GetMySqlServers(cancellationToken);
+            return GetMockableMySqlSubscriptionResource(subscriptionResource).GetMySqlServers(cancellationToken);
         }
 
         /// <summary>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.MySql
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlSubscriptionMockingExtension.GetLocationBasedPerformanceTiers(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlSubscriptionResource.GetLocationBasedPerformanceTiers(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An async collection of <see cref="MySqlPerformanceTier" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiersAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetMySqlSubscriptionMockingExtension(subscriptionResource).GetLocationBasedPerformanceTiersAsync(locationName, cancellationToken);
+            return GetMockableMySqlSubscriptionResource(subscriptionResource).GetLocationBasedPerformanceTiersAsync(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.MySql
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlSubscriptionMockingExtension.GetLocationBasedPerformanceTiers(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlSubscriptionResource.GetLocationBasedPerformanceTiers(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> A collection of <see cref="MySqlPerformanceTier" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MySqlPerformanceTier> GetLocationBasedPerformanceTiers(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
-            return GetMySqlSubscriptionMockingExtension(subscriptionResource).GetLocationBasedPerformanceTiers(locationName, cancellationToken);
+            return GetMockableMySqlSubscriptionResource(subscriptionResource).GetLocationBasedPerformanceTiers(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.MySql
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlSubscriptionMockingExtension.CheckMySqlNameAvailability(MySqlNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlSubscriptionResource.CheckMySqlNameAvailability(MySqlNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<MySqlNameAvailabilityResult>> CheckMySqlNameAvailabilityAsync(this SubscriptionResource subscriptionResource, MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetMySqlSubscriptionMockingExtension(subscriptionResource).CheckMySqlNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMySqlSubscriptionResource(subscriptionResource).CheckMySqlNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.MySql
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MySqlSubscriptionMockingExtension.CheckMySqlNameAvailability(MySqlNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMySqlSubscriptionResource.CheckMySqlNameAvailability(MySqlNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<MySqlNameAvailabilityResult> CheckMySqlNameAvailability(this SubscriptionResource subscriptionResource, MySqlNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetMySqlSubscriptionMockingExtension(subscriptionResource).CheckMySqlNameAvailability(content, cancellationToken);
+            return GetMockableMySqlSubscriptionResource(subscriptionResource).CheckMySqlNameAvailability(content, cancellationToken);
         }
     }
 }

@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.HybridContainerService
     /// <summary> A class to add extension methods to Azure.ResourceManager.HybridContainerService. </summary>
     public static partial class HybridContainerServiceExtensions
     {
-        private static HybridContainerServiceArmClientMockingExtension GetHybridContainerServiceArmClientMockingExtension(ArmClient client)
+        private static MockableHybridContainerServiceArmClient GetMockableHybridContainerServiceArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new HybridContainerServiceArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableHybridContainerServiceArmClient(client0));
         }
 
-        private static HybridContainerServiceResourceGroupMockingExtension GetHybridContainerServiceResourceGroupMockingExtension(ArmResource resource)
+        private static MockableHybridContainerServiceResourceGroupResource GetMockableHybridContainerServiceResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new HybridContainerServiceResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableHybridContainerServiceResourceGroupResource(client, resource.Id));
         }
 
-        private static HybridContainerServiceSubscriptionMockingExtension GetHybridContainerServiceSubscriptionMockingExtension(ArmResource resource)
+        private static MockableHybridContainerServiceSubscriptionResource GetMockableHybridContainerServiceSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new HybridContainerServiceSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableHybridContainerServiceSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceArmClientMockingExtension.GetOrchestratorsHybridContainerService(ResourceIdentifier,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetOrchestratorsHybridContainerService(ResourceIdentifier,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<OrchestratorVersionProfileListResult>> GetOrchestratorsHybridContainerServiceAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return await GetHybridContainerServiceArmClientMockingExtension(client).GetOrchestratorsHybridContainerServiceAsync(scope, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridContainerServiceArmClient(client).GetOrchestratorsHybridContainerServiceAsync(scope, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceArmClientMockingExtension.GetOrchestratorsHybridContainerService(ResourceIdentifier,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetOrchestratorsHybridContainerService(ResourceIdentifier,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<OrchestratorVersionProfileListResult> GetOrchestratorsHybridContainerService(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return GetHybridContainerServiceArmClientMockingExtension(client).GetOrchestratorsHybridContainerService(scope, cancellationToken);
+            return GetMockableHybridContainerServiceArmClient(client).GetOrchestratorsHybridContainerService(scope, cancellationToken);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceArmClientMockingExtension.GetVmSkusHybridContainerService(ResourceIdentifier,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetVmSkusHybridContainerService(ResourceIdentifier,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<VmSkuListResult>> GetVmSkusHybridContainerServiceAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return await GetHybridContainerServiceArmClientMockingExtension(client).GetVmSkusHybridContainerServiceAsync(scope, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridContainerServiceArmClient(client).GetVmSkusHybridContainerServiceAsync(scope, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceArmClientMockingExtension.GetVmSkusHybridContainerService(ResourceIdentifier,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetVmSkusHybridContainerService(ResourceIdentifier,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<VmSkuListResult> GetVmSkusHybridContainerService(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return GetHybridContainerServiceArmClientMockingExtension(client).GetVmSkusHybridContainerService(scope, cancellationToken);
+            return GetMockableHybridContainerServiceArmClient(client).GetVmSkusHybridContainerService(scope, cancellationToken);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// You can use <see cref="ProvisionedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ProvisionedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceArmClientMockingExtension.GetProvisionedClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetProvisionedClusterResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> Returns a <see cref="ProvisionedClusterResource" /> object. </returns>
         public static ProvisionedClusterResource GetProvisionedClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHybridContainerServiceArmClientMockingExtension(client).GetProvisionedClusterResource(id);
+            return GetMockableHybridContainerServiceArmClient(client).GetProvisionedClusterResource(id);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// You can use <see cref="ProvisionedClusterUpgradeProfileResource.CreateResourceIdentifier" /> to create a <see cref="ProvisionedClusterUpgradeProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceArmClientMockingExtension.GetProvisionedClusterUpgradeProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetProvisionedClusterUpgradeProfileResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> Returns a <see cref="ProvisionedClusterUpgradeProfileResource" /> object. </returns>
         public static ProvisionedClusterUpgradeProfileResource GetProvisionedClusterUpgradeProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHybridContainerServiceArmClientMockingExtension(client).GetProvisionedClusterUpgradeProfileResource(id);
+            return GetMockableHybridContainerServiceArmClient(client).GetProvisionedClusterUpgradeProfileResource(id);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// You can use <see cref="HybridIdentityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="HybridIdentityMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceArmClientMockingExtension.GetHybridIdentityMetadataResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetHybridIdentityMetadataResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> Returns a <see cref="HybridIdentityMetadataResource" /> object. </returns>
         public static HybridIdentityMetadataResource GetHybridIdentityMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHybridContainerServiceArmClientMockingExtension(client).GetHybridIdentityMetadataResource(id);
+            return GetMockableHybridContainerServiceArmClient(client).GetHybridIdentityMetadataResource(id);
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// You can use <see cref="HybridContainerServiceAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceAgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceArmClientMockingExtension.GetHybridContainerServiceAgentPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetHybridContainerServiceAgentPoolResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> Returns a <see cref="HybridContainerServiceAgentPoolResource" /> object. </returns>
         public static HybridContainerServiceAgentPoolResource GetHybridContainerServiceAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHybridContainerServiceArmClientMockingExtension(client).GetHybridContainerServiceAgentPoolResource(id);
+            return GetMockableHybridContainerServiceArmClient(client).GetHybridContainerServiceAgentPoolResource(id);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// You can use <see cref="StorageSpaceResource.CreateResourceIdentifier" /> to create a <see cref="StorageSpaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceArmClientMockingExtension.GetStorageSpaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetStorageSpaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> Returns a <see cref="StorageSpaceResource" /> object. </returns>
         public static StorageSpaceResource GetStorageSpaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHybridContainerServiceArmClientMockingExtension(client).GetStorageSpaceResource(id);
+            return GetMockableHybridContainerServiceArmClient(client).GetStorageSpaceResource(id);
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// You can use <see cref="HybridContainerServiceVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceArmClientMockingExtension.GetHybridContainerServiceVirtualNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetHybridContainerServiceVirtualNetworkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -228,21 +228,21 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> Returns a <see cref="HybridContainerServiceVirtualNetworkResource" /> object. </returns>
         public static HybridContainerServiceVirtualNetworkResource GetHybridContainerServiceVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHybridContainerServiceArmClientMockingExtension(client).GetHybridContainerServiceVirtualNetworkResource(id);
+            return GetMockableHybridContainerServiceArmClient(client).GetHybridContainerServiceVirtualNetworkResource(id);
         }
 
         /// <summary>
         /// Gets a collection of ProvisionedClusterResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceResourceGroupMockingExtension.GetProvisionedClusters()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceResourceGroupResource.GetProvisionedClusters()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ProvisionedClusterResources and their operations over a ProvisionedClusterResource. </returns>
         public static ProvisionedClusterCollection GetProvisionedClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetHybridContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetProvisionedClusters();
+            return GetMockableHybridContainerServiceResourceGroupResource(resourceGroupResource).GetProvisionedClusters();
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceResourceGroupMockingExtension.GetProvisionedClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceResourceGroupResource.GetProvisionedClusterAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.HybridContainerService
         [ForwardsClientCalls]
         public static async Task<Response<ProvisionedClusterResource>> GetProvisionedClusterAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetHybridContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetProvisionedClusterAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridContainerServiceResourceGroupResource(resourceGroupResource).GetProvisionedClusterAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceResourceGroupMockingExtension.GetProvisionedCluster(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceResourceGroupResource.GetProvisionedCluster(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -298,21 +298,21 @@ namespace Azure.ResourceManager.HybridContainerService
         [ForwardsClientCalls]
         public static Response<ProvisionedClusterResource> GetProvisionedCluster(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetHybridContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetProvisionedCluster(resourceName, cancellationToken);
+            return GetMockableHybridContainerServiceResourceGroupResource(resourceGroupResource).GetProvisionedCluster(resourceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of StorageSpaceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceResourceGroupMockingExtension.GetStorageSpaces()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceResourceGroupResource.GetStorageSpaces()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of StorageSpaceResources and their operations over a StorageSpaceResource. </returns>
         public static StorageSpaceCollection GetStorageSpaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetHybridContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetStorageSpaces();
+            return GetMockableHybridContainerServiceResourceGroupResource(resourceGroupResource).GetStorageSpaces();
         }
 
         /// <summary>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceResourceGroupMockingExtension.GetStorageSpaceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceResourceGroupResource.GetStorageSpaceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.HybridContainerService
         [ForwardsClientCalls]
         public static async Task<Response<StorageSpaceResource>> GetStorageSpaceAsync(this ResourceGroupResource resourceGroupResource, string storageSpacesName, CancellationToken cancellationToken = default)
         {
-            return await GetHybridContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetStorageSpaceAsync(storageSpacesName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridContainerServiceResourceGroupResource(resourceGroupResource).GetStorageSpaceAsync(storageSpacesName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceResourceGroupMockingExtension.GetStorageSpace(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceResourceGroupResource.GetStorageSpace(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -368,21 +368,21 @@ namespace Azure.ResourceManager.HybridContainerService
         [ForwardsClientCalls]
         public static Response<StorageSpaceResource> GetStorageSpace(this ResourceGroupResource resourceGroupResource, string storageSpacesName, CancellationToken cancellationToken = default)
         {
-            return GetHybridContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetStorageSpace(storageSpacesName, cancellationToken);
+            return GetMockableHybridContainerServiceResourceGroupResource(resourceGroupResource).GetStorageSpace(storageSpacesName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of HybridContainerServiceVirtualNetworkResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceResourceGroupMockingExtension.GetHybridContainerServiceVirtualNetworks()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceResourceGroupResource.GetHybridContainerServiceVirtualNetworks()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of HybridContainerServiceVirtualNetworkResources and their operations over a HybridContainerServiceVirtualNetworkResource. </returns>
         public static HybridContainerServiceVirtualNetworkCollection GetHybridContainerServiceVirtualNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetHybridContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetHybridContainerServiceVirtualNetworks();
+            return GetMockableHybridContainerServiceResourceGroupResource(resourceGroupResource).GetHybridContainerServiceVirtualNetworks();
         }
 
         /// <summary>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceResourceGroupMockingExtension.GetHybridContainerServiceVirtualNetworkAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceResourceGroupResource.GetHybridContainerServiceVirtualNetworkAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.HybridContainerService
         [ForwardsClientCalls]
         public static async Task<Response<HybridContainerServiceVirtualNetworkResource>> GetHybridContainerServiceVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworksName, CancellationToken cancellationToken = default)
         {
-            return await GetHybridContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetHybridContainerServiceVirtualNetworkAsync(virtualNetworksName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridContainerServiceResourceGroupResource(resourceGroupResource).GetHybridContainerServiceVirtualNetworkAsync(virtualNetworksName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceResourceGroupMockingExtension.GetHybridContainerServiceVirtualNetwork(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceResourceGroupResource.GetHybridContainerServiceVirtualNetwork(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.HybridContainerService
         [ForwardsClientCalls]
         public static Response<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworksName, CancellationToken cancellationToken = default)
         {
-            return GetHybridContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetHybridContainerServiceVirtualNetwork(virtualNetworksName, cancellationToken);
+            return GetMockableHybridContainerServiceResourceGroupResource(resourceGroupResource).GetHybridContainerServiceVirtualNetwork(virtualNetworksName, cancellationToken);
         }
 
         /// <summary>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceSubscriptionMockingExtension.GetProvisionedClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceSubscriptionResource.GetProvisionedClusters(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An async collection of <see cref="ProvisionedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProvisionedClusterResource> GetProvisionedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetHybridContainerServiceSubscriptionMockingExtension(subscriptionResource).GetProvisionedClustersAsync(cancellationToken);
+            return GetMockableHybridContainerServiceSubscriptionResource(subscriptionResource).GetProvisionedClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceSubscriptionMockingExtension.GetProvisionedClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceSubscriptionResource.GetProvisionedClusters(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> A collection of <see cref="ProvisionedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProvisionedClusterResource> GetProvisionedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetHybridContainerServiceSubscriptionMockingExtension(subscriptionResource).GetProvisionedClusters(cancellationToken);
+            return GetMockableHybridContainerServiceSubscriptionResource(subscriptionResource).GetProvisionedClusters(cancellationToken);
         }
 
         /// <summary>
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceSubscriptionMockingExtension.GetStorageSpaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceSubscriptionResource.GetStorageSpaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An async collection of <see cref="StorageSpaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StorageSpaceResource> GetStorageSpacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetHybridContainerServiceSubscriptionMockingExtension(subscriptionResource).GetStorageSpacesAsync(cancellationToken);
+            return GetMockableHybridContainerServiceSubscriptionResource(subscriptionResource).GetStorageSpacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceSubscriptionMockingExtension.GetStorageSpaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceSubscriptionResource.GetStorageSpaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> A collection of <see cref="StorageSpaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StorageSpaceResource> GetStorageSpaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetHybridContainerServiceSubscriptionMockingExtension(subscriptionResource).GetStorageSpaces(cancellationToken);
+            return GetMockableHybridContainerServiceSubscriptionResource(subscriptionResource).GetStorageSpaces(cancellationToken);
         }
 
         /// <summary>
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceSubscriptionMockingExtension.GetHybridContainerServiceVirtualNetworks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceSubscriptionResource.GetHybridContainerServiceVirtualNetworks(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> An async collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetHybridContainerServiceSubscriptionMockingExtension(subscriptionResource).GetHybridContainerServiceVirtualNetworksAsync(cancellationToken);
+            return GetMockableHybridContainerServiceSubscriptionResource(subscriptionResource).GetHybridContainerServiceVirtualNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridContainerServiceSubscriptionMockingExtension.GetHybridContainerServiceVirtualNetworks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceSubscriptionResource.GetHybridContainerServiceVirtualNetworks(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <returns> A collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetHybridContainerServiceSubscriptionMockingExtension(subscriptionResource).GetHybridContainerServiceVirtualNetworks(cancellationToken);
+            return GetMockableHybridContainerServiceSubscriptionResource(subscriptionResource).GetHybridContainerServiceVirtualNetworks(cancellationToken);
         }
     }
 }

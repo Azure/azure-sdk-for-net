@@ -419,9 +419,9 @@ namespace Azure.ResourceManager.Batch
 }
 namespace Azure.ResourceManager.Batch.Mocking
 {
-    public partial class BatchArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableBatchArmClient : Azure.ResourceManager.ArmResource
     {
-        protected BatchArmClientMockingExtension() { }
+        protected MockableBatchArmClient() { }
         public virtual Azure.ResourceManager.Batch.BatchAccountCertificateResource GetBatchAccountCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Batch.BatchAccountDetectorResource GetBatchAccountDetectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Batch.BatchAccountPoolResource GetBatchAccountPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -431,16 +431,16 @@ namespace Azure.ResourceManager.Batch.Mocking
         public virtual Azure.ResourceManager.Batch.BatchPrivateEndpointConnectionResource GetBatchPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Batch.BatchPrivateLinkResource GetBatchPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class BatchResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableBatchResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected BatchResourceGroupMockingExtension() { }
+        protected MockableBatchResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Batch.BatchAccountResource> GetBatchAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.BatchAccountResource>> GetBatchAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Batch.BatchAccountCollection GetBatchAccounts() { throw null; }
     }
-    public partial class BatchSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableBatchSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected BatchSubscriptionMockingExtension() { }
+        protected MockableBatchSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult> CheckBatchNameAvailability(Azure.Core.AzureLocation locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Batch.Models.BatchNameAvailabilityResult>> CheckBatchNameAvailabilityAsync(Azure.Core.AzureLocation locationName, Azure.ResourceManager.Batch.Models.BatchNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Batch.BatchAccountResource> GetBatchAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

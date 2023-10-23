@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.AppConfiguration
     /// <summary> A class to add extension methods to Azure.ResourceManager.AppConfiguration. </summary>
     public static partial class AppConfigurationExtensions
     {
-        private static AppConfigurationArmClientMockingExtension GetAppConfigurationArmClientMockingExtension(ArmClient client)
+        private static MockableAppConfigurationArmClient GetMockableAppConfigurationArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new AppConfigurationArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableAppConfigurationArmClient(client0));
         }
 
-        private static AppConfigurationResourceGroupMockingExtension GetAppConfigurationResourceGroupMockingExtension(ArmResource resource)
+        private static MockableAppConfigurationResourceGroupResource GetMockableAppConfigurationResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AppConfigurationResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAppConfigurationResourceGroupResource(client, resource.Id));
         }
 
-        private static AppConfigurationSubscriptionMockingExtension GetAppConfigurationSubscriptionMockingExtension(ArmResource resource)
+        private static MockableAppConfigurationSubscriptionResource GetMockableAppConfigurationSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AppConfigurationSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAppConfigurationSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// You can use <see cref="AppConfigurationStoreResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppConfigurationArmClientMockingExtension.GetAppConfigurationStoreResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationArmClient.GetAppConfigurationStoreResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="AppConfigurationStoreResource" /> object. </returns>
         public static AppConfigurationStoreResource GetAppConfigurationStoreResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppConfigurationArmClientMockingExtension(client).GetAppConfigurationStoreResource(id);
+            return GetMockableAppConfigurationArmClient(client).GetAppConfigurationStoreResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// You can use <see cref="DeletedAppConfigurationStoreResource.CreateResourceIdentifier" /> to create a <see cref="DeletedAppConfigurationStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppConfigurationArmClientMockingExtension.GetDeletedAppConfigurationStoreResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationArmClient.GetDeletedAppConfigurationStoreResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="DeletedAppConfigurationStoreResource" /> object. </returns>
         public static DeletedAppConfigurationStoreResource GetDeletedAppConfigurationStoreResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppConfigurationArmClientMockingExtension(client).GetDeletedAppConfigurationStoreResource(id);
+            return GetMockableAppConfigurationArmClient(client).GetDeletedAppConfigurationStoreResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// You can use <see cref="AppConfigurationPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppConfigurationArmClientMockingExtension.GetAppConfigurationPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationArmClient.GetAppConfigurationPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="AppConfigurationPrivateEndpointConnectionResource" /> object. </returns>
         public static AppConfigurationPrivateEndpointConnectionResource GetAppConfigurationPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppConfigurationArmClientMockingExtension(client).GetAppConfigurationPrivateEndpointConnectionResource(id);
+            return GetMockableAppConfigurationArmClient(client).GetAppConfigurationPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// You can use <see cref="AppConfigurationPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppConfigurationArmClientMockingExtension.GetAppConfigurationPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationArmClient.GetAppConfigurationPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="AppConfigurationPrivateLinkResource" /> object. </returns>
         public static AppConfigurationPrivateLinkResource GetAppConfigurationPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppConfigurationArmClientMockingExtension(client).GetAppConfigurationPrivateLinkResource(id);
+            return GetMockableAppConfigurationArmClient(client).GetAppConfigurationPrivateLinkResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// You can use <see cref="AppConfigurationKeyValueResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationKeyValueResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppConfigurationArmClientMockingExtension.GetAppConfigurationKeyValueResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationArmClient.GetAppConfigurationKeyValueResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,21 +112,21 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> Returns a <see cref="AppConfigurationKeyValueResource" /> object. </returns>
         public static AppConfigurationKeyValueResource GetAppConfigurationKeyValueResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppConfigurationArmClientMockingExtension(client).GetAppConfigurationKeyValueResource(id);
+            return GetMockableAppConfigurationArmClient(client).GetAppConfigurationKeyValueResource(id);
         }
 
         /// <summary>
         /// Gets a collection of AppConfigurationStoreResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppConfigurationResourceGroupMockingExtension.GetAppConfigurationStores()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationResourceGroupResource.GetAppConfigurationStores()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppConfigurationStoreResources and their operations over a AppConfigurationStoreResource. </returns>
         public static AppConfigurationStoreCollection GetAppConfigurationStores(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAppConfigurationResourceGroupMockingExtension(resourceGroupResource).GetAppConfigurationStores();
+            return GetMockableAppConfigurationResourceGroupResource(resourceGroupResource).GetAppConfigurationStores();
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppConfigurationResourceGroupMockingExtension.GetAppConfigurationStoreAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationResourceGroupResource.GetAppConfigurationStoreAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppConfiguration
         [ForwardsClientCalls]
         public static async Task<Response<AppConfigurationStoreResource>> GetAppConfigurationStoreAsync(this ResourceGroupResource resourceGroupResource, string configStoreName, CancellationToken cancellationToken = default)
         {
-            return await GetAppConfigurationResourceGroupMockingExtension(resourceGroupResource).GetAppConfigurationStoreAsync(configStoreName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppConfigurationResourceGroupResource(resourceGroupResource).GetAppConfigurationStoreAsync(configStoreName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppConfigurationResourceGroupMockingExtension.GetAppConfigurationStore(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationResourceGroupResource.GetAppConfigurationStore(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -182,21 +182,21 @@ namespace Azure.ResourceManager.AppConfiguration
         [ForwardsClientCalls]
         public static Response<AppConfigurationStoreResource> GetAppConfigurationStore(this ResourceGroupResource resourceGroupResource, string configStoreName, CancellationToken cancellationToken = default)
         {
-            return GetAppConfigurationResourceGroupMockingExtension(resourceGroupResource).GetAppConfigurationStore(configStoreName, cancellationToken);
+            return GetMockableAppConfigurationResourceGroupResource(resourceGroupResource).GetAppConfigurationStore(configStoreName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of DeletedAppConfigurationStoreResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppConfigurationSubscriptionMockingExtension.GetDeletedAppConfigurationStores()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStores()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeletedAppConfigurationStoreResources and their operations over a DeletedAppConfigurationStoreResource. </returns>
         public static DeletedAppConfigurationStoreCollection GetDeletedAppConfigurationStores(this SubscriptionResource subscriptionResource)
         {
-            return GetAppConfigurationSubscriptionMockingExtension(subscriptionResource).GetDeletedAppConfigurationStores();
+            return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetDeletedAppConfigurationStores();
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppConfigurationSubscriptionMockingExtension.GetDeletedAppConfigurationStoreAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStoreAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppConfiguration
         [ForwardsClientCalls]
         public static async Task<Response<DeletedAppConfigurationStoreResource>> GetDeletedAppConfigurationStoreAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
-            return await GetAppConfigurationSubscriptionMockingExtension(subscriptionResource).GetDeletedAppConfigurationStoreAsync(location, configStoreName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetDeletedAppConfigurationStoreAsync(location, configStoreName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppConfigurationSubscriptionMockingExtension.GetDeletedAppConfigurationStore(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationSubscriptionResource.GetDeletedAppConfigurationStore(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.AppConfiguration
         [ForwardsClientCalls]
         public static Response<DeletedAppConfigurationStoreResource> GetDeletedAppConfigurationStore(this SubscriptionResource subscriptionResource, AzureLocation location, string configStoreName, CancellationToken cancellationToken = default)
         {
-            return GetAppConfigurationSubscriptionMockingExtension(subscriptionResource).GetDeletedAppConfigurationStore(location, configStoreName, cancellationToken);
+            return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetDeletedAppConfigurationStore(location, configStoreName, cancellationToken);
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppConfigurationSubscriptionMockingExtension.GetAppConfigurationStores(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An async collection of <see cref="AppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppConfigurationStoreResource> GetAppConfigurationStoresAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetAppConfigurationSubscriptionMockingExtension(subscriptionResource).GetAppConfigurationStoresAsync(skipToken, cancellationToken);
+            return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetAppConfigurationStoresAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppConfigurationSubscriptionMockingExtension.GetAppConfigurationStores(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationSubscriptionResource.GetAppConfigurationStores(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> A collection of <see cref="AppConfigurationStoreResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppConfigurationStoreResource> GetAppConfigurationStores(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetAppConfigurationSubscriptionMockingExtension(subscriptionResource).GetAppConfigurationStores(skipToken, cancellationToken);
+            return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).GetAppConfigurationStores(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppConfigurationSubscriptionMockingExtension.CheckAppConfigurationNameAvailability(AppConfigurationNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationSubscriptionResource.CheckAppConfigurationNameAvailability(AppConfigurationNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<AppConfigurationNameAvailabilityResult>> CheckAppConfigurationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetAppConfigurationSubscriptionMockingExtension(subscriptionResource).CheckAppConfigurationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppConfigurationSubscriptionResource(subscriptionResource).CheckAppConfigurationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppConfigurationSubscriptionMockingExtension.CheckAppConfigurationNameAvailability(AppConfigurationNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppConfigurationSubscriptionResource.CheckAppConfigurationNameAvailability(AppConfigurationNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<AppConfigurationNameAvailabilityResult> CheckAppConfigurationNameAvailability(this SubscriptionResource subscriptionResource, AppConfigurationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetAppConfigurationSubscriptionMockingExtension(subscriptionResource).CheckAppConfigurationNameAvailability(content, cancellationToken);
+            return GetMockableAppConfigurationSubscriptionResource(subscriptionResource).CheckAppConfigurationNameAvailability(content, cancellationToken);
         }
     }
 }

@@ -12,21 +12,21 @@ namespace Azure.ResourceManager.ChangeAnalysis
 }
 namespace Azure.ResourceManager.ChangeAnalysis.Mocking
 {
-    public partial class ChangeAnalysisResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableChangeAnalysisResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ChangeAnalysisResourceGroupMockingExtension() { }
+        protected MockableChangeAnalysisResourceGroupResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData> GetChangesByResourceGroup(System.DateTimeOffset startTime, System.DateTimeOffset endTime, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData> GetChangesByResourceGroupAsync(System.DateTimeOffset startTime, System.DateTimeOffset endTime, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ChangeAnalysisSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableChangeAnalysisSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ChangeAnalysisSubscriptionMockingExtension() { }
+        protected MockableChangeAnalysisSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData> GetChangesBySubscription(System.DateTimeOffset startTime, System.DateTimeOffset endTime, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData> GetChangesBySubscriptionAsync(System.DateTimeOffset startTime, System.DateTimeOffset endTime, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ChangeAnalysisTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableChangeAnalysisTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected ChangeAnalysisTenantMockingExtension() { }
+        protected MockableChangeAnalysisTenantResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData> GetResourceChanges(string resourceId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ChangeAnalysis.Models.DetectedChangeData> GetResourceChangesAsync(string resourceId, System.DateTimeOffset startTime, System.DateTimeOffset endTime, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

@@ -392,9 +392,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
 }
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
 {
-    public partial class ServiceFabricManagedClustersArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableServiceFabricManagedClustersArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ServiceFabricManagedClustersArmClientMockingExtension() { }
+        protected MockableServiceFabricManagedClustersArmClient() { }
         public virtual Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationResource GetServiceFabricManagedApplicationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeResource GetServiceFabricManagedApplicationTypeResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionResource GetServiceFabricManagedApplicationTypeVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -402,16 +402,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         public virtual Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeResource GetServiceFabricManagedNodeTypeResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedServiceResource GetServiceFabricManagedServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ServiceFabricManagedClustersResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableServiceFabricManagedClustersResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ServiceFabricManagedClustersResourceGroupMockingExtension() { }
+        protected MockableServiceFabricManagedClustersResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterResource> GetServiceFabricManagedCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterResource>> GetServiceFabricManagedClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ServiceFabricManagedClusters.ServiceFabricManagedClusterCollection GetServiceFabricManagedClusters() { throw null; }
     }
-    public partial class ServiceFabricManagedClustersSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableServiceFabricManagedClustersSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ServiceFabricManagedClustersSubscriptionMockingExtension() { }
+        protected MockableServiceFabricManagedClustersSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterVersion> GetManagedClusterVersion(Azure.Core.AzureLocation location, string clusterVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterVersion>> GetManagedClusterVersionAsync(Azure.Core.AzureLocation location, string clusterVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabricManagedClusters.Models.ServiceFabricManagedClusterVersion> GetManagedClusterVersionByEnvironment(Azure.Core.AzureLocation location, Azure.ResourceManager.ServiceFabricManagedClusters.Models.ManagedClusterVersionEnvironment environment, string clusterVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

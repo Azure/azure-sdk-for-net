@@ -256,24 +256,24 @@ namespace Azure.ResourceManager.HDInsight
 }
 namespace Azure.ResourceManager.HDInsight.Mocking
 {
-    public partial class HDInsightArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHDInsightArmClient : Azure.ResourceManager.ArmResource
     {
-        protected HDInsightArmClientMockingExtension() { }
+        protected MockableHDInsightArmClient() { }
         public virtual Azure.ResourceManager.HDInsight.HDInsightApplicationResource GetHDInsightApplicationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HDInsight.HDInsightClusterResource GetHDInsightClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HDInsight.HDInsightPrivateEndpointConnectionResource GetHDInsightPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HDInsight.HDInsightPrivateLinkResource GetHDInsightPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class HDInsightResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHDInsightResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected HDInsightResourceGroupMockingExtension() { }
+        protected MockableHDInsightResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.HDInsightClusterResource> GetHDInsightCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.HDInsightClusterResource>> GetHDInsightClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HDInsight.HDInsightClusterCollection GetHDInsightClusters() { throw null; }
     }
-    public partial class HDInsightSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHDInsightSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected HDInsightSubscriptionMockingExtension() { }
+        protected MockableHDInsightSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityResult> CheckHDInsightNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityResult>> CheckHDInsightNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.HDInsight.Models.HDInsightNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Models.HDInsightBillingSpecsListResult> GetHDInsightBillingSpecs(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

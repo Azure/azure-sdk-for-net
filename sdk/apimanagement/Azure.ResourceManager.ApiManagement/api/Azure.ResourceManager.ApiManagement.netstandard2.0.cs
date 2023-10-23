@@ -2311,9 +2311,9 @@ namespace Azure.ResourceManager.ApiManagement
 }
 namespace Azure.ResourceManager.ApiManagement.Mocking
 {
-    public partial class ApiManagementArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableApiManagementArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ApiManagementArmClientMockingExtension() { }
+        protected MockableApiManagementArmClient() { }
         public virtual Azure.ResourceManager.ApiManagement.ApiDiagnosticResource GetApiDiagnosticResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ApiManagement.ApiIssueAttachmentResource GetApiIssueAttachmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ApiManagement.ApiIssueCommentResource GetApiIssueCommentResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2364,16 +2364,16 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
         public virtual Azure.ResourceManager.ApiManagement.ApiVersionSetResource GetApiVersionSetResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ApiManagement.TenantAccessInfoResource GetTenantAccessInfoResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ApiManagementResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableApiManagementResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ApiManagementResourceGroupMockingExtension() { }
+        protected MockableApiManagementResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementServiceResource> GetApiManagementService(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementServiceResource>> GetApiManagementServiceAsync(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ApiManagement.ApiManagementServiceCollection GetApiManagementServices() { throw null; }
     }
-    public partial class ApiManagementSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableApiManagementSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ApiManagementSubscriptionMockingExtension() { }
+        protected MockableApiManagementSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameAvailabilityResult> CheckApiManagementServiceNameAvailability(Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameAvailabilityResult>> CheckApiManagementServiceNameAvailabilityAsync(Azure.ResourceManager.ApiManagement.Models.ApiManagementServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApiManagement.ApiManagementDeletedServiceResource> GetApiManagementDeletedService(Azure.Core.AzureLocation location, string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

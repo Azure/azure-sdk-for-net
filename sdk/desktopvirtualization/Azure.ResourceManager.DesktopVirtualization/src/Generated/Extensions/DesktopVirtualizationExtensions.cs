@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.DesktopVirtualization
     /// <summary> A class to add extension methods to Azure.ResourceManager.DesktopVirtualization. </summary>
     public static partial class DesktopVirtualizationExtensions
     {
-        private static DesktopVirtualizationArmClientMockingExtension GetDesktopVirtualizationArmClientMockingExtension(ArmClient client)
+        private static MockableDesktopVirtualizationArmClient GetMockableDesktopVirtualizationArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new DesktopVirtualizationArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableDesktopVirtualizationArmClient(client0));
         }
 
-        private static DesktopVirtualizationResourceGroupMockingExtension GetDesktopVirtualizationResourceGroupMockingExtension(ArmResource resource)
+        private static MockableDesktopVirtualizationResourceGroupResource GetMockableDesktopVirtualizationResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DesktopVirtualizationResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDesktopVirtualizationResourceGroupResource(client, resource.Id));
         }
 
-        private static DesktopVirtualizationSubscriptionMockingExtension GetDesktopVirtualizationSubscriptionMockingExtension(ArmResource resource)
+        private static MockableDesktopVirtualizationSubscriptionResource GetMockableDesktopVirtualizationSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DesktopVirtualizationSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDesktopVirtualizationSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// You can use <see cref="VirtualWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="VirtualWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationArmClientMockingExtension.GetVirtualWorkspaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetVirtualWorkspaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="VirtualWorkspaceResource" /> object. </returns>
         public static VirtualWorkspaceResource GetVirtualWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDesktopVirtualizationArmClientMockingExtension(client).GetVirtualWorkspaceResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetVirtualWorkspaceResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// You can use <see cref="ScalingPlanResource.CreateResourceIdentifier" /> to create a <see cref="ScalingPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationArmClientMockingExtension.GetScalingPlanResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetScalingPlanResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="ScalingPlanResource" /> object. </returns>
         public static ScalingPlanResource GetScalingPlanResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDesktopVirtualizationArmClientMockingExtension(client).GetScalingPlanResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetScalingPlanResource(id);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// You can use <see cref="ScalingPlanPooledScheduleResource.CreateResourceIdentifier" /> to create a <see cref="ScalingPlanPooledScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationArmClientMockingExtension.GetScalingPlanPooledScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetScalingPlanPooledScheduleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="ScalingPlanPooledScheduleResource" /> object. </returns>
         public static ScalingPlanPooledScheduleResource GetScalingPlanPooledScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDesktopVirtualizationArmClientMockingExtension(client).GetScalingPlanPooledScheduleResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetScalingPlanPooledScheduleResource(id);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// You can use <see cref="VirtualApplicationGroupResource.CreateResourceIdentifier" /> to create a <see cref="VirtualApplicationGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationArmClientMockingExtension.GetVirtualApplicationGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetVirtualApplicationGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="VirtualApplicationGroupResource" /> object. </returns>
         public static VirtualApplicationGroupResource GetVirtualApplicationGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDesktopVirtualizationArmClientMockingExtension(client).GetVirtualApplicationGroupResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetVirtualApplicationGroupResource(id);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// You can use <see cref="VirtualApplicationResource.CreateResourceIdentifier" /> to create a <see cref="VirtualApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationArmClientMockingExtension.GetVirtualApplicationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetVirtualApplicationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="VirtualApplicationResource" /> object. </returns>
         public static VirtualApplicationResource GetVirtualApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDesktopVirtualizationArmClientMockingExtension(client).GetVirtualApplicationResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetVirtualApplicationResource(id);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// You can use <see cref="VirtualDesktopResource.CreateResourceIdentifier" /> to create a <see cref="VirtualDesktopResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationArmClientMockingExtension.GetVirtualDesktopResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetVirtualDesktopResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="VirtualDesktopResource" /> object. </returns>
         public static VirtualDesktopResource GetVirtualDesktopResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDesktopVirtualizationArmClientMockingExtension(client).GetVirtualDesktopResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetVirtualDesktopResource(id);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// You can use <see cref="HostPoolResource.CreateResourceIdentifier" /> to create a <see cref="HostPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationArmClientMockingExtension.GetHostPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetHostPoolResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="HostPoolResource" /> object. </returns>
         public static HostPoolResource GetHostPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDesktopVirtualizationArmClientMockingExtension(client).GetHostPoolResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetHostPoolResource(id);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// You can use <see cref="UserSessionResource.CreateResourceIdentifier" /> to create an <see cref="UserSessionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationArmClientMockingExtension.GetUserSessionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetUserSessionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="UserSessionResource" /> object. </returns>
         public static UserSessionResource GetUserSessionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDesktopVirtualizationArmClientMockingExtension(client).GetUserSessionResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetUserSessionResource(id);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// You can use <see cref="SessionHostResource.CreateResourceIdentifier" /> to create a <see cref="SessionHostResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationArmClientMockingExtension.GetSessionHostResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetSessionHostResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="SessionHostResource" /> object. </returns>
         public static SessionHostResource GetSessionHostResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDesktopVirtualizationArmClientMockingExtension(client).GetSessionHostResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetSessionHostResource(id);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// You can use <see cref="MsixPackageResource.CreateResourceIdentifier" /> to create a <see cref="MsixPackageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationArmClientMockingExtension.GetMsixPackageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationArmClient.GetMsixPackageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -191,21 +191,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> Returns a <see cref="MsixPackageResource" /> object. </returns>
         public static MsixPackageResource GetMsixPackageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDesktopVirtualizationArmClientMockingExtension(client).GetMsixPackageResource(id);
+            return GetMockableDesktopVirtualizationArmClient(client).GetMsixPackageResource(id);
         }
 
         /// <summary>
         /// Gets a collection of VirtualWorkspaceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationResourceGroupMockingExtension.GetVirtualWorkspaces()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetVirtualWorkspaces()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualWorkspaceResources and their operations over a VirtualWorkspaceResource. </returns>
         public static VirtualWorkspaceCollection GetVirtualWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetDesktopVirtualizationResourceGroupMockingExtension(resourceGroupResource).GetVirtualWorkspaces();
+            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetVirtualWorkspaces();
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationResourceGroupMockingExtension.GetVirtualWorkspaceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetVirtualWorkspaceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         [ForwardsClientCalls]
         public static async Task<Response<VirtualWorkspaceResource>> GetVirtualWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await GetDesktopVirtualizationResourceGroupMockingExtension(resourceGroupResource).GetVirtualWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetVirtualWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationResourceGroupMockingExtension.GetVirtualWorkspace(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetVirtualWorkspace(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -261,21 +261,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         [ForwardsClientCalls]
         public static Response<VirtualWorkspaceResource> GetVirtualWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return GetDesktopVirtualizationResourceGroupMockingExtension(resourceGroupResource).GetVirtualWorkspace(workspaceName, cancellationToken);
+            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetVirtualWorkspace(workspaceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ScalingPlanResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationResourceGroupMockingExtension.GetScalingPlans()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetScalingPlans()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ScalingPlanResources and their operations over a ScalingPlanResource. </returns>
         public static ScalingPlanCollection GetScalingPlans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetDesktopVirtualizationResourceGroupMockingExtension(resourceGroupResource).GetScalingPlans();
+            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetScalingPlans();
         }
 
         /// <summary>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationResourceGroupMockingExtension.GetScalingPlanAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetScalingPlanAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         [ForwardsClientCalls]
         public static async Task<Response<ScalingPlanResource>> GetScalingPlanAsync(this ResourceGroupResource resourceGroupResource, string scalingPlanName, CancellationToken cancellationToken = default)
         {
-            return await GetDesktopVirtualizationResourceGroupMockingExtension(resourceGroupResource).GetScalingPlanAsync(scalingPlanName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetScalingPlanAsync(scalingPlanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationResourceGroupMockingExtension.GetScalingPlan(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetScalingPlan(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -331,21 +331,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         [ForwardsClientCalls]
         public static Response<ScalingPlanResource> GetScalingPlan(this ResourceGroupResource resourceGroupResource, string scalingPlanName, CancellationToken cancellationToken = default)
         {
-            return GetDesktopVirtualizationResourceGroupMockingExtension(resourceGroupResource).GetScalingPlan(scalingPlanName, cancellationToken);
+            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetScalingPlan(scalingPlanName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of VirtualApplicationGroupResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationResourceGroupMockingExtension.GetVirtualApplicationGroups()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetVirtualApplicationGroups()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualApplicationGroupResources and their operations over a VirtualApplicationGroupResource. </returns>
         public static VirtualApplicationGroupCollection GetVirtualApplicationGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetDesktopVirtualizationResourceGroupMockingExtension(resourceGroupResource).GetVirtualApplicationGroups();
+            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetVirtualApplicationGroups();
         }
 
         /// <summary>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationResourceGroupMockingExtension.GetVirtualApplicationGroupAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetVirtualApplicationGroupAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         [ForwardsClientCalls]
         public static async Task<Response<VirtualApplicationGroupResource>> GetVirtualApplicationGroupAsync(this ResourceGroupResource resourceGroupResource, string applicationGroupName, CancellationToken cancellationToken = default)
         {
-            return await GetDesktopVirtualizationResourceGroupMockingExtension(resourceGroupResource).GetVirtualApplicationGroupAsync(applicationGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetVirtualApplicationGroupAsync(applicationGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationResourceGroupMockingExtension.GetVirtualApplicationGroup(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetVirtualApplicationGroup(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -401,21 +401,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         [ForwardsClientCalls]
         public static Response<VirtualApplicationGroupResource> GetVirtualApplicationGroup(this ResourceGroupResource resourceGroupResource, string applicationGroupName, CancellationToken cancellationToken = default)
         {
-            return GetDesktopVirtualizationResourceGroupMockingExtension(resourceGroupResource).GetVirtualApplicationGroup(applicationGroupName, cancellationToken);
+            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetVirtualApplicationGroup(applicationGroupName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of HostPoolResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationResourceGroupMockingExtension.GetHostPools()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetHostPools()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of HostPoolResources and their operations over a HostPoolResource. </returns>
         public static HostPoolCollection GetHostPools(this ResourceGroupResource resourceGroupResource)
         {
-            return GetDesktopVirtualizationResourceGroupMockingExtension(resourceGroupResource).GetHostPools();
+            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetHostPools();
         }
 
         /// <summary>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationResourceGroupMockingExtension.GetHostPoolAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetHostPoolAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         [ForwardsClientCalls]
         public static async Task<Response<HostPoolResource>> GetHostPoolAsync(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
         {
-            return await GetDesktopVirtualizationResourceGroupMockingExtension(resourceGroupResource).GetHostPoolAsync(hostPoolName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetHostPoolAsync(hostPoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationResourceGroupMockingExtension.GetHostPool(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationResourceGroupResource.GetHostPool(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         [ForwardsClientCalls]
         public static Response<HostPoolResource> GetHostPool(this ResourceGroupResource resourceGroupResource, string hostPoolName, CancellationToken cancellationToken = default)
         {
-            return GetDesktopVirtualizationResourceGroupMockingExtension(resourceGroupResource).GetHostPool(hostPoolName, cancellationToken);
+            return GetMockableDesktopVirtualizationResourceGroupResource(resourceGroupResource).GetHostPool(hostPoolName, cancellationToken);
         }
 
         /// <summary>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationSubscriptionMockingExtension.GetVirtualWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationSubscriptionResource.GetVirtualWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An async collection of <see cref="VirtualWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualWorkspaceResource> GetVirtualWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetDesktopVirtualizationSubscriptionMockingExtension(subscriptionResource).GetVirtualWorkspacesAsync(cancellationToken);
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetVirtualWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationSubscriptionMockingExtension.GetVirtualWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationSubscriptionResource.GetVirtualWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> A collection of <see cref="VirtualWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualWorkspaceResource> GetVirtualWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetDesktopVirtualizationSubscriptionMockingExtension(subscriptionResource).GetVirtualWorkspaces(cancellationToken);
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetVirtualWorkspaces(cancellationToken);
         }
 
         /// <summary>
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationSubscriptionMockingExtension.GetScalingPlans(int?,bool?,int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationSubscriptionResource.GetScalingPlans(int?,bool?,int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An async collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(this SubscriptionResource subscriptionResource, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            return GetDesktopVirtualizationSubscriptionMockingExtension(subscriptionResource).GetScalingPlansAsync(pageSize, isDescending, initialSkip, cancellationToken);
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetScalingPlansAsync(pageSize, isDescending, initialSkip, cancellationToken);
         }
 
         /// <summary>
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationSubscriptionMockingExtension.GetScalingPlans(int?,bool?,int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationSubscriptionResource.GetScalingPlans(int?,bool?,int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> A collection of <see cref="ScalingPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScalingPlanResource> GetScalingPlans(this SubscriptionResource subscriptionResource, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            return GetDesktopVirtualizationSubscriptionMockingExtension(subscriptionResource).GetScalingPlans(pageSize, isDescending, initialSkip, cancellationToken);
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetScalingPlans(pageSize, isDescending, initialSkip, cancellationToken);
         }
 
         /// <summary>
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationSubscriptionMockingExtension.GetVirtualApplicationGroups(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationSubscriptionResource.GetVirtualApplicationGroups(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An async collection of <see cref="VirtualApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualApplicationGroupResource> GetVirtualApplicationGroupsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetDesktopVirtualizationSubscriptionMockingExtension(subscriptionResource).GetVirtualApplicationGroupsAsync(filter, cancellationToken);
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetVirtualApplicationGroupsAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationSubscriptionMockingExtension.GetVirtualApplicationGroups(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationSubscriptionResource.GetVirtualApplicationGroups(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> A collection of <see cref="VirtualApplicationGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualApplicationGroupResource> GetVirtualApplicationGroups(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetDesktopVirtualizationSubscriptionMockingExtension(subscriptionResource).GetVirtualApplicationGroups(filter, cancellationToken);
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetVirtualApplicationGroups(filter, cancellationToken);
         }
 
         /// <summary>
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationSubscriptionMockingExtension.GetHostPools(int?,bool?,int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationSubscriptionResource.GetHostPools(int?,bool?,int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> An async collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HostPoolResource> GetHostPoolsAsync(this SubscriptionResource subscriptionResource, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            return GetDesktopVirtualizationSubscriptionMockingExtension(subscriptionResource).GetHostPoolsAsync(pageSize, isDescending, initialSkip, cancellationToken);
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetHostPoolsAsync(pageSize, isDescending, initialSkip, cancellationToken);
         }
 
         /// <summary>
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DesktopVirtualizationSubscriptionMockingExtension.GetHostPools(int?,bool?,int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDesktopVirtualizationSubscriptionResource.GetHostPools(int?,bool?,int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <returns> A collection of <see cref="HostPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HostPoolResource> GetHostPools(this SubscriptionResource subscriptionResource, int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
-            return GetDesktopVirtualizationSubscriptionMockingExtension(subscriptionResource).GetHostPools(pageSize, isDescending, initialSkip, cancellationToken);
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetHostPools(pageSize, isDescending, initialSkip, cancellationToken);
         }
     }
 }

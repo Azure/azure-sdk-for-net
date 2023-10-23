@@ -132,22 +132,22 @@ namespace Azure.ResourceManager.HDInsight.Containers
 }
 namespace Azure.ResourceManager.HDInsight.Containers.Mocking
 {
-    public partial class HDInsightContainersArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHDInsightContainersArmClient : Azure.ResourceManager.ArmResource
     {
-        protected HDInsightContainersArmClientMockingExtension() { }
+        protected MockableHDInsightContainersArmClient() { }
         public virtual Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolResource GetHDInsightClusterPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HDInsight.Containers.HDInsightClusterResource GetHDInsightClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class HDInsightContainersResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHDInsightContainersResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected HDInsightContainersResourceGroupMockingExtension() { }
+        protected MockableHDInsightContainersResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolResource> GetHDInsightClusterPool(string clusterPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolResource>> GetHDInsightClusterPoolAsync(string clusterPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HDInsight.Containers.HDInsightClusterPoolCollection GetHDInsightClusterPools() { throw null; }
     }
-    public partial class HDInsightContainersSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHDInsightContainersSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected HDInsightContainersSubscriptionMockingExtension() { }
+        protected MockableHDInsightContainersSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightNameAvailabilityResult> CheckHDInsightNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HDInsight.Containers.Models.HDInsightNameAvailabilityResult>> CheckHDInsightNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.HDInsight.Containers.Models.HDInsightNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HDInsight.Containers.Models.ClusterPoolVersion> GetAvailableClusterPoolVersionsByLocation(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

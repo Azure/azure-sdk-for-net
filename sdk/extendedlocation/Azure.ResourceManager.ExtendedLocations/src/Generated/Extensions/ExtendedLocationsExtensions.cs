@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.ExtendedLocations
     /// <summary> A class to add extension methods to Azure.ResourceManager.ExtendedLocations. </summary>
     public static partial class ExtendedLocationsExtensions
     {
-        private static ExtendedLocationsArmClientMockingExtension GetExtendedLocationsArmClientMockingExtension(ArmClient client)
+        private static MockableExtendedLocationsArmClient GetMockableExtendedLocationsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ExtendedLocationsArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableExtendedLocationsArmClient(client0));
         }
 
-        private static ExtendedLocationsResourceGroupMockingExtension GetExtendedLocationsResourceGroupMockingExtension(ArmResource resource)
+        private static MockableExtendedLocationsResourceGroupResource GetMockableExtendedLocationsResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ExtendedLocationsResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableExtendedLocationsResourceGroupResource(client, resource.Id));
         }
 
-        private static ExtendedLocationsSubscriptionMockingExtension GetExtendedLocationsSubscriptionMockingExtension(ArmResource resource)
+        private static MockableExtendedLocationsSubscriptionResource GetMockableExtendedLocationsSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ExtendedLocationsSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableExtendedLocationsSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// You can use <see cref="CustomLocationResource.CreateResourceIdentifier" /> to create a <see cref="CustomLocationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ExtendedLocationsArmClientMockingExtension.GetCustomLocationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableExtendedLocationsArmClient.GetCustomLocationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,21 +47,21 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> Returns a <see cref="CustomLocationResource" /> object. </returns>
         public static CustomLocationResource GetCustomLocationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetExtendedLocationsArmClientMockingExtension(client).GetCustomLocationResource(id);
+            return GetMockableExtendedLocationsArmClient(client).GetCustomLocationResource(id);
         }
 
         /// <summary>
         /// Gets a collection of CustomLocationResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ExtendedLocationsResourceGroupMockingExtension.GetCustomLocations()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableExtendedLocationsResourceGroupResource.GetCustomLocations()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CustomLocationResources and their operations over a CustomLocationResource. </returns>
         public static CustomLocationCollection GetCustomLocations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetExtendedLocationsResourceGroupMockingExtension(resourceGroupResource).GetCustomLocations();
+            return GetMockableExtendedLocationsResourceGroupResource(resourceGroupResource).GetCustomLocations();
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ExtendedLocationsResourceGroupMockingExtension.GetCustomLocationAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableExtendedLocationsResourceGroupResource.GetCustomLocationAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         [ForwardsClientCalls]
         public static async Task<Response<CustomLocationResource>> GetCustomLocationAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetExtendedLocationsResourceGroupMockingExtension(resourceGroupResource).GetCustomLocationAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableExtendedLocationsResourceGroupResource(resourceGroupResource).GetCustomLocationAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ExtendedLocationsResourceGroupMockingExtension.GetCustomLocation(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableExtendedLocationsResourceGroupResource.GetCustomLocation(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         [ForwardsClientCalls]
         public static Response<CustomLocationResource> GetCustomLocation(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetExtendedLocationsResourceGroupMockingExtension(resourceGroupResource).GetCustomLocation(resourceName, cancellationToken);
+            return GetMockableExtendedLocationsResourceGroupResource(resourceGroupResource).GetCustomLocation(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ExtendedLocationsSubscriptionMockingExtension.GetCustomLocations(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableExtendedLocationsSubscriptionResource.GetCustomLocations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> An async collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CustomLocationResource> GetCustomLocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtendedLocationsSubscriptionMockingExtension(subscriptionResource).GetCustomLocationsAsync(cancellationToken);
+            return GetMockableExtendedLocationsSubscriptionResource(subscriptionResource).GetCustomLocationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ExtendedLocationsSubscriptionMockingExtension.GetCustomLocations(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableExtendedLocationsSubscriptionResource.GetCustomLocations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         /// <returns> A collection of <see cref="CustomLocationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CustomLocationResource> GetCustomLocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetExtendedLocationsSubscriptionMockingExtension(subscriptionResource).GetCustomLocations(cancellationToken);
+            return GetMockableExtendedLocationsSubscriptionResource(subscriptionResource).GetCustomLocations(cancellationToken);
         }
     }
 }

@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Quantum
     /// <summary> A class to add extension methods to Azure.ResourceManager.Quantum. </summary>
     public static partial class QuantumExtensions
     {
-        private static QuantumArmClientMockingExtension GetQuantumArmClientMockingExtension(ArmClient client)
+        private static MockableQuantumArmClient GetMockableQuantumArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new QuantumArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableQuantumArmClient(client0));
         }
 
-        private static QuantumResourceGroupMockingExtension GetQuantumResourceGroupMockingExtension(ArmResource resource)
+        private static MockableQuantumResourceGroupResource GetMockableQuantumResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new QuantumResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableQuantumResourceGroupResource(client, resource.Id));
         }
 
-        private static QuantumSubscriptionMockingExtension GetQuantumSubscriptionMockingExtension(ArmResource resource)
+        private static MockableQuantumSubscriptionResource GetMockableQuantumSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new QuantumSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableQuantumSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Quantum
         /// You can use <see cref="QuantumWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="QuantumWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuantumArmClientMockingExtension.GetQuantumWorkspaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuantumArmClient.GetQuantumWorkspaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,21 +48,21 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> Returns a <see cref="QuantumWorkspaceResource" /> object. </returns>
         public static QuantumWorkspaceResource GetQuantumWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetQuantumArmClientMockingExtension(client).GetQuantumWorkspaceResource(id);
+            return GetMockableQuantumArmClient(client).GetQuantumWorkspaceResource(id);
         }
 
         /// <summary>
         /// Gets a collection of QuantumWorkspaceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuantumResourceGroupMockingExtension.GetQuantumWorkspaces()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuantumResourceGroupResource.GetQuantumWorkspaces()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of QuantumWorkspaceResources and their operations over a QuantumWorkspaceResource. </returns>
         public static QuantumWorkspaceCollection GetQuantumWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetQuantumResourceGroupMockingExtension(resourceGroupResource).GetQuantumWorkspaces();
+            return GetMockableQuantumResourceGroupResource(resourceGroupResource).GetQuantumWorkspaces();
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Quantum
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuantumResourceGroupMockingExtension.GetQuantumWorkspaceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuantumResourceGroupResource.GetQuantumWorkspaceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Quantum
         [ForwardsClientCalls]
         public static async Task<Response<QuantumWorkspaceResource>> GetQuantumWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await GetQuantumResourceGroupMockingExtension(resourceGroupResource).GetQuantumWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableQuantumResourceGroupResource(resourceGroupResource).GetQuantumWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Quantum
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuantumResourceGroupMockingExtension.GetQuantumWorkspace(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuantumResourceGroupResource.GetQuantumWorkspace(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Quantum
         [ForwardsClientCalls]
         public static Response<QuantumWorkspaceResource> GetQuantumWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return GetQuantumResourceGroupMockingExtension(resourceGroupResource).GetQuantumWorkspace(workspaceName, cancellationToken);
+            return GetMockableQuantumResourceGroupResource(resourceGroupResource).GetQuantumWorkspace(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Quantum
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuantumSubscriptionMockingExtension.GetQuantumWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.GetQuantumWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> An async collection of <see cref="QuantumWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<QuantumWorkspaceResource> GetQuantumWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetQuantumSubscriptionMockingExtension(subscriptionResource).GetQuantumWorkspacesAsync(cancellationToken);
+            return GetMockableQuantumSubscriptionResource(subscriptionResource).GetQuantumWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Quantum
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuantumSubscriptionMockingExtension.GetQuantumWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.GetQuantumWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> A collection of <see cref="QuantumWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<QuantumWorkspaceResource> GetQuantumWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetQuantumSubscriptionMockingExtension(subscriptionResource).GetQuantumWorkspaces(cancellationToken);
+            return GetMockableQuantumSubscriptionResource(subscriptionResource).GetQuantumWorkspaces(cancellationToken);
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Quantum
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuantumSubscriptionMockingExtension.GetOfferings(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.GetOfferings(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> An async collection of <see cref="ProviderDescription" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProviderDescription> GetOfferingsAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
-            return GetQuantumSubscriptionMockingExtension(subscriptionResource).GetOfferingsAsync(locationName, cancellationToken);
+            return GetMockableQuantumSubscriptionResource(subscriptionResource).GetOfferingsAsync(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Quantum
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuantumSubscriptionMockingExtension.GetOfferings(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.GetOfferings(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> A collection of <see cref="ProviderDescription" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProviderDescription> GetOfferings(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
-            return GetQuantumSubscriptionMockingExtension(subscriptionResource).GetOfferings(locationName, cancellationToken);
+            return GetMockableQuantumSubscriptionResource(subscriptionResource).GetOfferings(locationName, cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Quantum
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuantumSubscriptionMockingExtension.CheckNameAvailabilityWorkspace(string,CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.CheckNameAvailabilityWorkspace(string,CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityWorkspaceAsync(this SubscriptionResource subscriptionResource, string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetQuantumSubscriptionMockingExtension(subscriptionResource).CheckNameAvailabilityWorkspaceAsync(locationName, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableQuantumSubscriptionResource(subscriptionResource).CheckNameAvailabilityWorkspaceAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Quantum
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuantumSubscriptionMockingExtension.CheckNameAvailabilityWorkspace(string,CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.CheckNameAvailabilityWorkspace(string,CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
         public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityWorkspace(this SubscriptionResource subscriptionResource, string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetQuantumSubscriptionMockingExtension(subscriptionResource).CheckNameAvailabilityWorkspace(locationName, content, cancellationToken);
+            return GetMockableQuantumSubscriptionResource(subscriptionResource).CheckNameAvailabilityWorkspace(locationName, content, cancellationToken);
         }
     }
 }

@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.LoadTesting
     /// <summary> A class to add extension methods to Azure.ResourceManager.LoadTesting. </summary>
     public static partial class LoadTestingExtensions
     {
-        private static LoadTestingArmClientMockingExtension GetLoadTestingArmClientMockingExtension(ArmClient client)
+        private static MockableLoadTestingArmClient GetMockableLoadTestingArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new LoadTestingArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableLoadTestingArmClient(client0));
         }
 
-        private static LoadTestingResourceGroupMockingExtension GetLoadTestingResourceGroupMockingExtension(ArmResource resource)
+        private static MockableLoadTestingResourceGroupResource GetMockableLoadTestingResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new LoadTestingResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableLoadTestingResourceGroupResource(client, resource.Id));
         }
 
-        private static LoadTestingSubscriptionMockingExtension GetLoadTestingSubscriptionMockingExtension(ArmResource resource)
+        private static MockableLoadTestingSubscriptionResource GetMockableLoadTestingSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new LoadTestingSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableLoadTestingSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// You can use <see cref="LoadTestingQuotaResource.CreateResourceIdentifier" /> to create a <see cref="LoadTestingQuotaResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LoadTestingArmClientMockingExtension.GetLoadTestingQuotaResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestingQuotaResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> Returns a <see cref="LoadTestingQuotaResource" /> object. </returns>
         public static LoadTestingQuotaResource GetLoadTestingQuotaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetLoadTestingArmClientMockingExtension(client).GetLoadTestingQuotaResource(id);
+            return GetMockableLoadTestingArmClient(client).GetLoadTestingQuotaResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// You can use <see cref="LoadTestingResource.CreateResourceIdentifier" /> to create a <see cref="LoadTestingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LoadTestingArmClientMockingExtension.GetLoadTestingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLoadTestingArmClient.GetLoadTestingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,21 +63,21 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> Returns a <see cref="LoadTestingResource" /> object. </returns>
         public static LoadTestingResource GetLoadTestingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetLoadTestingArmClientMockingExtension(client).GetLoadTestingResource(id);
+            return GetMockableLoadTestingArmClient(client).GetLoadTestingResource(id);
         }
 
         /// <summary>
         /// Gets a collection of LoadTestingResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LoadTestingResourceGroupMockingExtension.GetLoadTestingResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLoadTestingResourceGroupResource.GetLoadTestingResources()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of LoadTestingResources and their operations over a LoadTestingResource. </returns>
         public static LoadTestingResourceCollection GetLoadTestingResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetLoadTestingResourceGroupMockingExtension(resourceGroupResource).GetLoadTestingResources();
+            return GetMockableLoadTestingResourceGroupResource(resourceGroupResource).GetLoadTestingResources();
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LoadTestingResourceGroupMockingExtension.GetLoadTestingResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLoadTestingResourceGroupResource.GetLoadTestingResourceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.LoadTesting
         [ForwardsClientCalls]
         public static async Task<Response<LoadTestingResource>> GetLoadTestingResourceAsync(this ResourceGroupResource resourceGroupResource, string loadTestName, CancellationToken cancellationToken = default)
         {
-            return await GetLoadTestingResourceGroupMockingExtension(resourceGroupResource).GetLoadTestingResourceAsync(loadTestName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableLoadTestingResourceGroupResource(resourceGroupResource).GetLoadTestingResourceAsync(loadTestName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LoadTestingResourceGroupMockingExtension.GetLoadTestingResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLoadTestingResourceGroupResource.GetLoadTestingResource(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -133,14 +133,14 @@ namespace Azure.ResourceManager.LoadTesting
         [ForwardsClientCalls]
         public static Response<LoadTestingResource> GetLoadTestingResource(this ResourceGroupResource resourceGroupResource, string loadTestName, CancellationToken cancellationToken = default)
         {
-            return GetLoadTestingResourceGroupMockingExtension(resourceGroupResource).GetLoadTestingResource(loadTestName, cancellationToken);
+            return GetMockableLoadTestingResourceGroupResource(resourceGroupResource).GetLoadTestingResource(loadTestName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of LoadTestingQuotaResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LoadTestingSubscriptionMockingExtension.GetAllLoadTestingQuota(AzureLocation)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLoadTestingSubscriptionResource.GetAllLoadTestingQuota(AzureLocation)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> An object representing collection of LoadTestingQuotaResources and their operations over a LoadTestingQuotaResource. </returns>
         public static LoadTestingQuotaCollection GetAllLoadTestingQuota(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            return GetLoadTestingSubscriptionMockingExtension(subscriptionResource).GetAllLoadTestingQuota(location);
+            return GetMockableLoadTestingSubscriptionResource(subscriptionResource).GetAllLoadTestingQuota(location);
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LoadTestingSubscriptionMockingExtension.GetLoadTestingQuotaAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLoadTestingSubscriptionResource.GetLoadTestingQuotaAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.LoadTesting
         [ForwardsClientCalls]
         public static async Task<Response<LoadTestingQuotaResource>> GetLoadTestingQuotaAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaBucketName, CancellationToken cancellationToken = default)
         {
-            return await GetLoadTestingSubscriptionMockingExtension(subscriptionResource).GetLoadTestingQuotaAsync(location, quotaBucketName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableLoadTestingSubscriptionResource(subscriptionResource).GetLoadTestingQuotaAsync(location, quotaBucketName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LoadTestingSubscriptionMockingExtension.GetLoadTestingQuota(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLoadTestingSubscriptionResource.GetLoadTestingQuota(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.LoadTesting
         [ForwardsClientCalls]
         public static Response<LoadTestingQuotaResource> GetLoadTestingQuota(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaBucketName, CancellationToken cancellationToken = default)
         {
-            return GetLoadTestingSubscriptionMockingExtension(subscriptionResource).GetLoadTestingQuota(location, quotaBucketName, cancellationToken);
+            return GetMockableLoadTestingSubscriptionResource(subscriptionResource).GetLoadTestingQuota(location, quotaBucketName, cancellationToken);
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LoadTestingSubscriptionMockingExtension.GetLoadTestingResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLoadTestingSubscriptionResource.GetLoadTestingResources(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> An async collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LoadTestingResource> GetLoadTestingResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetLoadTestingSubscriptionMockingExtension(subscriptionResource).GetLoadTestingResourcesAsync(cancellationToken);
+            return GetMockableLoadTestingSubscriptionResource(subscriptionResource).GetLoadTestingResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LoadTestingSubscriptionMockingExtension.GetLoadTestingResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLoadTestingSubscriptionResource.GetLoadTestingResources(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.LoadTesting
         /// <returns> A collection of <see cref="LoadTestingResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LoadTestingResource> GetLoadTestingResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetLoadTestingSubscriptionMockingExtension(subscriptionResource).GetLoadTestingResources(cancellationToken);
+            return GetMockableLoadTestingSubscriptionResource(subscriptionResource).GetLoadTestingResources(cancellationToken);
         }
     }
 }

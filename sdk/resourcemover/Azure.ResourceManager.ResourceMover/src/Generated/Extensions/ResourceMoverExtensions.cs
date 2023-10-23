@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.ResourceMover
     /// <summary> A class to add extension methods to Azure.ResourceManager.ResourceMover. </summary>
     public static partial class ResourceMoverExtensions
     {
-        private static ResourceMoverArmClientMockingExtension GetResourceMoverArmClientMockingExtension(ArmClient client)
+        private static MockableResourceMoverArmClient GetMockableResourceMoverArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ResourceMoverArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableResourceMoverArmClient(client0));
         }
 
-        private static ResourceMoverResourceGroupMockingExtension GetResourceMoverResourceGroupMockingExtension(ArmResource resource)
+        private static MockableResourceMoverResourceGroupResource GetMockableResourceMoverResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ResourceMoverResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableResourceMoverResourceGroupResource(client, resource.Id));
         }
 
-        private static ResourceMoverSubscriptionMockingExtension GetResourceMoverSubscriptionMockingExtension(ArmResource resource)
+        private static MockableResourceMoverSubscriptionResource GetMockableResourceMoverSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ResourceMoverSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableResourceMoverSubscriptionResource(client, resource.Id));
         }
 
-        private static ResourceMoverTenantMockingExtension GetResourceMoverTenantMockingExtension(ArmResource resource)
+        private static MockableResourceMoverTenantResource GetMockableResourceMoverTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ResourceMoverTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableResourceMoverTenantResource(client, resource.Id));
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// You can use <see cref="MoverResourceSetResource.CreateResourceIdentifier" /> to create a <see cref="MoverResourceSetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceMoverArmClientMockingExtension.GetMoverResourceSetResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceMoverArmClient.GetMoverResourceSetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> Returns a <see cref="MoverResourceSetResource" /> object. </returns>
         public static MoverResourceSetResource GetMoverResourceSetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetResourceMoverArmClientMockingExtension(client).GetMoverResourceSetResource(id);
+            return GetMockableResourceMoverArmClient(client).GetMoverResourceSetResource(id);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// You can use <see cref="MoverResource.CreateResourceIdentifier" /> to create a <see cref="MoverResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceMoverArmClientMockingExtension.GetMoverResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceMoverArmClient.GetMoverResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -69,21 +69,21 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> Returns a <see cref="MoverResource" /> object. </returns>
         public static MoverResource GetMoverResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetResourceMoverArmClientMockingExtension(client).GetMoverResource(id);
+            return GetMockableResourceMoverArmClient(client).GetMoverResource(id);
         }
 
         /// <summary>
         /// Gets a collection of MoverResourceSetResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceMoverResourceGroupMockingExtension.GetMoverResourceSets()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceMoverResourceGroupResource.GetMoverResourceSets()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MoverResourceSetResources and their operations over a MoverResourceSetResource. </returns>
         public static MoverResourceSetCollection GetMoverResourceSets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceMoverResourceGroupMockingExtension(resourceGroupResource).GetMoverResourceSets();
+            return GetMockableResourceMoverResourceGroupResource(resourceGroupResource).GetMoverResourceSets();
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceMoverResourceGroupMockingExtension.GetMoverResourceSetAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceMoverResourceGroupResource.GetMoverResourceSetAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ResourceMover
         [ForwardsClientCalls]
         public static async Task<Response<MoverResourceSetResource>> GetMoverResourceSetAsync(this ResourceGroupResource resourceGroupResource, string moverResourceSetName, CancellationToken cancellationToken = default)
         {
-            return await GetResourceMoverResourceGroupMockingExtension(resourceGroupResource).GetMoverResourceSetAsync(moverResourceSetName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourceMoverResourceGroupResource(resourceGroupResource).GetMoverResourceSetAsync(moverResourceSetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceMoverResourceGroupMockingExtension.GetMoverResourceSet(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceMoverResourceGroupResource.GetMoverResourceSet(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ResourceMover
         [ForwardsClientCalls]
         public static Response<MoverResourceSetResource> GetMoverResourceSet(this ResourceGroupResource resourceGroupResource, string moverResourceSetName, CancellationToken cancellationToken = default)
         {
-            return GetResourceMoverResourceGroupMockingExtension(resourceGroupResource).GetMoverResourceSet(moverResourceSetName, cancellationToken);
+            return GetMockableResourceMoverResourceGroupResource(resourceGroupResource).GetMoverResourceSet(moverResourceSetName, cancellationToken);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceMoverSubscriptionMockingExtension.GetMoverResourceSets(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceMoverSubscriptionResource.GetMoverResourceSets(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> An async collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MoverResourceSetResource> GetMoverResourceSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceMoverSubscriptionMockingExtension(subscriptionResource).GetMoverResourceSetsAsync(cancellationToken);
+            return GetMockableResourceMoverSubscriptionResource(subscriptionResource).GetMoverResourceSetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceMoverSubscriptionMockingExtension.GetMoverResourceSets(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceMoverSubscriptionResource.GetMoverResourceSets(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> A collection of <see cref="MoverResourceSetResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MoverResourceSetResource> GetMoverResourceSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceMoverSubscriptionMockingExtension(subscriptionResource).GetMoverResourceSets(cancellationToken);
+            return GetMockableResourceMoverSubscriptionResource(subscriptionResource).GetMoverResourceSets(cancellationToken);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceMoverTenantMockingExtension.GetOperationsDiscoveries(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceMoverTenantResource.GetOperationsDiscoveries(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> An async collection of <see cref="MoverOperationsDiscovery" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MoverOperationsDiscovery> GetOperationsDiscoveriesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceMoverTenantMockingExtension(tenantResource).GetOperationsDiscoveriesAsync(cancellationToken);
+            return GetMockableResourceMoverTenantResource(tenantResource).GetOperationsDiscoveriesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceMoverTenantMockingExtension.GetOperationsDiscoveries(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceMoverTenantResource.GetOperationsDiscoveries(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ResourceMover
         /// <returns> A collection of <see cref="MoverOperationsDiscovery" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MoverOperationsDiscovery> GetOperationsDiscoveries(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceMoverTenantMockingExtension(tenantResource).GetOperationsDiscoveries(cancellationToken);
+            return GetMockableResourceMoverTenantResource(tenantResource).GetOperationsDiscoveries(cancellationToken);
         }
     }
 }

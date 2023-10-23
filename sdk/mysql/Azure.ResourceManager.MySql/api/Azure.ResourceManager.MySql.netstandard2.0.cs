@@ -956,9 +956,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 }
 namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
 {
-    public partial class MySqlFlexibleServersArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMySqlFlexibleServersArmClient : Azure.ResourceManager.ArmResource
     {
-        protected MySqlFlexibleServersArmClientMockingExtension() { }
+        protected MockableMySqlFlexibleServersArmClient() { }
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerAadAdministratorResource GetMySqlFlexibleServerAadAdministratorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupResource GetMySqlFlexibleServerBackupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationResource GetMySqlFlexibleServerConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -966,16 +966,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleResource GetMySqlFlexibleServerFirewallRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource GetMySqlFlexibleServerResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class MySqlFlexibleServersResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMySqlFlexibleServersResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected MySqlFlexibleServersResourceGroupMockingExtension() { }
+        protected MockableMySqlFlexibleServersResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource> GetMySqlFlexibleServer(string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource>> GetMySqlFlexibleServerAsync(string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerCollection GetMySqlFlexibleServers() { throw null; }
     }
-    public partial class MySqlFlexibleServersSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMySqlFlexibleServersSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected MySqlFlexibleServersSubscriptionMockingExtension() { }
+        protected MockableMySqlFlexibleServersSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult> CheckMySqlFlexibleServerNameAvailability(Azure.Core.AzureLocation locationName, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult>> CheckMySqlFlexibleServerNameAvailabilityAsync(Azure.Core.AzureLocation locationName, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult> CheckMySqlFlexibleServerNameAvailabilityWithoutLocation(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -987,9 +987,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         public virtual Azure.Pageable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource> GetMySqlFlexibleServers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource> GetMySqlFlexibleServersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MySqlFlexibleServersTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMySqlFlexibleServersTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected MySqlFlexibleServersTenantMockingExtension() { }
+        protected MockableMySqlFlexibleServersTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse> ExecuteGetPrivateDnsZoneSuffix(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse>> ExecuteGetPrivateDnsZoneSuffixAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -1561,9 +1561,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 }
 namespace Azure.ResourceManager.MySql.Mocking
 {
-    public partial class MySqlArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMySqlArmClient : Azure.ResourceManager.ArmResource
     {
-        protected MySqlArmClientMockingExtension() { }
+        protected MockableMySqlArmClient() { }
         public virtual Azure.ResourceManager.MySql.MySqlAdvisorResource GetMySqlAdvisorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MySql.MySqlConfigurationResource GetMySqlConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MySql.MySqlDatabaseResource GetMySqlDatabaseResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1580,16 +1580,16 @@ namespace Azure.ResourceManager.MySql.Mocking
         public virtual Azure.ResourceManager.MySql.MySqlVirtualNetworkRuleResource GetMySqlVirtualNetworkRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MySql.MySqlWaitStatisticResource GetMySqlWaitStatisticResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class MySqlResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMySqlResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected MySqlResourceGroupMockingExtension() { }
+        protected MockableMySqlResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.MySql.MySqlServerResource> GetMySqlServer(string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.MySqlServerResource>> GetMySqlServerAsync(string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MySql.MySqlServerCollection GetMySqlServers() { throw null; }
     }
-    public partial class MySqlSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMySqlSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected MySqlSubscriptionMockingExtension() { }
+        protected MockableMySqlSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityResult> CheckMySqlNameAvailability(Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityResult>> CheckMySqlNameAvailabilityAsync(Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MySql.Models.MySqlPerformanceTier> GetLocationBasedPerformanceTiers(Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

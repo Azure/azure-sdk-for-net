@@ -68,21 +68,21 @@ namespace Azure.ResourceManager.ResourceConnector
 }
 namespace Azure.ResourceManager.ResourceConnector.Mocking
 {
-    public partial class ResourceConnectorArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableResourceConnectorArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ResourceConnectorArmClientMockingExtension() { }
+        protected MockableResourceConnectorArmClient() { }
         public virtual Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource GetResourceConnectorApplianceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ResourceConnectorResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableResourceConnectorResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ResourceConnectorResourceGroupMockingExtension() { }
+        protected MockableResourceConnectorResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource> GetResourceConnectorAppliance(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource>> GetResourceConnectorApplianceAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceCollection GetResourceConnectorAppliances() { throw null; }
     }
-    public partial class ResourceConnectorSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableResourceConnectorSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ResourceConnectorSubscriptionMockingExtension() { }
+        protected MockableResourceConnectorSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource> GetResourceConnectorAppliances(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ResourceConnector.ResourceConnectorApplianceResource> GetResourceConnectorAppliancesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ResourceConnector.Models.ApplianceTelemetryConfigResult> GetTelemetryConfigAppliance(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

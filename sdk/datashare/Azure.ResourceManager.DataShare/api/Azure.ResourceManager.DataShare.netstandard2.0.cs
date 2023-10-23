@@ -482,9 +482,9 @@ namespace Azure.ResourceManager.DataShare
 }
 namespace Azure.ResourceManager.DataShare.Mocking
 {
-    public partial class DataShareArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataShareArmClient : Azure.ResourceManager.ArmResource
     {
-        protected DataShareArmClientMockingExtension() { }
+        protected MockableDataShareArmClient() { }
         public virtual Azure.ResourceManager.DataShare.DataShareAccountResource GetDataShareAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource GetDataShareConsumerInvitationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataShare.DataShareInvitationResource GetDataShareInvitationResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -496,22 +496,22 @@ namespace Azure.ResourceManager.DataShare.Mocking
         public virtual Azure.ResourceManager.DataShare.ShareDataSetResource GetShareDataSetResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataShare.ShareSubscriptionResource GetShareSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DataShareResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataShareResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected DataShareResourceGroupMockingExtension() { }
+        protected MockableDataShareResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DataShare.DataShareAccountResource> GetDataShareAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.DataShareAccountResource>> GetDataShareAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataShare.DataShareAccountCollection GetDataShareAccounts() { throw null; }
     }
-    public partial class DataShareSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataShareSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected DataShareSubscriptionMockingExtension() { }
+        protected MockableDataShareSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.DataShare.DataShareAccountResource> GetDataShareAccounts(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataShare.DataShareAccountResource> GetDataShareAccountsAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DataShareTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataShareTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected DataShareTenantMockingExtension() { }
+        protected MockableDataShareTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration> ActivateEmail(Azure.Core.AzureLocation location, Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration emailRegistration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration>> ActivateEmailAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataShare.Models.DataShareEmailRegistration emailRegistration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataShare.DataShareConsumerInvitationResource> GetDataShareConsumerInvitation(Azure.Core.AzureLocation location, System.Guid invitationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

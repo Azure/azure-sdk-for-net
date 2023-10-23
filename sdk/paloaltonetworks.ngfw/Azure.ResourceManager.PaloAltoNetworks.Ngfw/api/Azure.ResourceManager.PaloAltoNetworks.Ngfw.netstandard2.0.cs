@@ -699,9 +699,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 }
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
 {
-    public partial class PaloAltoNetworksNgfwArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePaloAltoNetworksNgfwArmClient : Azure.ResourceManager.ArmResource
     {
-        protected PaloAltoNetworksNgfwArmClientMockingExtension() { }
+        protected MockablePaloAltoNetworksNgfwArmClient() { }
         public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCertificateObjectResource GetGlobalRulestackCertificateObjectResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackFqdnResource GetGlobalRulestackFqdnResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackPrefixResource GetGlobalRulestackPrefixResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -716,9 +716,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.PostRulestackRuleResource GetPostRulestackRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.PreRulestackRuleResource GetPreRulestackRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class PaloAltoNetworksNgfwResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePaloAltoNetworksNgfwResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected PaloAltoNetworksNgfwResourceGroupMockingExtension() { }
+        protected MockablePaloAltoNetworksNgfwResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> GetLocalRulestack(string localRulestackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource>> GetLocalRulestackAsync(string localRulestackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackCollection GetLocalRulestacks() { throw null; }
@@ -726,17 +726,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource>> GetPaloAltoNetworksFirewallAsync(string firewallName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallCollection GetPaloAltoNetworksFirewalls() { throw null; }
     }
-    public partial class PaloAltoNetworksNgfwSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePaloAltoNetworksNgfwSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected PaloAltoNetworksNgfwSubscriptionMockingExtension() { }
+        protected MockablePaloAltoNetworksNgfwSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> GetLocalRulestacks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.LocalRulestackResource> GetLocalRulestacksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewalls(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PaloAltoNetworks.Ngfw.PaloAltoNetworksFirewallResource> GetPaloAltoNetworksFirewallsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PaloAltoNetworksNgfwTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePaloAltoNetworksNgfwTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected PaloAltoNetworksNgfwTenantMockingExtension() { }
+        protected MockablePaloAltoNetworksNgfwTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource> GetGlobalRulestack(string globalRulestackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackResource>> GetGlobalRulestackAsync(string globalRulestackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.PaloAltoNetworks.Ngfw.GlobalRulestackCollection GetGlobalRulestacks() { throw null; }

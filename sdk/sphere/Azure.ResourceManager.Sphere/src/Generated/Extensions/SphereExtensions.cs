@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.Sphere
     /// <summary> A class to add extension methods to Azure.ResourceManager.Sphere. </summary>
     public static partial class SphereExtensions
     {
-        private static SphereArmClientMockingExtension GetSphereArmClientMockingExtension(ArmClient client)
+        private static MockableSphereArmClient GetMockableSphereArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new SphereArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableSphereArmClient(client0));
         }
 
-        private static SphereResourceGroupMockingExtension GetSphereResourceGroupMockingExtension(ArmResource resource)
+        private static MockableSphereResourceGroupResource GetMockableSphereResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new SphereResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableSphereResourceGroupResource(client, resource.Id));
         }
 
-        private static SphereSubscriptionMockingExtension GetSphereSubscriptionMockingExtension(ArmResource resource)
+        private static MockableSphereSubscriptionResource GetMockableSphereSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new SphereSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableSphereSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sphere
         /// You can use <see cref="SphereCatalogResource.CreateResourceIdentifier" /> to create a <see cref="SphereCatalogResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SphereArmClientMockingExtension.GetSphereCatalogResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSphereArmClient.GetSphereCatalogResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereCatalogResource" /> object. </returns>
         public static SphereCatalogResource GetSphereCatalogResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSphereArmClientMockingExtension(client).GetSphereCatalogResource(id);
+            return GetMockableSphereArmClient(client).GetSphereCatalogResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Sphere
         /// You can use <see cref="SphereCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SphereCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SphereArmClientMockingExtension.GetSphereCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSphereArmClient.GetSphereCertificateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereCertificateResource" /> object. </returns>
         public static SphereCertificateResource GetSphereCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSphereArmClientMockingExtension(client).GetSphereCertificateResource(id);
+            return GetMockableSphereArmClient(client).GetSphereCertificateResource(id);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sphere
         /// You can use <see cref="SphereImageResource.CreateResourceIdentifier" /> to create a <see cref="SphereImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SphereArmClientMockingExtension.GetSphereImageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSphereArmClient.GetSphereImageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereImageResource" /> object. </returns>
         public static SphereImageResource GetSphereImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSphereArmClientMockingExtension(client).GetSphereImageResource(id);
+            return GetMockableSphereArmClient(client).GetSphereImageResource(id);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Sphere
         /// You can use <see cref="SphereProductResource.CreateResourceIdentifier" /> to create a <see cref="SphereProductResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SphereArmClientMockingExtension.GetSphereProductResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSphereArmClient.GetSphereProductResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereProductResource" /> object. </returns>
         public static SphereProductResource GetSphereProductResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSphereArmClientMockingExtension(client).GetSphereProductResource(id);
+            return GetMockableSphereArmClient(client).GetSphereProductResource(id);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sphere
         /// You can use <see cref="SphereDeviceGroupResource.CreateResourceIdentifier" /> to create a <see cref="SphereDeviceGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SphereArmClientMockingExtension.GetSphereDeviceGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSphereArmClient.GetSphereDeviceGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereDeviceGroupResource" /> object. </returns>
         public static SphereDeviceGroupResource GetSphereDeviceGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSphereArmClientMockingExtension(client).GetSphereDeviceGroupResource(id);
+            return GetMockableSphereArmClient(client).GetSphereDeviceGroupResource(id);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sphere
         /// You can use <see cref="SphereDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="SphereDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SphereArmClientMockingExtension.GetSphereDeploymentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSphereArmClient.GetSphereDeploymentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereDeploymentResource" /> object. </returns>
         public static SphereDeploymentResource GetSphereDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSphereArmClientMockingExtension(client).GetSphereDeploymentResource(id);
+            return GetMockableSphereArmClient(client).GetSphereDeploymentResource(id);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sphere
         /// You can use <see cref="SphereDeviceResource.CreateResourceIdentifier" /> to create a <see cref="SphereDeviceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SphereArmClientMockingExtension.GetSphereDeviceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSphereArmClient.GetSphereDeviceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -143,21 +143,21 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> Returns a <see cref="SphereDeviceResource" /> object. </returns>
         public static SphereDeviceResource GetSphereDeviceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSphereArmClientMockingExtension(client).GetSphereDeviceResource(id);
+            return GetMockableSphereArmClient(client).GetSphereDeviceResource(id);
         }
 
         /// <summary>
         /// Gets a collection of SphereCatalogResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SphereResourceGroupMockingExtension.GetSphereCatalogs()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSphereResourceGroupResource.GetSphereCatalogs()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SphereCatalogResources and their operations over a SphereCatalogResource. </returns>
         public static SphereCatalogCollection GetSphereCatalogs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetSphereResourceGroupMockingExtension(resourceGroupResource).GetSphereCatalogs();
+            return GetMockableSphereResourceGroupResource(resourceGroupResource).GetSphereCatalogs();
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Sphere
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SphereResourceGroupMockingExtension.GetSphereCatalogAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSphereResourceGroupResource.GetSphereCatalogAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Sphere
         [ForwardsClientCalls]
         public static async Task<Response<SphereCatalogResource>> GetSphereCatalogAsync(this ResourceGroupResource resourceGroupResource, string catalogName, CancellationToken cancellationToken = default)
         {
-            return await GetSphereResourceGroupMockingExtension(resourceGroupResource).GetSphereCatalogAsync(catalogName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSphereResourceGroupResource(resourceGroupResource).GetSphereCatalogAsync(catalogName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Sphere
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SphereResourceGroupMockingExtension.GetSphereCatalog(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSphereResourceGroupResource.GetSphereCatalog(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Sphere
         [ForwardsClientCalls]
         public static Response<SphereCatalogResource> GetSphereCatalog(this ResourceGroupResource resourceGroupResource, string catalogName, CancellationToken cancellationToken = default)
         {
-            return GetSphereResourceGroupMockingExtension(resourceGroupResource).GetSphereCatalog(catalogName, cancellationToken);
+            return GetMockableSphereResourceGroupResource(resourceGroupResource).GetSphereCatalog(catalogName, cancellationToken);
         }
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sphere
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SphereSubscriptionMockingExtension.GetSphereCatalogs(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSphereSubscriptionResource.GetSphereCatalogs(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> An async collection of <see cref="SphereCatalogResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SphereCatalogResource> GetSphereCatalogsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSphereSubscriptionMockingExtension(subscriptionResource).GetSphereCatalogsAsync(cancellationToken);
+            return GetMockableSphereSubscriptionResource(subscriptionResource).GetSphereCatalogsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Sphere
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SphereSubscriptionMockingExtension.GetSphereCatalogs(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSphereSubscriptionResource.GetSphereCatalogs(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Sphere
         /// <returns> A collection of <see cref="SphereCatalogResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SphereCatalogResource> GetSphereCatalogs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSphereSubscriptionMockingExtension(subscriptionResource).GetSphereCatalogs(cancellationToken);
+            return GetMockableSphereSubscriptionResource(subscriptionResource).GetSphereCatalogs(cancellationToken);
         }
     }
 }

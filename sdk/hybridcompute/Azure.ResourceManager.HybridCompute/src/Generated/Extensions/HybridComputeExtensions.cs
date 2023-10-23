@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.HybridCompute
     /// <summary> A class to add extension methods to Azure.ResourceManager.HybridCompute. </summary>
     public static partial class HybridComputeExtensions
     {
-        private static HybridComputeArmClientMockingExtension GetHybridComputeArmClientMockingExtension(ArmClient client)
+        private static MockableHybridComputeArmClient GetMockableHybridComputeArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new HybridComputeArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableHybridComputeArmClient(client0));
         }
 
-        private static HybridComputeResourceGroupMockingExtension GetHybridComputeResourceGroupMockingExtension(ArmResource resource)
+        private static MockableHybridComputeResourceGroupResource GetMockableHybridComputeResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new HybridComputeResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableHybridComputeResourceGroupResource(client, resource.Id));
         }
 
-        private static HybridComputeSubscriptionMockingExtension GetHybridComputeSubscriptionMockingExtension(ArmResource resource)
+        private static MockableHybridComputeSubscriptionResource GetMockableHybridComputeSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new HybridComputeSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableHybridComputeSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// You can use <see cref="HybridComputeMachineResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeArmClientMockingExtension.GetHybridComputeMachineResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetHybridComputeMachineResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> Returns a <see cref="HybridComputeMachineResource" /> object. </returns>
         public static HybridComputeMachineResource GetHybridComputeMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHybridComputeArmClientMockingExtension(client).GetHybridComputeMachineResource(id);
+            return GetMockableHybridComputeArmClient(client).GetHybridComputeMachineResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// You can use <see cref="HybridComputeMachineExtensionResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputeMachineExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeArmClientMockingExtension.GetHybridComputeMachineExtensionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetHybridComputeMachineExtensionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> Returns a <see cref="HybridComputeMachineExtensionResource" /> object. </returns>
         public static HybridComputeMachineExtensionResource GetHybridComputeMachineExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHybridComputeArmClientMockingExtension(client).GetHybridComputeMachineExtensionResource(id);
+            return GetMockableHybridComputeArmClient(client).GetHybridComputeMachineExtensionResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// You can use <see cref="ExtensionValueResource.CreateResourceIdentifier" /> to create an <see cref="ExtensionValueResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeArmClientMockingExtension.GetExtensionValueResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetExtensionValueResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> Returns a <see cref="ExtensionValueResource" /> object. </returns>
         public static ExtensionValueResource GetExtensionValueResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHybridComputeArmClientMockingExtension(client).GetExtensionValueResource(id);
+            return GetMockableHybridComputeArmClient(client).GetExtensionValueResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// You can use <see cref="HybridComputePrivateLinkScopeResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputePrivateLinkScopeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeArmClientMockingExtension.GetHybridComputePrivateLinkScopeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetHybridComputePrivateLinkScopeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> Returns a <see cref="HybridComputePrivateLinkScopeResource" /> object. </returns>
         public static HybridComputePrivateLinkScopeResource GetHybridComputePrivateLinkScopeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHybridComputeArmClientMockingExtension(client).GetHybridComputePrivateLinkScopeResource(id);
+            return GetMockableHybridComputeArmClient(client).GetHybridComputePrivateLinkScopeResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// You can use <see cref="HybridComputePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeArmClientMockingExtension.GetHybridComputePrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetHybridComputePrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> Returns a <see cref="HybridComputePrivateLinkResource" /> object. </returns>
         public static HybridComputePrivateLinkResource GetHybridComputePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHybridComputeArmClientMockingExtension(client).GetHybridComputePrivateLinkResource(id);
+            return GetMockableHybridComputeArmClient(client).GetHybridComputePrivateLinkResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// You can use <see cref="HybridComputePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HybridComputePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeArmClientMockingExtension.GetHybridComputePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeArmClient.GetHybridComputePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,21 +128,21 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> Returns a <see cref="HybridComputePrivateEndpointConnectionResource" /> object. </returns>
         public static HybridComputePrivateEndpointConnectionResource GetHybridComputePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHybridComputeArmClientMockingExtension(client).GetHybridComputePrivateEndpointConnectionResource(id);
+            return GetMockableHybridComputeArmClient(client).GetHybridComputePrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
         /// Gets a collection of HybridComputeMachineResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeResourceGroupMockingExtension.GetHybridComputeMachines()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeResourceGroupResource.GetHybridComputeMachines()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of HybridComputeMachineResources and their operations over a HybridComputeMachineResource. </returns>
         public static HybridComputeMachineCollection GetHybridComputeMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetHybridComputeResourceGroupMockingExtension(resourceGroupResource).GetHybridComputeMachines();
+            return GetMockableHybridComputeResourceGroupResource(resourceGroupResource).GetHybridComputeMachines();
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeResourceGroupMockingExtension.GetHybridComputeMachineAsync(string,InstanceViewType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeResourceGroupResource.GetHybridComputeMachineAsync(string,InstanceViewType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HybridCompute
         [ForwardsClientCalls]
         public static async Task<Response<HybridComputeMachineResource>> GetHybridComputeMachineAsync(this ResourceGroupResource resourceGroupResource, string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetHybridComputeResourceGroupMockingExtension(resourceGroupResource).GetHybridComputeMachineAsync(machineName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridComputeResourceGroupResource(resourceGroupResource).GetHybridComputeMachineAsync(machineName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeResourceGroupMockingExtension.GetHybridComputeMachine(string,InstanceViewType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeResourceGroupResource.GetHybridComputeMachine(string,InstanceViewType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -200,21 +200,21 @@ namespace Azure.ResourceManager.HybridCompute
         [ForwardsClientCalls]
         public static Response<HybridComputeMachineResource> GetHybridComputeMachine(this ResourceGroupResource resourceGroupResource, string machineName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetHybridComputeResourceGroupMockingExtension(resourceGroupResource).GetHybridComputeMachine(machineName, expand, cancellationToken);
+            return GetMockableHybridComputeResourceGroupResource(resourceGroupResource).GetHybridComputeMachine(machineName, expand, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of HybridComputePrivateLinkScopeResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeResourceGroupMockingExtension.GetHybridComputePrivateLinkScopes()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeResourceGroupResource.GetHybridComputePrivateLinkScopes()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of HybridComputePrivateLinkScopeResources and their operations over a HybridComputePrivateLinkScopeResource. </returns>
         public static HybridComputePrivateLinkScopeCollection GetHybridComputePrivateLinkScopes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetHybridComputeResourceGroupMockingExtension(resourceGroupResource).GetHybridComputePrivateLinkScopes();
+            return GetMockableHybridComputeResourceGroupResource(resourceGroupResource).GetHybridComputePrivateLinkScopes();
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeResourceGroupMockingExtension.GetHybridComputePrivateLinkScopeAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeResourceGroupResource.GetHybridComputePrivateLinkScopeAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.HybridCompute
         [ForwardsClientCalls]
         public static async Task<Response<HybridComputePrivateLinkScopeResource>> GetHybridComputePrivateLinkScopeAsync(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
         {
-            return await GetHybridComputeResourceGroupMockingExtension(resourceGroupResource).GetHybridComputePrivateLinkScopeAsync(scopeName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridComputeResourceGroupResource(resourceGroupResource).GetHybridComputePrivateLinkScopeAsync(scopeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeResourceGroupMockingExtension.GetHybridComputePrivateLinkScope(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeResourceGroupResource.GetHybridComputePrivateLinkScope(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -270,14 +270,14 @@ namespace Azure.ResourceManager.HybridCompute
         [ForwardsClientCalls]
         public static Response<HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScope(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
         {
-            return GetHybridComputeResourceGroupMockingExtension(resourceGroupResource).GetHybridComputePrivateLinkScope(scopeName, cancellationToken);
+            return GetMockableHybridComputeResourceGroupResource(resourceGroupResource).GetHybridComputePrivateLinkScope(scopeName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ExtensionValueResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeSubscriptionMockingExtension.GetExtensionValues(AzureLocation,string,string)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetExtensionValues(AzureLocation,string,string)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> An object representing collection of ExtensionValueResources and their operations over a ExtensionValueResource. </returns>
         public static ExtensionValueCollection GetExtensionValues(this SubscriptionResource subscriptionResource, AzureLocation location, string publisher, string extensionType)
         {
-            return GetHybridComputeSubscriptionMockingExtension(subscriptionResource).GetExtensionValues(location, publisher, extensionType);
+            return GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetExtensionValues(location, publisher, extensionType);
         }
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeSubscriptionMockingExtension.GetExtensionValueAsync(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetExtensionValueAsync(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.HybridCompute
         [ForwardsClientCalls]
         public static async Task<Response<ExtensionValueResource>> GetExtensionValueAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
-            return await GetHybridComputeSubscriptionMockingExtension(subscriptionResource).GetExtensionValueAsync(location, publisher, extensionType, version, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetExtensionValueAsync(location, publisher, extensionType, version, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeSubscriptionMockingExtension.GetExtensionValue(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetExtensionValue(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.HybridCompute
         [ForwardsClientCalls]
         public static Response<ExtensionValueResource> GetExtensionValue(this SubscriptionResource subscriptionResource, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
-            return GetHybridComputeSubscriptionMockingExtension(subscriptionResource).GetExtensionValue(location, publisher, extensionType, version, cancellationToken);
+            return GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetExtensionValue(location, publisher, extensionType, version, cancellationToken);
         }
 
         /// <summary>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeSubscriptionMockingExtension.GetHybridComputeMachines(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetHybridComputeMachines(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> An async collection of <see cref="HybridComputeMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HybridComputeMachineResource> GetHybridComputeMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetHybridComputeSubscriptionMockingExtension(subscriptionResource).GetHybridComputeMachinesAsync(cancellationToken);
+            return GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetHybridComputeMachinesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeSubscriptionMockingExtension.GetHybridComputeMachines(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetHybridComputeMachines(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> A collection of <see cref="HybridComputeMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HybridComputeMachineResource> GetHybridComputeMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetHybridComputeSubscriptionMockingExtension(subscriptionResource).GetHybridComputeMachines(cancellationToken);
+            return GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetHybridComputeMachines(cancellationToken);
         }
 
         /// <summary>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeSubscriptionMockingExtension.GetHybridComputePrivateLinkScopes(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetHybridComputePrivateLinkScopes(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> An async collection of <see cref="HybridComputePrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScopesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetHybridComputeSubscriptionMockingExtension(subscriptionResource).GetHybridComputePrivateLinkScopesAsync(cancellationToken);
+            return GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetHybridComputePrivateLinkScopesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeSubscriptionMockingExtension.GetHybridComputePrivateLinkScopes(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetHybridComputePrivateLinkScopes(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <returns> A collection of <see cref="HybridComputePrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScopes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetHybridComputeSubscriptionMockingExtension(subscriptionResource).GetHybridComputePrivateLinkScopes(cancellationToken);
+            return GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetHybridComputePrivateLinkScopes(cancellationToken);
         }
 
         /// <summary>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeSubscriptionMockingExtension.GetValidationDetailsPrivateLinkScope(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetValidationDetailsPrivateLinkScope(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkScopeId"/> is null. </exception>
         public static async Task<Response<PrivateLinkScopeValidationDetails>> GetValidationDetailsPrivateLinkScopeAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string privateLinkScopeId, CancellationToken cancellationToken = default)
         {
-            return await GetHybridComputeSubscriptionMockingExtension(subscriptionResource).GetValidationDetailsPrivateLinkScopeAsync(location, privateLinkScopeId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetValidationDetailsPrivateLinkScopeAsync(location, privateLinkScopeId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridComputeSubscriptionMockingExtension.GetValidationDetailsPrivateLinkScope(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridComputeSubscriptionResource.GetValidationDetailsPrivateLinkScope(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkScopeId"/> is null. </exception>
         public static Response<PrivateLinkScopeValidationDetails> GetValidationDetailsPrivateLinkScope(this SubscriptionResource subscriptionResource, AzureLocation location, string privateLinkScopeId, CancellationToken cancellationToken = default)
         {
-            return GetHybridComputeSubscriptionMockingExtension(subscriptionResource).GetValidationDetailsPrivateLinkScope(location, privateLinkScopeId, cancellationToken);
+            return GetMockableHybridComputeSubscriptionResource(subscriptionResource).GetValidationDetailsPrivateLinkScope(location, privateLinkScopeId, cancellationToken);
         }
     }
 }

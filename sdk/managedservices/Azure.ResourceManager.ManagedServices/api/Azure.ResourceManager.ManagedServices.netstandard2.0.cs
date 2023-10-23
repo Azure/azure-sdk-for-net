@@ -122,9 +122,9 @@ namespace Azure.ResourceManager.ManagedServices
 }
 namespace Azure.ResourceManager.ManagedServices.Mocking
 {
-    public partial class ManagedServicesArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableManagedServicesArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ManagedServicesArmClientMockingExtension() { }
+        protected MockableManagedServicesArmClient() { }
         public virtual Azure.Response<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationResource> GetManagedServicesMarketplaceRegistration(Azure.Core.ResourceIdentifier scope, string marketplaceIdentifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationResource>> GetManagedServicesMarketplaceRegistrationAsync(Azure.Core.ResourceIdentifier scope, string marketplaceIdentifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ManagedServices.ManagedServicesMarketplaceRegistrationResource GetManagedServicesMarketplaceRegistrationResource(Azure.Core.ResourceIdentifier id) { throw null; }

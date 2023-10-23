@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Confluent
     /// <summary> A class to add extension methods to Azure.ResourceManager.Confluent. </summary>
     public static partial class ConfluentExtensions
     {
-        private static ConfluentArmClientMockingExtension GetConfluentArmClientMockingExtension(ArmClient client)
+        private static MockableConfluentArmClient GetMockableConfluentArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ConfluentArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableConfluentArmClient(client0));
         }
 
-        private static ConfluentResourceGroupMockingExtension GetConfluentResourceGroupMockingExtension(ArmResource resource)
+        private static MockableConfluentResourceGroupResource GetMockableConfluentResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ConfluentResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableConfluentResourceGroupResource(client, resource.Id));
         }
 
-        private static ConfluentSubscriptionMockingExtension GetConfluentSubscriptionMockingExtension(ArmResource resource)
+        private static MockableConfluentSubscriptionResource GetMockableConfluentSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ConfluentSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableConfluentSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Confluent
         /// You can use <see cref="ConfluentOrganizationResource.CreateResourceIdentifier" /> to create a <see cref="ConfluentOrganizationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ConfluentArmClientMockingExtension.GetConfluentOrganizationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentArmClient.GetConfluentOrganizationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,21 +48,21 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> Returns a <see cref="ConfluentOrganizationResource" /> object. </returns>
         public static ConfluentOrganizationResource GetConfluentOrganizationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetConfluentArmClientMockingExtension(client).GetConfluentOrganizationResource(id);
+            return GetMockableConfluentArmClient(client).GetConfluentOrganizationResource(id);
         }
 
         /// <summary>
         /// Gets a collection of ConfluentOrganizationResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ConfluentResourceGroupMockingExtension.GetConfluentOrganizations()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentResourceGroupResource.GetConfluentOrganizations()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ConfluentOrganizationResources and their operations over a ConfluentOrganizationResource. </returns>
         public static ConfluentOrganizationCollection GetConfluentOrganizations(this ResourceGroupResource resourceGroupResource)
         {
-            return GetConfluentResourceGroupMockingExtension(resourceGroupResource).GetConfluentOrganizations();
+            return GetMockableConfluentResourceGroupResource(resourceGroupResource).GetConfluentOrganizations();
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ConfluentResourceGroupMockingExtension.GetConfluentOrganizationAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentResourceGroupResource.GetConfluentOrganizationAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Confluent
         [ForwardsClientCalls]
         public static async Task<Response<ConfluentOrganizationResource>> GetConfluentOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
-            return await GetConfluentResourceGroupMockingExtension(resourceGroupResource).GetConfluentOrganizationAsync(organizationName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableConfluentResourceGroupResource(resourceGroupResource).GetConfluentOrganizationAsync(organizationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ConfluentResourceGroupMockingExtension.GetConfluentOrganization(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentResourceGroupResource.GetConfluentOrganization(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Confluent
         [ForwardsClientCalls]
         public static Response<ConfluentOrganizationResource> GetConfluentOrganization(this ResourceGroupResource resourceGroupResource, string organizationName, CancellationToken cancellationToken = default)
         {
-            return GetConfluentResourceGroupMockingExtension(resourceGroupResource).GetConfluentOrganization(organizationName, cancellationToken);
+            return GetMockableConfluentResourceGroupResource(resourceGroupResource).GetConfluentOrganization(organizationName, cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ConfluentResourceGroupMockingExtension.ValidateOrganization(string,ConfluentOrganizationData,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentResourceGroupResource.ValidateOrganization(string,ConfluentOrganizationData,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         public static async Task<Response<ConfluentOrganizationResource>> ValidateOrganizationAsync(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
-            return await GetConfluentResourceGroupMockingExtension(resourceGroupResource).ValidateOrganizationAsync(organizationName, data, cancellationToken).ConfigureAwait(false);
+            return await GetMockableConfluentResourceGroupResource(resourceGroupResource).ValidateOrganizationAsync(organizationName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ConfluentResourceGroupMockingExtension.ValidateOrganization(string,ConfluentOrganizationData,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentResourceGroupResource.ValidateOrganization(string,ConfluentOrganizationData,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
         public static Response<ConfluentOrganizationResource> ValidateOrganization(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
         {
-            return GetConfluentResourceGroupMockingExtension(resourceGroupResource).ValidateOrganization(organizationName, data, cancellationToken);
+            return GetMockableConfluentResourceGroupResource(resourceGroupResource).ValidateOrganization(organizationName, data, cancellationToken);
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ConfluentSubscriptionMockingExtension.GetMarketplaceAgreements(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentSubscriptionResource.GetMarketplaceAgreements(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> An async collection of <see cref="ConfluentAgreement" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ConfluentAgreement> GetMarketplaceAgreementsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetConfluentSubscriptionMockingExtension(subscriptionResource).GetMarketplaceAgreementsAsync(cancellationToken);
+            return GetMockableConfluentSubscriptionResource(subscriptionResource).GetMarketplaceAgreementsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ConfluentSubscriptionMockingExtension.GetMarketplaceAgreements(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentSubscriptionResource.GetMarketplaceAgreements(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> A collection of <see cref="ConfluentAgreement" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ConfluentAgreement> GetMarketplaceAgreements(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetConfluentSubscriptionMockingExtension(subscriptionResource).GetMarketplaceAgreements(cancellationToken);
+            return GetMockableConfluentSubscriptionResource(subscriptionResource).GetMarketplaceAgreements(cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ConfluentSubscriptionMockingExtension.CreateMarketplaceAgreement(ConfluentAgreement,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentSubscriptionResource.CreateMarketplaceAgreement(ConfluentAgreement,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ConfluentAgreement>> CreateMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, ConfluentAgreement body = null, CancellationToken cancellationToken = default)
         {
-            return await GetConfluentSubscriptionMockingExtension(subscriptionResource).CreateMarketplaceAgreementAsync(body, cancellationToken).ConfigureAwait(false);
+            return await GetMockableConfluentSubscriptionResource(subscriptionResource).CreateMarketplaceAgreementAsync(body, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ConfluentSubscriptionMockingExtension.CreateMarketplaceAgreement(ConfluentAgreement,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentSubscriptionResource.CreateMarketplaceAgreement(ConfluentAgreement,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ConfluentAgreement> CreateMarketplaceAgreement(this SubscriptionResource subscriptionResource, ConfluentAgreement body = null, CancellationToken cancellationToken = default)
         {
-            return GetConfluentSubscriptionMockingExtension(subscriptionResource).CreateMarketplaceAgreement(body, cancellationToken);
+            return GetMockableConfluentSubscriptionResource(subscriptionResource).CreateMarketplaceAgreement(body, cancellationToken);
         }
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ConfluentSubscriptionMockingExtension.GetConfluentOrganizations(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentSubscriptionResource.GetConfluentOrganizations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> An async collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ConfluentOrganizationResource> GetConfluentOrganizationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetConfluentSubscriptionMockingExtension(subscriptionResource).GetConfluentOrganizationsAsync(cancellationToken);
+            return GetMockableConfluentSubscriptionResource(subscriptionResource).GetConfluentOrganizationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Confluent
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ConfluentSubscriptionMockingExtension.GetConfluentOrganizations(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentSubscriptionResource.GetConfluentOrganizations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.Confluent
         /// <returns> A collection of <see cref="ConfluentOrganizationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ConfluentOrganizationResource> GetConfluentOrganizations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetConfluentSubscriptionMockingExtension(subscriptionResource).GetConfluentOrganizations(cancellationToken);
+            return GetMockableConfluentSubscriptionResource(subscriptionResource).GetConfluentOrganizations(cancellationToken);
         }
     }
 }

@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.Nginx
     /// <summary> A class to add extension methods to Azure.ResourceManager.Nginx. </summary>
     public static partial class NginxExtensions
     {
-        private static NginxArmClientMockingExtension GetNginxArmClientMockingExtension(ArmClient client)
+        private static MockableNginxArmClient GetMockableNginxArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new NginxArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableNginxArmClient(client0));
         }
 
-        private static NginxResourceGroupMockingExtension GetNginxResourceGroupMockingExtension(ArmResource resource)
+        private static MockableNginxResourceGroupResource GetMockableNginxResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new NginxResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableNginxResourceGroupResource(client, resource.Id));
         }
 
-        private static NginxSubscriptionMockingExtension GetNginxSubscriptionMockingExtension(ArmResource resource)
+        private static MockableNginxSubscriptionResource GetMockableNginxSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new NginxSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableNginxSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Nginx
         /// You can use <see cref="NginxCertificateResource.CreateResourceIdentifier" /> to create a <see cref="NginxCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NginxArmClientMockingExtension.GetNginxCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNginxArmClient.GetNginxCertificateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> Returns a <see cref="NginxCertificateResource" /> object. </returns>
         public static NginxCertificateResource GetNginxCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNginxArmClientMockingExtension(client).GetNginxCertificateResource(id);
+            return GetMockableNginxArmClient(client).GetNginxCertificateResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Nginx
         /// You can use <see cref="NginxConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NginxConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NginxArmClientMockingExtension.GetNginxConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNginxArmClient.GetNginxConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> Returns a <see cref="NginxConfigurationResource" /> object. </returns>
         public static NginxConfigurationResource GetNginxConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNginxArmClientMockingExtension(client).GetNginxConfigurationResource(id);
+            return GetMockableNginxArmClient(client).GetNginxConfigurationResource(id);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Nginx
         /// You can use <see cref="NginxDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="NginxDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NginxArmClientMockingExtension.GetNginxDeploymentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNginxArmClient.GetNginxDeploymentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -79,21 +79,21 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> Returns a <see cref="NginxDeploymentResource" /> object. </returns>
         public static NginxDeploymentResource GetNginxDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNginxArmClientMockingExtension(client).GetNginxDeploymentResource(id);
+            return GetMockableNginxArmClient(client).GetNginxDeploymentResource(id);
         }
 
         /// <summary>
         /// Gets a collection of NginxDeploymentResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NginxResourceGroupMockingExtension.GetNginxDeployments()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNginxResourceGroupResource.GetNginxDeployments()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NginxDeploymentResources and their operations over a NginxDeploymentResource. </returns>
         public static NginxDeploymentCollection GetNginxDeployments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetNginxResourceGroupMockingExtension(resourceGroupResource).GetNginxDeployments();
+            return GetMockableNginxResourceGroupResource(resourceGroupResource).GetNginxDeployments();
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Nginx
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NginxResourceGroupMockingExtension.GetNginxDeploymentAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNginxResourceGroupResource.GetNginxDeploymentAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Nginx
         [ForwardsClientCalls]
         public static async Task<Response<NginxDeploymentResource>> GetNginxDeploymentAsync(this ResourceGroupResource resourceGroupResource, string deploymentName, CancellationToken cancellationToken = default)
         {
-            return await GetNginxResourceGroupMockingExtension(resourceGroupResource).GetNginxDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNginxResourceGroupResource(resourceGroupResource).GetNginxDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Nginx
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NginxResourceGroupMockingExtension.GetNginxDeployment(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNginxResourceGroupResource.GetNginxDeployment(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Nginx
         [ForwardsClientCalls]
         public static Response<NginxDeploymentResource> GetNginxDeployment(this ResourceGroupResource resourceGroupResource, string deploymentName, CancellationToken cancellationToken = default)
         {
-            return GetNginxResourceGroupMockingExtension(resourceGroupResource).GetNginxDeployment(deploymentName, cancellationToken);
+            return GetMockableNginxResourceGroupResource(resourceGroupResource).GetNginxDeployment(deploymentName, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Nginx
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NginxSubscriptionMockingExtension.GetNginxDeployments(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNginxSubscriptionResource.GetNginxDeployments(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> An async collection of <see cref="NginxDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NginxDeploymentResource> GetNginxDeploymentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetNginxSubscriptionMockingExtension(subscriptionResource).GetNginxDeploymentsAsync(cancellationToken);
+            return GetMockableNginxSubscriptionResource(subscriptionResource).GetNginxDeploymentsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Nginx
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NginxSubscriptionMockingExtension.GetNginxDeployments(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNginxSubscriptionResource.GetNginxDeployments(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Nginx
         /// <returns> A collection of <see cref="NginxDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NginxDeploymentResource> GetNginxDeployments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetNginxSubscriptionMockingExtension(subscriptionResource).GetNginxDeployments(cancellationToken);
+            return GetMockableNginxSubscriptionResource(subscriptionResource).GetNginxDeployments(cancellationToken);
         }
     }
 }

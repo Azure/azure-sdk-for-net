@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Media
     /// <summary> A class to add extension methods to Azure.ResourceManager.Media. </summary>
     public static partial class MediaExtensions
     {
-        private static MediaArmClientMockingExtension GetMediaArmClientMockingExtension(ArmClient client)
+        private static MockableMediaArmClient GetMockableMediaArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MediaArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableMediaArmClient(client0));
         }
 
-        private static MediaResourceGroupMockingExtension GetMediaResourceGroupMockingExtension(ArmResource resource)
+        private static MockableMediaResourceGroupResource GetMockableMediaResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MediaResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMediaResourceGroupResource(client, resource.Id));
         }
 
-        private static MediaSubscriptionMockingExtension GetMediaSubscriptionMockingExtension(ArmResource resource)
+        private static MockableMediaSubscriptionResource GetMockableMediaSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MediaSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMediaSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Media
         /// You can use <see cref="MediaServicesAccountFilterResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesAccountFilterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaArmClientMockingExtension.GetMediaServicesAccountFilterResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaArmClient.GetMediaServicesAccountFilterResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaServicesAccountFilterResource" /> object. </returns>
         public static MediaServicesAccountFilterResource GetMediaServicesAccountFilterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMediaArmClientMockingExtension(client).GetMediaServicesAccountFilterResource(id);
+            return GetMockableMediaArmClient(client).GetMediaServicesAccountFilterResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Media
         /// You can use <see cref="MediaServicesAccountResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaArmClientMockingExtension.GetMediaServicesAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaArmClient.GetMediaServicesAccountResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaServicesAccountResource" /> object. </returns>
         public static MediaServicesAccountResource GetMediaServicesAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMediaArmClientMockingExtension(client).GetMediaServicesAccountResource(id);
+            return GetMockableMediaArmClient(client).GetMediaServicesAccountResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Media
         /// You can use <see cref="MediaServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaArmClientMockingExtension.GetMediaServicesPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaArmClient.GetMediaServicesPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaServicesPrivateLinkResource" /> object. </returns>
         public static MediaServicesPrivateLinkResource GetMediaServicesPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMediaArmClientMockingExtension(client).GetMediaServicesPrivateLinkResource(id);
+            return GetMockableMediaArmClient(client).GetMediaServicesPrivateLinkResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Media
         /// You can use <see cref="MediaServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MediaServicesPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaArmClientMockingExtension.GetMediaServicesPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaArmClient.GetMediaServicesPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaServicesPrivateEndpointConnectionResource" /> object. </returns>
         public static MediaServicesPrivateEndpointConnectionResource GetMediaServicesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMediaArmClientMockingExtension(client).GetMediaServicesPrivateEndpointConnectionResource(id);
+            return GetMockableMediaArmClient(client).GetMediaServicesPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Media
         /// You can use <see cref="MediaAssetResource.CreateResourceIdentifier" /> to create a <see cref="MediaAssetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaArmClientMockingExtension.GetMediaAssetResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaArmClient.GetMediaAssetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaAssetResource" /> object. </returns>
         public static MediaAssetResource GetMediaAssetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMediaArmClientMockingExtension(client).GetMediaAssetResource(id);
+            return GetMockableMediaArmClient(client).GetMediaAssetResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Media
         /// You can use <see cref="MediaAssetFilterResource.CreateResourceIdentifier" /> to create a <see cref="MediaAssetFilterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaArmClientMockingExtension.GetMediaAssetFilterResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaArmClient.GetMediaAssetFilterResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaAssetFilterResource" /> object. </returns>
         public static MediaAssetFilterResource GetMediaAssetFilterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMediaArmClientMockingExtension(client).GetMediaAssetFilterResource(id);
+            return GetMockableMediaArmClient(client).GetMediaAssetFilterResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Media
         /// You can use <see cref="MediaAssetTrackResource.CreateResourceIdentifier" /> to create a <see cref="MediaAssetTrackResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaArmClientMockingExtension.GetMediaAssetTrackResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaArmClient.GetMediaAssetTrackResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaAssetTrackResource" /> object. </returns>
         public static MediaAssetTrackResource GetMediaAssetTrackResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMediaArmClientMockingExtension(client).GetMediaAssetTrackResource(id);
+            return GetMockableMediaArmClient(client).GetMediaAssetTrackResource(id);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Media
         /// You can use <see cref="ContentKeyPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ContentKeyPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaArmClientMockingExtension.GetContentKeyPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaArmClient.GetContentKeyPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="ContentKeyPolicyResource" /> object. </returns>
         public static ContentKeyPolicyResource GetContentKeyPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMediaArmClientMockingExtension(client).GetContentKeyPolicyResource(id);
+            return GetMockableMediaArmClient(client).GetContentKeyPolicyResource(id);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Media
         /// You can use <see cref="MediaTransformResource.CreateResourceIdentifier" /> to create a <see cref="MediaTransformResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaArmClientMockingExtension.GetMediaTransformResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaArmClient.GetMediaTransformResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaTransformResource" /> object. </returns>
         public static MediaTransformResource GetMediaTransformResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMediaArmClientMockingExtension(client).GetMediaTransformResource(id);
+            return GetMockableMediaArmClient(client).GetMediaTransformResource(id);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Media
         /// You can use <see cref="MediaJobResource.CreateResourceIdentifier" /> to create a <see cref="MediaJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaArmClientMockingExtension.GetMediaJobResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaArmClient.GetMediaJobResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaJobResource" /> object. </returns>
         public static MediaJobResource GetMediaJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMediaArmClientMockingExtension(client).GetMediaJobResource(id);
+            return GetMockableMediaArmClient(client).GetMediaJobResource(id);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Media
         /// You can use <see cref="StreamingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="StreamingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaArmClientMockingExtension.GetStreamingPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaArmClient.GetStreamingPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="StreamingPolicyResource" /> object. </returns>
         public static StreamingPolicyResource GetStreamingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMediaArmClientMockingExtension(client).GetStreamingPolicyResource(id);
+            return GetMockableMediaArmClient(client).GetStreamingPolicyResource(id);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Media
         /// You can use <see cref="StreamingLocatorResource.CreateResourceIdentifier" /> to create a <see cref="StreamingLocatorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaArmClientMockingExtension.GetStreamingLocatorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaArmClient.GetStreamingLocatorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="StreamingLocatorResource" /> object. </returns>
         public static StreamingLocatorResource GetStreamingLocatorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMediaArmClientMockingExtension(client).GetStreamingLocatorResource(id);
+            return GetMockableMediaArmClient(client).GetStreamingLocatorResource(id);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Media
         /// You can use <see cref="MediaLiveEventResource.CreateResourceIdentifier" /> to create a <see cref="MediaLiveEventResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaArmClientMockingExtension.GetMediaLiveEventResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaArmClient.GetMediaLiveEventResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaLiveEventResource" /> object. </returns>
         public static MediaLiveEventResource GetMediaLiveEventResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMediaArmClientMockingExtension(client).GetMediaLiveEventResource(id);
+            return GetMockableMediaArmClient(client).GetMediaLiveEventResource(id);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Media
         /// You can use <see cref="MediaLiveOutputResource.CreateResourceIdentifier" /> to create a <see cref="MediaLiveOutputResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaArmClientMockingExtension.GetMediaLiveOutputResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaArmClient.GetMediaLiveOutputResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="MediaLiveOutputResource" /> object. </returns>
         public static MediaLiveOutputResource GetMediaLiveOutputResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMediaArmClientMockingExtension(client).GetMediaLiveOutputResource(id);
+            return GetMockableMediaArmClient(client).GetMediaLiveOutputResource(id);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Media
         /// You can use <see cref="StreamingEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StreamingEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaArmClientMockingExtension.GetStreamingEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaArmClient.GetStreamingEndpointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -272,21 +272,21 @@ namespace Azure.ResourceManager.Media
         /// <returns> Returns a <see cref="StreamingEndpointResource" /> object. </returns>
         public static StreamingEndpointResource GetStreamingEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMediaArmClientMockingExtension(client).GetStreamingEndpointResource(id);
+            return GetMockableMediaArmClient(client).GetStreamingEndpointResource(id);
         }
 
         /// <summary>
         /// Gets a collection of MediaServicesAccountResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaResourceGroupMockingExtension.GetMediaServicesAccounts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaResourceGroupResource.GetMediaServicesAccounts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MediaServicesAccountResources and their operations over a MediaServicesAccountResource. </returns>
         public static MediaServicesAccountCollection GetMediaServicesAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMediaResourceGroupMockingExtension(resourceGroupResource).GetMediaServicesAccounts();
+            return GetMockableMediaResourceGroupResource(resourceGroupResource).GetMediaServicesAccounts();
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaResourceGroupMockingExtension.GetMediaServicesAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaResourceGroupResource.GetMediaServicesAccountAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Media
         [ForwardsClientCalls]
         public static async Task<Response<MediaServicesAccountResource>> GetMediaServicesAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await GetMediaResourceGroupMockingExtension(resourceGroupResource).GetMediaServicesAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMediaResourceGroupResource(resourceGroupResource).GetMediaServicesAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaResourceGroupMockingExtension.GetMediaServicesAccount(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaResourceGroupResource.GetMediaServicesAccount(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Media
         [ForwardsClientCalls]
         public static Response<MediaServicesAccountResource> GetMediaServicesAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return GetMediaResourceGroupMockingExtension(resourceGroupResource).GetMediaServicesAccount(accountName, cancellationToken);
+            return GetMockableMediaResourceGroupResource(resourceGroupResource).GetMediaServicesAccount(accountName, cancellationToken);
         }
 
         /// <summary>
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaSubscriptionMockingExtension.GetMediaServicesAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaSubscriptionResource.GetMediaServicesAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> An async collection of <see cref="MediaServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MediaServicesAccountResource> GetMediaServicesAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMediaSubscriptionMockingExtension(subscriptionResource).GetMediaServicesAccountsAsync(cancellationToken);
+            return GetMockableMediaSubscriptionResource(subscriptionResource).GetMediaServicesAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaSubscriptionMockingExtension.GetMediaServicesAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaSubscriptionResource.GetMediaServicesAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Media
         /// <returns> A collection of <see cref="MediaServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MediaServicesAccountResource> GetMediaServicesAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMediaSubscriptionMockingExtension(subscriptionResource).GetMediaServicesAccounts(cancellationToken);
+            return GetMockableMediaSubscriptionResource(subscriptionResource).GetMediaServicesAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaSubscriptionMockingExtension.CheckMediaServicesNameAvailability(AzureLocation,MediaServicesNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaSubscriptionResource.CheckMediaServicesNameAvailability(AzureLocation,MediaServicesNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<MediaServicesNameAvailabilityResult>> CheckMediaServicesNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, MediaServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetMediaSubscriptionMockingExtension(subscriptionResource).CheckMediaServicesNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMediaSubscriptionResource(subscriptionResource).CheckMediaServicesNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Media
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MediaSubscriptionMockingExtension.CheckMediaServicesNameAvailability(AzureLocation,MediaServicesNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMediaSubscriptionResource.CheckMediaServicesNameAvailability(AzureLocation,MediaServicesNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<MediaServicesNameAvailabilityResult> CheckMediaServicesNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation locationName, MediaServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetMediaSubscriptionMockingExtension(subscriptionResource).CheckMediaServicesNameAvailability(locationName, content, cancellationToken);
+            return GetMockableMediaSubscriptionResource(subscriptionResource).CheckMediaServicesNameAvailability(locationName, content, cancellationToken);
         }
     }
 }

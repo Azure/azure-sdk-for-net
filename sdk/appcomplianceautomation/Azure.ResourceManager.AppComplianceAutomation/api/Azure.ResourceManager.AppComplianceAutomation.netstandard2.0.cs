@@ -82,15 +82,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 }
 namespace Azure.ResourceManager.AppComplianceAutomation.Mocking
 {
-    public partial class AppComplianceAutomationArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAppComplianceAutomationArmClient : Azure.ResourceManager.ArmResource
     {
-        protected AppComplianceAutomationArmClientMockingExtension() { }
+        protected MockableAppComplianceAutomationArmClient() { }
         public virtual Azure.ResourceManager.AppComplianceAutomation.ReportResource GetReportResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppComplianceAutomation.SnapshotResource GetSnapshotResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class AppComplianceAutomationTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAppComplianceAutomationTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected AppComplianceAutomationTenantMockingExtension() { }
+        protected MockableAppComplianceAutomationTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.AppComplianceAutomation.ReportResource> GetReportResource(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppComplianceAutomation.ReportResource>> GetReportResourceAsync(string reportName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppComplianceAutomation.ReportResourceCollection GetReportResources() { throw null; }

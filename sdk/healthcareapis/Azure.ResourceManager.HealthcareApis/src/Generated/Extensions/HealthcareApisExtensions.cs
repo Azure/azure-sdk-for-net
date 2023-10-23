@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.HealthcareApis
     /// <summary> A class to add extension methods to Azure.ResourceManager.HealthcareApis. </summary>
     public static partial class HealthcareApisExtensions
     {
-        private static HealthcareApisArmClientMockingExtension GetHealthcareApisArmClientMockingExtension(ArmClient client)
+        private static MockableHealthcareApisArmClient GetMockableHealthcareApisArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new HealthcareApisArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableHealthcareApisArmClient(client0));
         }
 
-        private static HealthcareApisResourceGroupMockingExtension GetHealthcareApisResourceGroupMockingExtension(ArmResource resource)
+        private static MockableHealthcareApisResourceGroupResource GetMockableHealthcareApisResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new HealthcareApisResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableHealthcareApisResourceGroupResource(client, resource.Id));
         }
 
-        private static HealthcareApisSubscriptionMockingExtension GetHealthcareApisSubscriptionMockingExtension(ArmResource resource)
+        private static MockableHealthcareApisSubscriptionResource GetMockableHealthcareApisSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new HealthcareApisSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableHealthcareApisSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// You can use <see cref="HealthcareApisServiceResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisArmClientMockingExtension.GetHealthcareApisServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetHealthcareApisServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="HealthcareApisServiceResource" /> object. </returns>
         public static HealthcareApisServiceResource GetHealthcareApisServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHealthcareApisArmClientMockingExtension(client).GetHealthcareApisServiceResource(id);
+            return GetMockableHealthcareApisArmClient(client).GetHealthcareApisServiceResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// You can use <see cref="HealthcareApisServicePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisServicePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisArmClientMockingExtension.GetHealthcareApisServicePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetHealthcareApisServicePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="HealthcareApisServicePrivateEndpointConnectionResource" /> object. </returns>
         public static HealthcareApisServicePrivateEndpointConnectionResource GetHealthcareApisServicePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHealthcareApisArmClientMockingExtension(client).GetHealthcareApisServicePrivateEndpointConnectionResource(id);
+            return GetMockableHealthcareApisArmClient(client).GetHealthcareApisServicePrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// You can use <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisArmClientMockingExtension.GetHealthcareApisWorkspacePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetHealthcareApisWorkspacePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="HealthcareApisWorkspacePrivateEndpointConnectionResource" /> object. </returns>
         public static HealthcareApisWorkspacePrivateEndpointConnectionResource GetHealthcareApisWorkspacePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHealthcareApisArmClientMockingExtension(client).GetHealthcareApisWorkspacePrivateEndpointConnectionResource(id);
+            return GetMockableHealthcareApisArmClient(client).GetHealthcareApisWorkspacePrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// You can use <see cref="HealthcareApisServicePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisServicePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisArmClientMockingExtension.GetHealthcareApisServicePrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetHealthcareApisServicePrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="HealthcareApisServicePrivateLinkResource" /> object. </returns>
         public static HealthcareApisServicePrivateLinkResource GetHealthcareApisServicePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHealthcareApisArmClientMockingExtension(client).GetHealthcareApisServicePrivateLinkResource(id);
+            return GetMockableHealthcareApisArmClient(client).GetHealthcareApisServicePrivateLinkResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// You can use <see cref="HealthcareApisWorkspacePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisWorkspacePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisArmClientMockingExtension.GetHealthcareApisWorkspacePrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetHealthcareApisWorkspacePrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="HealthcareApisWorkspacePrivateLinkResource" /> object. </returns>
         public static HealthcareApisWorkspacePrivateLinkResource GetHealthcareApisWorkspacePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHealthcareApisArmClientMockingExtension(client).GetHealthcareApisWorkspacePrivateLinkResource(id);
+            return GetMockableHealthcareApisArmClient(client).GetHealthcareApisWorkspacePrivateLinkResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// You can use <see cref="HealthcareApisWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisArmClientMockingExtension.GetHealthcareApisWorkspaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetHealthcareApisWorkspaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="HealthcareApisWorkspaceResource" /> object. </returns>
         public static HealthcareApisWorkspaceResource GetHealthcareApisWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHealthcareApisArmClientMockingExtension(client).GetHealthcareApisWorkspaceResource(id);
+            return GetMockableHealthcareApisArmClient(client).GetHealthcareApisWorkspaceResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// You can use <see cref="DicomServiceResource.CreateResourceIdentifier" /> to create a <see cref="DicomServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisArmClientMockingExtension.GetDicomServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetDicomServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="DicomServiceResource" /> object. </returns>
         public static DicomServiceResource GetDicomServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHealthcareApisArmClientMockingExtension(client).GetDicomServiceResource(id);
+            return GetMockableHealthcareApisArmClient(client).GetDicomServiceResource(id);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// You can use <see cref="HealthcareApisIotConnectorResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisIotConnectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisArmClientMockingExtension.GetHealthcareApisIotConnectorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetHealthcareApisIotConnectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="HealthcareApisIotConnectorResource" /> object. </returns>
         public static HealthcareApisIotConnectorResource GetHealthcareApisIotConnectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHealthcareApisArmClientMockingExtension(client).GetHealthcareApisIotConnectorResource(id);
+            return GetMockableHealthcareApisArmClient(client).GetHealthcareApisIotConnectorResource(id);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// You can use <see cref="HealthcareApisIotFhirDestinationResource.CreateResourceIdentifier" /> to create a <see cref="HealthcareApisIotFhirDestinationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisArmClientMockingExtension.GetHealthcareApisIotFhirDestinationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetHealthcareApisIotFhirDestinationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="HealthcareApisIotFhirDestinationResource" /> object. </returns>
         public static HealthcareApisIotFhirDestinationResource GetHealthcareApisIotFhirDestinationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHealthcareApisArmClientMockingExtension(client).GetHealthcareApisIotFhirDestinationResource(id);
+            return GetMockableHealthcareApisArmClient(client).GetHealthcareApisIotFhirDestinationResource(id);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// You can use <see cref="FhirServiceResource.CreateResourceIdentifier" /> to create a <see cref="FhirServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisArmClientMockingExtension.GetFhirServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisArmClient.GetFhirServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -192,21 +192,21 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> Returns a <see cref="FhirServiceResource" /> object. </returns>
         public static FhirServiceResource GetFhirServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHealthcareApisArmClientMockingExtension(client).GetFhirServiceResource(id);
+            return GetMockableHealthcareApisArmClient(client).GetFhirServiceResource(id);
         }
 
         /// <summary>
         /// Gets a collection of HealthcareApisServiceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisResourceGroupMockingExtension.GetHealthcareApisServices()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisResourceGroupResource.GetHealthcareApisServices()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of HealthcareApisServiceResources and their operations over a HealthcareApisServiceResource. </returns>
         public static HealthcareApisServiceCollection GetHealthcareApisServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetHealthcareApisResourceGroupMockingExtension(resourceGroupResource).GetHealthcareApisServices();
+            return GetMockableHealthcareApisResourceGroupResource(resourceGroupResource).GetHealthcareApisServices();
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisResourceGroupMockingExtension.GetHealthcareApisServiceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisResourceGroupResource.GetHealthcareApisServiceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.HealthcareApis
         [ForwardsClientCalls]
         public static async Task<Response<HealthcareApisServiceResource>> GetHealthcareApisServiceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetHealthcareApisResourceGroupMockingExtension(resourceGroupResource).GetHealthcareApisServiceAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHealthcareApisResourceGroupResource(resourceGroupResource).GetHealthcareApisServiceAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisResourceGroupMockingExtension.GetHealthcareApisService(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisResourceGroupResource.GetHealthcareApisService(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -262,21 +262,21 @@ namespace Azure.ResourceManager.HealthcareApis
         [ForwardsClientCalls]
         public static Response<HealthcareApisServiceResource> GetHealthcareApisService(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetHealthcareApisResourceGroupMockingExtension(resourceGroupResource).GetHealthcareApisService(resourceName, cancellationToken);
+            return GetMockableHealthcareApisResourceGroupResource(resourceGroupResource).GetHealthcareApisService(resourceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of HealthcareApisWorkspaceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisResourceGroupMockingExtension.GetHealthcareApisWorkspaces()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisResourceGroupResource.GetHealthcareApisWorkspaces()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of HealthcareApisWorkspaceResources and their operations over a HealthcareApisWorkspaceResource. </returns>
         public static HealthcareApisWorkspaceCollection GetHealthcareApisWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetHealthcareApisResourceGroupMockingExtension(resourceGroupResource).GetHealthcareApisWorkspaces();
+            return GetMockableHealthcareApisResourceGroupResource(resourceGroupResource).GetHealthcareApisWorkspaces();
         }
 
         /// <summary>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisResourceGroupMockingExtension.GetHealthcareApisWorkspaceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisResourceGroupResource.GetHealthcareApisWorkspaceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.HealthcareApis
         [ForwardsClientCalls]
         public static async Task<Response<HealthcareApisWorkspaceResource>> GetHealthcareApisWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await GetHealthcareApisResourceGroupMockingExtension(resourceGroupResource).GetHealthcareApisWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHealthcareApisResourceGroupResource(resourceGroupResource).GetHealthcareApisWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisResourceGroupMockingExtension.GetHealthcareApisWorkspace(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisResourceGroupResource.GetHealthcareApisWorkspace(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.HealthcareApis
         [ForwardsClientCalls]
         public static Response<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return GetHealthcareApisResourceGroupMockingExtension(resourceGroupResource).GetHealthcareApisWorkspace(workspaceName, cancellationToken);
+            return GetMockableHealthcareApisResourceGroupResource(resourceGroupResource).GetHealthcareApisWorkspace(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisSubscriptionMockingExtension.GetHealthcareApisServices(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisSubscriptionResource.GetHealthcareApisServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An async collection of <see cref="HealthcareApisServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HealthcareApisServiceResource> GetHealthcareApisServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetHealthcareApisSubscriptionMockingExtension(subscriptionResource).GetHealthcareApisServicesAsync(cancellationToken);
+            return GetMockableHealthcareApisSubscriptionResource(subscriptionResource).GetHealthcareApisServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisSubscriptionMockingExtension.GetHealthcareApisServices(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisSubscriptionResource.GetHealthcareApisServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> A collection of <see cref="HealthcareApisServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HealthcareApisServiceResource> GetHealthcareApisServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetHealthcareApisSubscriptionMockingExtension(subscriptionResource).GetHealthcareApisServices(cancellationToken);
+            return GetMockableHealthcareApisSubscriptionResource(subscriptionResource).GetHealthcareApisServices(cancellationToken);
         }
 
         /// <summary>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisSubscriptionMockingExtension.CheckHealthcareApisNameAvailability(HealthcareApisNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisSubscriptionResource.CheckHealthcareApisNameAvailability(HealthcareApisNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<HealthcareApisNameAvailabilityResult>> CheckHealthcareApisNameAvailabilityAsync(this SubscriptionResource subscriptionResource, HealthcareApisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetHealthcareApisSubscriptionMockingExtension(subscriptionResource).CheckHealthcareApisNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHealthcareApisSubscriptionResource(subscriptionResource).CheckHealthcareApisNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisSubscriptionMockingExtension.CheckHealthcareApisNameAvailability(HealthcareApisNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisSubscriptionResource.CheckHealthcareApisNameAvailability(HealthcareApisNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<HealthcareApisNameAvailabilityResult> CheckHealthcareApisNameAvailability(this SubscriptionResource subscriptionResource, HealthcareApisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetHealthcareApisSubscriptionMockingExtension(subscriptionResource).CheckHealthcareApisNameAvailability(content, cancellationToken);
+            return GetMockableHealthcareApisSubscriptionResource(subscriptionResource).CheckHealthcareApisNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisSubscriptionMockingExtension.GetHealthcareApisWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisSubscriptionResource.GetHealthcareApisWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> An async collection of <see cref="HealthcareApisWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetHealthcareApisSubscriptionMockingExtension(subscriptionResource).GetHealthcareApisWorkspacesAsync(cancellationToken);
+            return GetMockableHealthcareApisSubscriptionResource(subscriptionResource).GetHealthcareApisWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HealthcareApisSubscriptionMockingExtension.GetHealthcareApisWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHealthcareApisSubscriptionResource.GetHealthcareApisWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <returns> A collection of <see cref="HealthcareApisWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HealthcareApisWorkspaceResource> GetHealthcareApisWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetHealthcareApisSubscriptionMockingExtension(subscriptionResource).GetHealthcareApisWorkspaces(cancellationToken);
+            return GetMockableHealthcareApisSubscriptionResource(subscriptionResource).GetHealthcareApisWorkspaces(cancellationToken);
         }
     }
 }

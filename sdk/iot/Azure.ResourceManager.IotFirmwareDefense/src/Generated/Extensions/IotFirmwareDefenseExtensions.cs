@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     /// <summary> A class to add extension methods to Azure.ResourceManager.IotFirmwareDefense. </summary>
     public static partial class IotFirmwareDefenseExtensions
     {
-        private static IotFirmwareDefenseArmClientMockingExtension GetIotFirmwareDefenseArmClientMockingExtension(ArmClient client)
+        private static MockableIotFirmwareDefenseArmClient GetMockableIotFirmwareDefenseArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new IotFirmwareDefenseArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableIotFirmwareDefenseArmClient(client0));
         }
 
-        private static IotFirmwareDefenseResourceGroupMockingExtension GetIotFirmwareDefenseResourceGroupMockingExtension(ArmResource resource)
+        private static MockableIotFirmwareDefenseResourceGroupResource GetMockableIotFirmwareDefenseResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new IotFirmwareDefenseResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableIotFirmwareDefenseResourceGroupResource(client, resource.Id));
         }
 
-        private static IotFirmwareDefenseSubscriptionMockingExtension GetIotFirmwareDefenseSubscriptionMockingExtension(ArmResource resource)
+        private static MockableIotFirmwareDefenseSubscriptionResource GetMockableIotFirmwareDefenseSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new IotFirmwareDefenseSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableIotFirmwareDefenseSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// You can use <see cref="FirmwareResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotFirmwareDefenseArmClientMockingExtension.GetFirmwareResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseArmClient.GetFirmwareResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> Returns a <see cref="FirmwareResource" /> object. </returns>
         public static FirmwareResource GetFirmwareResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetIotFirmwareDefenseArmClientMockingExtension(client).GetFirmwareResource(id);
+            return GetMockableIotFirmwareDefenseArmClient(client).GetFirmwareResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// You can use <see cref="FirmwareWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotFirmwareDefenseArmClientMockingExtension.GetFirmwareWorkspaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseArmClient.GetFirmwareWorkspaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,21 +63,21 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> Returns a <see cref="FirmwareWorkspaceResource" /> object. </returns>
         public static FirmwareWorkspaceResource GetFirmwareWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetIotFirmwareDefenseArmClientMockingExtension(client).GetFirmwareWorkspaceResource(id);
+            return GetMockableIotFirmwareDefenseArmClient(client).GetFirmwareWorkspaceResource(id);
         }
 
         /// <summary>
         /// Gets a collection of FirmwareWorkspaceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotFirmwareDefenseResourceGroupMockingExtension.GetFirmwareWorkspaces()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseResourceGroupResource.GetFirmwareWorkspaces()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of FirmwareWorkspaceResources and their operations over a FirmwareWorkspaceResource. </returns>
         public static FirmwareWorkspaceCollection GetFirmwareWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetIotFirmwareDefenseResourceGroupMockingExtension(resourceGroupResource).GetFirmwareWorkspaces();
+            return GetMockableIotFirmwareDefenseResourceGroupResource(resourceGroupResource).GetFirmwareWorkspaces();
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotFirmwareDefenseResourceGroupMockingExtension.GetFirmwareWorkspaceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseResourceGroupResource.GetFirmwareWorkspaceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         [ForwardsClientCalls]
         public static async Task<Response<FirmwareWorkspaceResource>> GetFirmwareWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await GetIotFirmwareDefenseResourceGroupMockingExtension(resourceGroupResource).GetFirmwareWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableIotFirmwareDefenseResourceGroupResource(resourceGroupResource).GetFirmwareWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotFirmwareDefenseResourceGroupMockingExtension.GetFirmwareWorkspace(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseResourceGroupResource.GetFirmwareWorkspace(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         [ForwardsClientCalls]
         public static Response<FirmwareWorkspaceResource> GetFirmwareWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return GetIotFirmwareDefenseResourceGroupMockingExtension(resourceGroupResource).GetFirmwareWorkspace(workspaceName, cancellationToken);
+            return GetMockableIotFirmwareDefenseResourceGroupResource(resourceGroupResource).GetFirmwareWorkspace(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotFirmwareDefenseSubscriptionMockingExtension.GetFirmwareWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseSubscriptionResource.GetFirmwareWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> An async collection of <see cref="FirmwareWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FirmwareWorkspaceResource> GetFirmwareWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetIotFirmwareDefenseSubscriptionMockingExtension(subscriptionResource).GetFirmwareWorkspacesAsync(cancellationToken);
+            return GetMockableIotFirmwareDefenseSubscriptionResource(subscriptionResource).GetFirmwareWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotFirmwareDefenseSubscriptionMockingExtension.GetFirmwareWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseSubscriptionResource.GetFirmwareWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> A collection of <see cref="FirmwareWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FirmwareWorkspaceResource> GetFirmwareWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetIotFirmwareDefenseSubscriptionMockingExtension(subscriptionResource).GetFirmwareWorkspaces(cancellationToken);
+            return GetMockableIotFirmwareDefenseSubscriptionResource(subscriptionResource).GetFirmwareWorkspaces(cancellationToken);
         }
     }
 }

@@ -669,9 +669,9 @@ namespace Azure.ResourceManager.NetApp
 }
 namespace Azure.ResourceManager.NetApp.Mocking
 {
-    public partial class NetAppArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNetAppArmClient : Azure.ResourceManager.ArmResource
     {
-        protected NetAppArmClientMockingExtension() { }
+        protected MockableNetAppArmClient() { }
         public virtual Azure.ResourceManager.NetApp.CapacityPoolResource GetCapacityPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppAccountResource GetNetAppAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppBackupPolicyResource GetNetAppBackupPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -682,16 +682,16 @@ namespace Azure.ResourceManager.NetApp.Mocking
         public virtual Azure.ResourceManager.NetApp.NetAppVolumeSnapshotResource GetNetAppVolumeSnapshotResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetApp.SnapshotPolicyResource GetSnapshotPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class NetAppResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNetAppResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected NetAppResourceGroupMockingExtension() { }
+        protected MockableNetAppResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.NetApp.NetAppAccountResource> GetNetAppAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.NetAppAccountResource>> GetNetAppAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.NetApp.NetAppAccountCollection GetNetAppAccounts() { throw null; }
     }
-    public partial class NetAppSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNetAppSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected NetAppSubscriptionMockingExtension() { }
+        protected MockableNetAppSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppCheckAvailabilityResult> CheckNetAppFilePathAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.NetApp.Models.NetAppFilePathAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppCheckAvailabilityResult>> CheckNetAppFilePathAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.NetApp.Models.NetAppFilePathAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetApp.Models.NetAppCheckAvailabilityResult> CheckNetAppNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.NetApp.Models.NetAppNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

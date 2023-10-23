@@ -162,23 +162,23 @@ namespace Azure.ResourceManager.Search
 }
 namespace Azure.ResourceManager.Search.Mocking
 {
-    public partial class SearchArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSearchArmClient : Azure.ResourceManager.ArmResource
     {
-        protected SearchArmClientMockingExtension() { }
+        protected MockableSearchArmClient() { }
         public virtual Azure.ResourceManager.Search.SearchPrivateEndpointConnectionResource GetSearchPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Search.SearchServiceResource GetSearchServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Search.SharedSearchServicePrivateLinkResource GetSharedSearchServicePrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class SearchResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSearchResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected SearchResourceGroupMockingExtension() { }
+        protected MockableSearchResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Search.SearchServiceResource> GetSearchService(string searchServiceName, Azure.ResourceManager.Search.Models.SearchManagementRequestOptions searchManagementRequestOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Search.SearchServiceResource>> GetSearchServiceAsync(string searchServiceName, Azure.ResourceManager.Search.Models.SearchManagementRequestOptions searchManagementRequestOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Search.SearchServiceCollection GetSearchServices() { throw null; }
     }
-    public partial class SearchSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSearchSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected SearchSubscriptionMockingExtension() { }
+        protected MockableSearchSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityResult> CheckSearchServiceNameAvailability(Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityContent content, Azure.ResourceManager.Search.Models.SearchManagementRequestOptions searchManagementRequestOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityResult>> CheckSearchServiceNameAvailabilityAsync(Azure.ResourceManager.Search.Models.SearchServiceNameAvailabilityContent content, Azure.ResourceManager.Search.Models.SearchManagementRequestOptions searchManagementRequestOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Search.SearchServiceResource> GetSearchServices(Azure.ResourceManager.Search.Models.SearchManagementRequestOptions searchManagementRequestOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

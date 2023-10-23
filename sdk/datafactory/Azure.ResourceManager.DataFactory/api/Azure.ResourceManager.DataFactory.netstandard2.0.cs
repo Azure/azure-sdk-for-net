@@ -664,9 +664,9 @@ namespace Azure.ResourceManager.DataFactory
 }
 namespace Azure.ResourceManager.DataFactory.Mocking
 {
-    public partial class DataFactoryArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataFactoryArmClient : Azure.ResourceManager.ArmResource
     {
-        protected DataFactoryArmClientMockingExtension() { }
+        protected MockableDataFactoryArmClient() { }
         public virtual Azure.ResourceManager.DataFactory.DataFactoryChangeDataCaptureResource GetDataFactoryChangeDataCaptureResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataFactory.DataFactoryDataFlowResource GetDataFactoryDataFlowResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataFactory.DataFactoryDatasetResource GetDataFactoryDatasetResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -681,16 +681,16 @@ namespace Azure.ResourceManager.DataFactory.Mocking
         public virtual Azure.ResourceManager.DataFactory.DataFactoryResource GetDataFactoryResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataFactory.DataFactoryTriggerResource GetDataFactoryTriggerResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DataFactoryResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataFactoryResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected DataFactoryResourceGroupMockingExtension() { }
+        protected MockableDataFactoryResourceGroupResource() { }
         public virtual Azure.ResourceManager.DataFactory.DataFactoryCollection GetDataFactories() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource> GetDataFactory(string factoryName, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource>> GetDataFactoryAsync(string factoryName, string ifNoneMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DataFactorySubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataFactorySubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected DataFactorySubscriptionMockingExtension() { }
+        protected MockableDataFactorySubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource> ConfigureFactoryRepoInformation(Azure.Core.AzureLocation locationId, Azure.ResourceManager.DataFactory.Models.FactoryRepoContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataFactory.DataFactoryResource>> ConfigureFactoryRepoInformationAsync(Azure.Core.AzureLocation locationId, Azure.ResourceManager.DataFactory.Models.FactoryRepoContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataFactory.DataFactoryResource> GetDataFactories(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

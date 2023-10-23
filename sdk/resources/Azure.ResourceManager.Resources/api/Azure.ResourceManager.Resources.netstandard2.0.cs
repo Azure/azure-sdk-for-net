@@ -437,9 +437,9 @@ namespace Azure.ResourceManager.Resources
 }
 namespace Azure.ResourceManager.Resources.Mocking
 {
-    public partial class ResourcesArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableResourcesArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ResourcesArmClientMockingExtension() { }
+        protected MockableResourcesArmClient() { }
         public virtual Azure.ResourceManager.Resources.ArmApplicationDefinitionResource GetArmApplicationDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.ArmApplicationResource GetArmApplicationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.ArmDeploymentResource GetArmDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -449,16 +449,16 @@ namespace Azure.ResourceManager.Resources.Mocking
         public virtual Azure.ResourceManager.Resources.TemplateSpecResource GetTemplateSpecResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Resources.TemplateSpecVersionResource GetTemplateSpecVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ResourcesManagementGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableResourcesManagementGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ResourcesManagementGroupMockingExtension() { }
+        protected MockableResourcesManagementGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ArmDeploymentResource> GetArmDeployment(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ArmDeploymentResource>> GetArmDeploymentAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Resources.ArmDeploymentCollection GetArmDeployments() { throw null; }
     }
-    public partial class ResourcesResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableResourcesResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ResourcesResourceGroupMockingExtension() { }
+        protected MockableResourcesResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ArmApplicationResource> GetArmApplication(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.ArmApplicationResource>> GetArmApplicationAsync(string applicationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ArmApplicationDefinitionResource> GetArmApplicationDefinition(string applicationDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -478,9 +478,9 @@ namespace Azure.ResourceManager.Resources.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.TemplateSpecResource>> GetTemplateSpecAsync(string templateSpecName, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Resources.TemplateSpecCollection GetTemplateSpecs() { throw null; }
     }
-    public partial class ResourcesSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableResourcesSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ResourcesSubscriptionMockingExtension() { }
+        protected MockableResourcesSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.ArmApplicationResource> GetArmApplications(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.ArmApplicationResource> GetArmApplicationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ArmDeploymentResource> GetArmDeployment(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -493,9 +493,9 @@ namespace Azure.ResourceManager.Resources.Mocking
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.TemplateSpecResource> GetTemplateSpecs(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.TemplateSpecResource> GetTemplateSpecsAsync(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ResourcesTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableResourcesTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected ResourcesTenantMockingExtension() { }
+        protected MockableResourcesTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Resources.Models.TemplateHashResult> CalculateDeploymentTemplateHash(System.BinaryData template, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.TemplateHashResult>> CalculateDeploymentTemplateHashAsync(System.BinaryData template, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Resources.ArmDeploymentResource> GetArmDeployment(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

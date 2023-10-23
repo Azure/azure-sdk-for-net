@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.LabServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.LabServices. </summary>
     public static partial class LabServicesExtensions
     {
-        private static LabServicesArmClientMockingExtension GetLabServicesArmClientMockingExtension(ArmClient client)
+        private static MockableLabServicesArmClient GetMockableLabServicesArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new LabServicesArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableLabServicesArmClient(client0));
         }
 
-        private static LabServicesResourceGroupMockingExtension GetLabServicesResourceGroupMockingExtension(ArmResource resource)
+        private static MockableLabServicesResourceGroupResource GetMockableLabServicesResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new LabServicesResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableLabServicesResourceGroupResource(client, resource.Id));
         }
 
-        private static LabServicesSubscriptionMockingExtension GetLabServicesSubscriptionMockingExtension(ArmResource resource)
+        private static MockableLabServicesSubscriptionResource GetMockableLabServicesSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new LabServicesSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableLabServicesSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.LabServices
         /// You can use <see cref="LabVirtualMachineImageResource.CreateResourceIdentifier" /> to create a <see cref="LabVirtualMachineImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesArmClientMockingExtension.GetLabVirtualMachineImageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesArmClient.GetLabVirtualMachineImageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabVirtualMachineImageResource" /> object. </returns>
         public static LabVirtualMachineImageResource GetLabVirtualMachineImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetLabServicesArmClientMockingExtension(client).GetLabVirtualMachineImageResource(id);
+            return GetMockableLabServicesArmClient(client).GetLabVirtualMachineImageResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.LabServices
         /// You can use <see cref="LabPlanResource.CreateResourceIdentifier" /> to create a <see cref="LabPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesArmClientMockingExtension.GetLabPlanResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesArmClient.GetLabPlanResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabPlanResource" /> object. </returns>
         public static LabPlanResource GetLabPlanResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetLabServicesArmClientMockingExtension(client).GetLabPlanResource(id);
+            return GetMockableLabServicesArmClient(client).GetLabPlanResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.LabServices
         /// You can use <see cref="LabResource.CreateResourceIdentifier" /> to create a <see cref="LabResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesArmClientMockingExtension.GetLabResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesArmClient.GetLabResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabResource" /> object. </returns>
         public static LabResource GetLabResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetLabServicesArmClientMockingExtension(client).GetLabResource(id);
+            return GetMockableLabServicesArmClient(client).GetLabResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.LabServices
         /// You can use <see cref="LabServicesScheduleResource.CreateResourceIdentifier" /> to create a <see cref="LabServicesScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesArmClientMockingExtension.GetLabServicesScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesArmClient.GetLabServicesScheduleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabServicesScheduleResource" /> object. </returns>
         public static LabServicesScheduleResource GetLabServicesScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetLabServicesArmClientMockingExtension(client).GetLabServicesScheduleResource(id);
+            return GetMockableLabServicesArmClient(client).GetLabServicesScheduleResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.LabServices
         /// You can use <see cref="LabUserResource.CreateResourceIdentifier" /> to create a <see cref="LabUserResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesArmClientMockingExtension.GetLabUserResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesArmClient.GetLabUserResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabUserResource" /> object. </returns>
         public static LabUserResource GetLabUserResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetLabServicesArmClientMockingExtension(client).GetLabUserResource(id);
+            return GetMockableLabServicesArmClient(client).GetLabUserResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.LabServices
         /// You can use <see cref="LabVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="LabVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesArmClientMockingExtension.GetLabVirtualMachineResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesArmClient.GetLabVirtualMachineResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,21 +128,21 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> Returns a <see cref="LabVirtualMachineResource" /> object. </returns>
         public static LabVirtualMachineResource GetLabVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetLabServicesArmClientMockingExtension(client).GetLabVirtualMachineResource(id);
+            return GetMockableLabServicesArmClient(client).GetLabVirtualMachineResource(id);
         }
 
         /// <summary>
         /// Gets a collection of LabPlanResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesResourceGroupMockingExtension.GetLabPlans()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesResourceGroupResource.GetLabPlans()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of LabPlanResources and their operations over a LabPlanResource. </returns>
         public static LabPlanCollection GetLabPlans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetLabServicesResourceGroupMockingExtension(resourceGroupResource).GetLabPlans();
+            return GetMockableLabServicesResourceGroupResource(resourceGroupResource).GetLabPlans();
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.LabServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesResourceGroupMockingExtension.GetLabPlanAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesResourceGroupResource.GetLabPlanAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.LabServices
         [ForwardsClientCalls]
         public static async Task<Response<LabPlanResource>> GetLabPlanAsync(this ResourceGroupResource resourceGroupResource, string labPlanName, CancellationToken cancellationToken = default)
         {
-            return await GetLabServicesResourceGroupMockingExtension(resourceGroupResource).GetLabPlanAsync(labPlanName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableLabServicesResourceGroupResource(resourceGroupResource).GetLabPlanAsync(labPlanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.LabServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesResourceGroupMockingExtension.GetLabPlan(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesResourceGroupResource.GetLabPlan(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -198,21 +198,21 @@ namespace Azure.ResourceManager.LabServices
         [ForwardsClientCalls]
         public static Response<LabPlanResource> GetLabPlan(this ResourceGroupResource resourceGroupResource, string labPlanName, CancellationToken cancellationToken = default)
         {
-            return GetLabServicesResourceGroupMockingExtension(resourceGroupResource).GetLabPlan(labPlanName, cancellationToken);
+            return GetMockableLabServicesResourceGroupResource(resourceGroupResource).GetLabPlan(labPlanName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of LabResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesResourceGroupMockingExtension.GetLabs()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesResourceGroupResource.GetLabs()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of LabResources and their operations over a LabResource. </returns>
         public static LabCollection GetLabs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetLabServicesResourceGroupMockingExtension(resourceGroupResource).GetLabs();
+            return GetMockableLabServicesResourceGroupResource(resourceGroupResource).GetLabs();
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.LabServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesResourceGroupMockingExtension.GetLabAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesResourceGroupResource.GetLabAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.LabServices
         [ForwardsClientCalls]
         public static async Task<Response<LabResource>> GetLabAsync(this ResourceGroupResource resourceGroupResource, string labName, CancellationToken cancellationToken = default)
         {
-            return await GetLabServicesResourceGroupMockingExtension(resourceGroupResource).GetLabAsync(labName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableLabServicesResourceGroupResource(resourceGroupResource).GetLabAsync(labName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.LabServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesResourceGroupMockingExtension.GetLab(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesResourceGroupResource.GetLab(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.LabServices
         [ForwardsClientCalls]
         public static Response<LabResource> GetLab(this ResourceGroupResource resourceGroupResource, string labName, CancellationToken cancellationToken = default)
         {
-            return GetLabServicesResourceGroupMockingExtension(resourceGroupResource).GetLab(labName, cancellationToken);
+            return GetMockableLabServicesResourceGroupResource(resourceGroupResource).GetLab(labName, cancellationToken);
         }
 
         /// <summary>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.LabServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesSubscriptionMockingExtension.GetLabPlans(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesSubscriptionResource.GetLabPlans(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="LabPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LabPlanResource> GetLabPlansAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetLabServicesSubscriptionMockingExtension(subscriptionResource).GetLabPlansAsync(filter, cancellationToken);
+            return GetMockableLabServicesSubscriptionResource(subscriptionResource).GetLabPlansAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.LabServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesSubscriptionMockingExtension.GetLabPlans(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesSubscriptionResource.GetLabPlans(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="LabPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LabPlanResource> GetLabPlans(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetLabServicesSubscriptionMockingExtension(subscriptionResource).GetLabPlans(filter, cancellationToken);
+            return GetMockableLabServicesSubscriptionResource(subscriptionResource).GetLabPlans(filter, cancellationToken);
         }
 
         /// <summary>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.LabServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesSubscriptionMockingExtension.GetLabs(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesSubscriptionResource.GetLabs(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="LabResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LabResource> GetLabsAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetLabServicesSubscriptionMockingExtension(subscriptionResource).GetLabsAsync(filter, cancellationToken);
+            return GetMockableLabServicesSubscriptionResource(subscriptionResource).GetLabsAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.LabServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesSubscriptionMockingExtension.GetLabs(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesSubscriptionResource.GetLabs(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="LabResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LabResource> GetLabs(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetLabServicesSubscriptionMockingExtension(subscriptionResource).GetLabs(filter, cancellationToken);
+            return GetMockableLabServicesSubscriptionResource(subscriptionResource).GetLabs(filter, cancellationToken);
         }
 
         /// <summary>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.LabServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesSubscriptionMockingExtension.GetSkus(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesSubscriptionResource.GetSkus(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="AvailableLabServicesSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableLabServicesSku> GetSkusAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetLabServicesSubscriptionMockingExtension(subscriptionResource).GetSkusAsync(filter, cancellationToken);
+            return GetMockableLabServicesSubscriptionResource(subscriptionResource).GetSkusAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.LabServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesSubscriptionMockingExtension.GetSkus(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesSubscriptionResource.GetSkus(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="AvailableLabServicesSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableLabServicesSku> GetSkus(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetLabServicesSubscriptionMockingExtension(subscriptionResource).GetSkus(filter, cancellationToken);
+            return GetMockableLabServicesSubscriptionResource(subscriptionResource).GetSkus(filter, cancellationToken);
         }
 
         /// <summary>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.LabServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesSubscriptionMockingExtension.GetUsages(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesSubscriptionResource.GetUsages(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> An async collection of <see cref="LabServicesUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LabServicesUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetLabServicesSubscriptionMockingExtension(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
+            return GetMockableLabServicesSubscriptionResource(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
         }
 
         /// <summary>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.LabServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="LabServicesSubscriptionMockingExtension.GetUsages(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableLabServicesSubscriptionResource.GetUsages(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.LabServices
         /// <returns> A collection of <see cref="LabServicesUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LabServicesUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetLabServicesSubscriptionMockingExtension(subscriptionResource).GetUsages(location, filter, cancellationToken);
+            return GetMockableLabServicesSubscriptionResource(subscriptionResource).GetUsages(location, filter, cancellationToken);
         }
     }
 }

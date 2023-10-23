@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Analysis
     /// <summary> A class to add extension methods to Azure.ResourceManager.Analysis. </summary>
     public static partial class AnalysisExtensions
     {
-        private static AnalysisArmClientMockingExtension GetAnalysisArmClientMockingExtension(ArmClient client)
+        private static MockableAnalysisArmClient GetMockableAnalysisArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new AnalysisArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableAnalysisArmClient(client0));
         }
 
-        private static AnalysisResourceGroupMockingExtension GetAnalysisResourceGroupMockingExtension(ArmResource resource)
+        private static MockableAnalysisResourceGroupResource GetMockableAnalysisResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AnalysisResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAnalysisResourceGroupResource(client, resource.Id));
         }
 
-        private static AnalysisSubscriptionMockingExtension GetAnalysisSubscriptionMockingExtension(ArmResource resource)
+        private static MockableAnalysisSubscriptionResource GetMockableAnalysisSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AnalysisSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAnalysisSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Analysis
         /// You can use <see cref="AnalysisServerResource.CreateResourceIdentifier" /> to create an <see cref="AnalysisServerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AnalysisArmClientMockingExtension.GetAnalysisServerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAnalysisArmClient.GetAnalysisServerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,21 +48,21 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> Returns a <see cref="AnalysisServerResource" /> object. </returns>
         public static AnalysisServerResource GetAnalysisServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAnalysisArmClientMockingExtension(client).GetAnalysisServerResource(id);
+            return GetMockableAnalysisArmClient(client).GetAnalysisServerResource(id);
         }
 
         /// <summary>
         /// Gets a collection of AnalysisServerResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AnalysisResourceGroupMockingExtension.GetAnalysisServers()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAnalysisResourceGroupResource.GetAnalysisServers()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AnalysisServerResources and their operations over a AnalysisServerResource. </returns>
         public static AnalysisServerCollection GetAnalysisServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAnalysisResourceGroupMockingExtension(resourceGroupResource).GetAnalysisServers();
+            return GetMockableAnalysisResourceGroupResource(resourceGroupResource).GetAnalysisServers();
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Analysis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AnalysisResourceGroupMockingExtension.GetAnalysisServerAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAnalysisResourceGroupResource.GetAnalysisServerAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Analysis
         [ForwardsClientCalls]
         public static async Task<Response<AnalysisServerResource>> GetAnalysisServerAsync(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            return await GetAnalysisResourceGroupMockingExtension(resourceGroupResource).GetAnalysisServerAsync(serverName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAnalysisResourceGroupResource(resourceGroupResource).GetAnalysisServerAsync(serverName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Analysis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AnalysisResourceGroupMockingExtension.GetAnalysisServer(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAnalysisResourceGroupResource.GetAnalysisServer(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Analysis
         [ForwardsClientCalls]
         public static Response<AnalysisServerResource> GetAnalysisServer(this ResourceGroupResource resourceGroupResource, string serverName, CancellationToken cancellationToken = default)
         {
-            return GetAnalysisResourceGroupMockingExtension(resourceGroupResource).GetAnalysisServer(serverName, cancellationToken);
+            return GetMockableAnalysisResourceGroupResource(resourceGroupResource).GetAnalysisServer(serverName, cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Analysis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AnalysisSubscriptionMockingExtension.GetAnalysisServers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAnalysisSubscriptionResource.GetAnalysisServers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> An async collection of <see cref="AnalysisServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AnalysisServerResource> GetAnalysisServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAnalysisSubscriptionMockingExtension(subscriptionResource).GetAnalysisServersAsync(cancellationToken);
+            return GetMockableAnalysisSubscriptionResource(subscriptionResource).GetAnalysisServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Analysis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AnalysisSubscriptionMockingExtension.GetAnalysisServers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAnalysisSubscriptionResource.GetAnalysisServers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> A collection of <see cref="AnalysisServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AnalysisServerResource> GetAnalysisServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAnalysisSubscriptionMockingExtension(subscriptionResource).GetAnalysisServers(cancellationToken);
+            return GetMockableAnalysisSubscriptionResource(subscriptionResource).GetAnalysisServers(cancellationToken);
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Analysis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AnalysisSubscriptionMockingExtension.GetEligibleSkus(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAnalysisSubscriptionResource.GetEligibleSkus(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> An async collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AnalysisResourceSku> GetEligibleSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAnalysisSubscriptionMockingExtension(subscriptionResource).GetEligibleSkusAsync(cancellationToken);
+            return GetMockableAnalysisSubscriptionResource(subscriptionResource).GetEligibleSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Analysis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AnalysisSubscriptionMockingExtension.GetEligibleSkus(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAnalysisSubscriptionResource.GetEligibleSkus(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Analysis
         /// <returns> A collection of <see cref="AnalysisResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AnalysisResourceSku> GetEligibleSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAnalysisSubscriptionMockingExtension(subscriptionResource).GetEligibleSkus(cancellationToken);
+            return GetMockableAnalysisSubscriptionResource(subscriptionResource).GetEligibleSkus(cancellationToken);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Analysis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AnalysisSubscriptionMockingExtension.CheckAnalysisServerNameAvailability(AzureLocation,AnalysisServerNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAnalysisSubscriptionResource.CheckAnalysisServerNameAvailability(AzureLocation,AnalysisServerNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<AnalysisServerNameAvailabilityResult>> CheckAnalysisServerNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetAnalysisSubscriptionMockingExtension(subscriptionResource).CheckAnalysisServerNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAnalysisSubscriptionResource(subscriptionResource).CheckAnalysisServerNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Analysis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AnalysisSubscriptionMockingExtension.CheckAnalysisServerNameAvailability(AzureLocation,AnalysisServerNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAnalysisSubscriptionResource.CheckAnalysisServerNameAvailability(AzureLocation,AnalysisServerNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Analysis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<AnalysisServerNameAvailabilityResult> CheckAnalysisServerNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, AnalysisServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetAnalysisSubscriptionMockingExtension(subscriptionResource).CheckAnalysisServerNameAvailability(location, content, cancellationToken);
+            return GetMockableAnalysisSubscriptionResource(subscriptionResource).CheckAnalysisServerNameAvailability(location, content, cancellationToken);
         }
     }
 }

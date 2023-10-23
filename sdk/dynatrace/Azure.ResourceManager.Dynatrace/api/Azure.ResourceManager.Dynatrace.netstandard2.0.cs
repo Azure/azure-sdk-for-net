@@ -160,23 +160,23 @@ namespace Azure.ResourceManager.Dynatrace
 }
 namespace Azure.ResourceManager.Dynatrace.Mocking
 {
-    public partial class DynatraceArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDynatraceArmClient : Azure.ResourceManager.ArmResource
     {
-        protected DynatraceArmClientMockingExtension() { }
+        protected MockableDynatraceArmClient() { }
         public virtual Azure.ResourceManager.Dynatrace.DynatraceMonitorResource GetDynatraceMonitorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource GetDynatraceSingleSignOnResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource GetDynatraceTagRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DynatraceResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDynatraceResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected DynatraceResourceGroupMockingExtension() { }
+        protected MockableDynatraceResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetDynatraceMonitor(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>> GetDynatraceMonitorAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Dynatrace.DynatraceMonitorCollection GetDynatraceMonitors() { throw null; }
     }
-    public partial class DynatraceSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDynatraceSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected DynatraceSubscriptionMockingExtension() { }
+        protected MockableDynatraceSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetDynatraceMonitors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetDynatraceMonitorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

@@ -1304,9 +1304,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 }
 namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
 {
-    public partial class ManagedNetworkFabricArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableManagedNetworkFabricArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ManagedNetworkFabricArmClientMockingExtension() { }
+        protected MockableManagedNetworkFabricArmClient() { }
         public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceResource GetNetworkDeviceInterfaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceResource GetNetworkDeviceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuResource GetNetworkDeviceSkuResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1331,9 +1331,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleResource GetNetworkTapRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkToNetworkInterconnectResource GetNetworkToNetworkInterconnectResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ManagedNetworkFabricResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableManagedNetworkFabricResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ManagedNetworkFabricResourceGroupMockingExtension() { }
+        protected MockableManagedNetworkFabricResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceResource> GetNetworkDevice(string networkDeviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceResource>> GetNetworkDeviceAsync(string networkDeviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceCollection GetNetworkDevices() { throw null; }
@@ -1386,9 +1386,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
         public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleCollection GetNetworkTapRules() { throw null; }
         public virtual Azure.ResourceManager.ManagedNetworkFabric.NetworkTapCollection GetNetworkTaps() { throw null; }
     }
-    public partial class ManagedNetworkFabricSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableManagedNetworkFabricSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ManagedNetworkFabricSubscriptionMockingExtension() { }
+        protected MockableManagedNetworkFabricSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceResource> GetNetworkDevices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceResource> GetNetworkDevicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuResource> GetNetworkDeviceSku(string networkDeviceSkuName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

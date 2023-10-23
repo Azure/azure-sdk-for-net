@@ -575,9 +575,9 @@ namespace Azure.ResourceManager.ContainerRegistry
 }
 namespace Azure.ResourceManager.ContainerRegistry.Mocking
 {
-    public partial class ContainerRegistryArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableContainerRegistryArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ContainerRegistryArmClientMockingExtension() { }
+        protected MockableContainerRegistryArmClient() { }
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryAgentPoolResource GetContainerRegistryAgentPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateEndpointConnectionResource GetContainerRegistryPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryPrivateLinkResource GetContainerRegistryPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -590,16 +590,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryWebhookResource GetContainerRegistryWebhookResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ContainerRegistry.ScopeMapResource GetScopeMapResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ContainerRegistryResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableContainerRegistryResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ContainerRegistryResourceGroupMockingExtension() { }
+        protected MockableContainerRegistryResourceGroupResource() { }
         public virtual Azure.ResourceManager.ContainerRegistry.ContainerRegistryCollection GetContainerRegistries() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource> GetContainerRegistry(string registryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource>> GetContainerRegistryAsync(string registryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ContainerRegistrySubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableContainerRegistrySubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ContainerRegistrySubscriptionMockingExtension() { }
+        protected MockableContainerRegistrySubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailableResult> CheckContainerRegistryNameAvailability(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailableResult>> CheckContainerRegistryNameAvailabilityAsync(Azure.ResourceManager.ContainerRegistry.Models.ContainerRegistryNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ContainerRegistry.ContainerRegistryResource> GetContainerRegistries(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

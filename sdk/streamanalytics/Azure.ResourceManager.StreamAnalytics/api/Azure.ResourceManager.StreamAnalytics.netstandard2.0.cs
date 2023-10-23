@@ -363,9 +363,9 @@ namespace Azure.ResourceManager.StreamAnalytics
 }
 namespace Azure.ResourceManager.StreamAnalytics.Mocking
 {
-    public partial class StreamAnalyticsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableStreamAnalyticsArmClient : Azure.ResourceManager.ArmResource
     {
-        protected StreamAnalyticsArmClientMockingExtension() { }
+        protected MockableStreamAnalyticsArmClient() { }
         public virtual Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterResource GetStreamAnalyticsClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.StreamAnalytics.StreamAnalyticsPrivateEndpointResource GetStreamAnalyticsPrivateEndpointResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.StreamAnalytics.StreamingJobFunctionResource GetStreamingJobFunctionResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -374,9 +374,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         public virtual Azure.ResourceManager.StreamAnalytics.StreamingJobResource GetStreamingJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.StreamAnalytics.StreamingJobTransformationResource GetStreamingJobTransformationResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class StreamAnalyticsResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableStreamAnalyticsResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected StreamAnalyticsResourceGroupMockingExtension() { }
+        protected MockableStreamAnalyticsResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterResource> GetStreamAnalyticsCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterResource>> GetStreamAnalyticsClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.StreamAnalytics.StreamAnalyticsClusterCollection GetStreamAnalyticsClusters() { throw null; }
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.StreamingJobResource>> GetStreamingJobAsync(string jobName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.StreamAnalytics.StreamingJobCollection GetStreamingJobs() { throw null; }
     }
-    public partial class StreamAnalyticsSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableStreamAnalyticsSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected StreamAnalyticsSubscriptionMockingExtension() { }
+        protected MockableStreamAnalyticsSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsQueryCompilationResult> CompileQuerySubscription(Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsCompileQuery compileQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsQueryCompilationResult>> CompileQuerySubscriptionAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsCompileQuery compileQuery, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.StreamAnalytics.Models.StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptions(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

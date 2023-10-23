@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Compute
     /// <summary> A class to add extension methods to Azure.ResourceManager.Compute. </summary>
     public static partial class ComputeExtensions
     {
-        private static ComputeArmClientMockingExtension GetComputeArmClientMockingExtension(ArmClient client)
+        private static MockableComputeArmClient GetMockableComputeArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ComputeArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableComputeArmClient(client0));
         }
 
-        private static ComputeResourceGroupMockingExtension GetComputeResourceGroupMockingExtension(ArmResource resource)
+        private static MockableComputeResourceGroupResource GetMockableComputeResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ComputeResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableComputeResourceGroupResource(client, resource.Id));
         }
 
-        private static ComputeSubscriptionMockingExtension GetComputeSubscriptionMockingExtension(ArmResource resource)
+        private static MockableComputeSubscriptionResource GetMockableComputeSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ComputeSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableComputeSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="VirtualMachineScaleSetResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetVirtualMachineScaleSetResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineScaleSetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetResource" /> object. </returns>
         public static VirtualMachineScaleSetResource GetVirtualMachineScaleSetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetVirtualMachineScaleSetResource(id);
+            return GetMockableComputeArmClient(client).GetVirtualMachineScaleSetResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetVirtualMachineScaleSetExtensionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineScaleSetExtensionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetExtensionResource" /> object. </returns>
         public static VirtualMachineScaleSetExtensionResource GetVirtualMachineScaleSetExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetVirtualMachineScaleSetExtensionResource(id);
+            return GetMockableComputeArmClient(client).GetVirtualMachineScaleSetExtensionResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="VirtualMachineScaleSetRollingUpgradeResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetRollingUpgradeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetVirtualMachineScaleSetRollingUpgradeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineScaleSetRollingUpgradeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetRollingUpgradeResource" /> object. </returns>
         public static VirtualMachineScaleSetRollingUpgradeResource GetVirtualMachineScaleSetRollingUpgradeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetVirtualMachineScaleSetRollingUpgradeResource(id);
+            return GetMockableComputeArmClient(client).GetVirtualMachineScaleSetRollingUpgradeResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="VirtualMachineScaleSetVmExtensionResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVmExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetVirtualMachineScaleSetVmExtensionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineScaleSetVmExtensionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVmExtensionResource" /> object. </returns>
         public static VirtualMachineScaleSetVmExtensionResource GetVirtualMachineScaleSetVmExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetVirtualMachineScaleSetVmExtensionResource(id);
+            return GetMockableComputeArmClient(client).GetVirtualMachineScaleSetVmExtensionResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="VirtualMachineScaleSetVmResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVmResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetVirtualMachineScaleSetVmResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineScaleSetVmResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVmResource" /> object. </returns>
         public static VirtualMachineScaleSetVmResource GetVirtualMachineScaleSetVmResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetVirtualMachineScaleSetVmResource(id);
+            return GetMockableComputeArmClient(client).GetVirtualMachineScaleSetVmResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="VirtualMachineExtensionResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetVirtualMachineExtensionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineExtensionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineExtensionResource" /> object. </returns>
         public static VirtualMachineExtensionResource GetVirtualMachineExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetVirtualMachineExtensionResource(id);
+            return GetMockableComputeArmClient(client).GetVirtualMachineExtensionResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="VirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetVirtualMachineResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineResource" /> object. </returns>
         public static VirtualMachineResource GetVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetVirtualMachineResource(id);
+            return GetMockableComputeArmClient(client).GetVirtualMachineResource(id);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="VirtualMachineExtensionImageResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineExtensionImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetVirtualMachineExtensionImageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineExtensionImageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineExtensionImageResource" /> object. </returns>
         public static VirtualMachineExtensionImageResource GetVirtualMachineExtensionImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetVirtualMachineExtensionImageResource(id);
+            return GetMockableComputeArmClient(client).GetVirtualMachineExtensionImageResource(id);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="AvailabilitySetResource.CreateResourceIdentifier" /> to create an <see cref="AvailabilitySetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetAvailabilitySetResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetAvailabilitySetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="AvailabilitySetResource" /> object. </returns>
         public static AvailabilitySetResource GetAvailabilitySetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetAvailabilitySetResource(id);
+            return GetMockableComputeArmClient(client).GetAvailabilitySetResource(id);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="ProximityPlacementGroupResource.CreateResourceIdentifier" /> to create a <see cref="ProximityPlacementGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetProximityPlacementGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetProximityPlacementGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="ProximityPlacementGroupResource" /> object. </returns>
         public static ProximityPlacementGroupResource GetProximityPlacementGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetProximityPlacementGroupResource(id);
+            return GetMockableComputeArmClient(client).GetProximityPlacementGroupResource(id);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="DedicatedHostGroupResource.CreateResourceIdentifier" /> to create a <see cref="DedicatedHostGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetDedicatedHostGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetDedicatedHostGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="DedicatedHostGroupResource" /> object. </returns>
         public static DedicatedHostGroupResource GetDedicatedHostGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetDedicatedHostGroupResource(id);
+            return GetMockableComputeArmClient(client).GetDedicatedHostGroupResource(id);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="DedicatedHostResource.CreateResourceIdentifier" /> to create a <see cref="DedicatedHostResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetDedicatedHostResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetDedicatedHostResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="DedicatedHostResource" /> object. </returns>
         public static DedicatedHostResource GetDedicatedHostResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetDedicatedHostResource(id);
+            return GetMockableComputeArmClient(client).GetDedicatedHostResource(id);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="SshPublicKeyResource.CreateResourceIdentifier" /> to create a <see cref="SshPublicKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetSshPublicKeyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetSshPublicKeyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="SshPublicKeyResource" /> object. </returns>
         public static SshPublicKeyResource GetSshPublicKeyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetSshPublicKeyResource(id);
+            return GetMockableComputeArmClient(client).GetSshPublicKeyResource(id);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="DiskImageResource.CreateResourceIdentifier" /> to create a <see cref="DiskImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetDiskImageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetDiskImageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="DiskImageResource" /> object. </returns>
         public static DiskImageResource GetDiskImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetDiskImageResource(id);
+            return GetMockableComputeArmClient(client).GetDiskImageResource(id);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="RestorePointGroupResource.CreateResourceIdentifier" /> to create a <see cref="RestorePointGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetRestorePointGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetRestorePointGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="RestorePointGroupResource" /> object. </returns>
         public static RestorePointGroupResource GetRestorePointGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetRestorePointGroupResource(id);
+            return GetMockableComputeArmClient(client).GetRestorePointGroupResource(id);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="RestorePointResource.CreateResourceIdentifier" /> to create a <see cref="RestorePointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetRestorePointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetRestorePointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="RestorePointResource" /> object. </returns>
         public static RestorePointResource GetRestorePointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetRestorePointResource(id);
+            return GetMockableComputeArmClient(client).GetRestorePointResource(id);
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="CapacityReservationGroupResource.CreateResourceIdentifier" /> to create a <see cref="CapacityReservationGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetCapacityReservationGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetCapacityReservationGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CapacityReservationGroupResource" /> object. </returns>
         public static CapacityReservationGroupResource GetCapacityReservationGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetCapacityReservationGroupResource(id);
+            return GetMockableComputeArmClient(client).GetCapacityReservationGroupResource(id);
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="CapacityReservationResource.CreateResourceIdentifier" /> to create a <see cref="CapacityReservationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetCapacityReservationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetCapacityReservationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CapacityReservationResource" /> object. </returns>
         public static CapacityReservationResource GetCapacityReservationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetCapacityReservationResource(id);
+            return GetMockableComputeArmClient(client).GetCapacityReservationResource(id);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="VirtualMachineRunCommandResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineRunCommandResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetVirtualMachineRunCommandResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineRunCommandResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineRunCommandResource" /> object. </returns>
         public static VirtualMachineRunCommandResource GetVirtualMachineRunCommandResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetVirtualMachineRunCommandResource(id);
+            return GetMockableComputeArmClient(client).GetVirtualMachineRunCommandResource(id);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="VirtualMachineScaleSetVmRunCommandResource.CreateResourceIdentifier" /> to create a <see cref="VirtualMachineScaleSetVmRunCommandResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetVirtualMachineScaleSetVmRunCommandResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineScaleSetVmRunCommandResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="VirtualMachineScaleSetVmRunCommandResource" /> object. </returns>
         public static VirtualMachineScaleSetVmRunCommandResource GetVirtualMachineScaleSetVmRunCommandResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetVirtualMachineScaleSetVmRunCommandResource(id);
+            return GetMockableComputeArmClient(client).GetVirtualMachineScaleSetVmRunCommandResource(id);
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="ManagedDiskResource.CreateResourceIdentifier" /> to create a <see cref="ManagedDiskResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetManagedDiskResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetManagedDiskResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="ManagedDiskResource" /> object. </returns>
         public static ManagedDiskResource GetManagedDiskResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetManagedDiskResource(id);
+            return GetMockableComputeArmClient(client).GetManagedDiskResource(id);
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="DiskAccessResource.CreateResourceIdentifier" /> to create a <see cref="DiskAccessResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetDiskAccessResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetDiskAccessResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="DiskAccessResource" /> object. </returns>
         public static DiskAccessResource GetDiskAccessResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetDiskAccessResource(id);
+            return GetMockableComputeArmClient(client).GetDiskAccessResource(id);
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="ComputePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ComputePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetComputePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetComputePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="ComputePrivateEndpointConnectionResource" /> object. </returns>
         public static ComputePrivateEndpointConnectionResource GetComputePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetComputePrivateEndpointConnectionResource(id);
+            return GetMockableComputeArmClient(client).GetComputePrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="DiskEncryptionSetResource.CreateResourceIdentifier" /> to create a <see cref="DiskEncryptionSetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetDiskEncryptionSetResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetDiskEncryptionSetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="DiskEncryptionSetResource" /> object. </returns>
         public static DiskEncryptionSetResource GetDiskEncryptionSetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetDiskEncryptionSetResource(id);
+            return GetMockableComputeArmClient(client).GetDiskEncryptionSetResource(id);
         }
 
         /// <summary>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="DiskRestorePointResource.CreateResourceIdentifier" /> to create a <see cref="DiskRestorePointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetDiskRestorePointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetDiskRestorePointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="DiskRestorePointResource" /> object. </returns>
         public static DiskRestorePointResource GetDiskRestorePointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetDiskRestorePointResource(id);
+            return GetMockableComputeArmClient(client).GetDiskRestorePointResource(id);
         }
 
         /// <summary>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="SnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetSnapshotResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetSnapshotResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="SnapshotResource" /> object. </returns>
         public static SnapshotResource GetSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetSnapshotResource(id);
+            return GetMockableComputeArmClient(client).GetSnapshotResource(id);
         }
 
         /// <summary>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="GalleryResource.CreateResourceIdentifier" /> to create a <see cref="GalleryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetGalleryResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetGalleryResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="GalleryResource" /> object. </returns>
         public static GalleryResource GetGalleryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetGalleryResource(id);
+            return GetMockableComputeArmClient(client).GetGalleryResource(id);
         }
 
         /// <summary>
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="GalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="GalleryImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetGalleryImageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetGalleryImageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="GalleryImageResource" /> object. </returns>
         public static GalleryImageResource GetGalleryImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetGalleryImageResource(id);
+            return GetMockableComputeArmClient(client).GetGalleryImageResource(id);
         }
 
         /// <summary>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="GalleryImageVersionResource.CreateResourceIdentifier" /> to create a <see cref="GalleryImageVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetGalleryImageVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetGalleryImageVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="GalleryImageVersionResource" /> object. </returns>
         public static GalleryImageVersionResource GetGalleryImageVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetGalleryImageVersionResource(id);
+            return GetMockableComputeArmClient(client).GetGalleryImageVersionResource(id);
         }
 
         /// <summary>
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="GalleryApplicationResource.CreateResourceIdentifier" /> to create a <see cref="GalleryApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetGalleryApplicationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetGalleryApplicationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="GalleryApplicationResource" /> object. </returns>
         public static GalleryApplicationResource GetGalleryApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetGalleryApplicationResource(id);
+            return GetMockableComputeArmClient(client).GetGalleryApplicationResource(id);
         }
 
         /// <summary>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="GalleryApplicationVersionResource.CreateResourceIdentifier" /> to create a <see cref="GalleryApplicationVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetGalleryApplicationVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetGalleryApplicationVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="GalleryApplicationVersionResource" /> object. </returns>
         public static GalleryApplicationVersionResource GetGalleryApplicationVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetGalleryApplicationVersionResource(id);
+            return GetMockableComputeArmClient(client).GetGalleryApplicationVersionResource(id);
         }
 
         /// <summary>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="SharedGalleryResource.CreateResourceIdentifier" /> to create a <see cref="SharedGalleryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetSharedGalleryResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetSharedGalleryResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="SharedGalleryResource" /> object. </returns>
         public static SharedGalleryResource GetSharedGalleryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetSharedGalleryResource(id);
+            return GetMockableComputeArmClient(client).GetSharedGalleryResource(id);
         }
 
         /// <summary>
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="SharedGalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="SharedGalleryImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetSharedGalleryImageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetSharedGalleryImageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="SharedGalleryImageResource" /> object. </returns>
         public static SharedGalleryImageResource GetSharedGalleryImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetSharedGalleryImageResource(id);
+            return GetMockableComputeArmClient(client).GetSharedGalleryImageResource(id);
         }
 
         /// <summary>
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="SharedGalleryImageVersionResource.CreateResourceIdentifier" /> to create a <see cref="SharedGalleryImageVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetSharedGalleryImageVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetSharedGalleryImageVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="SharedGalleryImageVersionResource" /> object. </returns>
         public static SharedGalleryImageVersionResource GetSharedGalleryImageVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetSharedGalleryImageVersionResource(id);
+            return GetMockableComputeArmClient(client).GetSharedGalleryImageVersionResource(id);
         }
 
         /// <summary>
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="CommunityGalleryResource.CreateResourceIdentifier" /> to create a <see cref="CommunityGalleryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetCommunityGalleryResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetCommunityGalleryResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CommunityGalleryResource" /> object. </returns>
         public static CommunityGalleryResource GetCommunityGalleryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetCommunityGalleryResource(id);
+            return GetMockableComputeArmClient(client).GetCommunityGalleryResource(id);
         }
 
         /// <summary>
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="CommunityGalleryImageResource.CreateResourceIdentifier" /> to create a <see cref="CommunityGalleryImageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetCommunityGalleryImageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetCommunityGalleryImageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CommunityGalleryImageResource" /> object. </returns>
         public static CommunityGalleryImageResource GetCommunityGalleryImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetCommunityGalleryImageResource(id);
+            return GetMockableComputeArmClient(client).GetCommunityGalleryImageResource(id);
         }
 
         /// <summary>
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="CommunityGalleryImageVersionResource.CreateResourceIdentifier" /> to create a <see cref="CommunityGalleryImageVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetCommunityGalleryImageVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetCommunityGalleryImageVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CommunityGalleryImageVersionResource" /> object. </returns>
         public static CommunityGalleryImageVersionResource GetCommunityGalleryImageVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetCommunityGalleryImageVersionResource(id);
+            return GetMockableComputeArmClient(client).GetCommunityGalleryImageVersionResource(id);
         }
 
         /// <summary>
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="CloudServiceRoleInstanceResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceRoleInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetCloudServiceRoleInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetCloudServiceRoleInstanceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CloudServiceRoleInstanceResource" /> object. </returns>
         public static CloudServiceRoleInstanceResource GetCloudServiceRoleInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetCloudServiceRoleInstanceResource(id);
+            return GetMockableComputeArmClient(client).GetCloudServiceRoleInstanceResource(id);
         }
 
         /// <summary>
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="CloudServiceRoleResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceRoleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetCloudServiceRoleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetCloudServiceRoleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CloudServiceRoleResource" /> object. </returns>
         public static CloudServiceRoleResource GetCloudServiceRoleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetCloudServiceRoleResource(id);
+            return GetMockableComputeArmClient(client).GetCloudServiceRoleResource(id);
         }
 
         /// <summary>
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="CloudServiceResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetCloudServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetCloudServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CloudServiceResource" /> object. </returns>
         public static CloudServiceResource GetCloudServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetCloudServiceResource(id);
+            return GetMockableComputeArmClient(client).GetCloudServiceResource(id);
         }
 
         /// <summary>
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="CloudServiceOSVersionResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceOSVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetCloudServiceOSVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetCloudServiceOSVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CloudServiceOSVersionResource" /> object. </returns>
         public static CloudServiceOSVersionResource GetCloudServiceOSVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetCloudServiceOSVersionResource(id);
+            return GetMockableComputeArmClient(client).GetCloudServiceOSVersionResource(id);
         }
 
         /// <summary>
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.Compute
         /// You can use <see cref="CloudServiceOSFamilyResource.CreateResourceIdentifier" /> to create a <see cref="CloudServiceOSFamilyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeArmClientMockingExtension.GetCloudServiceOSFamilyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeArmClient.GetCloudServiceOSFamilyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -704,21 +704,21 @@ namespace Azure.ResourceManager.Compute
         /// <returns> Returns a <see cref="CloudServiceOSFamilyResource" /> object. </returns>
         public static CloudServiceOSFamilyResource GetCloudServiceOSFamilyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetComputeArmClientMockingExtension(client).GetCloudServiceOSFamilyResource(id);
+            return GetMockableComputeArmClient(client).GetCloudServiceOSFamilyResource(id);
         }
 
         /// <summary>
         /// Gets a collection of VirtualMachineScaleSetResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetVirtualMachineScaleSets()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetVirtualMachineScaleSets()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualMachineScaleSetResources and their operations over a VirtualMachineScaleSetResource. </returns>
         public static VirtualMachineScaleSetCollection GetVirtualMachineScaleSets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetVirtualMachineScaleSets();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetVirtualMachineScaleSets();
         }
 
         /// <summary>
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetVirtualMachineScaleSetAsync(string,VirtualMachineScaleSetGetExpand?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetVirtualMachineScaleSetAsync(string,VirtualMachineScaleSetGetExpand?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<VirtualMachineScaleSetResource>> GetVirtualMachineScaleSetAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineScaleSetName, VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetComputeResourceGroupMockingExtension(resourceGroupResource).GetVirtualMachineScaleSetAsync(virtualMachineScaleSetName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetVirtualMachineScaleSetAsync(virtualMachineScaleSetName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetVirtualMachineScaleSet(string,VirtualMachineScaleSetGetExpand?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetVirtualMachineScaleSet(string,VirtualMachineScaleSetGetExpand?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -776,21 +776,21 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<VirtualMachineScaleSetResource> GetVirtualMachineScaleSet(this ResourceGroupResource resourceGroupResource, string virtualMachineScaleSetName, VirtualMachineScaleSetGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetVirtualMachineScaleSet(virtualMachineScaleSetName, expand, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetVirtualMachineScaleSet(virtualMachineScaleSetName, expand, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of VirtualMachineResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetVirtualMachines()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetVirtualMachines()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VirtualMachineResources and their operations over a VirtualMachineResource. </returns>
         public static VirtualMachineCollection GetVirtualMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetVirtualMachines();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetVirtualMachines();
         }
 
         /// <summary>
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetVirtualMachineAsync(string,InstanceViewType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetVirtualMachineAsync(string,InstanceViewType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<VirtualMachineResource>> GetVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetComputeResourceGroupMockingExtension(resourceGroupResource).GetVirtualMachineAsync(vmName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetVirtualMachineAsync(vmName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetVirtualMachine(string,InstanceViewType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetVirtualMachine(string,InstanceViewType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -848,21 +848,21 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<VirtualMachineResource> GetVirtualMachine(this ResourceGroupResource resourceGroupResource, string vmName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetVirtualMachine(vmName, expand, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetVirtualMachine(vmName, expand, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of AvailabilitySetResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetAvailabilitySets()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetAvailabilitySets()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AvailabilitySetResources and their operations over a AvailabilitySetResource. </returns>
         public static AvailabilitySetCollection GetAvailabilitySets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetAvailabilitySets();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetAvailabilitySets();
         }
 
         /// <summary>
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetAvailabilitySetAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetAvailabilitySetAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<AvailabilitySetResource>> GetAvailabilitySetAsync(this ResourceGroupResource resourceGroupResource, string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            return await GetComputeResourceGroupMockingExtension(resourceGroupResource).GetAvailabilitySetAsync(availabilitySetName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetAvailabilitySetAsync(availabilitySetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -907,7 +907,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetAvailabilitySet(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetAvailabilitySet(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -918,21 +918,21 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<AvailabilitySetResource> GetAvailabilitySet(this ResourceGroupResource resourceGroupResource, string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetAvailabilitySet(availabilitySetName, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetAvailabilitySet(availabilitySetName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ProximityPlacementGroupResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetProximityPlacementGroups()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetProximityPlacementGroups()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ProximityPlacementGroupResources and their operations over a ProximityPlacementGroupResource. </returns>
         public static ProximityPlacementGroupCollection GetProximityPlacementGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetProximityPlacementGroups();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetProximityPlacementGroups();
         }
 
         /// <summary>
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetProximityPlacementGroupAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetProximityPlacementGroupAsync(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -961,7 +961,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<ProximityPlacementGroupResource>> GetProximityPlacementGroupAsync(this ResourceGroupResource resourceGroupResource, string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
-            return await GetComputeResourceGroupMockingExtension(resourceGroupResource).GetProximityPlacementGroupAsync(proximityPlacementGroupName, includeColocationStatus, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetProximityPlacementGroupAsync(proximityPlacementGroupName, includeColocationStatus, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetProximityPlacementGroup(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetProximityPlacementGroup(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -990,21 +990,21 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<ProximityPlacementGroupResource> GetProximityPlacementGroup(this ResourceGroupResource resourceGroupResource, string proximityPlacementGroupName, string includeColocationStatus = null, CancellationToken cancellationToken = default)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetProximityPlacementGroup(proximityPlacementGroupName, includeColocationStatus, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetProximityPlacementGroup(proximityPlacementGroupName, includeColocationStatus, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of DedicatedHostGroupResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetDedicatedHostGroups()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDedicatedHostGroups()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DedicatedHostGroupResources and their operations over a DedicatedHostGroupResource. </returns>
         public static DedicatedHostGroupCollection GetDedicatedHostGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetDedicatedHostGroups();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetDedicatedHostGroups();
         }
 
         /// <summary>
@@ -1021,7 +1021,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetDedicatedHostGroupAsync(string,InstanceViewType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDedicatedHostGroupAsync(string,InstanceViewType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1033,7 +1033,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<DedicatedHostGroupResource>> GetDedicatedHostGroupAsync(this ResourceGroupResource resourceGroupResource, string hostGroupName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetComputeResourceGroupMockingExtension(resourceGroupResource).GetDedicatedHostGroupAsync(hostGroupName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetDedicatedHostGroupAsync(hostGroupName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1050,7 +1050,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetDedicatedHostGroup(string,InstanceViewType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDedicatedHostGroup(string,InstanceViewType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1062,21 +1062,21 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<DedicatedHostGroupResource> GetDedicatedHostGroup(this ResourceGroupResource resourceGroupResource, string hostGroupName, InstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetDedicatedHostGroup(hostGroupName, expand, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetDedicatedHostGroup(hostGroupName, expand, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of SshPublicKeyResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetSshPublicKeys()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetSshPublicKeys()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SshPublicKeyResources and their operations over a SshPublicKeyResource. </returns>
         public static SshPublicKeyCollection GetSshPublicKeys(this ResourceGroupResource resourceGroupResource)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetSshPublicKeys();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetSshPublicKeys();
         }
 
         /// <summary>
@@ -1093,7 +1093,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetSshPublicKeyAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetSshPublicKeyAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1104,7 +1104,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<SshPublicKeyResource>> GetSshPublicKeyAsync(this ResourceGroupResource resourceGroupResource, string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
-            return await GetComputeResourceGroupMockingExtension(resourceGroupResource).GetSshPublicKeyAsync(sshPublicKeyName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetSshPublicKeyAsync(sshPublicKeyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1121,7 +1121,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetSshPublicKey(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetSshPublicKey(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1132,21 +1132,21 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<SshPublicKeyResource> GetSshPublicKey(this ResourceGroupResource resourceGroupResource, string sshPublicKeyName, CancellationToken cancellationToken = default)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetSshPublicKey(sshPublicKeyName, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetSshPublicKey(sshPublicKeyName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of DiskImageResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetDiskImages()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDiskImages()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DiskImageResources and their operations over a DiskImageResource. </returns>
         public static DiskImageCollection GetDiskImages(this ResourceGroupResource resourceGroupResource)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetDiskImages();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetDiskImages();
         }
 
         /// <summary>
@@ -1163,7 +1163,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetDiskImageAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDiskImageAsync(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1175,7 +1175,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<DiskImageResource>> GetDiskImageAsync(this ResourceGroupResource resourceGroupResource, string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetComputeResourceGroupMockingExtension(resourceGroupResource).GetDiskImageAsync(imageName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetDiskImageAsync(imageName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1192,7 +1192,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetDiskImage(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDiskImage(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1204,21 +1204,21 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<DiskImageResource> GetDiskImage(this ResourceGroupResource resourceGroupResource, string imageName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetDiskImage(imageName, expand, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetDiskImage(imageName, expand, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of RestorePointGroupResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetRestorePointGroups()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetRestorePointGroups()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RestorePointGroupResources and their operations over a RestorePointGroupResource. </returns>
         public static RestorePointGroupCollection GetRestorePointGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetRestorePointGroups();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetRestorePointGroups();
         }
 
         /// <summary>
@@ -1235,7 +1235,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetRestorePointGroupAsync(string,RestorePointGroupExpand?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetRestorePointGroupAsync(string,RestorePointGroupExpand?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1247,7 +1247,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<RestorePointGroupResource>> GetRestorePointGroupAsync(this ResourceGroupResource resourceGroupResource, string restorePointGroupName, RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetComputeResourceGroupMockingExtension(resourceGroupResource).GetRestorePointGroupAsync(restorePointGroupName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetRestorePointGroupAsync(restorePointGroupName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1264,7 +1264,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetRestorePointGroup(string,RestorePointGroupExpand?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetRestorePointGroup(string,RestorePointGroupExpand?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1276,21 +1276,21 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<RestorePointGroupResource> GetRestorePointGroup(this ResourceGroupResource resourceGroupResource, string restorePointGroupName, RestorePointGroupExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetRestorePointGroup(restorePointGroupName, expand, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetRestorePointGroup(restorePointGroupName, expand, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of CapacityReservationGroupResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetCapacityReservationGroups()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetCapacityReservationGroups()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CapacityReservationGroupResources and their operations over a CapacityReservationGroupResource. </returns>
         public static CapacityReservationGroupCollection GetCapacityReservationGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetCapacityReservationGroups();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetCapacityReservationGroups();
         }
 
         /// <summary>
@@ -1307,7 +1307,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetCapacityReservationGroupAsync(string,CapacityReservationGroupInstanceViewType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetCapacityReservationGroupAsync(string,CapacityReservationGroupInstanceViewType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1319,7 +1319,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<CapacityReservationGroupResource>> GetCapacityReservationGroupAsync(this ResourceGroupResource resourceGroupResource, string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetComputeResourceGroupMockingExtension(resourceGroupResource).GetCapacityReservationGroupAsync(capacityReservationGroupName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetCapacityReservationGroupAsync(capacityReservationGroupName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1336,7 +1336,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetCapacityReservationGroup(string,CapacityReservationGroupInstanceViewType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetCapacityReservationGroup(string,CapacityReservationGroupInstanceViewType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1348,21 +1348,21 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<CapacityReservationGroupResource> GetCapacityReservationGroup(this ResourceGroupResource resourceGroupResource, string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetCapacityReservationGroup(capacityReservationGroupName, expand, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetCapacityReservationGroup(capacityReservationGroupName, expand, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ManagedDiskResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetManagedDisks()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetManagedDisks()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ManagedDiskResources and their operations over a ManagedDiskResource. </returns>
         public static ManagedDiskCollection GetManagedDisks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetManagedDisks();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetManagedDisks();
         }
 
         /// <summary>
@@ -1379,7 +1379,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetManagedDiskAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetManagedDiskAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1390,7 +1390,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<ManagedDiskResource>> GetManagedDiskAsync(this ResourceGroupResource resourceGroupResource, string diskName, CancellationToken cancellationToken = default)
         {
-            return await GetComputeResourceGroupMockingExtension(resourceGroupResource).GetManagedDiskAsync(diskName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetManagedDiskAsync(diskName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1407,7 +1407,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetManagedDisk(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetManagedDisk(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1418,21 +1418,21 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<ManagedDiskResource> GetManagedDisk(this ResourceGroupResource resourceGroupResource, string diskName, CancellationToken cancellationToken = default)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetManagedDisk(diskName, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetManagedDisk(diskName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of DiskAccessResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetDiskAccesses()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDiskAccesses()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DiskAccessResources and their operations over a DiskAccessResource. </returns>
         public static DiskAccessCollection GetDiskAccesses(this ResourceGroupResource resourceGroupResource)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetDiskAccesses();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetDiskAccesses();
         }
 
         /// <summary>
@@ -1449,7 +1449,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetDiskAccessAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDiskAccessAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1460,7 +1460,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<DiskAccessResource>> GetDiskAccessAsync(this ResourceGroupResource resourceGroupResource, string diskAccessName, CancellationToken cancellationToken = default)
         {
-            return await GetComputeResourceGroupMockingExtension(resourceGroupResource).GetDiskAccessAsync(diskAccessName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetDiskAccessAsync(diskAccessName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1477,7 +1477,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetDiskAccess(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDiskAccess(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1488,21 +1488,21 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<DiskAccessResource> GetDiskAccess(this ResourceGroupResource resourceGroupResource, string diskAccessName, CancellationToken cancellationToken = default)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetDiskAccess(diskAccessName, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetDiskAccess(diskAccessName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of DiskEncryptionSetResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetDiskEncryptionSets()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDiskEncryptionSets()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DiskEncryptionSetResources and their operations over a DiskEncryptionSetResource. </returns>
         public static DiskEncryptionSetCollection GetDiskEncryptionSets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetDiskEncryptionSets();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetDiskEncryptionSets();
         }
 
         /// <summary>
@@ -1519,7 +1519,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetDiskEncryptionSetAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDiskEncryptionSetAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1530,7 +1530,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<DiskEncryptionSetResource>> GetDiskEncryptionSetAsync(this ResourceGroupResource resourceGroupResource, string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
-            return await GetComputeResourceGroupMockingExtension(resourceGroupResource).GetDiskEncryptionSetAsync(diskEncryptionSetName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetDiskEncryptionSetAsync(diskEncryptionSetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1547,7 +1547,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetDiskEncryptionSet(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetDiskEncryptionSet(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1558,21 +1558,21 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<DiskEncryptionSetResource> GetDiskEncryptionSet(this ResourceGroupResource resourceGroupResource, string diskEncryptionSetName, CancellationToken cancellationToken = default)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetDiskEncryptionSet(diskEncryptionSetName, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetDiskEncryptionSet(diskEncryptionSetName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of SnapshotResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetSnapshots()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetSnapshots()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SnapshotResources and their operations over a SnapshotResource. </returns>
         public static SnapshotCollection GetSnapshots(this ResourceGroupResource resourceGroupResource)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetSnapshots();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetSnapshots();
         }
 
         /// <summary>
@@ -1589,7 +1589,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetSnapshotAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetSnapshotAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1600,7 +1600,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<SnapshotResource>> GetSnapshotAsync(this ResourceGroupResource resourceGroupResource, string snapshotName, CancellationToken cancellationToken = default)
         {
-            return await GetComputeResourceGroupMockingExtension(resourceGroupResource).GetSnapshotAsync(snapshotName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetSnapshotAsync(snapshotName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1617,7 +1617,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetSnapshot(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetSnapshot(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1628,21 +1628,21 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<SnapshotResource> GetSnapshot(this ResourceGroupResource resourceGroupResource, string snapshotName, CancellationToken cancellationToken = default)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetSnapshot(snapshotName, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetSnapshot(snapshotName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of GalleryResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetGalleries()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetGalleries()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of GalleryResources and their operations over a GalleryResource. </returns>
         public static GalleryCollection GetGalleries(this ResourceGroupResource resourceGroupResource)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetGalleries();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetGalleries();
         }
 
         /// <summary>
@@ -1659,7 +1659,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetGalleryAsync(string,SelectPermission?,GalleryExpand?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetGalleryAsync(string,SelectPermission?,GalleryExpand?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1672,7 +1672,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<GalleryResource>> GetGalleryAsync(this ResourceGroupResource resourceGroupResource, string galleryName, SelectPermission? select = null, GalleryExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetComputeResourceGroupMockingExtension(resourceGroupResource).GetGalleryAsync(galleryName, select, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetGalleryAsync(galleryName, select, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1689,7 +1689,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetGallery(string,SelectPermission?,GalleryExpand?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetGallery(string,SelectPermission?,GalleryExpand?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1702,21 +1702,21 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<GalleryResource> GetGallery(this ResourceGroupResource resourceGroupResource, string galleryName, SelectPermission? select = null, GalleryExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetGallery(galleryName, select, expand, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetGallery(galleryName, select, expand, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of CloudServiceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetCloudServices()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetCloudServices()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CloudServiceResources and their operations over a CloudServiceResource. </returns>
         public static CloudServiceCollection GetCloudServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetCloudServices();
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetCloudServices();
         }
 
         /// <summary>
@@ -1733,7 +1733,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetCloudServiceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetCloudServiceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1744,7 +1744,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<CloudServiceResource>> GetCloudServiceAsync(this ResourceGroupResource resourceGroupResource, string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            return await GetComputeResourceGroupMockingExtension(resourceGroupResource).GetCloudServiceAsync(cloudServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeResourceGroupResource(resourceGroupResource).GetCloudServiceAsync(cloudServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1761,7 +1761,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeResourceGroupMockingExtension.GetCloudService(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeResourceGroupResource.GetCloudService(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1772,14 +1772,14 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<CloudServiceResource> GetCloudService(this ResourceGroupResource resourceGroupResource, string cloudServiceName, CancellationToken cancellationToken = default)
         {
-            return GetComputeResourceGroupMockingExtension(resourceGroupResource).GetCloudService(cloudServiceName, cancellationToken);
+            return GetMockableComputeResourceGroupResource(resourceGroupResource).GetCloudService(cloudServiceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of VirtualMachineExtensionImageResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineExtensionImages(AzureLocation,string)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineExtensionImages(AzureLocation,string)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1790,7 +1790,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of VirtualMachineExtensionImageResources and their operations over a VirtualMachineExtensionImageResource. </returns>
         public static VirtualMachineExtensionImageCollection GetVirtualMachineExtensionImages(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineExtensionImages(location, publisherName);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineExtensionImages(location, publisherName);
         }
 
         /// <summary>
@@ -1807,7 +1807,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineExtensionImageAsync(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineExtensionImageAsync(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1821,7 +1821,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<VirtualMachineExtensionImageResource>> GetVirtualMachineExtensionImageAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
         {
-            return await GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineExtensionImageAsync(location, publisherName, type, version, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineExtensionImageAsync(location, publisherName, type, version, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1838,7 +1838,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineExtensionImage(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineExtensionImage(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1852,14 +1852,14 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<VirtualMachineExtensionImageResource> GetVirtualMachineExtensionImage(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string type, string version, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineExtensionImage(location, publisherName, type, version, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineExtensionImage(location, publisherName, type, version, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of SharedGalleryResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetSharedGalleries(AzureLocation)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSharedGalleries(AzureLocation)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1867,7 +1867,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of SharedGalleryResources and their operations over a SharedGalleryResource. </returns>
         public static SharedGalleryCollection GetSharedGalleries(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetSharedGalleries(location);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetSharedGalleries(location);
         }
 
         /// <summary>
@@ -1884,7 +1884,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetSharedGalleryAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSharedGalleryAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1896,7 +1896,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<SharedGalleryResource>> GetSharedGalleryAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
         {
-            return await GetComputeSubscriptionMockingExtension(subscriptionResource).GetSharedGalleryAsync(location, galleryUniqueName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetSharedGalleryAsync(location, galleryUniqueName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1913,7 +1913,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetSharedGallery(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSharedGallery(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1925,21 +1925,21 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<SharedGalleryResource> GetSharedGallery(this SubscriptionResource subscriptionResource, AzureLocation location, string galleryUniqueName, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetSharedGallery(location, galleryUniqueName, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetSharedGallery(location, galleryUniqueName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of CommunityGalleryResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetCommunityGalleries()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCommunityGalleries()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CommunityGalleryResources and their operations over a CommunityGalleryResource. </returns>
         public static CommunityGalleryCollection GetCommunityGalleries(this SubscriptionResource subscriptionResource)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetCommunityGalleries();
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCommunityGalleries();
         }
 
         /// <summary>
@@ -1956,7 +1956,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetCommunityGalleryAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCommunityGalleryAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1968,7 +1968,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<CommunityGalleryResource>> GetCommunityGalleryAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
-            return await GetComputeSubscriptionMockingExtension(subscriptionResource).GetCommunityGalleryAsync(location, publicGalleryName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetCommunityGalleryAsync(location, publicGalleryName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1985,7 +1985,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetCommunityGallery(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCommunityGallery(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1997,14 +1997,14 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<CommunityGalleryResource> GetCommunityGallery(this SubscriptionResource subscriptionResource, AzureLocation location, string publicGalleryName, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetCommunityGallery(location, publicGalleryName, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCommunityGallery(location, publicGalleryName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of CloudServiceOSVersionResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetCloudServiceOSVersions(AzureLocation)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCloudServiceOSVersions(AzureLocation)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2012,7 +2012,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of CloudServiceOSVersionResources and their operations over a CloudServiceOSVersionResource. </returns>
         public static CloudServiceOSVersionCollection GetCloudServiceOSVersions(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetCloudServiceOSVersions(location);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCloudServiceOSVersions(location);
         }
 
         /// <summary>
@@ -2029,7 +2029,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetCloudServiceOSVersionAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCloudServiceOSVersionAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2041,7 +2041,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<CloudServiceOSVersionResource>> GetCloudServiceOSVersionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string osVersionName, CancellationToken cancellationToken = default)
         {
-            return await GetComputeSubscriptionMockingExtension(subscriptionResource).GetCloudServiceOSVersionAsync(location, osVersionName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetCloudServiceOSVersionAsync(location, osVersionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2058,7 +2058,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetCloudServiceOSVersion(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCloudServiceOSVersion(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2070,14 +2070,14 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<CloudServiceOSVersionResource> GetCloudServiceOSVersion(this SubscriptionResource subscriptionResource, AzureLocation location, string osVersionName, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetCloudServiceOSVersion(location, osVersionName, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCloudServiceOSVersion(location, osVersionName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of CloudServiceOSFamilyResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetCloudServiceOSFamilies(AzureLocation)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCloudServiceOSFamilies(AzureLocation)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2085,7 +2085,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An object representing collection of CloudServiceOSFamilyResources and their operations over a CloudServiceOSFamilyResource. </returns>
         public static CloudServiceOSFamilyCollection GetCloudServiceOSFamilies(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetCloudServiceOSFamilies(location);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCloudServiceOSFamilies(location);
         }
 
         /// <summary>
@@ -2102,7 +2102,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetCloudServiceOSFamilyAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCloudServiceOSFamilyAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2114,7 +2114,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static async Task<Response<CloudServiceOSFamilyResource>> GetCloudServiceOSFamilyAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string osFamilyName, CancellationToken cancellationToken = default)
         {
-            return await GetComputeSubscriptionMockingExtension(subscriptionResource).GetCloudServiceOSFamilyAsync(location, osFamilyName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetCloudServiceOSFamilyAsync(location, osFamilyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2131,7 +2131,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetCloudServiceOSFamily(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCloudServiceOSFamily(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2143,7 +2143,7 @@ namespace Azure.ResourceManager.Compute
         [ForwardsClientCalls]
         public static Response<CloudServiceOSFamilyResource> GetCloudServiceOSFamily(this SubscriptionResource subscriptionResource, AzureLocation location, string osFamilyName, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetCloudServiceOSFamily(location, osFamilyName, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCloudServiceOSFamily(location, osFamilyName, cancellationToken);
         }
 
         /// <summary>
@@ -2160,7 +2160,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetUsages(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetUsages(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2169,7 +2169,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="ComputeUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ComputeUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetUsagesAsync(location, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -2186,7 +2186,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetUsages(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetUsages(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2195,7 +2195,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="ComputeUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ComputeUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetUsages(location, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetUsages(location, cancellationToken);
         }
 
         /// <summary>
@@ -2212,7 +2212,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineSizes(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineSizes(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2221,7 +2221,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineSize> GetVirtualMachineSizesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineSizesAsync(location, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineSizesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -2238,7 +2238,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineSizes(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineSizes(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2247,7 +2247,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineSize" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineSize> GetVirtualMachineSizes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineSizes(location, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineSizes(location, cancellationToken);
         }
 
         /// <summary>
@@ -2264,7 +2264,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineScaleSetsByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineScaleSetsByLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2273,7 +2273,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineScaleSetsByLocationAsync(location, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineScaleSetsByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -2290,7 +2290,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineScaleSetsByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineScaleSetsByLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2299,7 +2299,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineScaleSetsByLocation(location, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineScaleSetsByLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -2316,7 +2316,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineScaleSets(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineScaleSets(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2324,7 +2324,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineScaleSetsAsync(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineScaleSetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2341,7 +2341,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineScaleSets(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineScaleSets(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2349,7 +2349,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineScaleSetResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineScaleSetResource> GetVirtualMachineScaleSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineScaleSets(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineScaleSets(cancellationToken);
         }
 
         /// <summary>
@@ -2366,7 +2366,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachinesByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachinesByLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2375,7 +2375,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachinesByLocationAsync(location, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachinesByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -2392,7 +2392,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachinesByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachinesByLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2401,7 +2401,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineResource> GetVirtualMachinesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachinesByLocation(location, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachinesByLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -2418,7 +2418,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachines(string,string,ExpandTypesForListVm?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachines(string,string,ExpandTypesForListVm?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2429,7 +2429,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineResource> GetVirtualMachinesAsync(this SubscriptionResource subscriptionResource, string statusOnly = null, string filter = null, ExpandTypesForListVm? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachinesAsync(statusOnly, filter, expand, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachinesAsync(statusOnly, filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -2446,7 +2446,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachines(string,string,ExpandTypesForListVm?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachines(string,string,ExpandTypesForListVm?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2457,7 +2457,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineResource> GetVirtualMachines(this SubscriptionResource subscriptionResource, string statusOnly = null, string filter = null, ExpandTypesForListVm? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachines(statusOnly, filter, expand, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachines(statusOnly, filter, expand, cancellationToken);
         }
 
         /// <summary>
@@ -2474,7 +2474,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImage(AzureLocation,string,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImage(AzureLocation,string,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2488,7 +2488,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
         public static async Task<Response<VirtualMachineImage>> GetVirtualMachineImageAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
-            return await GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImageAsync(location, publisherName, offer, skus, version, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImageAsync(location, publisherName, offer, skus, version, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2505,7 +2505,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImage(AzureLocation,string,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImage(AzureLocation,string,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2519,7 +2519,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/>, <paramref name="offer"/>, <paramref name="skus"/> or <paramref name="version"/> is null. </exception>
         public static Response<VirtualMachineImage> GetVirtualMachineImage(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImage(location, publisherName, offer, skus, version, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImage(location, publisherName, offer, skus, version, cancellationToken);
         }
 
         /// <summary>
@@ -2536,7 +2536,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImages(SubscriptionResourceGetVirtualMachineImagesOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImages(SubscriptionResourceGetVirtualMachineImagesOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2546,7 +2546,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImagesAsync(options, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -2563,7 +2563,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImages(SubscriptionResourceGetVirtualMachineImagesOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImages(SubscriptionResourceGetVirtualMachineImagesOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2573,7 +2573,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineImageBase> GetVirtualMachineImages(this SubscriptionResource subscriptionResource, SubscriptionResourceGetVirtualMachineImagesOptions options, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImages(options, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImages(options, cancellationToken);
         }
 
         /// <summary>
@@ -2590,7 +2590,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImageOffers(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImageOffers(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2602,7 +2602,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageOffersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImageOffersAsync(location, publisherName, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImageOffersAsync(location, publisherName, cancellationToken);
         }
 
         /// <summary>
@@ -2619,7 +2619,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImageOffers(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImageOffers(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2631,7 +2631,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineImageBase> GetVirtualMachineImageOffers(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImageOffers(location, publisherName, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImageOffers(location, publisherName, cancellationToken);
         }
 
         /// <summary>
@@ -2648,7 +2648,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImagePublishers(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2657,7 +2657,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagePublishersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImagePublishersAsync(location, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagePublishersAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -2674,7 +2674,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImagePublishers(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImagePublishers(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2683,7 +2683,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineImageBase> GetVirtualMachineImagePublishers(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImagePublishers(location, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagePublishers(location, cancellationToken);
         }
 
         /// <summary>
@@ -2700,7 +2700,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImageSkus(AzureLocation,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImageSkus(AzureLocation,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2713,7 +2713,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImageSkusAsync(location, publisherName, offer, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImageSkusAsync(location, publisherName, offer, cancellationToken);
         }
 
         /// <summary>
@@ -2730,7 +2730,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImageSkus(AzureLocation,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImageSkus(AzureLocation,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2743,7 +2743,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineImageBase> GetVirtualMachineImageSkus(this SubscriptionResource subscriptionResource, AzureLocation location, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImageSkus(location, publisherName, offer, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImageSkus(location, publisherName, offer, cancellationToken);
         }
 
         /// <summary>
@@ -2760,7 +2760,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImagesByEdgeZone(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2772,7 +2772,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZoneAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImagesByEdgeZoneAsync(location, edgeZone, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesByEdgeZoneAsync(location, edgeZone, cancellationToken);
         }
 
         /// <summary>
@@ -2789,7 +2789,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImagesByEdgeZone(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImagesByEdgeZone(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2801,7 +2801,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineImageBase> GetVirtualMachineImagesByEdgeZone(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImagesByEdgeZone(location, edgeZone, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesByEdgeZone(location, edgeZone, cancellationToken);
         }
 
         /// <summary>
@@ -2818,7 +2818,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImagesEdgeZone(SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZone(SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2827,7 +2827,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public static async Task<Response<VirtualMachineImage>> GetVirtualMachineImagesEdgeZoneAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
         {
-            return await GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImagesEdgeZoneAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesEdgeZoneAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2844,7 +2844,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImagesEdgeZone(SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZone(SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2853,7 +2853,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public static Response<VirtualMachineImage> GetVirtualMachineImagesEdgeZone(this SubscriptionResource subscriptionResource, SubscriptionResourceGetVirtualMachineImagesEdgeZoneOptions options, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImagesEdgeZone(options, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesEdgeZone(options, cancellationToken);
         }
 
         /// <summary>
@@ -2870,7 +2870,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImagesEdgeZones(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2880,7 +2880,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImagesEdgeZonesAsync(options, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesEdgeZonesAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -2897,7 +2897,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImagesEdgeZones(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImagesEdgeZones(SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2907,7 +2907,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineImageBase> GetVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, SubscriptionResourceGetVirtualMachineImagesEdgeZonesOptions options, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImagesEdgeZones(options, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImagesEdgeZones(options, cancellationToken);
         }
 
         /// <summary>
@@ -2924,7 +2924,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetOffersVirtualMachineImagesEdgeZones(AzureLocation,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones(AzureLocation,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2937,7 +2937,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetOffersVirtualMachineImagesEdgeZonesAsync(location, edgeZone, publisherName, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetOffersVirtualMachineImagesEdgeZonesAsync(location, edgeZone, publisherName, cancellationToken);
         }
 
         /// <summary>
@@ -2954,7 +2954,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetOffersVirtualMachineImagesEdgeZones(AzureLocation,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetOffersVirtualMachineImagesEdgeZones(AzureLocation,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2967,7 +2967,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineImageBase> GetOffersVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetOffersVirtualMachineImagesEdgeZones(location, edgeZone, publisherName, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetOffersVirtualMachineImagesEdgeZones(location, edgeZone, publisherName, cancellationToken);
         }
 
         /// <summary>
@@ -2984,7 +2984,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetPublishersVirtualMachineImagesEdgeZones(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2996,7 +2996,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetPublishersVirtualMachineImagesEdgeZonesAsync(location, edgeZone, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetPublishersVirtualMachineImagesEdgeZonesAsync(location, edgeZone, cancellationToken);
         }
 
         /// <summary>
@@ -3013,7 +3013,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetPublishersVirtualMachineImagesEdgeZones(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetPublishersVirtualMachineImagesEdgeZones(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3025,7 +3025,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineImageBase> GetPublishersVirtualMachineImagesEdgeZones(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetPublishersVirtualMachineImagesEdgeZones(location, edgeZone, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetPublishersVirtualMachineImagesEdgeZones(location, edgeZone, cancellationToken);
         }
 
         /// <summary>
@@ -3042,7 +3042,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImageEdgeZoneSkus(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3056,7 +3056,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImageEdgeZoneSkusAsync(location, edgeZone, publisherName, offer, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImageEdgeZoneSkusAsync(location, edgeZone, publisherName, offer, cancellationToken);
         }
 
         /// <summary>
@@ -3073,7 +3073,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineImageEdgeZoneSkus(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineImageEdgeZoneSkus(AzureLocation,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3087,7 +3087,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="VirtualMachineImageBase" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VirtualMachineImageBase> GetVirtualMachineImageEdgeZoneSkus(this SubscriptionResource subscriptionResource, AzureLocation location, string edgeZone, string publisherName, string offer, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineImageEdgeZoneSkus(location, edgeZone, publisherName, offer, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineImageEdgeZoneSkus(location, edgeZone, publisherName, offer, cancellationToken);
         }
 
         /// <summary>
@@ -3104,7 +3104,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetAvailabilitySets(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetAvailabilitySets(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3113,7 +3113,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="AvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailabilitySetResource> GetAvailabilitySetsAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetAvailabilitySetsAsync(expand, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetAvailabilitySetsAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -3130,7 +3130,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetAvailabilitySets(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetAvailabilitySets(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3139,7 +3139,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="AvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailabilitySetResource> GetAvailabilitySets(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetAvailabilitySets(expand, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetAvailabilitySets(expand, cancellationToken);
         }
 
         /// <summary>
@@ -3156,7 +3156,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetProximityPlacementGroups(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetProximityPlacementGroups(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3164,7 +3164,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="ProximityPlacementGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ProximityPlacementGroupResource> GetProximityPlacementGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetProximityPlacementGroupsAsync(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetProximityPlacementGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3181,7 +3181,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetProximityPlacementGroups(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetProximityPlacementGroups(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3189,7 +3189,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="ProximityPlacementGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ProximityPlacementGroupResource> GetProximityPlacementGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetProximityPlacementGroups(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetProximityPlacementGroups(cancellationToken);
         }
 
         /// <summary>
@@ -3206,7 +3206,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetDedicatedHostGroups(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetDedicatedHostGroups(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3214,7 +3214,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="DedicatedHostGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DedicatedHostGroupResource> GetDedicatedHostGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetDedicatedHostGroupsAsync(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetDedicatedHostGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3231,7 +3231,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetDedicatedHostGroups(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetDedicatedHostGroups(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3239,7 +3239,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="DedicatedHostGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DedicatedHostGroupResource> GetDedicatedHostGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetDedicatedHostGroups(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetDedicatedHostGroups(cancellationToken);
         }
 
         /// <summary>
@@ -3256,7 +3256,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetSshPublicKeys(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSshPublicKeys(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3264,7 +3264,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="SshPublicKeyResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SshPublicKeyResource> GetSshPublicKeysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetSshPublicKeysAsync(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetSshPublicKeysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3281,7 +3281,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetSshPublicKeys(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSshPublicKeys(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3289,7 +3289,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="SshPublicKeyResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SshPublicKeyResource> GetSshPublicKeys(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetSshPublicKeys(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetSshPublicKeys(cancellationToken);
         }
 
         /// <summary>
@@ -3306,7 +3306,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetDiskImages(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetDiskImages(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3314,7 +3314,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="DiskImageResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DiskImageResource> GetDiskImagesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetDiskImagesAsync(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetDiskImagesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3331,7 +3331,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetDiskImages(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetDiskImages(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3339,7 +3339,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="DiskImageResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DiskImageResource> GetDiskImages(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetDiskImages(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetDiskImages(cancellationToken);
         }
 
         /// <summary>
@@ -3356,7 +3356,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetRestorePointGroups(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetRestorePointGroups(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3364,7 +3364,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="RestorePointGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RestorePointGroupResource> GetRestorePointGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetRestorePointGroupsAsync(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetRestorePointGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3381,7 +3381,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetRestorePointGroups(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetRestorePointGroups(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3389,7 +3389,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="RestorePointGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RestorePointGroupResource> GetRestorePointGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetRestorePointGroups(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetRestorePointGroups(cancellationToken);
         }
 
         /// <summary>
@@ -3406,7 +3406,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetCapacityReservationGroups(CapacityReservationGroupGetExpand?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCapacityReservationGroups(CapacityReservationGroupGetExpand?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3415,7 +3415,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="CapacityReservationGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CapacityReservationGroupResource> GetCapacityReservationGroupsAsync(this SubscriptionResource subscriptionResource, CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetCapacityReservationGroupsAsync(expand, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCapacityReservationGroupsAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -3432,7 +3432,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetCapacityReservationGroups(CapacityReservationGroupGetExpand?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCapacityReservationGroups(CapacityReservationGroupGetExpand?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3441,7 +3441,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="CapacityReservationGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CapacityReservationGroupResource> GetCapacityReservationGroups(this SubscriptionResource subscriptionResource, CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetCapacityReservationGroups(expand, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCapacityReservationGroups(expand, cancellationToken);
         }
 
         /// <summary>
@@ -3458,7 +3458,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.ExportLogAnalyticsRequestRateByInterval(WaitUntil,AzureLocation,RequestRateByIntervalContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.ExportLogAnalyticsRequestRateByInterval(WaitUntil,AzureLocation,RequestRateByIntervalContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3469,7 +3469,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsRequestRateByIntervalAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
         {
-            return await GetComputeSubscriptionMockingExtension(subscriptionResource).ExportLogAnalyticsRequestRateByIntervalAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).ExportLogAnalyticsRequestRateByIntervalAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3486,7 +3486,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.ExportLogAnalyticsRequestRateByInterval(WaitUntil,AzureLocation,RequestRateByIntervalContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.ExportLogAnalyticsRequestRateByInterval(WaitUntil,AzureLocation,RequestRateByIntervalContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3497,7 +3497,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static ArmOperation<LogAnalytics> ExportLogAnalyticsRequestRateByInterval(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, RequestRateByIntervalContent content, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).ExportLogAnalyticsRequestRateByInterval(waitUntil, location, content, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).ExportLogAnalyticsRequestRateByInterval(waitUntil, location, content, cancellationToken);
         }
 
         /// <summary>
@@ -3514,7 +3514,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.ExportLogAnalyticsThrottledRequests(WaitUntil,AzureLocation,ThrottledRequestsContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.ExportLogAnalyticsThrottledRequests(WaitUntil,AzureLocation,ThrottledRequestsContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3525,7 +3525,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<LogAnalytics>> ExportLogAnalyticsThrottledRequestsAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
         {
-            return await GetComputeSubscriptionMockingExtension(subscriptionResource).ExportLogAnalyticsThrottledRequestsAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).ExportLogAnalyticsThrottledRequestsAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3542,7 +3542,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.ExportLogAnalyticsThrottledRequests(WaitUntil,AzureLocation,ThrottledRequestsContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.ExportLogAnalyticsThrottledRequests(WaitUntil,AzureLocation,ThrottledRequestsContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3553,7 +3553,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static ArmOperation<LogAnalytics> ExportLogAnalyticsThrottledRequests(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, ThrottledRequestsContent content, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).ExportLogAnalyticsThrottledRequests(waitUntil, location, content, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).ExportLogAnalyticsThrottledRequests(waitUntil, location, content, cancellationToken);
         }
 
         /// <summary>
@@ -3570,7 +3570,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineRunCommands(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineRunCommands(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3579,7 +3579,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="RunCommandDocumentBase" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RunCommandDocumentBase> GetVirtualMachineRunCommandsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineRunCommandsAsync(location, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineRunCommandsAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -3596,7 +3596,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineRunCommands(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineRunCommands(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3605,7 +3605,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="RunCommandDocumentBase" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RunCommandDocumentBase> GetVirtualMachineRunCommands(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineRunCommands(location, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineRunCommands(location, cancellationToken);
         }
 
         /// <summary>
@@ -3622,7 +3622,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineRunCommand(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineRunCommand(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3633,7 +3633,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
         public static async Task<Response<RunCommandDocument>> GetVirtualMachineRunCommandAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string commandId, CancellationToken cancellationToken = default)
         {
-            return await GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineRunCommandAsync(location, commandId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineRunCommandAsync(location, commandId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3650,7 +3650,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetVirtualMachineRunCommand(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetVirtualMachineRunCommand(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3661,7 +3661,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="commandId"/> is null. </exception>
         public static Response<RunCommandDocument> GetVirtualMachineRunCommand(this SubscriptionResource subscriptionResource, AzureLocation location, string commandId, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetVirtualMachineRunCommand(location, commandId, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetVirtualMachineRunCommand(location, commandId, cancellationToken);
         }
 
         /// <summary>
@@ -3678,7 +3678,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetManagedDisks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetManagedDisks(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3686,7 +3686,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="ManagedDiskResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedDiskResource> GetManagedDisksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetManagedDisksAsync(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetManagedDisksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3703,7 +3703,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetManagedDisks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetManagedDisks(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3711,7 +3711,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="ManagedDiskResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedDiskResource> GetManagedDisks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetManagedDisks(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetManagedDisks(cancellationToken);
         }
 
         /// <summary>
@@ -3728,7 +3728,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetDiskAccesses(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetDiskAccesses(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3736,7 +3736,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="DiskAccessResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DiskAccessResource> GetDiskAccessesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetDiskAccessesAsync(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetDiskAccessesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3753,7 +3753,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetDiskAccesses(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetDiskAccesses(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3761,7 +3761,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="DiskAccessResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DiskAccessResource> GetDiskAccesses(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetDiskAccesses(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetDiskAccesses(cancellationToken);
         }
 
         /// <summary>
@@ -3778,7 +3778,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetDiskEncryptionSets(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetDiskEncryptionSets(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3786,7 +3786,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="DiskEncryptionSetResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DiskEncryptionSetResource> GetDiskEncryptionSetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetDiskEncryptionSetsAsync(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetDiskEncryptionSetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3803,7 +3803,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetDiskEncryptionSets(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetDiskEncryptionSets(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3811,7 +3811,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="DiskEncryptionSetResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DiskEncryptionSetResource> GetDiskEncryptionSets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetDiskEncryptionSets(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetDiskEncryptionSets(cancellationToken);
         }
 
         /// <summary>
@@ -3828,7 +3828,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetSnapshots(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSnapshots(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3836,7 +3836,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SnapshotResource> GetSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetSnapshotsAsync(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetSnapshotsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3853,7 +3853,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetSnapshots(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetSnapshots(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3861,7 +3861,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SnapshotResource> GetSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetSnapshots(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetSnapshots(cancellationToken);
         }
 
         /// <summary>
@@ -3878,7 +3878,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetComputeResourceSkus(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetComputeResourceSkus(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3888,7 +3888,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="ComputeResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ComputeResourceSku> GetComputeResourceSkusAsync(this SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetComputeResourceSkusAsync(filter, includeExtendedLocations, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetComputeResourceSkusAsync(filter, includeExtendedLocations, cancellationToken);
         }
 
         /// <summary>
@@ -3905,7 +3905,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetComputeResourceSkus(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetComputeResourceSkus(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3915,7 +3915,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="ComputeResourceSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ComputeResourceSku> GetComputeResourceSkus(this SubscriptionResource subscriptionResource, string filter = null, string includeExtendedLocations = null, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetComputeResourceSkus(filter, includeExtendedLocations, cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetComputeResourceSkus(filter, includeExtendedLocations, cancellationToken);
         }
 
         /// <summary>
@@ -3932,7 +3932,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetGalleries(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetGalleries(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3940,7 +3940,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="GalleryResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GalleryResource> GetGalleriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetGalleriesAsync(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetGalleriesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3957,7 +3957,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetGalleries(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetGalleries(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3965,7 +3965,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="GalleryResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<GalleryResource> GetGalleries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetGalleries(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetGalleries(cancellationToken);
         }
 
         /// <summary>
@@ -3982,7 +3982,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetCloudServices(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCloudServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3990,7 +3990,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> An async collection of <see cref="CloudServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CloudServiceResource> GetCloudServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetCloudServicesAsync(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCloudServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -4007,7 +4007,7 @@ namespace Azure.ResourceManager.Compute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ComputeSubscriptionMockingExtension.GetCloudServices(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableComputeSubscriptionResource.GetCloudServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -4015,7 +4015,7 @@ namespace Azure.ResourceManager.Compute
         /// <returns> A collection of <see cref="CloudServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CloudServiceResource> GetCloudServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetComputeSubscriptionMockingExtension(subscriptionResource).GetCloudServices(cancellationToken);
+            return GetMockableComputeSubscriptionResource(subscriptionResource).GetCloudServices(cancellationToken);
         }
     }
 }

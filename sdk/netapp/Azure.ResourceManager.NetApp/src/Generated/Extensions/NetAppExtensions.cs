@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.NetApp
     /// <summary> A class to add extension methods to Azure.ResourceManager.NetApp. </summary>
     public static partial class NetAppExtensions
     {
-        private static NetAppArmClientMockingExtension GetNetAppArmClientMockingExtension(ArmClient client)
+        private static MockableNetAppArmClient GetMockableNetAppArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new NetAppArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableNetAppArmClient(client0));
         }
 
-        private static NetAppResourceGroupMockingExtension GetNetAppResourceGroupMockingExtension(ArmResource resource)
+        private static MockableNetAppResourceGroupResource GetMockableNetAppResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new NetAppResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableNetAppResourceGroupResource(client, resource.Id));
         }
 
-        private static NetAppSubscriptionMockingExtension GetNetAppSubscriptionMockingExtension(ArmResource resource)
+        private static MockableNetAppSubscriptionResource GetMockableNetAppSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new NetAppSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableNetAppSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetApp
         /// You can use <see cref="NetAppAccountResource.CreateResourceIdentifier" /> to create a <see cref="NetAppAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppArmClientMockingExtension.GetNetAppAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppAccountResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> Returns a <see cref="NetAppAccountResource" /> object. </returns>
         public static NetAppAccountResource GetNetAppAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNetAppArmClientMockingExtension(client).GetNetAppAccountResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppAccountResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NetApp
         /// You can use <see cref="CapacityPoolResource.CreateResourceIdentifier" /> to create a <see cref="CapacityPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppArmClientMockingExtension.GetCapacityPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetCapacityPoolResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> Returns a <see cref="CapacityPoolResource" /> object. </returns>
         public static CapacityPoolResource GetCapacityPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNetAppArmClientMockingExtension(client).GetCapacityPoolResource(id);
+            return GetMockableNetAppArmClient(client).GetCapacityPoolResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NetApp
         /// You can use <see cref="NetAppVolumeResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppArmClientMockingExtension.GetNetAppVolumeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppVolumeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> Returns a <see cref="NetAppVolumeResource" /> object. </returns>
         public static NetAppVolumeResource GetNetAppVolumeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNetAppArmClientMockingExtension(client).GetNetAppVolumeResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppVolumeResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NetApp
         /// You can use <see cref="NetAppVolumeSnapshotResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeSnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppArmClientMockingExtension.GetNetAppVolumeSnapshotResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppVolumeSnapshotResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> Returns a <see cref="NetAppVolumeSnapshotResource" /> object. </returns>
         public static NetAppVolumeSnapshotResource GetNetAppVolumeSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNetAppArmClientMockingExtension(client).GetNetAppVolumeSnapshotResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppVolumeSnapshotResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.NetApp
         /// You can use <see cref="SnapshotPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppArmClientMockingExtension.GetSnapshotPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetSnapshotPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> Returns a <see cref="SnapshotPolicyResource" /> object. </returns>
         public static SnapshotPolicyResource GetSnapshotPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNetAppArmClientMockingExtension(client).GetSnapshotPolicyResource(id);
+            return GetMockableNetAppArmClient(client).GetSnapshotPolicyResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.NetApp
         /// You can use <see cref="NetAppBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="NetAppBackupPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppArmClientMockingExtension.GetNetAppBackupPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppBackupPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> Returns a <see cref="NetAppBackupPolicyResource" /> object. </returns>
         public static NetAppBackupPolicyResource GetNetAppBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNetAppArmClientMockingExtension(client).GetNetAppBackupPolicyResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppBackupPolicyResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.NetApp
         /// You can use <see cref="NetAppVolumeQuotaRuleResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeQuotaRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppArmClientMockingExtension.GetNetAppVolumeQuotaRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppVolumeQuotaRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> Returns a <see cref="NetAppVolumeQuotaRuleResource" /> object. </returns>
         public static NetAppVolumeQuotaRuleResource GetNetAppVolumeQuotaRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNetAppArmClientMockingExtension(client).GetNetAppVolumeQuotaRuleResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppVolumeQuotaRuleResource(id);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.NetApp
         /// You can use <see cref="NetAppVolumeGroupResource.CreateResourceIdentifier" /> to create a <see cref="NetAppVolumeGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppArmClientMockingExtension.GetNetAppVolumeGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppVolumeGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> Returns a <see cref="NetAppVolumeGroupResource" /> object. </returns>
         public static NetAppVolumeGroupResource GetNetAppVolumeGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNetAppArmClientMockingExtension(client).GetNetAppVolumeGroupResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppVolumeGroupResource(id);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.NetApp
         /// You can use <see cref="NetAppSubvolumeInfoResource.CreateResourceIdentifier" /> to create a <see cref="NetAppSubvolumeInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppArmClientMockingExtension.GetNetAppSubvolumeInfoResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppArmClient.GetNetAppSubvolumeInfoResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -176,21 +176,21 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> Returns a <see cref="NetAppSubvolumeInfoResource" /> object. </returns>
         public static NetAppSubvolumeInfoResource GetNetAppSubvolumeInfoResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNetAppArmClientMockingExtension(client).GetNetAppSubvolumeInfoResource(id);
+            return GetMockableNetAppArmClient(client).GetNetAppSubvolumeInfoResource(id);
         }
 
         /// <summary>
         /// Gets a collection of NetAppAccountResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppResourceGroupMockingExtension.GetNetAppAccounts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetNetAppAccounts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NetAppAccountResources and their operations over a NetAppAccountResource. </returns>
         public static NetAppAccountCollection GetNetAppAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetNetAppResourceGroupMockingExtension(resourceGroupResource).GetNetAppAccounts();
+            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetNetAppAccounts();
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppResourceGroupMockingExtension.GetNetAppAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetNetAppAccountAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.NetApp
         [ForwardsClientCalls]
         public static async Task<Response<NetAppAccountResource>> GetNetAppAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await GetNetAppResourceGroupMockingExtension(resourceGroupResource).GetNetAppAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppResourceGroupResource(resourceGroupResource).GetNetAppAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppResourceGroupMockingExtension.GetNetAppAccount(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppResourceGroupResource.GetNetAppAccount(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.NetApp
         [ForwardsClientCalls]
         public static Response<NetAppAccountResource> GetNetAppAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return GetNetAppResourceGroupMockingExtension(resourceGroupResource).GetNetAppAccount(accountName, cancellationToken);
+            return GetMockableNetAppResourceGroupResource(resourceGroupResource).GetNetAppAccount(accountName, cancellationToken);
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.CheckNetAppNameAvailability(AzureLocation,NetAppNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckNetAppNameAvailability(AzureLocation,NetAppNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetNetAppSubscriptionMockingExtension(subscriptionResource).CheckNetAppNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.CheckNetAppNameAvailability(AzureLocation,NetAppNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckNetAppNameAvailability(AzureLocation,NetAppNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<NetAppCheckAvailabilityResult> CheckNetAppNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetNetAppSubscriptionMockingExtension(subscriptionResource).CheckNetAppNameAvailability(location, content, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.CheckNetAppFilePathAvailability(AzureLocation,NetAppFilePathAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckNetAppFilePathAvailability(AzureLocation,NetAppFilePathAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppFilePathAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetNetAppSubscriptionMockingExtension(subscriptionResource).CheckNetAppFilePathAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppFilePathAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.CheckNetAppFilePathAvailability(AzureLocation,NetAppFilePathAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckNetAppFilePathAvailability(AzureLocation,NetAppFilePathAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<NetAppCheckAvailabilityResult> CheckNetAppFilePathAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppFilePathAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetNetAppSubscriptionMockingExtension(subscriptionResource).CheckNetAppFilePathAvailability(location, content, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppFilePathAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.CheckNetAppQuotaAvailability(AzureLocation,NetAppQuotaAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckNetAppQuotaAvailability(AzureLocation,NetAppQuotaAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<NetAppCheckAvailabilityResult>> CheckNetAppQuotaAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetNetAppSubscriptionMockingExtension(subscriptionResource).CheckNetAppQuotaAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppQuotaAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.CheckNetAppQuotaAvailability(AzureLocation,NetAppQuotaAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.CheckNetAppQuotaAvailability(AzureLocation,NetAppQuotaAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<NetAppCheckAvailabilityResult> CheckNetAppQuotaAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, NetAppQuotaAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetNetAppSubscriptionMockingExtension(subscriptionResource).CheckNetAppQuotaAvailability(location, content, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).CheckNetAppQuotaAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.QueryRegionInfoNetAppResource(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.QueryRegionInfoNetAppResource(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<NetAppRegionInfo>> QueryRegionInfoNetAppResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetNetAppSubscriptionMockingExtension(subscriptionResource).QueryRegionInfoNetAppResourceAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).QueryRegionInfoNetAppResourceAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.QueryRegionInfoNetAppResource(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.QueryRegionInfoNetAppResource(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<NetAppRegionInfo> QueryRegionInfoNetAppResource(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetNetAppSubscriptionMockingExtension(subscriptionResource).QueryRegionInfoNetAppResource(location, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).QueryRegionInfoNetAppResource(location, cancellationToken);
         }
 
         /// <summary>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.QueryNetworkSiblingSetNetAppResource(AzureLocation,QueryNetworkSiblingSetContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.QueryNetworkSiblingSetNetAppResource(AzureLocation,QueryNetworkSiblingSetContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<NetworkSiblingSet>> QueryNetworkSiblingSetNetAppResourceAsync(this SubscriptionResource subscriptionResource, AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            return await GetNetAppSubscriptionMockingExtension(subscriptionResource).QueryNetworkSiblingSetNetAppResourceAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).QueryNetworkSiblingSetNetAppResourceAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.QueryNetworkSiblingSetNetAppResource(AzureLocation,QueryNetworkSiblingSetContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.QueryNetworkSiblingSetNetAppResource(AzureLocation,QueryNetworkSiblingSetContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<NetworkSiblingSet> QueryNetworkSiblingSetNetAppResource(this SubscriptionResource subscriptionResource, AzureLocation location, QueryNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            return GetNetAppSubscriptionMockingExtension(subscriptionResource).QueryNetworkSiblingSetNetAppResource(location, content, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).QueryNetworkSiblingSetNetAppResource(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.UpdateNetworkSiblingSetNetAppResource(WaitUntil,AzureLocation,UpdateNetworkSiblingSetContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.UpdateNetworkSiblingSetNetAppResource(WaitUntil,AzureLocation,UpdateNetworkSiblingSetContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<NetworkSiblingSet>> UpdateNetworkSiblingSetNetAppResourceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            return await GetNetAppSubscriptionMockingExtension(subscriptionResource).UpdateNetworkSiblingSetNetAppResourceAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).UpdateNetworkSiblingSetNetAppResourceAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.UpdateNetworkSiblingSetNetAppResource(WaitUntil,AzureLocation,UpdateNetworkSiblingSetContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.UpdateNetworkSiblingSetNetAppResource(WaitUntil,AzureLocation,UpdateNetworkSiblingSetContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static ArmOperation<NetworkSiblingSet> UpdateNetworkSiblingSetNetAppResource(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, UpdateNetworkSiblingSetContent content, CancellationToken cancellationToken = default)
         {
-            return GetNetAppSubscriptionMockingExtension(subscriptionResource).UpdateNetworkSiblingSetNetAppResource(waitUntil, location, content, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).UpdateNetworkSiblingSetNetAppResource(waitUntil, location, content, cancellationToken);
         }
 
         /// <summary>
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.GetNetAppQuotaLimits(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppQuotaLimits(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An async collection of <see cref="NetAppSubscriptionQuotaItem" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimitsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetNetAppSubscriptionMockingExtension(subscriptionResource).GetNetAppQuotaLimitsAsync(location, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppQuotaLimitsAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.GetNetAppQuotaLimits(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppQuotaLimits(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> A collection of <see cref="NetAppSubscriptionQuotaItem" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimits(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetNetAppSubscriptionMockingExtension(subscriptionResource).GetNetAppQuotaLimits(location, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppQuotaLimits(location, cancellationToken);
         }
 
         /// <summary>
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.GetNetAppQuotaLimit(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppQuotaLimit(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
         public static async Task<Response<NetAppSubscriptionQuotaItem>> GetNetAppQuotaLimitAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
-            return await GetNetAppSubscriptionMockingExtension(subscriptionResource).GetNetAppQuotaLimitAsync(location, quotaLimitName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppQuotaLimitAsync(location, quotaLimitName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.GetNetAppQuotaLimit(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppQuotaLimit(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="quotaLimitName"/> is null. </exception>
         public static Response<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimit(this SubscriptionResource subscriptionResource, AzureLocation location, string quotaLimitName, CancellationToken cancellationToken = default)
         {
-            return GetNetAppSubscriptionMockingExtension(subscriptionResource).GetNetAppQuotaLimit(location, quotaLimitName, cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppQuotaLimit(location, quotaLimitName, cancellationToken);
         }
 
         /// <summary>
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.GetNetAppAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> An async collection of <see cref="NetAppAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NetAppAccountResource> GetNetAppAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetNetAppSubscriptionMockingExtension(subscriptionResource).GetNetAppAccountsAsync(cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.NetApp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NetAppSubscriptionMockingExtension.GetNetAppAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNetAppSubscriptionResource.GetNetAppAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.NetApp
         /// <returns> A collection of <see cref="NetAppAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NetAppAccountResource> GetNetAppAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetNetAppSubscriptionMockingExtension(subscriptionResource).GetNetAppAccounts(cancellationToken);
+            return GetMockableNetAppSubscriptionResource(subscriptionResource).GetNetAppAccounts(cancellationToken);
         }
     }
 }

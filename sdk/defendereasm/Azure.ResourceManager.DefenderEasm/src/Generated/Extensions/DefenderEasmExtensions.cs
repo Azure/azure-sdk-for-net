@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.DefenderEasm
     /// <summary> A class to add extension methods to Azure.ResourceManager.DefenderEasm. </summary>
     public static partial class DefenderEasmExtensions
     {
-        private static DefenderEasmArmClientMockingExtension GetDefenderEasmArmClientMockingExtension(ArmClient client)
+        private static MockableDefenderEasmArmClient GetMockableDefenderEasmArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new DefenderEasmArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableDefenderEasmArmClient(client0));
         }
 
-        private static DefenderEasmResourceGroupMockingExtension GetDefenderEasmResourceGroupMockingExtension(ArmResource resource)
+        private static MockableDefenderEasmResourceGroupResource GetMockableDefenderEasmResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DefenderEasmResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDefenderEasmResourceGroupResource(client, resource.Id));
         }
 
-        private static DefenderEasmSubscriptionMockingExtension GetDefenderEasmSubscriptionMockingExtension(ArmResource resource)
+        private static MockableDefenderEasmSubscriptionResource GetMockableDefenderEasmSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DefenderEasmSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDefenderEasmSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// You can use <see cref="EasmWorkspaceResource.CreateResourceIdentifier" /> to create an <see cref="EasmWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DefenderEasmArmClientMockingExtension.GetEasmWorkspaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDefenderEasmArmClient.GetEasmWorkspaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <returns> Returns a <see cref="EasmWorkspaceResource" /> object. </returns>
         public static EasmWorkspaceResource GetEasmWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDefenderEasmArmClientMockingExtension(client).GetEasmWorkspaceResource(id);
+            return GetMockableDefenderEasmArmClient(client).GetEasmWorkspaceResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// You can use <see cref="EasmLabelResource.CreateResourceIdentifier" /> to create an <see cref="EasmLabelResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DefenderEasmArmClientMockingExtension.GetEasmLabelResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDefenderEasmArmClient.GetEasmLabelResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,21 +63,21 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <returns> Returns a <see cref="EasmLabelResource" /> object. </returns>
         public static EasmLabelResource GetEasmLabelResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDefenderEasmArmClientMockingExtension(client).GetEasmLabelResource(id);
+            return GetMockableDefenderEasmArmClient(client).GetEasmLabelResource(id);
         }
 
         /// <summary>
         /// Gets a collection of EasmWorkspaceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DefenderEasmResourceGroupMockingExtension.GetEasmWorkspaces()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDefenderEasmResourceGroupResource.GetEasmWorkspaces()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of EasmWorkspaceResources and their operations over a EasmWorkspaceResource. </returns>
         public static EasmWorkspaceCollection GetEasmWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetDefenderEasmResourceGroupMockingExtension(resourceGroupResource).GetEasmWorkspaces();
+            return GetMockableDefenderEasmResourceGroupResource(resourceGroupResource).GetEasmWorkspaces();
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DefenderEasmResourceGroupMockingExtension.GetEasmWorkspaceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDefenderEasmResourceGroupResource.GetEasmWorkspaceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DefenderEasm
         [ForwardsClientCalls]
         public static async Task<Response<EasmWorkspaceResource>> GetEasmWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await GetDefenderEasmResourceGroupMockingExtension(resourceGroupResource).GetEasmWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDefenderEasmResourceGroupResource(resourceGroupResource).GetEasmWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DefenderEasmResourceGroupMockingExtension.GetEasmWorkspace(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDefenderEasmResourceGroupResource.GetEasmWorkspace(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DefenderEasm
         [ForwardsClientCalls]
         public static Response<EasmWorkspaceResource> GetEasmWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return GetDefenderEasmResourceGroupMockingExtension(resourceGroupResource).GetEasmWorkspace(workspaceName, cancellationToken);
+            return GetMockableDefenderEasmResourceGroupResource(resourceGroupResource).GetEasmWorkspace(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DefenderEasmSubscriptionMockingExtension.GetEasmWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDefenderEasmSubscriptionResource.GetEasmWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <returns> An async collection of <see cref="EasmWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EasmWorkspaceResource> GetEasmWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetDefenderEasmSubscriptionMockingExtension(subscriptionResource).GetEasmWorkspacesAsync(cancellationToken);
+            return GetMockableDefenderEasmSubscriptionResource(subscriptionResource).GetEasmWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DefenderEasmSubscriptionMockingExtension.GetEasmWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDefenderEasmSubscriptionResource.GetEasmWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DefenderEasm
         /// <returns> A collection of <see cref="EasmWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EasmWorkspaceResource> GetEasmWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetDefenderEasmSubscriptionMockingExtension(subscriptionResource).GetEasmWorkspaces(cancellationToken);
+            return GetMockableDefenderEasmSubscriptionResource(subscriptionResource).GetEasmWorkspaces(cancellationToken);
         }
     }
 }

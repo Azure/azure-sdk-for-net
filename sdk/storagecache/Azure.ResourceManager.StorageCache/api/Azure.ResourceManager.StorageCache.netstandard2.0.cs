@@ -229,16 +229,16 @@ namespace Azure.ResourceManager.StorageCache
 }
 namespace Azure.ResourceManager.StorageCache.Mocking
 {
-    public partial class StorageCacheArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableStorageCacheArmClient : Azure.ResourceManager.ArmResource
     {
-        protected StorageCacheArmClientMockingExtension() { }
+        protected MockableStorageCacheArmClient() { }
         public virtual Azure.ResourceManager.StorageCache.AmlFileSystemResource GetAmlFileSystemResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.StorageCache.StorageCacheResource GetStorageCacheResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.StorageCache.StorageTargetResource GetStorageTargetResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class StorageCacheResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableStorageCacheResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected StorageCacheResourceGroupMockingExtension() { }
+        protected MockableStorageCacheResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.StorageCache.AmlFileSystemResource> GetAmlFileSystem(string amlFileSystemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageCache.AmlFileSystemResource>> GetAmlFileSystemAsync(string amlFileSystemName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.StorageCache.AmlFileSystemCollection GetAmlFileSystems() { throw null; }
@@ -246,9 +246,9 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageCache.StorageCacheResource>> GetStorageCacheAsync(string cacheName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.StorageCache.StorageCacheCollection GetStorageCaches() { throw null; }
     }
-    public partial class StorageCacheSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableStorageCacheSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected StorageCacheSubscriptionMockingExtension() { }
+        protected MockableStorageCacheSubscriptionResource() { }
         public virtual Azure.Response CheckAmlFSSubnets(Azure.ResourceManager.StorageCache.Models.AmlFileSystemSubnetContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CheckAmlFSSubnetsAsync(Azure.ResourceManager.StorageCache.Models.AmlFileSystemSubnetContent content = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.StorageCache.AmlFileSystemResource> GetAmlFileSystems(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

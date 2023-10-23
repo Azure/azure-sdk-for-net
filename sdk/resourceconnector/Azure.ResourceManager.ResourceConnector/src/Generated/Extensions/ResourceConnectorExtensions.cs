@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ResourceConnector
     /// <summary> A class to add extension methods to Azure.ResourceManager.ResourceConnector. </summary>
     public static partial class ResourceConnectorExtensions
     {
-        private static ResourceConnectorArmClientMockingExtension GetResourceConnectorArmClientMockingExtension(ArmClient client)
+        private static MockableResourceConnectorArmClient GetMockableResourceConnectorArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ResourceConnectorArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableResourceConnectorArmClient(client0));
         }
 
-        private static ResourceConnectorResourceGroupMockingExtension GetResourceConnectorResourceGroupMockingExtension(ArmResource resource)
+        private static MockableResourceConnectorResourceGroupResource GetMockableResourceConnectorResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ResourceConnectorResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableResourceConnectorResourceGroupResource(client, resource.Id));
         }
 
-        private static ResourceConnectorSubscriptionMockingExtension GetResourceConnectorSubscriptionMockingExtension(ArmResource resource)
+        private static MockableResourceConnectorSubscriptionResource GetMockableResourceConnectorSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ResourceConnectorSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableResourceConnectorSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// You can use <see cref="ResourceConnectorApplianceResource.CreateResourceIdentifier" /> to create a <see cref="ResourceConnectorApplianceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceConnectorArmClientMockingExtension.GetResourceConnectorApplianceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceConnectorArmClient.GetResourceConnectorApplianceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,21 +48,21 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <returns> Returns a <see cref="ResourceConnectorApplianceResource" /> object. </returns>
         public static ResourceConnectorApplianceResource GetResourceConnectorApplianceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetResourceConnectorArmClientMockingExtension(client).GetResourceConnectorApplianceResource(id);
+            return GetMockableResourceConnectorArmClient(client).GetResourceConnectorApplianceResource(id);
         }
 
         /// <summary>
         /// Gets a collection of ResourceConnectorApplianceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceConnectorResourceGroupMockingExtension.GetResourceConnectorAppliances()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceConnectorResourceGroupResource.GetResourceConnectorAppliances()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ResourceConnectorApplianceResources and their operations over a ResourceConnectorApplianceResource. </returns>
         public static ResourceConnectorApplianceCollection GetResourceConnectorAppliances(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceConnectorResourceGroupMockingExtension(resourceGroupResource).GetResourceConnectorAppliances();
+            return GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetResourceConnectorAppliances();
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceConnectorResourceGroupMockingExtension.GetResourceConnectorApplianceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceConnectorResourceGroupResource.GetResourceConnectorApplianceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ResourceConnector
         [ForwardsClientCalls]
         public static async Task<Response<ResourceConnectorApplianceResource>> GetResourceConnectorApplianceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetResourceConnectorResourceGroupMockingExtension(resourceGroupResource).GetResourceConnectorApplianceAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetResourceConnectorApplianceAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceConnectorResourceGroupMockingExtension.GetResourceConnectorAppliance(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceConnectorResourceGroupResource.GetResourceConnectorAppliance(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ResourceConnector
         [ForwardsClientCalls]
         public static Response<ResourceConnectorApplianceResource> GetResourceConnectorAppliance(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetResourceConnectorResourceGroupMockingExtension(resourceGroupResource).GetResourceConnectorAppliance(resourceName, cancellationToken);
+            return GetMockableResourceConnectorResourceGroupResource(resourceGroupResource).GetResourceConnectorAppliance(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceConnectorSubscriptionMockingExtension.GetResourceConnectorAppliances(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceConnectorSubscriptionResource.GetResourceConnectorAppliances(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <returns> An async collection of <see cref="ResourceConnectorApplianceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceConnectorSubscriptionMockingExtension(subscriptionResource).GetResourceConnectorAppliancesAsync(cancellationToken);
+            return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetResourceConnectorAppliancesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceConnectorSubscriptionMockingExtension.GetResourceConnectorAppliances(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceConnectorSubscriptionResource.GetResourceConnectorAppliances(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ResourceConnector
         /// <returns> A collection of <see cref="ResourceConnectorApplianceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceConnectorApplianceResource> GetResourceConnectorAppliances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceConnectorSubscriptionMockingExtension(subscriptionResource).GetResourceConnectorAppliances(cancellationToken);
+            return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetResourceConnectorAppliances(cancellationToken);
         }
 
         /// <summary>
@@ -185,14 +185,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceConnectorSubscriptionMockingExtension.GetTelemetryConfigAppliance(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceConnectorSubscriptionResource.GetTelemetryConfigAppliance(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ApplianceTelemetryConfigResult>> GetTelemetryConfigApplianceAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetResourceConnectorSubscriptionMockingExtension(subscriptionResource).GetTelemetryConfigApplianceAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetTelemetryConfigApplianceAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -209,14 +209,14 @@ namespace Azure.ResourceManager.ResourceConnector
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourceConnectorSubscriptionMockingExtension.GetTelemetryConfigAppliance(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourceConnectorSubscriptionResource.GetTelemetryConfigAppliance(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ApplianceTelemetryConfigResult> GetTelemetryConfigAppliance(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceConnectorSubscriptionMockingExtension(subscriptionResource).GetTelemetryConfigAppliance(cancellationToken);
+            return GetMockableResourceConnectorSubscriptionResource(subscriptionResource).GetTelemetryConfigAppliance(cancellationToken);
         }
     }
 }

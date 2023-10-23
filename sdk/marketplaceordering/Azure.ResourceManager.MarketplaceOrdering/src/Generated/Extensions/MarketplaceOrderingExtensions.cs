@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.MarketplaceOrdering
     /// <summary> A class to add extension methods to Azure.ResourceManager.MarketplaceOrdering. </summary>
     public static partial class MarketplaceOrderingExtensions
     {
-        private static MarketplaceOrderingArmClientMockingExtension GetMarketplaceOrderingArmClientMockingExtension(ArmClient client)
+        private static MockableMarketplaceOrderingArmClient GetMockableMarketplaceOrderingArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MarketplaceOrderingArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableMarketplaceOrderingArmClient(client0));
         }
 
-        private static MarketplaceOrderingSubscriptionMockingExtension GetMarketplaceOrderingSubscriptionMockingExtension(ArmResource resource)
+        private static MockableMarketplaceOrderingSubscriptionResource GetMockableMarketplaceOrderingSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MarketplaceOrderingSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMarketplaceOrderingSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// You can use <see cref="MarketplaceAgreementTermResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAgreementTermResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MarketplaceOrderingArmClientMockingExtension.GetMarketplaceAgreementTermResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMarketplaceOrderingArmClient.GetMarketplaceAgreementTermResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <returns> Returns a <see cref="MarketplaceAgreementTermResource" /> object. </returns>
         public static MarketplaceAgreementTermResource GetMarketplaceAgreementTermResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMarketplaceOrderingArmClientMockingExtension(client).GetMarketplaceAgreementTermResource(id);
+            return GetMockableMarketplaceOrderingArmClient(client).GetMarketplaceAgreementTermResource(id);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// You can use <see cref="MarketplaceAgreementResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAgreementResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MarketplaceOrderingArmClientMockingExtension.GetMarketplaceAgreementResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMarketplaceOrderingArmClient.GetMarketplaceAgreementResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -59,21 +59,21 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// <returns> Returns a <see cref="MarketplaceAgreementResource" /> object. </returns>
         public static MarketplaceAgreementResource GetMarketplaceAgreementResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMarketplaceOrderingArmClientMockingExtension(client).GetMarketplaceAgreementResource(id);
+            return GetMockableMarketplaceOrderingArmClient(client).GetMarketplaceAgreementResource(id);
         }
 
         /// <summary>
         /// Gets a collection of MarketplaceAgreementTermResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MarketplaceOrderingSubscriptionMockingExtension.GetMarketplaceAgreementTerms()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMarketplaceOrderingSubscriptionResource.GetMarketplaceAgreementTerms()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MarketplaceAgreementTermResources and their operations over a MarketplaceAgreementTermResource. </returns>
         public static MarketplaceAgreementTermCollection GetMarketplaceAgreementTerms(this SubscriptionResource subscriptionResource)
         {
-            return GetMarketplaceOrderingSubscriptionMockingExtension(subscriptionResource).GetMarketplaceAgreementTerms();
+            return GetMockableMarketplaceOrderingSubscriptionResource(subscriptionResource).GetMarketplaceAgreementTerms();
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MarketplaceOrderingSubscriptionMockingExtension.GetMarketplaceAgreementTermAsync(AgreementOfferType,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMarketplaceOrderingSubscriptionResource.GetMarketplaceAgreementTermAsync(AgreementOfferType,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         [ForwardsClientCalls]
         public static async Task<Response<MarketplaceAgreementTermResource>> GetMarketplaceAgreementTermAsync(this SubscriptionResource subscriptionResource, AgreementOfferType offerType, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
-            return await GetMarketplaceOrderingSubscriptionMockingExtension(subscriptionResource).GetMarketplaceAgreementTermAsync(offerType, publisherId, offerId, planId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMarketplaceOrderingSubscriptionResource(subscriptionResource).GetMarketplaceAgreementTermAsync(offerType, publisherId, offerId, planId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MarketplaceOrderingSubscriptionMockingExtension.GetMarketplaceAgreementTerm(AgreementOfferType,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMarketplaceOrderingSubscriptionResource.GetMarketplaceAgreementTerm(AgreementOfferType,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -135,21 +135,21 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         [ForwardsClientCalls]
         public static Response<MarketplaceAgreementTermResource> GetMarketplaceAgreementTerm(this SubscriptionResource subscriptionResource, AgreementOfferType offerType, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
-            return GetMarketplaceOrderingSubscriptionMockingExtension(subscriptionResource).GetMarketplaceAgreementTerm(offerType, publisherId, offerId, planId, cancellationToken);
+            return GetMockableMarketplaceOrderingSubscriptionResource(subscriptionResource).GetMarketplaceAgreementTerm(offerType, publisherId, offerId, planId, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of MarketplaceAgreementResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MarketplaceOrderingSubscriptionMockingExtension.GetMarketplaceAgreements()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMarketplaceOrderingSubscriptionResource.GetMarketplaceAgreements()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MarketplaceAgreementResources and their operations over a MarketplaceAgreementResource. </returns>
         public static MarketplaceAgreementCollection GetMarketplaceAgreements(this SubscriptionResource subscriptionResource)
         {
-            return GetMarketplaceOrderingSubscriptionMockingExtension(subscriptionResource).GetMarketplaceAgreements();
+            return GetMockableMarketplaceOrderingSubscriptionResource(subscriptionResource).GetMarketplaceAgreements();
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MarketplaceOrderingSubscriptionMockingExtension.GetMarketplaceAgreementAsync(string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMarketplaceOrderingSubscriptionResource.GetMarketplaceAgreementAsync(string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         [ForwardsClientCalls]
         public static async Task<Response<MarketplaceAgreementResource>> GetMarketplaceAgreementAsync(this SubscriptionResource subscriptionResource, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
-            return await GetMarketplaceOrderingSubscriptionMockingExtension(subscriptionResource).GetMarketplaceAgreementAsync(publisherId, offerId, planId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMarketplaceOrderingSubscriptionResource(subscriptionResource).GetMarketplaceAgreementAsync(publisherId, offerId, planId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MarketplaceOrderingSubscriptionMockingExtension.GetMarketplaceAgreement(string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMarketplaceOrderingSubscriptionResource.GetMarketplaceAgreement(string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering
         [ForwardsClientCalls]
         public static Response<MarketplaceAgreementResource> GetMarketplaceAgreement(this SubscriptionResource subscriptionResource, string publisherId, string offerId, string planId, CancellationToken cancellationToken = default)
         {
-            return GetMarketplaceOrderingSubscriptionMockingExtension(subscriptionResource).GetMarketplaceAgreement(publisherId, offerId, planId, cancellationToken);
+            return GetMockableMarketplaceOrderingSubscriptionResource(subscriptionResource).GetMarketplaceAgreement(publisherId, offerId, planId, cancellationToken);
         }
     }
 }

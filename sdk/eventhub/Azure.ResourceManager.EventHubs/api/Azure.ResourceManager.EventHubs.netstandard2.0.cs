@@ -556,9 +556,9 @@ namespace Azure.ResourceManager.EventHubs
 }
 namespace Azure.ResourceManager.EventHubs.Mocking
 {
-    public partial class EventHubsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableEventHubsArmClient : Azure.ResourceManager.ArmResource
     {
-        protected EventHubsArmClientMockingExtension() { }
+        protected MockableEventHubsArmClient() { }
         public virtual Azure.ResourceManager.EventHubs.EventHubAuthorizationRuleResource GetEventHubAuthorizationRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.EventHubs.EventHubResource GetEventHubResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.EventHubs.EventHubsApplicationGroupResource GetEventHubsApplicationGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -572,9 +572,9 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         public virtual Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionResource GetEventHubsPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.EventHubs.EventHubsSchemaGroupResource GetEventHubsSchemaGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class EventHubsResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableEventHubsResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected EventHubsResourceGroupMockingExtension() { }
+        protected MockableEventHubsResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.EventHubs.EventHubsClusterResource> GetEventHubsCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.EventHubsClusterResource>> GetEventHubsClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.EventHubs.EventHubsClusterCollection GetEventHubsClusters() { throw null; }
@@ -582,9 +582,9 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.EventHubsNamespaceResource>> GetEventHubsNamespaceAsync(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.EventHubs.EventHubsNamespaceCollection GetEventHubsNamespaces() { throw null; }
     }
-    public partial class EventHubsSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableEventHubsSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected EventHubsSubscriptionMockingExtension() { }
+        protected MockableEventHubsSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityResult> CheckEventHubsNamespaceNameAvailability(Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityResult>> CheckEventHubsNamespaceNameAvailabilityAsync(Azure.ResourceManager.EventHubs.Models.EventHubsNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.EventHubs.Models.AvailableCluster> GetAvailableClusterRegionClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

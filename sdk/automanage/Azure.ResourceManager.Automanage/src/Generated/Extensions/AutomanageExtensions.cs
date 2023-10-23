@@ -20,31 +20,31 @@ namespace Azure.ResourceManager.Automanage
     /// <summary> A class to add extension methods to Azure.ResourceManager.Automanage. </summary>
     public static partial class AutomanageExtensions
     {
-        private static AutomanageArmClientMockingExtension GetAutomanageArmClientMockingExtension(ArmClient client)
+        private static MockableAutomanageArmClient GetMockableAutomanageArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new AutomanageArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableAutomanageArmClient(client0));
         }
 
-        private static AutomanageResourceGroupMockingExtension GetAutomanageResourceGroupMockingExtension(ArmResource resource)
+        private static MockableAutomanageResourceGroupResource GetMockableAutomanageResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AutomanageResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAutomanageResourceGroupResource(client, resource.Id));
         }
 
-        private static AutomanageSubscriptionMockingExtension GetAutomanageSubscriptionMockingExtension(ArmResource resource)
+        private static MockableAutomanageSubscriptionResource GetMockableAutomanageSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AutomanageSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAutomanageSubscriptionResource(client, resource.Id));
         }
 
-        private static AutomanageTenantMockingExtension GetAutomanageTenantMockingExtension(ArmResource resource)
+        private static MockableAutomanageTenantResource GetMockableAutomanageTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AutomanageTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAutomanageTenantResource(client, resource.Id));
         }
 
         /// <summary>
         /// Gets a collection of AutomanageVmConfigurationProfileAssignmentResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageVmConfigurationProfileAssignments(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageVmConfigurationProfileAssignments(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An object representing collection of AutomanageVmConfigurationProfileAssignmentResources and their operations over a AutomanageVmConfigurationProfileAssignmentResource. </returns>
         public static AutomanageVmConfigurationProfileAssignmentCollection GetAutomanageVmConfigurationProfileAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetAutomanageArmClientMockingExtension(client).GetAutomanageVmConfigurationProfileAssignments(scope);
+            return GetMockableAutomanageArmClient(client).GetAutomanageVmConfigurationProfileAssignments(scope);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageVmConfigurationProfileAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageVmConfigurationProfileAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static async Task<Response<AutomanageVmConfigurationProfileAssignmentResource>> GetAutomanageVmConfigurationProfileAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            return await GetAutomanageArmClientMockingExtension(client).GetAutomanageVmConfigurationProfileAssignmentAsync(scope, configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAutomanageArmClient(client).GetAutomanageVmConfigurationProfileAssignmentAsync(scope, configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageVmConfigurationProfileAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageVmConfigurationProfileAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static Response<AutomanageVmConfigurationProfileAssignmentResource> GetAutomanageVmConfigurationProfileAssignment(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            return GetAutomanageArmClientMockingExtension(client).GetAutomanageVmConfigurationProfileAssignment(scope, configurationProfileAssignmentName, cancellationToken);
+            return GetMockableAutomanageArmClient(client).GetAutomanageVmConfigurationProfileAssignment(scope, configurationProfileAssignmentName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of AutomanageHcrpConfigurationProfileAssignmentResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageHcrpConfigurationProfileAssignments(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHcrpConfigurationProfileAssignments(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An object representing collection of AutomanageHcrpConfigurationProfileAssignmentResources and their operations over a AutomanageHcrpConfigurationProfileAssignmentResource. </returns>
         public static AutomanageHcrpConfigurationProfileAssignmentCollection GetAutomanageHcrpConfigurationProfileAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetAutomanageArmClientMockingExtension(client).GetAutomanageHcrpConfigurationProfileAssignments(scope);
+            return GetMockableAutomanageArmClient(client).GetAutomanageHcrpConfigurationProfileAssignments(scope);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageHcrpConfigurationProfileAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHcrpConfigurationProfileAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static async Task<Response<AutomanageHcrpConfigurationProfileAssignmentResource>> GetAutomanageHcrpConfigurationProfileAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            return await GetAutomanageArmClientMockingExtension(client).GetAutomanageHcrpConfigurationProfileAssignmentAsync(scope, configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAutomanageArmClient(client).GetAutomanageHcrpConfigurationProfileAssignmentAsync(scope, configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageHcrpConfigurationProfileAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHcrpConfigurationProfileAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -183,14 +183,14 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static Response<AutomanageHcrpConfigurationProfileAssignmentResource> GetAutomanageHcrpConfigurationProfileAssignment(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            return GetAutomanageArmClientMockingExtension(client).GetAutomanageHcrpConfigurationProfileAssignment(scope, configurationProfileAssignmentName, cancellationToken);
+            return GetMockableAutomanageArmClient(client).GetAutomanageHcrpConfigurationProfileAssignment(scope, configurationProfileAssignmentName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of AutomanageHciClusterConfigurationProfileAssignmentResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageHciClusterConfigurationProfileAssignments(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHciClusterConfigurationProfileAssignments(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An object representing collection of AutomanageHciClusterConfigurationProfileAssignmentResources and their operations over a AutomanageHciClusterConfigurationProfileAssignmentResource. </returns>
         public static AutomanageHciClusterConfigurationProfileAssignmentCollection GetAutomanageHciClusterConfigurationProfileAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetAutomanageArmClientMockingExtension(client).GetAutomanageHciClusterConfigurationProfileAssignments(scope);
+            return GetMockableAutomanageArmClient(client).GetAutomanageHciClusterConfigurationProfileAssignments(scope);
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageHciClusterConfigurationProfileAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHciClusterConfigurationProfileAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static async Task<Response<AutomanageHciClusterConfigurationProfileAssignmentResource>> GetAutomanageHciClusterConfigurationProfileAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            return await GetAutomanageArmClientMockingExtension(client).GetAutomanageHciClusterConfigurationProfileAssignmentAsync(scope, configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAutomanageArmClient(client).GetAutomanageHciClusterConfigurationProfileAssignmentAsync(scope, configurationProfileAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageHciClusterConfigurationProfileAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHciClusterConfigurationProfileAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static Response<AutomanageHciClusterConfigurationProfileAssignmentResource> GetAutomanageHciClusterConfigurationProfileAssignment(this ArmClient client, ResourceIdentifier scope, string configurationProfileAssignmentName, CancellationToken cancellationToken = default)
         {
-            return GetAutomanageArmClientMockingExtension(client).GetAutomanageHciClusterConfigurationProfileAssignment(scope, configurationProfileAssignmentName, cancellationToken);
+            return GetMockableAutomanageArmClient(client).GetAutomanageHciClusterConfigurationProfileAssignment(scope, configurationProfileAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Automanage
         /// You can use <see cref="AutomanageBestPracticeResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageBestPracticeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageBestPracticeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageBestPracticeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageBestPracticeResource" /> object. </returns>
         public static AutomanageBestPracticeResource GetAutomanageBestPracticeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomanageArmClientMockingExtension(client).GetAutomanageBestPracticeResource(id);
+            return GetMockableAutomanageArmClient(client).GetAutomanageBestPracticeResource(id);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Automanage
         /// You can use <see cref="AutomanageConfigurationProfileResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageConfigurationProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageConfigurationProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageConfigurationProfileResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageConfigurationProfileResource" /> object. </returns>
         public static AutomanageConfigurationProfileResource GetAutomanageConfigurationProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomanageArmClientMockingExtension(client).GetAutomanageConfigurationProfileResource(id);
+            return GetMockableAutomanageArmClient(client).GetAutomanageConfigurationProfileResource(id);
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Automanage
         /// You can use <see cref="AutomanageConfigurationProfileVersionResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageConfigurationProfileVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageConfigurationProfileVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageConfigurationProfileVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageConfigurationProfileVersionResource" /> object. </returns>
         public static AutomanageConfigurationProfileVersionResource GetAutomanageConfigurationProfileVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomanageArmClientMockingExtension(client).GetAutomanageConfigurationProfileVersionResource(id);
+            return GetMockableAutomanageArmClient(client).GetAutomanageConfigurationProfileVersionResource(id);
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Automanage
         /// You can use <see cref="AutomanageVmConfigurationProfileAssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageVmConfigurationProfileAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageVmConfigurationProfileAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageVmConfigurationProfileAssignmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageVmConfigurationProfileAssignmentResource" /> object. </returns>
         public static AutomanageVmConfigurationProfileAssignmentResource GetAutomanageVmConfigurationProfileAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomanageArmClientMockingExtension(client).GetAutomanageVmConfigurationProfileAssignmentResource(id);
+            return GetMockableAutomanageArmClient(client).GetAutomanageVmConfigurationProfileAssignmentResource(id);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Automanage
         /// You can use <see cref="AutomanageHcrpConfigurationProfileAssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageHcrpConfigurationProfileAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageHcrpConfigurationProfileAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHcrpConfigurationProfileAssignmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageHcrpConfigurationProfileAssignmentResource" /> object. </returns>
         public static AutomanageHcrpConfigurationProfileAssignmentResource GetAutomanageHcrpConfigurationProfileAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomanageArmClientMockingExtension(client).GetAutomanageHcrpConfigurationProfileAssignmentResource(id);
+            return GetMockableAutomanageArmClient(client).GetAutomanageHcrpConfigurationProfileAssignmentResource(id);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Automanage
         /// You can use <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageHciClusterConfigurationProfileAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHciClusterConfigurationProfileAssignmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageHciClusterConfigurationProfileAssignmentResource" /> object. </returns>
         public static AutomanageHciClusterConfigurationProfileAssignmentResource GetAutomanageHciClusterConfigurationProfileAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomanageArmClientMockingExtension(client).GetAutomanageHciClusterConfigurationProfileAssignmentResource(id);
+            return GetMockableAutomanageArmClient(client).GetAutomanageHciClusterConfigurationProfileAssignmentResource(id);
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Automanage
         /// You can use <see cref="AutomanageVmConfigurationProfileAssignmentReportResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageVmConfigurationProfileAssignmentReportResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageVmConfigurationProfileAssignmentReportResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" /> object. </returns>
         public static AutomanageVmConfigurationProfileAssignmentReportResource GetAutomanageVmConfigurationProfileAssignmentReportResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomanageArmClientMockingExtension(client).GetAutomanageVmConfigurationProfileAssignmentReportResource(id);
+            return GetMockableAutomanageArmClient(client).GetAutomanageVmConfigurationProfileAssignmentReportResource(id);
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Automanage
         /// You can use <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageHcrpConfigurationProfileAssignmentReportResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHcrpConfigurationProfileAssignmentReportResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource" /> object. </returns>
         public static AutomanageHcrpConfigurationProfileAssignmentReportResource GetAutomanageHcrpConfigurationProfileAssignmentReportResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomanageArmClientMockingExtension(client).GetAutomanageHcrpConfigurationProfileAssignmentReportResource(id);
+            return GetMockableAutomanageArmClient(client).GetAutomanageHcrpConfigurationProfileAssignmentReportResource(id);
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Automanage
         /// You can use <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource.CreateResourceIdentifier" /> to create an <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageArmClientMockingExtension.GetAutomanageHciClusterConfigurationProfileAssignmentReportResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageArmClient.GetAutomanageHciClusterConfigurationProfileAssignmentReportResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -400,21 +400,21 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> Returns a <see cref="AutomanageHciClusterConfigurationProfileAssignmentReportResource" /> object. </returns>
         public static AutomanageHciClusterConfigurationProfileAssignmentReportResource GetAutomanageHciClusterConfigurationProfileAssignmentReportResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomanageArmClientMockingExtension(client).GetAutomanageHciClusterConfigurationProfileAssignmentReportResource(id);
+            return GetMockableAutomanageArmClient(client).GetAutomanageHciClusterConfigurationProfileAssignmentReportResource(id);
         }
 
         /// <summary>
         /// Gets a collection of AutomanageConfigurationProfileResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageResourceGroupMockingExtension.GetAutomanageConfigurationProfiles()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageResourceGroupResource.GetAutomanageConfigurationProfiles()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AutomanageConfigurationProfileResources and their operations over a AutomanageConfigurationProfileResource. </returns>
         public static AutomanageConfigurationProfileCollection GetAutomanageConfigurationProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAutomanageResourceGroupMockingExtension(resourceGroupResource).GetAutomanageConfigurationProfiles();
+            return GetMockableAutomanageResourceGroupResource(resourceGroupResource).GetAutomanageConfigurationProfiles();
         }
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageResourceGroupMockingExtension.GetAutomanageConfigurationProfileAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageResourceGroupResource.GetAutomanageConfigurationProfileAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static async Task<Response<AutomanageConfigurationProfileResource>> GetAutomanageConfigurationProfileAsync(this ResourceGroupResource resourceGroupResource, string configurationProfileName, CancellationToken cancellationToken = default)
         {
-            return await GetAutomanageResourceGroupMockingExtension(resourceGroupResource).GetAutomanageConfigurationProfileAsync(configurationProfileName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAutomanageResourceGroupResource(resourceGroupResource).GetAutomanageConfigurationProfileAsync(configurationProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageResourceGroupMockingExtension.GetAutomanageConfigurationProfile(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageResourceGroupResource.GetAutomanageConfigurationProfile(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static Response<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfile(this ResourceGroupResource resourceGroupResource, string configurationProfileName, CancellationToken cancellationToken = default)
         {
-            return GetAutomanageResourceGroupMockingExtension(resourceGroupResource).GetAutomanageConfigurationProfile(configurationProfileName, cancellationToken);
+            return GetMockableAutomanageResourceGroupResource(resourceGroupResource).GetAutomanageConfigurationProfile(configurationProfileName, cancellationToken);
         }
 
         /// <summary>
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageSubscriptionMockingExtension.GetAutomanageConfigurationProfiles(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageSubscriptionResource.GetAutomanageConfigurationProfiles(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An async collection of <see cref="AutomanageConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAutomanageSubscriptionMockingExtension(subscriptionResource).GetAutomanageConfigurationProfilesAsync(cancellationToken);
+            return GetMockableAutomanageSubscriptionResource(subscriptionResource).GetAutomanageConfigurationProfilesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageSubscriptionMockingExtension.GetAutomanageConfigurationProfiles(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageSubscriptionResource.GetAutomanageConfigurationProfiles(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> A collection of <see cref="AutomanageConfigurationProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAutomanageSubscriptionMockingExtension(subscriptionResource).GetAutomanageConfigurationProfiles(cancellationToken);
+            return GetMockableAutomanageSubscriptionResource(subscriptionResource).GetAutomanageConfigurationProfiles(cancellationToken);
         }
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageSubscriptionMockingExtension.GetServicePrincipals(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageSubscriptionResource.GetServicePrincipals(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> An async collection of <see cref="AutomanageServicePrincipalData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutomanageServicePrincipalData> GetServicePrincipalsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAutomanageSubscriptionMockingExtension(subscriptionResource).GetServicePrincipalsAsync(cancellationToken);
+            return GetMockableAutomanageSubscriptionResource(subscriptionResource).GetServicePrincipalsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageSubscriptionMockingExtension.GetServicePrincipals(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageSubscriptionResource.GetServicePrincipals(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.Automanage
         /// <returns> A collection of <see cref="AutomanageServicePrincipalData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutomanageServicePrincipalData> GetServicePrincipals(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAutomanageSubscriptionMockingExtension(subscriptionResource).GetServicePrincipals(cancellationToken);
+            return GetMockableAutomanageSubscriptionResource(subscriptionResource).GetServicePrincipals(cancellationToken);
         }
 
         /// <summary>
@@ -587,14 +587,14 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageSubscriptionMockingExtension.GetServicePrincipal(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageSubscriptionResource.GetServicePrincipal(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<AutomanageServicePrincipalData>> GetServicePrincipalAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetAutomanageSubscriptionMockingExtension(subscriptionResource).GetServicePrincipalAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableAutomanageSubscriptionResource(subscriptionResource).GetServicePrincipalAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -611,28 +611,28 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageSubscriptionMockingExtension.GetServicePrincipal(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageSubscriptionResource.GetServicePrincipal(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<AutomanageServicePrincipalData> GetServicePrincipal(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAutomanageSubscriptionMockingExtension(subscriptionResource).GetServicePrincipal(cancellationToken);
+            return GetMockableAutomanageSubscriptionResource(subscriptionResource).GetServicePrincipal(cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of AutomanageBestPracticeResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageTenantMockingExtension.GetAutomanageBestPractices()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageTenantResource.GetAutomanageBestPractices()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AutomanageBestPracticeResources and their operations over a AutomanageBestPracticeResource. </returns>
         public static AutomanageBestPracticeCollection GetAutomanageBestPractices(this TenantResource tenantResource)
         {
-            return GetAutomanageTenantMockingExtension(tenantResource).GetAutomanageBestPractices();
+            return GetMockableAutomanageTenantResource(tenantResource).GetAutomanageBestPractices();
         }
 
         /// <summary>
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageTenantMockingExtension.GetAutomanageBestPracticeAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageTenantResource.GetAutomanageBestPracticeAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static async Task<Response<AutomanageBestPracticeResource>> GetAutomanageBestPracticeAsync(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            return await GetAutomanageTenantMockingExtension(tenantResource).GetAutomanageBestPracticeAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAutomanageTenantResource(tenantResource).GetAutomanageBestPracticeAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.Automanage
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomanageTenantMockingExtension.GetAutomanageBestPractice(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomanageTenantResource.GetAutomanageBestPractice(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.Automanage
         [ForwardsClientCalls]
         public static Response<AutomanageBestPracticeResource> GetAutomanageBestPractice(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            return GetAutomanageTenantMockingExtension(tenantResource).GetAutomanageBestPractice(bestPracticeName, cancellationToken);
+            return GetMockableAutomanageTenantResource(tenantResource).GetAutomanageBestPractice(bestPracticeName, cancellationToken);
         }
     }
 }

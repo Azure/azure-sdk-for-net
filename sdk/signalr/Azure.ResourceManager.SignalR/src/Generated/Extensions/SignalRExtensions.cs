@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.SignalR
     /// <summary> A class to add extension methods to Azure.ResourceManager.SignalR. </summary>
     public static partial class SignalRExtensions
     {
-        private static SignalRArmClientMockingExtension GetSignalRArmClientMockingExtension(ArmClient client)
+        private static MockableSignalRArmClient GetMockableSignalRArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new SignalRArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableSignalRArmClient(client0));
         }
 
-        private static SignalRResourceGroupMockingExtension GetSignalRResourceGroupMockingExtension(ArmResource resource)
+        private static MockableSignalRResourceGroupResource GetMockableSignalRResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new SignalRResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableSignalRResourceGroupResource(client, resource.Id));
         }
 
-        private static SignalRSubscriptionMockingExtension GetSignalRSubscriptionMockingExtension(ArmResource resource)
+        private static MockableSignalRSubscriptionResource GetMockableSignalRSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new SignalRSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableSignalRSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SignalR
         /// You can use <see cref="SignalRResource.CreateResourceIdentifier" /> to create a <see cref="SignalRResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SignalRArmClientMockingExtension.GetSignalRResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRArmClient.GetSignalRResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> Returns a <see cref="SignalRResource" /> object. </returns>
         public static SignalRResource GetSignalRResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSignalRArmClientMockingExtension(client).GetSignalRResource(id);
+            return GetMockableSignalRArmClient(client).GetSignalRResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SignalR
         /// You can use <see cref="SignalRCustomCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SignalRCustomCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SignalRArmClientMockingExtension.GetSignalRCustomCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRArmClient.GetSignalRCustomCertificateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> Returns a <see cref="SignalRCustomCertificateResource" /> object. </returns>
         public static SignalRCustomCertificateResource GetSignalRCustomCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSignalRArmClientMockingExtension(client).GetSignalRCustomCertificateResource(id);
+            return GetMockableSignalRArmClient(client).GetSignalRCustomCertificateResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SignalR
         /// You can use <see cref="SignalRCustomDomainResource.CreateResourceIdentifier" /> to create a <see cref="SignalRCustomDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SignalRArmClientMockingExtension.GetSignalRCustomDomainResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRArmClient.GetSignalRCustomDomainResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> Returns a <see cref="SignalRCustomDomainResource" /> object. </returns>
         public static SignalRCustomDomainResource GetSignalRCustomDomainResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSignalRArmClientMockingExtension(client).GetSignalRCustomDomainResource(id);
+            return GetMockableSignalRArmClient(client).GetSignalRCustomDomainResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SignalR
         /// You can use <see cref="SignalRPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SignalRPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SignalRArmClientMockingExtension.GetSignalRPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRArmClient.GetSignalRPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> Returns a <see cref="SignalRPrivateEndpointConnectionResource" /> object. </returns>
         public static SignalRPrivateEndpointConnectionResource GetSignalRPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSignalRArmClientMockingExtension(client).GetSignalRPrivateEndpointConnectionResource(id);
+            return GetMockableSignalRArmClient(client).GetSignalRPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SignalR
         /// You can use <see cref="SignalRSharedPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SignalRSharedPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SignalRArmClientMockingExtension.GetSignalRSharedPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRArmClient.GetSignalRSharedPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,21 +112,21 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> Returns a <see cref="SignalRSharedPrivateLinkResource" /> object. </returns>
         public static SignalRSharedPrivateLinkResource GetSignalRSharedPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSignalRArmClientMockingExtension(client).GetSignalRSharedPrivateLinkResource(id);
+            return GetMockableSignalRArmClient(client).GetSignalRSharedPrivateLinkResource(id);
         }
 
         /// <summary>
         /// Gets a collection of SignalRResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SignalRResourceGroupMockingExtension.GetSignalRs()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRResourceGroupResource.GetSignalRs()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SignalRResources and their operations over a SignalRResource. </returns>
         public static SignalRCollection GetSignalRs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetSignalRResourceGroupMockingExtension(resourceGroupResource).GetSignalRs();
+            return GetMockableSignalRResourceGroupResource(resourceGroupResource).GetSignalRs();
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SignalRResourceGroupMockingExtension.GetSignalRAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRResourceGroupResource.GetSignalRAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SignalR
         [ForwardsClientCalls]
         public static async Task<Response<SignalRResource>> GetSignalRAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetSignalRResourceGroupMockingExtension(resourceGroupResource).GetSignalRAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSignalRResourceGroupResource(resourceGroupResource).GetSignalRAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SignalRResourceGroupMockingExtension.GetSignalR(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRResourceGroupResource.GetSignalR(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SignalR
         [ForwardsClientCalls]
         public static Response<SignalRResource> GetSignalR(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetSignalRResourceGroupMockingExtension(resourceGroupResource).GetSignalR(resourceName, cancellationToken);
+            return GetMockableSignalRResourceGroupResource(resourceGroupResource).GetSignalR(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SignalRSubscriptionMockingExtension.CheckSignalRNameAvailability(AzureLocation,SignalRNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRSubscriptionResource.CheckSignalRNameAvailability(AzureLocation,SignalRNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<SignalRNameAvailabilityResult>> CheckSignalRNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetSignalRSubscriptionMockingExtension(subscriptionResource).CheckSignalRNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSignalRSubscriptionResource(subscriptionResource).CheckSignalRNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SignalRSubscriptionMockingExtension.CheckSignalRNameAvailability(AzureLocation,SignalRNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRSubscriptionResource.CheckSignalRNameAvailability(AzureLocation,SignalRNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<SignalRNameAvailabilityResult> CheckSignalRNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, SignalRNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetSignalRSubscriptionMockingExtension(subscriptionResource).CheckSignalRNameAvailability(location, content, cancellationToken);
+            return GetMockableSignalRSubscriptionResource(subscriptionResource).CheckSignalRNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SignalRSubscriptionMockingExtension.GetSignalRs(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRSubscriptionResource.GetSignalRs(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An async collection of <see cref="SignalRResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SignalRResource> GetSignalRsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSignalRSubscriptionMockingExtension(subscriptionResource).GetSignalRsAsync(cancellationToken);
+            return GetMockableSignalRSubscriptionResource(subscriptionResource).GetSignalRsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SignalRSubscriptionMockingExtension.GetSignalRs(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRSubscriptionResource.GetSignalRs(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> A collection of <see cref="SignalRResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SignalRResource> GetSignalRs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSignalRSubscriptionMockingExtension(subscriptionResource).GetSignalRs(cancellationToken);
+            return GetMockableSignalRSubscriptionResource(subscriptionResource).GetSignalRs(cancellationToken);
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SignalRSubscriptionMockingExtension.GetUsages(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRSubscriptionResource.GetUsages(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> An async collection of <see cref="SignalRUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SignalRUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSignalRSubscriptionMockingExtension(subscriptionResource).GetUsagesAsync(location, cancellationToken);
+            return GetMockableSignalRSubscriptionResource(subscriptionResource).GetUsagesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.SignalR
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SignalRSubscriptionMockingExtension.GetUsages(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSignalRSubscriptionResource.GetUsages(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.SignalR
         /// <returns> A collection of <see cref="SignalRUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SignalRUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSignalRSubscriptionMockingExtension(subscriptionResource).GetUsages(location, cancellationToken);
+            return GetMockableSignalRSubscriptionResource(subscriptionResource).GetUsages(location, cancellationToken);
         }
     }
 }

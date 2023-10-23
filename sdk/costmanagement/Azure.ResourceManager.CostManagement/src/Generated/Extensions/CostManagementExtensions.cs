@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.CostManagement
     /// <summary> A class to add extension methods to Azure.ResourceManager.CostManagement. </summary>
     public static partial class CostManagementExtensions
     {
-        private static CostManagementArmClientMockingExtension GetCostManagementArmClientMockingExtension(ArmClient client)
+        private static MockableCostManagementArmClient GetMockableCostManagementArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new CostManagementArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableCostManagementArmClient(client0));
         }
 
-        private static CostManagementTenantMockingExtension GetCostManagementTenantMockingExtension(ArmResource resource)
+        private static MockableCostManagementTenantResource GetMockableCostManagementTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new CostManagementTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableCostManagementTenantResource(client, resource.Id));
         }
 
         /// <summary>
         /// Gets a collection of CostManagementExportResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetCostManagementExports(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementExports(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An object representing collection of CostManagementExportResources and their operations over a CostManagementExportResource. </returns>
         public static CostManagementExportCollection GetCostManagementExports(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetCostManagementExports(scope);
+            return GetMockableCostManagementArmClient(client).GetCostManagementExports(scope);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetCostManagementExportAsync(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementExportAsync(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static async Task<Response<CostManagementExportResource>> GetCostManagementExportAsync(this ArmClient client, ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementArmClientMockingExtension(client).GetCostManagementExportAsync(scope, exportName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).GetCostManagementExportAsync(scope, exportName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetCostManagementExport(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementExport(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -102,14 +102,14 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static Response<CostManagementExportResource> GetCostManagementExport(this ArmClient client, ResourceIdentifier scope, string exportName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetCostManagementExport(scope, exportName, expand, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GetCostManagementExport(scope, exportName, expand, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of CostManagementViewsResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetAllCostManagementViews(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetAllCostManagementViews(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An object representing collection of CostManagementViewsResources and their operations over a CostManagementViewsResource. </returns>
         public static CostManagementViewsCollection GetAllCostManagementViews(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetAllCostManagementViews(scope);
+            return GetMockableCostManagementArmClient(client).GetAllCostManagementViews(scope);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetCostManagementViewsAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementViewsAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static async Task<Response<CostManagementViewsResource>> GetCostManagementViewsAsync(this ArmClient client, ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementArmClientMockingExtension(client).GetCostManagementViewsAsync(scope, viewName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).GetCostManagementViewsAsync(scope, viewName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetCostManagementViews(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementViews(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -175,14 +175,14 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static Response<CostManagementViewsResource> GetCostManagementViews(this ArmClient client, ResourceIdentifier scope, string viewName, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetCostManagementViews(scope, viewName, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GetCostManagementViews(scope, viewName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of CostManagementAlertResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetCostManagementAlerts(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementAlerts(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An object representing collection of CostManagementAlertResources and their operations over a CostManagementAlertResource. </returns>
         public static CostManagementAlertCollection GetCostManagementAlerts(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetCostManagementAlerts(scope);
+            return GetMockableCostManagementArmClient(client).GetCostManagementAlerts(scope);
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetCostManagementAlertAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementAlertAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static async Task<Response<CostManagementAlertResource>> GetCostManagementAlertAsync(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementArmClientMockingExtension(client).GetCostManagementAlertAsync(scope, alertId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).GetCostManagementAlertAsync(scope, alertId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetCostManagementAlert(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementAlert(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -246,14 +246,14 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static Response<CostManagementAlertResource> GetCostManagementAlert(this ArmClient client, ResourceIdentifier scope, string alertId, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetCostManagementAlert(scope, alertId, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GetCostManagementAlert(scope, alertId, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ScheduledActionResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetScheduledActions(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetScheduledActions(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An object representing collection of ScheduledActionResources and their operations over a ScheduledActionResource. </returns>
         public static ScheduledActionCollection GetScheduledActions(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetScheduledActions(scope);
+            return GetMockableCostManagementArmClient(client).GetScheduledActions(scope);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetScheduledActionAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetScheduledActionAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static async Task<Response<ScheduledActionResource>> GetScheduledActionAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementArmClientMockingExtension(client).GetScheduledActionAsync(scope, name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).GetScheduledActionAsync(scope, name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetScheduledAction(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetScheduledAction(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static Response<ScheduledActionResource> GetScheduledAction(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetScheduledAction(scope, name, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GetScheduledAction(scope, name, cancellationToken);
         }
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetBenefitRecommendations(ResourceIdentifier,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetBenefitRecommendations(ResourceIdentifier,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<BenefitRecommendationModel> GetBenefitRecommendationsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetBenefitRecommendationsAsync(scope, filter, orderby, expand, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GetBenefitRecommendationsAsync(scope, filter, orderby, expand, cancellationToken);
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetBenefitRecommendations(ResourceIdentifier,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetBenefitRecommendations(ResourceIdentifier,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<BenefitRecommendationModel> GetBenefitRecommendations(this ArmClient client, ResourceIdentifier scope, string filter = null, string orderby = null, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetBenefitRecommendations(scope, filter, orderby, expand, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GetBenefitRecommendations(scope, filter, orderby, expand, cancellationToken);
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.UsageForecast(ResourceIdentifier,ForecastDefinition,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.UsageForecast(ResourceIdentifier,ForecastDefinition,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="forecastDefinition"/> is null. </exception>
         public static async Task<Response<ForecastResult>> UsageForecastAsync(this ArmClient client, ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementArmClientMockingExtension(client).UsageForecastAsync(scope, forecastDefinition, filter, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).UsageForecastAsync(scope, forecastDefinition, filter, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.UsageForecast(ResourceIdentifier,ForecastDefinition,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.UsageForecast(ResourceIdentifier,ForecastDefinition,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="forecastDefinition"/> is null. </exception>
         public static Response<ForecastResult> UsageForecast(this ArmClient client, ResourceIdentifier scope, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementArmClientMockingExtension(client).UsageForecast(scope, forecastDefinition, filter, cancellationToken);
+            return GetMockableCostManagementArmClient(client).UsageForecast(scope, forecastDefinition, filter, cancellationToken);
         }
 
         /// <summary>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetDimensions(ResourceIdentifier,string,string,string,int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetDimensions(ResourceIdentifier,string,string,string,int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<CostManagementDimension> GetDimensionsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetDimensionsAsync(scope, filter, expand, skiptoken, top, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GetDimensionsAsync(scope, filter, expand, skiptoken, top, cancellationToken);
         }
 
         /// <summary>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetDimensions(ResourceIdentifier,string,string,string,int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetDimensions(ResourceIdentifier,string,string,string,int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<CostManagementDimension> GetDimensions(this ArmClient client, ResourceIdentifier scope, string filter = null, string expand = null, string skiptoken = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetDimensions(scope, filter, expand, skiptoken, top, cancellationToken);
+            return GetMockableCostManagementArmClient(client).GetDimensions(scope, filter, expand, skiptoken, top, cancellationToken);
         }
 
         /// <summary>
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.UsageQuery(ResourceIdentifier,QueryDefinition,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.UsageQuery(ResourceIdentifier,QueryDefinition,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="queryDefinition"/> is null. </exception>
         public static async Task<Response<QueryResult>> UsageQueryAsync(this ArmClient client, ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementArmClientMockingExtension(client).UsageQueryAsync(scope, queryDefinition, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).UsageQueryAsync(scope, queryDefinition, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.UsageQuery(ResourceIdentifier,QueryDefinition,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.UsageQuery(ResourceIdentifier,QueryDefinition,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="queryDefinition"/> is null. </exception>
         public static Response<QueryResult> UsageQuery(this ArmClient client, ResourceIdentifier scope, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementArmClientMockingExtension(client).UsageQuery(scope, queryDefinition, cancellationToken);
+            return GetMockableCostManagementArmClient(client).UsageQuery(scope, queryDefinition, cancellationToken);
         }
 
         /// <summary>
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.CheckCostManagementNameAvailabilityByScopeScheduledAction(ResourceIdentifier,CostManagementNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction(ResourceIdentifier,CostManagementNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(this ArmClient client, ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementArmClientMockingExtension(client).CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(scope, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementArmClient(client).CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(scope, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.CheckCostManagementNameAvailabilityByScopeScheduledAction(ResourceIdentifier,CostManagementNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.CheckCostManagementNameAvailabilityByScopeScheduledAction(ResourceIdentifier,CostManagementNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScopeScheduledAction(this ArmClient client, ResourceIdentifier scope, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementArmClientMockingExtension(client).CheckCostManagementNameAvailabilityByScopeScheduledAction(scope, content, cancellationToken);
+            return GetMockableCostManagementArmClient(client).CheckCostManagementNameAvailabilityByScopeScheduledAction(scope, content, cancellationToken);
         }
 
         /// <summary>
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.CostManagement
         /// You can use <see cref="CostManagementExportResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementExportResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetCostManagementExportResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementExportResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> Returns a <see cref="CostManagementExportResource" /> object. </returns>
         public static CostManagementExportResource GetCostManagementExportResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetCostManagementExportResource(id);
+            return GetMockableCostManagementArmClient(client).GetCostManagementExportResource(id);
         }
 
         /// <summary>
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.CostManagement
         /// You can use <see cref="TenantsCostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="TenantsCostManagementViewsResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetTenantsCostManagementViewsResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetTenantsCostManagementViewsResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> Returns a <see cref="TenantsCostManagementViewsResource" /> object. </returns>
         public static TenantsCostManagementViewsResource GetTenantsCostManagementViewsResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetTenantsCostManagementViewsResource(id);
+            return GetMockableCostManagementArmClient(client).GetTenantsCostManagementViewsResource(id);
         }
 
         /// <summary>
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.CostManagement
         /// You can use <see cref="CostManagementViewsResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementViewsResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetCostManagementViewsResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementViewsResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> Returns a <see cref="CostManagementViewsResource" /> object. </returns>
         public static CostManagementViewsResource GetCostManagementViewsResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetCostManagementViewsResource(id);
+            return GetMockableCostManagementArmClient(client).GetCostManagementViewsResource(id);
         }
 
         /// <summary>
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.CostManagement
         /// You can use <see cref="CostManagementAlertResource.CreateResourceIdentifier" /> to create a <see cref="CostManagementAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetCostManagementAlertResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetCostManagementAlertResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> Returns a <see cref="CostManagementAlertResource" /> object. </returns>
         public static CostManagementAlertResource GetCostManagementAlertResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetCostManagementAlertResource(id);
+            return GetMockableCostManagementArmClient(client).GetCostManagementAlertResource(id);
         }
 
         /// <summary>
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.CostManagement
         /// You can use <see cref="TenantScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="TenantScheduledActionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetTenantScheduledActionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetTenantScheduledActionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> Returns a <see cref="TenantScheduledActionResource" /> object. </returns>
         public static TenantScheduledActionResource GetTenantScheduledActionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetTenantScheduledActionResource(id);
+            return GetMockableCostManagementArmClient(client).GetTenantScheduledActionResource(id);
         }
 
         /// <summary>
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.CostManagement
         /// You can use <see cref="ScheduledActionResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledActionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementArmClientMockingExtension.GetScheduledActionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementArmClient.GetScheduledActionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -693,21 +693,21 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> Returns a <see cref="ScheduledActionResource" /> object. </returns>
         public static ScheduledActionResource GetScheduledActionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCostManagementArmClientMockingExtension(client).GetScheduledActionResource(id);
+            return GetMockableCostManagementArmClient(client).GetScheduledActionResource(id);
         }
 
         /// <summary>
         /// Gets a collection of TenantsCostManagementViewsResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GetAllTenantsCostManagementViews()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetAllTenantsCostManagementViews()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of TenantsCostManagementViewsResources and their operations over a TenantsCostManagementViewsResource. </returns>
         public static TenantsCostManagementViewsCollection GetAllTenantsCostManagementViews(this TenantResource tenantResource)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GetAllTenantsCostManagementViews();
+            return GetMockableCostManagementTenantResource(tenantResource).GetAllTenantsCostManagementViews();
         }
 
         /// <summary>
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GetTenantsCostManagementViewsAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetTenantsCostManagementViewsAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static async Task<Response<TenantsCostManagementViewsResource>> GetTenantsCostManagementViewsAsync(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementTenantMockingExtension(tenantResource).GetTenantsCostManagementViewsAsync(viewName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).GetTenantsCostManagementViewsAsync(viewName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GetTenantsCostManagementViews(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetTenantsCostManagementViews(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -763,21 +763,21 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static Response<TenantsCostManagementViewsResource> GetTenantsCostManagementViews(this TenantResource tenantResource, string viewName, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GetTenantsCostManagementViews(viewName, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetTenantsCostManagementViews(viewName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of TenantScheduledActionResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GetTenantScheduledActions()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetTenantScheduledActions()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of TenantScheduledActionResources and their operations over a TenantScheduledActionResource. </returns>
         public static TenantScheduledActionCollection GetTenantScheduledActions(this TenantResource tenantResource)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GetTenantScheduledActions();
+            return GetMockableCostManagementTenantResource(tenantResource).GetTenantScheduledActions();
         }
 
         /// <summary>
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GetTenantScheduledActionAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetTenantScheduledActionAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static async Task<Response<TenantScheduledActionResource>> GetTenantScheduledActionAsync(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementTenantMockingExtension(tenantResource).GetTenantScheduledActionAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).GetTenantScheduledActionAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GetTenantScheduledAction(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetTenantScheduledAction(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.CostManagement
         [ForwardsClientCalls]
         public static Response<TenantScheduledActionResource> GetTenantScheduledAction(this TenantResource tenantResource, string name, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GetTenantScheduledAction(name, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetTenantScheduledAction(name, cancellationToken);
         }
 
         /// <summary>
@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GetBenefitUtilizationSummariesByBillingAccountId(string,GrainContent?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingAccountId(string,GrainContent?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountIdAsync(this TenantResource tenantResource, string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GetBenefitUtilizationSummariesByBillingAccountIdAsync(billingAccountId, grainParameter, filter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesByBillingAccountIdAsync(billingAccountId, grainParameter, filter, cancellationToken);
         }
 
         /// <summary>
@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GetBenefitUtilizationSummariesByBillingAccountId(string,GrainContent?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingAccountId(string,GrainContent?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingAccountId(this TenantResource tenantResource, string billingAccountId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GetBenefitUtilizationSummariesByBillingAccountId(billingAccountId, grainParameter, filter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesByBillingAccountId(billingAccountId, grainParameter, filter, cancellationToken);
         }
 
         /// <summary>
@@ -910,7 +910,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GetBenefitUtilizationSummariesByBillingProfileId(string,string,GrainContent?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingProfileId(string,string,GrainContent?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -924,7 +924,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileIdAsync(this TenantResource tenantResource, string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GetBenefitUtilizationSummariesByBillingProfileIdAsync(billingAccountId, billingProfileId, grainParameter, filter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesByBillingProfileIdAsync(billingAccountId, billingProfileId, grainParameter, filter, cancellationToken);
         }
 
         /// <summary>
@@ -941,7 +941,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GetBenefitUtilizationSummariesByBillingProfileId(string,string,GrainContent?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingProfileId(string,string,GrainContent?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -955,7 +955,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesByBillingProfileId(this TenantResource tenantResource, string billingAccountId, string billingProfileId, GrainContent? grainParameter = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GetBenefitUtilizationSummariesByBillingProfileId(billingAccountId, billingProfileId, grainParameter, filter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesByBillingProfileId(billingAccountId, billingProfileId, grainParameter, filter, cancellationToken);
         }
 
         /// <summary>
@@ -972,7 +972,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GetBenefitUtilizationSummariesBySavingsPlanOrder(string,string,GrainContent?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrder(string,string,GrainContent?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -985,7 +985,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(this TenantResource tenantResource, string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(savingsPlanOrderId, filter, grainParameter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanOrderAsync(savingsPlanOrderId, filter, grainParameter, cancellationToken);
         }
 
         /// <summary>
@@ -1002,7 +1002,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GetBenefitUtilizationSummariesBySavingsPlanOrder(string,string,GrainContent?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrder(string,string,GrainContent?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1015,7 +1015,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanOrder(this TenantResource tenantResource, string savingsPlanOrderId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanOrder(savingsPlanOrderId, filter, grainParameter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanOrder(savingsPlanOrderId, filter, grainParameter, cancellationToken);
         }
 
         /// <summary>
@@ -1032,7 +1032,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GetBenefitUtilizationSummariesBySavingsPlanId(string,string,string,GrainContent?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanId(string,string,string,GrainContent?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1046,7 +1046,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An async collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanIdAsync(this TenantResource tenantResource, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanIdAsync(savingsPlanOrderId, savingsPlanId, filter, grainParameter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanIdAsync(savingsPlanOrderId, savingsPlanId, filter, grainParameter, cancellationToken);
         }
 
         /// <summary>
@@ -1063,7 +1063,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GetBenefitUtilizationSummariesBySavingsPlanId(string,string,string,GrainContent?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanId(string,string,string,GrainContent?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1077,7 +1077,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> A collection of <see cref="BenefitUtilizationSummary" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<BenefitUtilizationSummary> GetBenefitUtilizationSummariesBySavingsPlanId(this TenantResource tenantResource, string savingsPlanOrderId, string savingsPlanId, string filter = null, GrainContent? grainParameter = null, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanId(savingsPlanOrderId, savingsPlanId, filter, grainParameter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetBenefitUtilizationSummariesBySavingsPlanId(savingsPlanOrderId, savingsPlanId, filter, grainParameter, cancellationToken);
         }
 
         /// <summary>
@@ -1094,7 +1094,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GenerateBenefitUtilizationSummariesReportBillingAccountScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementTenantMockingExtension(tenantResource).GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(waitUntil, billingAccountId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportBillingAccountScopeAsync(waitUntil, billingAccountId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1123,7 +1123,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GenerateBenefitUtilizationSummariesReportBillingAccountScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingAccountScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1135,7 +1135,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingAccountScope(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GenerateBenefitUtilizationSummariesReportBillingAccountScope(waitUntil, billingAccountId, content, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportBillingAccountScope(waitUntil, billingAccountId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1152,7 +1152,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1165,7 +1165,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementTenantMockingExtension(tenantResource).GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(waitUntil, billingAccountId, billingProfileId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportBillingProfileScopeAsync(waitUntil, billingAccountId, billingProfileId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1182,7 +1182,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportBillingProfileScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1195,7 +1195,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportBillingProfileScope(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GenerateBenefitUtilizationSummariesReportBillingProfileScope(waitUntil, billingAccountId, billingProfileId, content, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportBillingProfileScope(waitUntil, billingAccountId, billingProfileId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1212,7 +1212,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GenerateBenefitUtilizationSummariesReportReservationOrderScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1224,7 +1224,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementTenantMockingExtension(tenantResource).GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(waitUntil, reservationOrderId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportReservationOrderScopeAsync(waitUntil, reservationOrderId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1241,7 +1241,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GenerateBenefitUtilizationSummariesReportReservationOrderScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationOrderScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1253,7 +1253,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationOrderScope(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GenerateBenefitUtilizationSummariesReportReservationOrderScope(waitUntil, reservationOrderId, content, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportReservationOrderScope(waitUntil, reservationOrderId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1270,7 +1270,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1283,7 +1283,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportReservationScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementTenantMockingExtension(tenantResource).GenerateBenefitUtilizationSummariesReportReservationScopeAsync(waitUntil, reservationOrderId, reservationId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportReservationScopeAsync(waitUntil, reservationOrderId, reservationId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1300,7 +1300,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportReservationScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1313,7 +1313,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="reservationOrderId"/>, <paramref name="reservationId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportReservationScope(this TenantResource tenantResource, WaitUntil waitUntil, string reservationOrderId, string reservationId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GenerateBenefitUtilizationSummariesReportReservationScope(waitUntil, reservationOrderId, reservationId, content, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportReservationScope(waitUntil, reservationOrderId, reservationId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1330,7 +1330,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1342,7 +1342,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementTenantMockingExtension(tenantResource).GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(waitUntil, savingsPlanOrderId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScopeAsync(waitUntil, savingsPlanOrderId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1359,7 +1359,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(WaitUntil,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1371,7 +1371,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(waitUntil, savingsPlanOrderId, content, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportSavingsPlanOrderScope(waitUntil, savingsPlanOrderId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1388,7 +1388,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1401,7 +1401,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<BenefitUtilizationSummariesOperationStatus>> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementTenantMockingExtension(tenantResource).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(waitUntil, savingsPlanOrderId, savingsPlanId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScopeAsync(waitUntil, savingsPlanOrderId, savingsPlanId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1418,7 +1418,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(WaitUntil,string,string,BenefitUtilizationSummariesContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1431,7 +1431,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="savingsPlanOrderId"/>, <paramref name="savingsPlanId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation<BenefitUtilizationSummariesOperationStatus> GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(this TenantResource tenantResource, WaitUntil waitUntil, string savingsPlanOrderId, string savingsPlanId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(waitUntil, savingsPlanOrderId, savingsPlanId, content, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GenerateBenefitUtilizationSummariesReportAsyncSavingsPlanScope(waitUntil, savingsPlanOrderId, savingsPlanId, content, cancellationToken);
         }
 
         /// <summary>
@@ -1448,7 +1448,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GetCostManagementAlerts(ExternalCloudProviderType,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetCostManagementAlerts(ExternalCloudProviderType,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1460,7 +1460,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An async collection of <see cref="CostManagementAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CostManagementAlertResource> GetCostManagementAlertsAsync(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GetCostManagementAlertsAsync(externalCloudProviderType, externalCloudProviderId, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetCostManagementAlertsAsync(externalCloudProviderType, externalCloudProviderId, cancellationToken);
         }
 
         /// <summary>
@@ -1477,7 +1477,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.GetCostManagementAlerts(ExternalCloudProviderType,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.GetCostManagementAlerts(ExternalCloudProviderType,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1489,7 +1489,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> A collection of <see cref="CostManagementAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CostManagementAlertResource> GetCostManagementAlerts(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).GetCostManagementAlerts(externalCloudProviderType, externalCloudProviderId, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).GetCostManagementAlerts(externalCloudProviderType, externalCloudProviderId, cancellationToken);
         }
 
         /// <summary>
@@ -1506,7 +1506,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.ExternalCloudProviderUsageForecast(ExternalCloudProviderType,string,ForecastDefinition,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.ExternalCloudProviderUsageForecast(ExternalCloudProviderType,string,ForecastDefinition,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1519,7 +1519,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public static async Task<Response<ForecastResult>> ExternalCloudProviderUsageForecastAsync(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementTenantMockingExtension(tenantResource).ExternalCloudProviderUsageForecastAsync(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).ExternalCloudProviderUsageForecastAsync(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1536,7 +1536,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.ExternalCloudProviderUsageForecast(ExternalCloudProviderType,string,ForecastDefinition,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.ExternalCloudProviderUsageForecast(ExternalCloudProviderType,string,ForecastDefinition,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1549,7 +1549,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="forecastDefinition"/> is null. </exception>
         public static Response<ForecastResult> ExternalCloudProviderUsageForecast(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, ForecastDefinition forecastDefinition, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).ExternalCloudProviderUsageForecast(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).ExternalCloudProviderUsageForecast(externalCloudProviderType, externalCloudProviderId, forecastDefinition, filter, cancellationToken);
         }
 
         /// <summary>
@@ -1566,7 +1566,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.ByExternalCloudProviderTypeDimensions(TenantResourceByExternalCloudProviderTypeDimensionsOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions(TenantResourceByExternalCloudProviderTypeDimensionsOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1576,7 +1576,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> An async collection of <see cref="CostManagementDimension" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CostManagementDimension> ByExternalCloudProviderTypeDimensionsAsync(this TenantResource tenantResource, TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).ByExternalCloudProviderTypeDimensionsAsync(options, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).ByExternalCloudProviderTypeDimensionsAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -1593,7 +1593,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.ByExternalCloudProviderTypeDimensions(TenantResourceByExternalCloudProviderTypeDimensionsOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions(TenantResourceByExternalCloudProviderTypeDimensionsOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1603,7 +1603,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <returns> A collection of <see cref="CostManagementDimension" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CostManagementDimension> ByExternalCloudProviderTypeDimensions(this TenantResource tenantResource, TenantResourceByExternalCloudProviderTypeDimensionsOptions options, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).ByExternalCloudProviderTypeDimensions(options, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).ByExternalCloudProviderTypeDimensions(options, cancellationToken);
         }
 
         /// <summary>
@@ -1620,7 +1620,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.UsageByExternalCloudProviderTypeQuery(ExternalCloudProviderType,string,QueryDefinition,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.UsageByExternalCloudProviderTypeQuery(ExternalCloudProviderType,string,QueryDefinition,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1632,7 +1632,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
         public static async Task<Response<QueryResult>> UsageByExternalCloudProviderTypeQueryAsync(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementTenantMockingExtension(tenantResource).UsageByExternalCloudProviderTypeQueryAsync(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).UsageByExternalCloudProviderTypeQueryAsync(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1649,7 +1649,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.UsageByExternalCloudProviderTypeQuery(ExternalCloudProviderType,string,QueryDefinition,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.UsageByExternalCloudProviderTypeQuery(ExternalCloudProviderType,string,QueryDefinition,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1661,7 +1661,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> or <paramref name="queryDefinition"/> is null. </exception>
         public static Response<QueryResult> UsageByExternalCloudProviderTypeQuery(this TenantResource tenantResource, ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, QueryDefinition queryDefinition, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).UsageByExternalCloudProviderTypeQuery(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).UsageByExternalCloudProviderTypeQuery(externalCloudProviderType, externalCloudProviderId, queryDefinition, cancellationToken);
         }
 
         /// <summary>
@@ -1678,7 +1678,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.ByBillingAccountIdGenerateReservationDetailsReport(WaitUntil,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.ByBillingAccountIdGenerateReservationDetailsReport(WaitUntil,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1691,7 +1691,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         public static async Task<ArmOperation<OperationStatus>> ByBillingAccountIdGenerateReservationDetailsReportAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementTenantMockingExtension(tenantResource).ByBillingAccountIdGenerateReservationDetailsReportAsync(waitUntil, billingAccountId, startDate, endDate, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).ByBillingAccountIdGenerateReservationDetailsReportAsync(waitUntil, billingAccountId, startDate, endDate, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1708,7 +1708,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.ByBillingAccountIdGenerateReservationDetailsReport(WaitUntil,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.ByBillingAccountIdGenerateReservationDetailsReport(WaitUntil,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1721,7 +1721,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         public static ArmOperation<OperationStatus> ByBillingAccountIdGenerateReservationDetailsReport(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).ByBillingAccountIdGenerateReservationDetailsReport(waitUntil, billingAccountId, startDate, endDate, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).ByBillingAccountIdGenerateReservationDetailsReport(waitUntil, billingAccountId, startDate, endDate, cancellationToken);
         }
 
         /// <summary>
@@ -1738,7 +1738,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.ByBillingProfileIdGenerateReservationDetailsReport(WaitUntil,string,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.ByBillingProfileIdGenerateReservationDetailsReport(WaitUntil,string,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1752,7 +1752,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         public static async Task<ArmOperation<OperationStatus>> ByBillingProfileIdGenerateReservationDetailsReportAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementTenantMockingExtension(tenantResource).ByBillingProfileIdGenerateReservationDetailsReportAsync(waitUntil, billingAccountId, billingProfileId, startDate, endDate, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).ByBillingProfileIdGenerateReservationDetailsReportAsync(waitUntil, billingAccountId, billingProfileId, startDate, endDate, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1769,7 +1769,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.ByBillingProfileIdGenerateReservationDetailsReport(WaitUntil,string,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.ByBillingProfileIdGenerateReservationDetailsReport(WaitUntil,string,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1783,7 +1783,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountId"/>, <paramref name="billingProfileId"/>, <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         public static ArmOperation<OperationStatus> ByBillingProfileIdGenerateReservationDetailsReport(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).ByBillingProfileIdGenerateReservationDetailsReport(waitUntil, billingAccountId, billingProfileId, startDate, endDate, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).ByBillingProfileIdGenerateReservationDetailsReport(waitUntil, billingAccountId, billingProfileId, startDate, endDate, cancellationToken);
         }
 
         /// <summary>
@@ -1800,7 +1800,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.DownloadPriceSheet(WaitUntil,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.DownloadPriceSheet(WaitUntil,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1813,7 +1813,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
         public static async Task<ArmOperation<DownloadURL>> DownloadPriceSheetAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementTenantMockingExtension(tenantResource).DownloadPriceSheetAsync(waitUntil, billingAccountName, billingProfileName, invoiceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).DownloadPriceSheetAsync(waitUntil, billingAccountName, billingProfileName, invoiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1830,7 +1830,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.DownloadPriceSheet(WaitUntil,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.DownloadPriceSheet(WaitUntil,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1843,7 +1843,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/>, <paramref name="billingProfileName"/> or <paramref name="invoiceName"/> is null. </exception>
         public static ArmOperation<DownloadURL> DownloadPriceSheet(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).DownloadPriceSheet(waitUntil, billingAccountName, billingProfileName, invoiceName, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).DownloadPriceSheet(waitUntil, billingAccountName, billingProfileName, invoiceName, cancellationToken);
         }
 
         /// <summary>
@@ -1860,7 +1860,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.DownloadByBillingProfilePriceSheet(WaitUntil,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.DownloadByBillingProfilePriceSheet(WaitUntil,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1872,7 +1872,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
         public static async Task<ArmOperation<DownloadURL>> DownloadByBillingProfilePriceSheetAsync(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementTenantMockingExtension(tenantResource).DownloadByBillingProfilePriceSheetAsync(waitUntil, billingAccountName, billingProfileName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).DownloadByBillingProfilePriceSheetAsync(waitUntil, billingAccountName, billingProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1889,7 +1889,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.DownloadByBillingProfilePriceSheet(WaitUntil,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.DownloadByBillingProfilePriceSheet(WaitUntil,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1901,7 +1901,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="billingAccountName"/> or <paramref name="billingProfileName"/> is null. </exception>
         public static ArmOperation<DownloadURL> DownloadByBillingProfilePriceSheet(this TenantResource tenantResource, WaitUntil waitUntil, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).DownloadByBillingProfilePriceSheet(waitUntil, billingAccountName, billingProfileName, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).DownloadByBillingProfilePriceSheet(waitUntil, billingAccountName, billingProfileName, cancellationToken);
         }
 
         /// <summary>
@@ -1918,7 +1918,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.CheckCostManagementNameAvailabilityByScheduledAction(CostManagementNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.CheckCostManagementNameAvailabilityByScheduledAction(CostManagementNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1927,7 +1927,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScheduledActionAsync(this TenantResource tenantResource, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetCostManagementTenantMockingExtension(tenantResource).CheckCostManagementNameAvailabilityByScheduledActionAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCostManagementTenantResource(tenantResource).CheckCostManagementNameAvailabilityByScheduledActionAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1944,7 +1944,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CostManagementTenantMockingExtension.CheckCostManagementNameAvailabilityByScheduledAction(CostManagementNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCostManagementTenantResource.CheckCostManagementNameAvailabilityByScheduledAction(CostManagementNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1953,7 +1953,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScheduledAction(this TenantResource tenantResource, CostManagementNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetCostManagementTenantMockingExtension(tenantResource).CheckCostManagementNameAvailabilityByScheduledAction(content, cancellationToken);
+            return GetMockableCostManagementTenantResource(tenantResource).CheckCostManagementNameAvailabilityByScheduledAction(content, cancellationToken);
         }
     }
 }

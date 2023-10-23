@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.RecoveryServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.RecoveryServices. </summary>
     public static partial class RecoveryServicesExtensions
     {
-        private static RecoveryServicesArmClientMockingExtension GetRecoveryServicesArmClientMockingExtension(ArmClient client)
+        private static MockableRecoveryServicesArmClient GetMockableRecoveryServicesArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new RecoveryServicesArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableRecoveryServicesArmClient(client0));
         }
 
-        private static RecoveryServicesResourceGroupMockingExtension GetRecoveryServicesResourceGroupMockingExtension(ArmResource resource)
+        private static MockableRecoveryServicesResourceGroupResource GetMockableRecoveryServicesResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new RecoveryServicesResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableRecoveryServicesResourceGroupResource(client, resource.Id));
         }
 
-        private static RecoveryServicesSubscriptionMockingExtension GetRecoveryServicesSubscriptionMockingExtension(ArmResource resource)
+        private static MockableRecoveryServicesSubscriptionResource GetMockableRecoveryServicesSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new RecoveryServicesSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableRecoveryServicesSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// You can use <see cref="RecoveryServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RecoveryServicesArmClientMockingExtension.GetRecoveryServicesPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesArmClient.GetRecoveryServicesPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> Returns a <see cref="RecoveryServicesPrivateLinkResource" /> object. </returns>
         public static RecoveryServicesPrivateLinkResource GetRecoveryServicesPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRecoveryServicesArmClientMockingExtension(client).GetRecoveryServicesPrivateLinkResource(id);
+            return GetMockableRecoveryServicesArmClient(client).GetRecoveryServicesPrivateLinkResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// You can use <see cref="RecoveryServicesVaultResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesVaultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RecoveryServicesArmClientMockingExtension.GetRecoveryServicesVaultResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesArmClient.GetRecoveryServicesVaultResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> Returns a <see cref="RecoveryServicesVaultResource" /> object. </returns>
         public static RecoveryServicesVaultResource GetRecoveryServicesVaultResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRecoveryServicesArmClientMockingExtension(client).GetRecoveryServicesVaultResource(id);
+            return GetMockableRecoveryServicesArmClient(client).GetRecoveryServicesVaultResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// You can use <see cref="RecoveryServicesVaultExtendedInfoResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesVaultExtendedInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RecoveryServicesArmClientMockingExtension.GetRecoveryServicesVaultExtendedInfoResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesArmClient.GetRecoveryServicesVaultExtendedInfoResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,21 +80,21 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> Returns a <see cref="RecoveryServicesVaultExtendedInfoResource" /> object. </returns>
         public static RecoveryServicesVaultExtendedInfoResource GetRecoveryServicesVaultExtendedInfoResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRecoveryServicesArmClientMockingExtension(client).GetRecoveryServicesVaultExtendedInfoResource(id);
+            return GetMockableRecoveryServicesArmClient(client).GetRecoveryServicesVaultExtendedInfoResource(id);
         }
 
         /// <summary>
         /// Gets a collection of RecoveryServicesVaultResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RecoveryServicesResourceGroupMockingExtension.GetRecoveryServicesVaults()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesResourceGroupResource.GetRecoveryServicesVaults()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RecoveryServicesVaultResources and their operations over a RecoveryServicesVaultResource. </returns>
         public static RecoveryServicesVaultCollection GetRecoveryServicesVaults(this ResourceGroupResource resourceGroupResource)
         {
-            return GetRecoveryServicesResourceGroupMockingExtension(resourceGroupResource).GetRecoveryServicesVaults();
+            return GetMockableRecoveryServicesResourceGroupResource(resourceGroupResource).GetRecoveryServicesVaults();
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RecoveryServicesResourceGroupMockingExtension.GetRecoveryServicesVaultAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesResourceGroupResource.GetRecoveryServicesVaultAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServices
         [ForwardsClientCalls]
         public static async Task<Response<RecoveryServicesVaultResource>> GetRecoveryServicesVaultAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return await GetRecoveryServicesResourceGroupMockingExtension(resourceGroupResource).GetRecoveryServicesVaultAsync(vaultName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRecoveryServicesResourceGroupResource(resourceGroupResource).GetRecoveryServicesVaultAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RecoveryServicesResourceGroupMockingExtension.GetRecoveryServicesVault(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesResourceGroupResource.GetRecoveryServicesVault(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServices
         [ForwardsClientCalls]
         public static Response<RecoveryServicesVaultResource> GetRecoveryServicesVault(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return GetRecoveryServicesResourceGroupMockingExtension(resourceGroupResource).GetRecoveryServicesVault(vaultName, cancellationToken);
+            return GetMockableRecoveryServicesResourceGroupResource(resourceGroupResource).GetRecoveryServicesVault(vaultName, cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RecoveryServicesResourceGroupMockingExtension.CheckRecoveryServicesNameAvailability(AzureLocation,RecoveryServicesNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesResourceGroupResource.CheckRecoveryServicesNameAvailability(AzureLocation,RecoveryServicesNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<RecoveryServicesNameAvailabilityResult>> CheckRecoveryServicesNameAvailabilityAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetRecoveryServicesResourceGroupMockingExtension(resourceGroupResource).CheckRecoveryServicesNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRecoveryServicesResourceGroupResource(resourceGroupResource).CheckRecoveryServicesNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RecoveryServicesResourceGroupMockingExtension.CheckRecoveryServicesNameAvailability(AzureLocation,RecoveryServicesNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesResourceGroupResource.CheckRecoveryServicesNameAvailability(AzureLocation,RecoveryServicesNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<RecoveryServicesNameAvailabilityResult> CheckRecoveryServicesNameAvailability(this ResourceGroupResource resourceGroupResource, AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetRecoveryServicesResourceGroupMockingExtension(resourceGroupResource).CheckRecoveryServicesNameAvailability(location, content, cancellationToken);
+            return GetMockableRecoveryServicesResourceGroupResource(resourceGroupResource).CheckRecoveryServicesNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RecoveryServicesSubscriptionMockingExtension.GetRecoveryServiceCapabilities(AzureLocation,ResourceCapabilities,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSubscriptionResource.GetRecoveryServiceCapabilities(AzureLocation,ResourceCapabilities,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public static async Task<Response<CapabilitiesResult>> GetRecoveryServiceCapabilitiesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
         {
-            return await GetRecoveryServicesSubscriptionMockingExtension(subscriptionResource).GetRecoveryServiceCapabilitiesAsync(location, input, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRecoveryServicesSubscriptionResource(subscriptionResource).GetRecoveryServiceCapabilitiesAsync(location, input, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RecoveryServicesSubscriptionMockingExtension.GetRecoveryServiceCapabilities(AzureLocation,ResourceCapabilities,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSubscriptionResource.GetRecoveryServiceCapabilities(AzureLocation,ResourceCapabilities,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public static Response<CapabilitiesResult> GetRecoveryServiceCapabilities(this SubscriptionResource subscriptionResource, AzureLocation location, ResourceCapabilities input, CancellationToken cancellationToken = default)
         {
-            return GetRecoveryServicesSubscriptionMockingExtension(subscriptionResource).GetRecoveryServiceCapabilities(location, input, cancellationToken);
+            return GetMockableRecoveryServicesSubscriptionResource(subscriptionResource).GetRecoveryServiceCapabilities(location, input, cancellationToken);
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RecoveryServicesSubscriptionMockingExtension.GetRecoveryServicesVaults(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesVaults(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> An async collection of <see cref="RecoveryServicesVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RecoveryServicesVaultResource> GetRecoveryServicesVaultsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetRecoveryServicesSubscriptionMockingExtension(subscriptionResource).GetRecoveryServicesVaultsAsync(cancellationToken);
+            return GetMockableRecoveryServicesSubscriptionResource(subscriptionResource).GetRecoveryServicesVaultsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RecoveryServicesSubscriptionMockingExtension.GetRecoveryServicesVaults(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesVaults(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <returns> A collection of <see cref="RecoveryServicesVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RecoveryServicesVaultResource> GetRecoveryServicesVaults(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetRecoveryServicesSubscriptionMockingExtension(subscriptionResource).GetRecoveryServicesVaults(cancellationToken);
+            return GetMockableRecoveryServicesSubscriptionResource(subscriptionResource).GetRecoveryServicesVaults(cancellationToken);
         }
     }
 }

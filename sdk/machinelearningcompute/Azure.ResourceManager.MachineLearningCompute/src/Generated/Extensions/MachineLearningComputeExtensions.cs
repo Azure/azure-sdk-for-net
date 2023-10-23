@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.MachineLearningCompute
     /// <summary> A class to add extension methods to Azure.ResourceManager.MachineLearningCompute. </summary>
     public static partial class MachineLearningComputeExtensions
     {
-        private static MachineLearningComputeArmClientMockingExtension GetMachineLearningComputeArmClientMockingExtension(ArmClient client)
+        private static MockableMachineLearningComputeArmClient GetMockableMachineLearningComputeArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MachineLearningComputeArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableMachineLearningComputeArmClient(client0));
         }
 
-        private static MachineLearningComputeResourceGroupMockingExtension GetMachineLearningComputeResourceGroupMockingExtension(ArmResource resource)
+        private static MockableMachineLearningComputeResourceGroupResource GetMockableMachineLearningComputeResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MachineLearningComputeResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMachineLearningComputeResourceGroupResource(client, resource.Id));
         }
 
-        private static MachineLearningComputeSubscriptionMockingExtension GetMachineLearningComputeSubscriptionMockingExtension(ArmResource resource)
+        private static MockableMachineLearningComputeSubscriptionResource GetMockableMachineLearningComputeSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MachineLearningComputeSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMachineLearningComputeSubscriptionResource(client, resource.Id));
         }
 
-        private static MachineLearningComputeTenantMockingExtension GetMachineLearningComputeTenantMockingExtension(ArmResource resource)
+        private static MockableMachineLearningComputeTenantResource GetMockableMachineLearningComputeTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MachineLearningComputeTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMachineLearningComputeTenantResource(client, resource.Id));
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// You can use <see cref="OperationalizationClusterResource.CreateResourceIdentifier" /> to create an <see cref="OperationalizationClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MachineLearningComputeArmClientMockingExtension.GetOperationalizationClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningComputeArmClient.GetOperationalizationClusterResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -53,21 +53,21 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> Returns a <see cref="OperationalizationClusterResource" /> object. </returns>
         public static OperationalizationClusterResource GetOperationalizationClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMachineLearningComputeArmClientMockingExtension(client).GetOperationalizationClusterResource(id);
+            return GetMockableMachineLearningComputeArmClient(client).GetOperationalizationClusterResource(id);
         }
 
         /// <summary>
         /// Gets a collection of OperationalizationClusterResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MachineLearningComputeResourceGroupMockingExtension.GetOperationalizationClusters()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningComputeResourceGroupResource.GetOperationalizationClusters()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of OperationalizationClusterResources and their operations over a OperationalizationClusterResource. </returns>
         public static OperationalizationClusterCollection GetOperationalizationClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMachineLearningComputeResourceGroupMockingExtension(resourceGroupResource).GetOperationalizationClusters();
+            return GetMockableMachineLearningComputeResourceGroupResource(resourceGroupResource).GetOperationalizationClusters();
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MachineLearningComputeResourceGroupMockingExtension.GetOperationalizationClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningComputeResourceGroupResource.GetOperationalizationClusterAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         [ForwardsClientCalls]
         public static async Task<Response<OperationalizationClusterResource>> GetOperationalizationClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await GetMachineLearningComputeResourceGroupMockingExtension(resourceGroupResource).GetOperationalizationClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMachineLearningComputeResourceGroupResource(resourceGroupResource).GetOperationalizationClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MachineLearningComputeResourceGroupMockingExtension.GetOperationalizationCluster(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningComputeResourceGroupResource.GetOperationalizationCluster(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         [ForwardsClientCalls]
         public static Response<OperationalizationClusterResource> GetOperationalizationCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return GetMachineLearningComputeResourceGroupMockingExtension(resourceGroupResource).GetOperationalizationCluster(clusterName, cancellationToken);
+            return GetMockableMachineLearningComputeResourceGroupResource(resourceGroupResource).GetOperationalizationCluster(clusterName, cancellationToken);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MachineLearningComputeSubscriptionMockingExtension.GetOperationalizationClusters(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningComputeSubscriptionResource.GetOperationalizationClusters(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> An async collection of <see cref="OperationalizationClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalizationClusterResource> GetOperationalizationClustersAsync(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetMachineLearningComputeSubscriptionMockingExtension(subscriptionResource).GetOperationalizationClustersAsync(skiptoken, cancellationToken);
+            return GetMockableMachineLearningComputeSubscriptionResource(subscriptionResource).GetOperationalizationClustersAsync(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MachineLearningComputeSubscriptionMockingExtension.GetOperationalizationClusters(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningComputeSubscriptionResource.GetOperationalizationClusters(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> A collection of <see cref="OperationalizationClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalizationClusterResource> GetOperationalizationClusters(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetMachineLearningComputeSubscriptionMockingExtension(subscriptionResource).GetOperationalizationClusters(skiptoken, cancellationToken);
+            return GetMockableMachineLearningComputeSubscriptionResource(subscriptionResource).GetOperationalizationClusters(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MachineLearningComputeTenantMockingExtension.GetAvailableOperationsMachineLearningComputes(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningComputeTenantResource.GetAvailableOperationsMachineLearningComputes(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> An async collection of <see cref="ResourceOperation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceOperation> GetAvailableOperationsMachineLearningComputesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetMachineLearningComputeTenantMockingExtension(tenantResource).GetAvailableOperationsMachineLearningComputesAsync(cancellationToken);
+            return GetMockableMachineLearningComputeTenantResource(tenantResource).GetAvailableOperationsMachineLearningComputesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MachineLearningComputeTenantMockingExtension.GetAvailableOperationsMachineLearningComputes(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMachineLearningComputeTenantResource.GetAvailableOperationsMachineLearningComputes(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.MachineLearningCompute
         /// <returns> A collection of <see cref="ResourceOperation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceOperation> GetAvailableOperationsMachineLearningComputes(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetMachineLearningComputeTenantMockingExtension(tenantResource).GetAvailableOperationsMachineLearningComputes(cancellationToken);
+            return GetMockableMachineLearningComputeTenantResource(tenantResource).GetAvailableOperationsMachineLearningComputes(cancellationToken);
         }
     }
 }

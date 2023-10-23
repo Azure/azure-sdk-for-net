@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.DevSpaces
     /// <summary> A class to add extension methods to Azure.ResourceManager.DevSpaces. </summary>
     public static partial class DevSpacesExtensions
     {
-        private static DevSpacesArmClientMockingExtension GetDevSpacesArmClientMockingExtension(ArmClient client)
+        private static MockableDevSpacesArmClient GetMockableDevSpacesArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new DevSpacesArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableDevSpacesArmClient(client0));
         }
 
-        private static DevSpacesResourceGroupMockingExtension GetDevSpacesResourceGroupMockingExtension(ArmResource resource)
+        private static MockableDevSpacesResourceGroupResource GetMockableDevSpacesResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DevSpacesResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDevSpacesResourceGroupResource(client, resource.Id));
         }
 
-        private static DevSpacesSubscriptionMockingExtension GetDevSpacesSubscriptionMockingExtension(ArmResource resource)
+        private static MockableDevSpacesSubscriptionResource GetMockableDevSpacesSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DevSpacesSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDevSpacesSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// You can use <see cref="ControllerResource.CreateResourceIdentifier" /> to create a <see cref="ControllerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DevSpacesArmClientMockingExtension.GetControllerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevSpacesArmClient.GetControllerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,21 +48,21 @@ namespace Azure.ResourceManager.DevSpaces
         /// <returns> Returns a <see cref="ControllerResource" /> object. </returns>
         public static ControllerResource GetControllerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDevSpacesArmClientMockingExtension(client).GetControllerResource(id);
+            return GetMockableDevSpacesArmClient(client).GetControllerResource(id);
         }
 
         /// <summary>
         /// Gets a collection of ControllerResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DevSpacesResourceGroupMockingExtension.GetControllers()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevSpacesResourceGroupResource.GetControllers()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ControllerResources and their operations over a ControllerResource. </returns>
         public static ControllerCollection GetControllers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetDevSpacesResourceGroupMockingExtension(resourceGroupResource).GetControllers();
+            return GetMockableDevSpacesResourceGroupResource(resourceGroupResource).GetControllers();
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DevSpacesResourceGroupMockingExtension.GetControllerAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevSpacesResourceGroupResource.GetControllerAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DevSpaces
         [ForwardsClientCalls]
         public static async Task<Response<ControllerResource>> GetControllerAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await GetDevSpacesResourceGroupMockingExtension(resourceGroupResource).GetControllerAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDevSpacesResourceGroupResource(resourceGroupResource).GetControllerAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DevSpacesResourceGroupMockingExtension.GetController(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevSpacesResourceGroupResource.GetController(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DevSpaces
         [ForwardsClientCalls]
         public static Response<ControllerResource> GetController(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return GetDevSpacesResourceGroupMockingExtension(resourceGroupResource).GetController(name, cancellationToken);
+            return GetMockableDevSpacesResourceGroupResource(resourceGroupResource).GetController(name, cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DevSpacesResourceGroupMockingExtension.GetContainerHostMappingContainerHostMapping(AzureLocation,ContainerHostMapping,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevSpacesResourceGroupResource.GetContainerHostMappingContainerHostMapping(AzureLocation,ContainerHostMapping,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentNullException"> <paramref name="containerHostMapping"/> is null. </exception>
         public static async Task<Response<ContainerHostMapping>> GetContainerHostMappingContainerHostMappingAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)
         {
-            return await GetDevSpacesResourceGroupMockingExtension(resourceGroupResource).GetContainerHostMappingContainerHostMappingAsync(location, containerHostMapping, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDevSpacesResourceGroupResource(resourceGroupResource).GetContainerHostMappingContainerHostMappingAsync(location, containerHostMapping, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DevSpacesResourceGroupMockingExtension.GetContainerHostMappingContainerHostMapping(AzureLocation,ContainerHostMapping,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevSpacesResourceGroupResource.GetContainerHostMappingContainerHostMapping(AzureLocation,ContainerHostMapping,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <exception cref="ArgumentNullException"> <paramref name="containerHostMapping"/> is null. </exception>
         public static Response<ContainerHostMapping> GetContainerHostMappingContainerHostMapping(this ResourceGroupResource resourceGroupResource, AzureLocation location, ContainerHostMapping containerHostMapping, CancellationToken cancellationToken = default)
         {
-            return GetDevSpacesResourceGroupMockingExtension(resourceGroupResource).GetContainerHostMappingContainerHostMapping(location, containerHostMapping, cancellationToken);
+            return GetMockableDevSpacesResourceGroupResource(resourceGroupResource).GetContainerHostMappingContainerHostMapping(location, containerHostMapping, cancellationToken);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DevSpacesSubscriptionMockingExtension.GetControllers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevSpacesSubscriptionResource.GetControllers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <returns> An async collection of <see cref="ControllerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ControllerResource> GetControllersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetDevSpacesSubscriptionMockingExtension(subscriptionResource).GetControllersAsync(cancellationToken);
+            return GetMockableDevSpacesSubscriptionResource(subscriptionResource).GetControllersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DevSpacesSubscriptionMockingExtension.GetControllers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDevSpacesSubscriptionResource.GetControllers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DevSpaces
         /// <returns> A collection of <see cref="ControllerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ControllerResource> GetControllers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetDevSpacesSubscriptionMockingExtension(subscriptionResource).GetControllers(cancellationToken);
+            return GetMockableDevSpacesSubscriptionResource(subscriptionResource).GetControllers(cancellationToken);
         }
     }
 }

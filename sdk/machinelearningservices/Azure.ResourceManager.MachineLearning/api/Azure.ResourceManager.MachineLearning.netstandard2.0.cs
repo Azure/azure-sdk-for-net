@@ -1756,9 +1756,9 @@ namespace Azure.ResourceManager.MachineLearning
 }
 namespace Azure.ResourceManager.MachineLearning.Mocking
 {
-    public partial class MachineLearningArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMachineLearningArmClient : Azure.ResourceManager.ArmResource
     {
-        protected MachineLearningArmClientMockingExtension() { }
+        protected MockableMachineLearningArmClient() { }
         public virtual Azure.ResourceManager.MachineLearning.MachineLearningBatchDeploymentResource GetMachineLearningBatchDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MachineLearning.MachineLearningBatchEndpointResource GetMachineLearningBatchEndpointResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MachineLearning.MachineLearningCodeContainerResource GetMachineLearningCodeContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1799,9 +1799,9 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         public virtual Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentContainerResource GetMachineLearninRegistryComponentContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MachineLearning.MachineLearninRegistryComponentVersionResource GetMachineLearninRegistryComponentVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class MachineLearningResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMachineLearningResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected MachineLearningResourceGroupMockingExtension() { }
+        protected MockableMachineLearningResourceGroupResource() { }
         public virtual Azure.ResourceManager.MachineLearning.MachineLearningRegistryCollection GetMachineLearningRegistries() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MachineLearning.MachineLearningRegistryResource> GetMachineLearningRegistry(string registryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearning.MachineLearningRegistryResource>> GetMachineLearningRegistryAsync(string registryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1809,9 +1809,9 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceResource>> GetMachineLearningWorkspaceAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MachineLearning.MachineLearningWorkspaceCollection GetMachineLearningWorkspaces() { throw null; }
     }
-    public partial class MachineLearningSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMachineLearningSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected MachineLearningSubscriptionMockingExtension() { }
+        protected MockableMachineLearningSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.MachineLearning.Models.MachineLearningResourceQuota> GetMachineLearningQuotas(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearning.Models.MachineLearningResourceQuota> GetMachineLearningQuotasAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MachineLearning.MachineLearningRegistryResource> GetMachineLearningRegistries(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

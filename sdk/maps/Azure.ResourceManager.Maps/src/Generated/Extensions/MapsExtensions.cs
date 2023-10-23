@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.Maps
     /// <summary> A class to add extension methods to Azure.ResourceManager.Maps. </summary>
     public static partial class MapsExtensions
     {
-        private static MapsArmClientMockingExtension GetMapsArmClientMockingExtension(ArmClient client)
+        private static MockableMapsArmClient GetMockableMapsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MapsArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableMapsArmClient(client0));
         }
 
-        private static MapsResourceGroupMockingExtension GetMapsResourceGroupMockingExtension(ArmResource resource)
+        private static MockableMapsResourceGroupResource GetMockableMapsResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MapsResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMapsResourceGroupResource(client, resource.Id));
         }
 
-        private static MapsSubscriptionMockingExtension GetMapsSubscriptionMockingExtension(ArmResource resource)
+        private static MockableMapsSubscriptionResource GetMockableMapsSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MapsSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMapsSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Maps
         /// You can use <see cref="MapsAccountResource.CreateResourceIdentifier" /> to create a <see cref="MapsAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MapsArmClientMockingExtension.GetMapsAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMapsArmClient.GetMapsAccountResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Maps
         /// <returns> Returns a <see cref="MapsAccountResource" /> object. </returns>
         public static MapsAccountResource GetMapsAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMapsArmClientMockingExtension(client).GetMapsAccountResource(id);
+            return GetMockableMapsArmClient(client).GetMapsAccountResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Maps
         /// You can use <see cref="MapsCreatorResource.CreateResourceIdentifier" /> to create a <see cref="MapsCreatorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MapsArmClientMockingExtension.GetMapsCreatorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMapsArmClient.GetMapsCreatorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,21 +63,21 @@ namespace Azure.ResourceManager.Maps
         /// <returns> Returns a <see cref="MapsCreatorResource" /> object. </returns>
         public static MapsCreatorResource GetMapsCreatorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMapsArmClientMockingExtension(client).GetMapsCreatorResource(id);
+            return GetMockableMapsArmClient(client).GetMapsCreatorResource(id);
         }
 
         /// <summary>
         /// Gets a collection of MapsAccountResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MapsResourceGroupMockingExtension.GetMapsAccounts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMapsResourceGroupResource.GetMapsAccounts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MapsAccountResources and their operations over a MapsAccountResource. </returns>
         public static MapsAccountCollection GetMapsAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMapsResourceGroupMockingExtension(resourceGroupResource).GetMapsAccounts();
+            return GetMockableMapsResourceGroupResource(resourceGroupResource).GetMapsAccounts();
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Maps
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MapsResourceGroupMockingExtension.GetMapsAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMapsResourceGroupResource.GetMapsAccountAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Maps
         [ForwardsClientCalls]
         public static async Task<Response<MapsAccountResource>> GetMapsAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await GetMapsResourceGroupMockingExtension(resourceGroupResource).GetMapsAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMapsResourceGroupResource(resourceGroupResource).GetMapsAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Maps
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MapsResourceGroupMockingExtension.GetMapsAccount(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMapsResourceGroupResource.GetMapsAccount(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Maps
         [ForwardsClientCalls]
         public static Response<MapsAccountResource> GetMapsAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return GetMapsResourceGroupMockingExtension(resourceGroupResource).GetMapsAccount(accountName, cancellationToken);
+            return GetMockableMapsResourceGroupResource(resourceGroupResource).GetMapsAccount(accountName, cancellationToken);
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Maps
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MapsSubscriptionMockingExtension.GetMapsAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMapsSubscriptionResource.GetMapsAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Maps
         /// <returns> An async collection of <see cref="MapsAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MapsAccountResource> GetMapsAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMapsSubscriptionMockingExtension(subscriptionResource).GetMapsAccountsAsync(cancellationToken);
+            return GetMockableMapsSubscriptionResource(subscriptionResource).GetMapsAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Maps
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MapsSubscriptionMockingExtension.GetMapsAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMapsSubscriptionResource.GetMapsAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Maps
         /// <returns> A collection of <see cref="MapsAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MapsAccountResource> GetMapsAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMapsSubscriptionMockingExtension(subscriptionResource).GetMapsAccounts(cancellationToken);
+            return GetMockableMapsSubscriptionResource(subscriptionResource).GetMapsAccounts(cancellationToken);
         }
     }
 }

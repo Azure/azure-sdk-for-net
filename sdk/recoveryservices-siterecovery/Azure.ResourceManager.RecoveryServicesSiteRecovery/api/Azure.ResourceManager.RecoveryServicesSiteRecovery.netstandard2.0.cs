@@ -1000,9 +1000,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 }
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
 {
-    public partial class RecoveryServicesSiteRecoveryArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableRecoveryServicesSiteRecoveryArmClient : Azure.ResourceManager.ArmResource
     {
-        protected RecoveryServicesSiteRecoveryArmClientMockingExtension() { }
+        protected MockableRecoveryServicesSiteRecoveryArmClient() { }
         public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.MigrationRecoveryPointResource GetMigrationRecoveryPointResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectionContainerMappingResource GetProtectionContainerMappingResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.ReplicationEligibilityResultResource GetReplicationEligibilityResultResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1027,9 +1027,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Mocking
         public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.StorageClassificationMappingResource GetStorageClassificationMappingResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.RecoveryServicesSiteRecovery.StorageClassificationResource GetStorageClassificationResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class RecoveryServicesSiteRecoveryResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableRecoveryServicesSiteRecoveryResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected RecoveryServicesSiteRecoveryResourceGroupMockingExtension() { }
+        protected MockableRecoveryServicesSiteRecoveryResourceGroupResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectionContainerMappingResource> GetProtectionContainerMappings(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.ProtectionContainerMappingResource> GetProtectionContainerMappingsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.SiteRecoveryReplicationAppliance> GetReplicationAppliances(string resourceName, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

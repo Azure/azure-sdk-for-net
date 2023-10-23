@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.DataProtectionBackup
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataProtectionBackup. </summary>
     public static partial class DataProtectionBackupExtensions
     {
-        private static DataProtectionBackupArmClientMockingExtension GetDataProtectionBackupArmClientMockingExtension(ArmClient client)
+        private static MockableDataProtectionBackupArmClient GetMockableDataProtectionBackupArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new DataProtectionBackupArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableDataProtectionBackupArmClient(client0));
         }
 
-        private static DataProtectionBackupResourceGroupMockingExtension GetDataProtectionBackupResourceGroupMockingExtension(ArmResource resource)
+        private static MockableDataProtectionBackupResourceGroupResource GetMockableDataProtectionBackupResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DataProtectionBackupResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDataProtectionBackupResourceGroupResource(client, resource.Id));
         }
 
-        private static DataProtectionBackupSubscriptionMockingExtension GetDataProtectionBackupSubscriptionMockingExtension(ArmResource resource)
+        private static MockableDataProtectionBackupSubscriptionResource GetMockableDataProtectionBackupSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DataProtectionBackupSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDataProtectionBackupSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// You can use <see cref="DataProtectionBackupVaultResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupVaultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupArmClientMockingExtension.GetDataProtectionBackupVaultResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetDataProtectionBackupVaultResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> Returns a <see cref="DataProtectionBackupVaultResource" /> object. </returns>
         public static DataProtectionBackupVaultResource GetDataProtectionBackupVaultResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataProtectionBackupArmClientMockingExtension(client).GetDataProtectionBackupVaultResource(id);
+            return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupVaultResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// You can use <see cref="DataProtectionBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupArmClientMockingExtension.GetDataProtectionBackupPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetDataProtectionBackupPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> Returns a <see cref="DataProtectionBackupPolicyResource" /> object. </returns>
         public static DataProtectionBackupPolicyResource GetDataProtectionBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataProtectionBackupArmClientMockingExtension(client).GetDataProtectionBackupPolicyResource(id);
+            return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupPolicyResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// You can use <see cref="DataProtectionBackupInstanceResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupArmClientMockingExtension.GetDataProtectionBackupInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetDataProtectionBackupInstanceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> Returns a <see cref="DataProtectionBackupInstanceResource" /> object. </returns>
         public static DataProtectionBackupInstanceResource GetDataProtectionBackupInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataProtectionBackupArmClientMockingExtension(client).GetDataProtectionBackupInstanceResource(id);
+            return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupInstanceResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// You can use <see cref="DataProtectionBackupRecoveryPointResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupRecoveryPointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupArmClientMockingExtension.GetDataProtectionBackupRecoveryPointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetDataProtectionBackupRecoveryPointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> Returns a <see cref="DataProtectionBackupRecoveryPointResource" /> object. </returns>
         public static DataProtectionBackupRecoveryPointResource GetDataProtectionBackupRecoveryPointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataProtectionBackupArmClientMockingExtension(client).GetDataProtectionBackupRecoveryPointResource(id);
+            return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupRecoveryPointResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// You can use <see cref="DataProtectionBackupJobResource.CreateResourceIdentifier" /> to create a <see cref="DataProtectionBackupJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupArmClientMockingExtension.GetDataProtectionBackupJobResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetDataProtectionBackupJobResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> Returns a <see cref="DataProtectionBackupJobResource" /> object. </returns>
         public static DataProtectionBackupJobResource GetDataProtectionBackupJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataProtectionBackupArmClientMockingExtension(client).GetDataProtectionBackupJobResource(id);
+            return GetMockableDataProtectionBackupArmClient(client).GetDataProtectionBackupJobResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// You can use <see cref="DeletedDataProtectionBackupInstanceResource.CreateResourceIdentifier" /> to create a <see cref="DeletedDataProtectionBackupInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupArmClientMockingExtension.GetDeletedDataProtectionBackupInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetDeletedDataProtectionBackupInstanceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> Returns a <see cref="DeletedDataProtectionBackupInstanceResource" /> object. </returns>
         public static DeletedDataProtectionBackupInstanceResource GetDeletedDataProtectionBackupInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataProtectionBackupArmClientMockingExtension(client).GetDeletedDataProtectionBackupInstanceResource(id);
+            return GetMockableDataProtectionBackupArmClient(client).GetDeletedDataProtectionBackupInstanceResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// You can use <see cref="ResourceGuardResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGuardResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupArmClientMockingExtension.GetResourceGuardResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetResourceGuardResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> Returns a <see cref="ResourceGuardResource" /> object. </returns>
         public static ResourceGuardResource GetResourceGuardResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataProtectionBackupArmClientMockingExtension(client).GetResourceGuardResource(id);
+            return GetMockableDataProtectionBackupArmClient(client).GetResourceGuardResource(id);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// You can use <see cref="ResourceGuardProxyBaseResource.CreateResourceIdentifier" /> to create a <see cref="ResourceGuardProxyBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupArmClientMockingExtension.GetResourceGuardProxyBaseResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupArmClient.GetResourceGuardProxyBaseResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -160,21 +160,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> Returns a <see cref="ResourceGuardProxyBaseResource" /> object. </returns>
         public static ResourceGuardProxyBaseResource GetResourceGuardProxyBaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataProtectionBackupArmClientMockingExtension(client).GetResourceGuardProxyBaseResource(id);
+            return GetMockableDataProtectionBackupArmClient(client).GetResourceGuardProxyBaseResource(id);
         }
 
         /// <summary>
         /// Gets a collection of DataProtectionBackupVaultResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupResourceGroupMockingExtension.GetDataProtectionBackupVaults()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDataProtectionBackupVaults()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataProtectionBackupVaultResources and their operations over a DataProtectionBackupVaultResource. </returns>
         public static DataProtectionBackupVaultCollection GetDataProtectionBackupVaults(this ResourceGroupResource resourceGroupResource)
         {
-            return GetDataProtectionBackupResourceGroupMockingExtension(resourceGroupResource).GetDataProtectionBackupVaults();
+            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDataProtectionBackupVaults();
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupResourceGroupMockingExtension.GetDataProtectionBackupVaultAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDataProtectionBackupVaultAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         [ForwardsClientCalls]
         public static async Task<Response<DataProtectionBackupVaultResource>> GetDataProtectionBackupVaultAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return await GetDataProtectionBackupResourceGroupMockingExtension(resourceGroupResource).GetDataProtectionBackupVaultAsync(vaultName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDataProtectionBackupVaultAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupResourceGroupMockingExtension.GetDataProtectionBackupVault(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetDataProtectionBackupVault(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -230,21 +230,21 @@ namespace Azure.ResourceManager.DataProtectionBackup
         [ForwardsClientCalls]
         public static Response<DataProtectionBackupVaultResource> GetDataProtectionBackupVault(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return GetDataProtectionBackupResourceGroupMockingExtension(resourceGroupResource).GetDataProtectionBackupVault(vaultName, cancellationToken);
+            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetDataProtectionBackupVault(vaultName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ResourceGuardResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupResourceGroupMockingExtension.GetResourceGuards()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetResourceGuards()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ResourceGuardResources and their operations over a ResourceGuardResource. </returns>
         public static ResourceGuardCollection GetResourceGuards(this ResourceGroupResource resourceGroupResource)
         {
-            return GetDataProtectionBackupResourceGroupMockingExtension(resourceGroupResource).GetResourceGuards();
+            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetResourceGuards();
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupResourceGroupMockingExtension.GetResourceGuardAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetResourceGuardAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         [ForwardsClientCalls]
         public static async Task<Response<ResourceGuardResource>> GetResourceGuardAsync(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
-            return await GetDataProtectionBackupResourceGroupMockingExtension(resourceGroupResource).GetResourceGuardAsync(resourceGuardsName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetResourceGuardAsync(resourceGuardsName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupResourceGroupMockingExtension.GetResourceGuard(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.GetResourceGuard(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         [ForwardsClientCalls]
         public static Response<ResourceGuardResource> GetResourceGuard(this ResourceGroupResource resourceGroupResource, string resourceGuardsName, CancellationToken cancellationToken = default)
         {
-            return GetDataProtectionBackupResourceGroupMockingExtension(resourceGroupResource).GetResourceGuard(resourceGuardsName, cancellationToken);
+            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).GetResourceGuard(resourceGuardsName, cancellationToken);
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupResourceGroupMockingExtension.CheckDataProtectionBackupVaultNameAvailability(AzureLocation,DataProtectionBackupNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.CheckDataProtectionBackupVaultNameAvailability(AzureLocation,DataProtectionBackupNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<DataProtectionBackupNameAvailabilityResult>> CheckDataProtectionBackupVaultNameAvailabilityAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataProtectionBackupNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetDataProtectionBackupResourceGroupMockingExtension(resourceGroupResource).CheckDataProtectionBackupVaultNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).CheckDataProtectionBackupVaultNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupResourceGroupMockingExtension.CheckDataProtectionBackupVaultNameAvailability(AzureLocation,DataProtectionBackupNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupResourceGroupResource.CheckDataProtectionBackupVaultNameAvailability(AzureLocation,DataProtectionBackupNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<DataProtectionBackupNameAvailabilityResult> CheckDataProtectionBackupVaultNameAvailability(this ResourceGroupResource resourceGroupResource, AzureLocation location, DataProtectionBackupNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetDataProtectionBackupResourceGroupMockingExtension(resourceGroupResource).CheckDataProtectionBackupVaultNameAvailability(location, content, cancellationToken);
+            return GetMockableDataProtectionBackupResourceGroupResource(resourceGroupResource).CheckDataProtectionBackupVaultNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupSubscriptionMockingExtension.GetDataProtectionBackupVaults(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupSubscriptionResource.GetDataProtectionBackupVaults(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An async collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataProtectionBackupVaultResource> GetDataProtectionBackupVaultsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetDataProtectionBackupSubscriptionMockingExtension(subscriptionResource).GetDataProtectionBackupVaultsAsync(cancellationToken);
+            return GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).GetDataProtectionBackupVaultsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupSubscriptionMockingExtension.GetDataProtectionBackupVaults(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupSubscriptionResource.GetDataProtectionBackupVaults(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> A collection of <see cref="DataProtectionBackupVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataProtectionBackupVaultResource> GetDataProtectionBackupVaults(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetDataProtectionBackupSubscriptionMockingExtension(subscriptionResource).GetDataProtectionBackupVaults(cancellationToken);
+            return GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).GetDataProtectionBackupVaults(cancellationToken);
         }
 
         /// <summary>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupSubscriptionMockingExtension.CheckDataProtectionBackupFeatureSupport(AzureLocation,BackupFeatureValidationContentBase,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupSubscriptionResource.CheckDataProtectionBackupFeatureSupport(AzureLocation,BackupFeatureValidationContentBase,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<BackupFeatureValidationResultBase>> CheckDataProtectionBackupFeatureSupportAsync(this SubscriptionResource subscriptionResource, AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
-            return await GetDataProtectionBackupSubscriptionMockingExtension(subscriptionResource).CheckDataProtectionBackupFeatureSupportAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).CheckDataProtectionBackupFeatureSupportAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupSubscriptionMockingExtension.CheckDataProtectionBackupFeatureSupport(AzureLocation,BackupFeatureValidationContentBase,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupSubscriptionResource.CheckDataProtectionBackupFeatureSupport(AzureLocation,BackupFeatureValidationContentBase,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<BackupFeatureValidationResultBase> CheckDataProtectionBackupFeatureSupport(this SubscriptionResource subscriptionResource, AzureLocation location, BackupFeatureValidationContentBase content, CancellationToken cancellationToken = default)
         {
-            return GetDataProtectionBackupSubscriptionMockingExtension(subscriptionResource).CheckDataProtectionBackupFeatureSupport(location, content, cancellationToken);
+            return GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).CheckDataProtectionBackupFeatureSupport(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupSubscriptionMockingExtension.GetResourceGuards(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupSubscriptionResource.GetResourceGuards(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> An async collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceGuardResource> GetResourceGuardsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetDataProtectionBackupSubscriptionMockingExtension(subscriptionResource).GetResourceGuardsAsync(cancellationToken);
+            return GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).GetResourceGuardsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataProtectionBackupSubscriptionMockingExtension.GetResourceGuards(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataProtectionBackupSubscriptionResource.GetResourceGuards(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <returns> A collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceGuardResource> GetResourceGuards(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetDataProtectionBackupSubscriptionMockingExtension(subscriptionResource).GetResourceGuards(cancellationToken);
+            return GetMockableDataProtectionBackupSubscriptionResource(subscriptionResource).GetResourceGuards(cancellationToken);
         }
     }
 }

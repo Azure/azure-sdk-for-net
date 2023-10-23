@@ -407,9 +407,9 @@ namespace Azure.ResourceManager.ArcScVmm
 }
 namespace Azure.ResourceManager.ArcScVmm.Mocking
 {
-    public partial class ArcScVmmArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableArcScVmmArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ArcScVmmArmClientMockingExtension() { }
+        protected MockableArcScVmmArmClient() { }
         public virtual Azure.ResourceManager.ArcScVmm.InventoryItemResource GetInventoryItemResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource GetScVmmAvailabilitySetResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ArcScVmm.ScVmmCloudResource GetScVmmCloudResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -418,9 +418,9 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         public virtual Azure.ResourceManager.ArcScVmm.ScVmmVirtualMachineTemplateResource GetScVmmVirtualMachineTemplateResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource GetScVmmVirtualNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ArcScVmmResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableArcScVmmResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ArcScVmmResourceGroupMockingExtension() { }
+        protected MockableArcScVmmResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource> GetScVmmAvailabilitySet(string availabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource>> GetScVmmAvailabilitySetAsync(string availabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetCollection GetScVmmAvailabilitySets() { throw null; }
@@ -440,9 +440,9 @@ namespace Azure.ResourceManager.ArcScVmm.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkResource>> GetScVmmVirtualNetworkAsync(string virtualNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArcScVmm.ScVmmVirtualNetworkCollection GetScVmmVirtualNetworks() { throw null; }
     }
-    public partial class ArcScVmmSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableArcScVmmSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ArcScVmmSubscriptionMockingExtension() { }
+        protected MockableArcScVmmSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource> GetScVmmAvailabilitySets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ArcScVmm.ScVmmAvailabilitySetResource> GetScVmmAvailabilitySetsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ArcScVmm.ScVmmCloudResource> GetScVmmClouds(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

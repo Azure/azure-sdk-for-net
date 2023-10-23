@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.ManagementPartner
 }
 namespace Azure.ResourceManager.ManagementPartner.Mocking
 {
-    public partial class ManagementPartnerArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableManagementPartnerArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ManagementPartnerArmClientMockingExtension() { }
+        protected MockableManagementPartnerArmClient() { }
         public virtual Azure.ResourceManager.ManagementPartner.PartnerResponseResource GetPartnerResponseResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ManagementPartnerTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableManagementPartnerTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected ManagementPartnerTenantMockingExtension() { }
+        protected MockableManagementPartnerTenantResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ManagementPartner.Models.OperationResponse> GetOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagementPartner.Models.OperationResponse> GetOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ManagementPartner.PartnerResponseResource> GetPartnerResponse(string partnerId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

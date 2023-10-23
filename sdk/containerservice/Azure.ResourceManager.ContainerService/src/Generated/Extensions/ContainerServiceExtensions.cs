@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ContainerService
     /// <summary> A class to add extension methods to Azure.ResourceManager.ContainerService. </summary>
     public static partial class ContainerServiceExtensions
     {
-        private static ContainerServiceArmClientMockingExtension GetContainerServiceArmClientMockingExtension(ArmClient client)
+        private static MockableContainerServiceArmClient GetMockableContainerServiceArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ContainerServiceArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableContainerServiceArmClient(client0));
         }
 
-        private static ContainerServiceResourceGroupMockingExtension GetContainerServiceResourceGroupMockingExtension(ArmResource resource)
+        private static MockableContainerServiceResourceGroupResource GetMockableContainerServiceResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ContainerServiceResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableContainerServiceResourceGroupResource(client, resource.Id));
         }
 
-        private static ContainerServiceSubscriptionMockingExtension GetContainerServiceSubscriptionMockingExtension(ArmResource resource)
+        private static MockableContainerServiceSubscriptionResource GetMockableContainerServiceSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ContainerServiceSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableContainerServiceSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerService
         /// You can use <see cref="OSOptionProfileResource.CreateResourceIdentifier" /> to create an <see cref="OSOptionProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceArmClientMockingExtension.GetOSOptionProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetOSOptionProfileResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="OSOptionProfileResource" /> object. </returns>
         public static OSOptionProfileResource GetOSOptionProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerServiceArmClientMockingExtension(client).GetOSOptionProfileResource(id);
+            return GetMockableContainerServiceArmClient(client).GetOSOptionProfileResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService
         /// You can use <see cref="ManagedClusterUpgradeProfileResource.CreateResourceIdentifier" /> to create a <see cref="ManagedClusterUpgradeProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceArmClientMockingExtension.GetManagedClusterUpgradeProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetManagedClusterUpgradeProfileResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="ManagedClusterUpgradeProfileResource" /> object. </returns>
         public static ManagedClusterUpgradeProfileResource GetManagedClusterUpgradeProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerServiceArmClientMockingExtension(client).GetManagedClusterUpgradeProfileResource(id);
+            return GetMockableContainerServiceArmClient(client).GetManagedClusterUpgradeProfileResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerService
         /// You can use <see cref="ContainerServiceManagedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceManagedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceArmClientMockingExtension.GetContainerServiceManagedClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceManagedClusterResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="ContainerServiceManagedClusterResource" /> object. </returns>
         public static ContainerServiceManagedClusterResource GetContainerServiceManagedClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerServiceArmClientMockingExtension(client).GetContainerServiceManagedClusterResource(id);
+            return GetMockableContainerServiceArmClient(client).GetContainerServiceManagedClusterResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService
         /// You can use <see cref="ContainerServiceMaintenanceConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceMaintenanceConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceArmClientMockingExtension.GetContainerServiceMaintenanceConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceMaintenanceConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="ContainerServiceMaintenanceConfigurationResource" /> object. </returns>
         public static ContainerServiceMaintenanceConfigurationResource GetContainerServiceMaintenanceConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerServiceArmClientMockingExtension(client).GetContainerServiceMaintenanceConfigurationResource(id);
+            return GetMockableContainerServiceArmClient(client).GetContainerServiceMaintenanceConfigurationResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerService
         /// You can use <see cref="ContainerServiceAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceAgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceArmClientMockingExtension.GetContainerServiceAgentPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceAgentPoolResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="ContainerServiceAgentPoolResource" /> object. </returns>
         public static ContainerServiceAgentPoolResource GetContainerServiceAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerServiceArmClientMockingExtension(client).GetContainerServiceAgentPoolResource(id);
+            return GetMockableContainerServiceArmClient(client).GetContainerServiceAgentPoolResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ContainerService
         /// You can use <see cref="AgentPoolUpgradeProfileResource.CreateResourceIdentifier" /> to create an <see cref="AgentPoolUpgradeProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceArmClientMockingExtension.GetAgentPoolUpgradeProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetAgentPoolUpgradeProfileResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="AgentPoolUpgradeProfileResource" /> object. </returns>
         public static AgentPoolUpgradeProfileResource GetAgentPoolUpgradeProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerServiceArmClientMockingExtension(client).GetAgentPoolUpgradeProfileResource(id);
+            return GetMockableContainerServiceArmClient(client).GetAgentPoolUpgradeProfileResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerService
         /// You can use <see cref="ContainerServicePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServicePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceArmClientMockingExtension.GetContainerServicePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServicePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="ContainerServicePrivateEndpointConnectionResource" /> object. </returns>
         public static ContainerServicePrivateEndpointConnectionResource GetContainerServicePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerServiceArmClientMockingExtension(client).GetContainerServicePrivateEndpointConnectionResource(id);
+            return GetMockableContainerServiceArmClient(client).GetContainerServicePrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerService
         /// You can use <see cref="AgentPoolSnapshotResource.CreateResourceIdentifier" /> to create an <see cref="AgentPoolSnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceArmClientMockingExtension.GetAgentPoolSnapshotResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetAgentPoolSnapshotResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="AgentPoolSnapshotResource" /> object. </returns>
         public static AgentPoolSnapshotResource GetAgentPoolSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerServiceArmClientMockingExtension(client).GetAgentPoolSnapshotResource(id);
+            return GetMockableContainerServiceArmClient(client).GetAgentPoolSnapshotResource(id);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerService
         /// You can use <see cref="ManagedClusterSnapshotResource.CreateResourceIdentifier" /> to create a <see cref="ManagedClusterSnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceArmClientMockingExtension.GetManagedClusterSnapshotResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetManagedClusterSnapshotResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="ManagedClusterSnapshotResource" /> object. </returns>
         public static ManagedClusterSnapshotResource GetManagedClusterSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerServiceArmClientMockingExtension(client).GetManagedClusterSnapshotResource(id);
+            return GetMockableContainerServiceArmClient(client).GetManagedClusterSnapshotResource(id);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ContainerService
         /// You can use <see cref="ContainerServiceTrustedAccessRoleBindingResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceTrustedAccessRoleBindingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceArmClientMockingExtension.GetContainerServiceTrustedAccessRoleBindingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceTrustedAccessRoleBindingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="ContainerServiceTrustedAccessRoleBindingResource" /> object. </returns>
         public static ContainerServiceTrustedAccessRoleBindingResource GetContainerServiceTrustedAccessRoleBindingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerServiceArmClientMockingExtension(client).GetContainerServiceTrustedAccessRoleBindingResource(id);
+            return GetMockableContainerServiceArmClient(client).GetContainerServiceTrustedAccessRoleBindingResource(id);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerService
         /// You can use <see cref="ContainerServiceFleetResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceArmClientMockingExtension.GetContainerServiceFleetResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceFleetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="ContainerServiceFleetResource" /> object. </returns>
         public static ContainerServiceFleetResource GetContainerServiceFleetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerServiceArmClientMockingExtension(client).GetContainerServiceFleetResource(id);
+            return GetMockableContainerServiceArmClient(client).GetContainerServiceFleetResource(id);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ContainerService
         /// You can use <see cref="ContainerServiceFleetMemberResource.CreateResourceIdentifier" /> to create a <see cref="ContainerServiceFleetMemberResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceArmClientMockingExtension.GetContainerServiceFleetMemberResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceArmClient.GetContainerServiceFleetMemberResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -224,21 +224,21 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="ContainerServiceFleetMemberResource" /> object. </returns>
         public static ContainerServiceFleetMemberResource GetContainerServiceFleetMemberResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerServiceArmClientMockingExtension(client).GetContainerServiceFleetMemberResource(id);
+            return GetMockableContainerServiceArmClient(client).GetContainerServiceFleetMemberResource(id);
         }
 
         /// <summary>
         /// Gets a collection of ContainerServiceManagedClusterResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceResourceGroupMockingExtension.GetContainerServiceManagedClusters()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetContainerServiceManagedClusters()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ContainerServiceManagedClusterResources and their operations over a ContainerServiceManagedClusterResource. </returns>
         public static ContainerServiceManagedClusterCollection GetContainerServiceManagedClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetContainerServiceManagedClusters();
+            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceManagedClusters();
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceResourceGroupMockingExtension.GetContainerServiceManagedClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetContainerServiceManagedClusterAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.ContainerService
         [ForwardsClientCalls]
         public static async Task<Response<ContainerServiceManagedClusterResource>> GetContainerServiceManagedClusterAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetContainerServiceManagedClusterAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceManagedClusterAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceResourceGroupMockingExtension.GetContainerServiceManagedCluster(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetContainerServiceManagedCluster(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -294,21 +294,21 @@ namespace Azure.ResourceManager.ContainerService
         [ForwardsClientCalls]
         public static Response<ContainerServiceManagedClusterResource> GetContainerServiceManagedCluster(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetContainerServiceManagedCluster(resourceName, cancellationToken);
+            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceManagedCluster(resourceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of AgentPoolSnapshotResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceResourceGroupMockingExtension.GetAgentPoolSnapshots()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetAgentPoolSnapshots()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AgentPoolSnapshotResources and their operations over a AgentPoolSnapshotResource. </returns>
         public static AgentPoolSnapshotCollection GetAgentPoolSnapshots(this ResourceGroupResource resourceGroupResource)
         {
-            return GetContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetAgentPoolSnapshots();
+            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetAgentPoolSnapshots();
         }
 
         /// <summary>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceResourceGroupMockingExtension.GetAgentPoolSnapshotAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetAgentPoolSnapshotAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ContainerService
         [ForwardsClientCalls]
         public static async Task<Response<AgentPoolSnapshotResource>> GetAgentPoolSnapshotAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetAgentPoolSnapshotAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetAgentPoolSnapshotAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceResourceGroupMockingExtension.GetAgentPoolSnapshot(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetAgentPoolSnapshot(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -364,21 +364,21 @@ namespace Azure.ResourceManager.ContainerService
         [ForwardsClientCalls]
         public static Response<AgentPoolSnapshotResource> GetAgentPoolSnapshot(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetAgentPoolSnapshot(resourceName, cancellationToken);
+            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetAgentPoolSnapshot(resourceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ManagedClusterSnapshotResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceResourceGroupMockingExtension.GetManagedClusterSnapshots()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetManagedClusterSnapshots()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ManagedClusterSnapshotResources and their operations over a ManagedClusterSnapshotResource. </returns>
         public static ManagedClusterSnapshotCollection GetManagedClusterSnapshots(this ResourceGroupResource resourceGroupResource)
         {
-            return GetContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetManagedClusterSnapshots();
+            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetManagedClusterSnapshots();
         }
 
         /// <summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceResourceGroupMockingExtension.GetManagedClusterSnapshotAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetManagedClusterSnapshotAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ContainerService
         [ForwardsClientCalls]
         public static async Task<Response<ManagedClusterSnapshotResource>> GetManagedClusterSnapshotAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetManagedClusterSnapshotAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetManagedClusterSnapshotAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceResourceGroupMockingExtension.GetManagedClusterSnapshot(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetManagedClusterSnapshot(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -434,21 +434,21 @@ namespace Azure.ResourceManager.ContainerService
         [ForwardsClientCalls]
         public static Response<ManagedClusterSnapshotResource> GetManagedClusterSnapshot(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetManagedClusterSnapshot(resourceName, cancellationToken);
+            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetManagedClusterSnapshot(resourceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ContainerServiceFleetResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceResourceGroupMockingExtension.GetContainerServiceFleets()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetContainerServiceFleets()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ContainerServiceFleetResources and their operations over a ContainerServiceFleetResource. </returns>
         public static ContainerServiceFleetCollection GetContainerServiceFleets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetContainerServiceFleets();
+            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceFleets();
         }
 
         /// <summary>
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceResourceGroupMockingExtension.GetContainerServiceFleetAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetContainerServiceFleetAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.ContainerService
         [ForwardsClientCalls]
         public static async Task<Response<ContainerServiceFleetResource>> GetContainerServiceFleetAsync(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
         {
-            return await GetContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetContainerServiceFleetAsync(fleetName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceFleetAsync(fleetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceResourceGroupMockingExtension.GetContainerServiceFleet(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceResourceGroupResource.GetContainerServiceFleet(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.ContainerService
         [ForwardsClientCalls]
         public static Response<ContainerServiceFleetResource> GetContainerServiceFleet(this ResourceGroupResource resourceGroupResource, string fleetName, CancellationToken cancellationToken = default)
         {
-            return GetContainerServiceResourceGroupMockingExtension(resourceGroupResource).GetContainerServiceFleet(fleetName, cancellationToken);
+            return GetMockableContainerServiceResourceGroupResource(resourceGroupResource).GetContainerServiceFleet(fleetName, cancellationToken);
         }
 
         /// <summary>
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceSubscriptionMockingExtension.GetContainerServiceManagedClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceManagedClusters(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetContainerServiceSubscriptionMockingExtension(subscriptionResource).GetContainerServiceManagedClustersAsync(cancellationToken);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceManagedClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceSubscriptionMockingExtension.GetContainerServiceManagedClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceManagedClusters(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="ContainerServiceManagedClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerServiceManagedClusterResource> GetContainerServiceManagedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetContainerServiceSubscriptionMockingExtension(subscriptionResource).GetContainerServiceManagedClusters(cancellationToken);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceManagedClusters(cancellationToken);
         }
 
         /// <summary>
@@ -571,7 +571,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceSubscriptionMockingExtension.GetAgentPoolSnapshots(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AgentPoolSnapshotResource> GetAgentPoolSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetContainerServiceSubscriptionMockingExtension(subscriptionResource).GetAgentPoolSnapshotsAsync(cancellationToken);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetAgentPoolSnapshotsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceSubscriptionMockingExtension.GetAgentPoolSnapshots(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetAgentPoolSnapshots(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="AgentPoolSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AgentPoolSnapshotResource> GetAgentPoolSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetContainerServiceSubscriptionMockingExtension(subscriptionResource).GetAgentPoolSnapshots(cancellationToken);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetAgentPoolSnapshots(cancellationToken);
         }
 
         /// <summary>
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceSubscriptionMockingExtension.GetManagedClusterSnapshots(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetManagedClusterSnapshots(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="ManagedClusterSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedClusterSnapshotResource> GetManagedClusterSnapshotsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetContainerServiceSubscriptionMockingExtension(subscriptionResource).GetManagedClusterSnapshotsAsync(cancellationToken);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetManagedClusterSnapshotsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceSubscriptionMockingExtension.GetManagedClusterSnapshots(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetManagedClusterSnapshots(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="ManagedClusterSnapshotResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedClusterSnapshotResource> GetManagedClusterSnapshots(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetContainerServiceSubscriptionMockingExtension(subscriptionResource).GetManagedClusterSnapshots(cancellationToken);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetManagedClusterSnapshots(cancellationToken);
         }
 
         /// <summary>
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceSubscriptionMockingExtension.GetTrustedAccessRoles(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="ContainerServiceTrustedAccessRole" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRolesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetContainerServiceSubscriptionMockingExtension(subscriptionResource).GetTrustedAccessRolesAsync(location, cancellationToken);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetTrustedAccessRolesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceSubscriptionMockingExtension.GetTrustedAccessRoles(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetTrustedAccessRoles(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="ContainerServiceTrustedAccessRole" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerServiceTrustedAccessRole> GetTrustedAccessRoles(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetContainerServiceSubscriptionMockingExtension(subscriptionResource).GetTrustedAccessRoles(location, cancellationToken);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetTrustedAccessRoles(location, cancellationToken);
         }
 
         /// <summary>
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceSubscriptionMockingExtension.GetContainerServiceFleets(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceFleets(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> An async collection of <see cref="ContainerServiceFleetResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerServiceFleetResource> GetContainerServiceFleetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetContainerServiceSubscriptionMockingExtension(subscriptionResource).GetContainerServiceFleetsAsync(cancellationToken);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceFleetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerServiceSubscriptionMockingExtension.GetContainerServiceFleets(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerServiceSubscriptionResource.GetContainerServiceFleets(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -756,7 +756,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> A collection of <see cref="ContainerServiceFleetResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerServiceFleetResource> GetContainerServiceFleets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetContainerServiceSubscriptionMockingExtension(subscriptionResource).GetContainerServiceFleets(cancellationToken);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetContainerServiceFleets(cancellationToken);
         }
     }
 }

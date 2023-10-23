@@ -94,23 +94,23 @@ namespace Azure.ResourceManager.ContainerInstance
 }
 namespace Azure.ResourceManager.ContainerInstance.Mocking
 {
-    public partial class ContainerInstanceArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableContainerInstanceArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ContainerInstanceArmClientMockingExtension() { }
+        protected MockableContainerInstanceArmClient() { }
         public virtual Azure.ResourceManager.ContainerInstance.ContainerGroupResource GetContainerGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ContainerInstanceResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableContainerInstanceResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ContainerInstanceResourceGroupMockingExtension() { }
+        protected MockableContainerInstanceResourceGroupResource() { }
         public virtual Azure.ResourceManager.ArmOperation DeleteSubnetServiceAssociationLink(Azure.WaitUntil waitUntil, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteSubnetServiceAssociationLinkAsync(Azure.WaitUntil waitUntil, string virtualNetworkName, string subnetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupResource> GetContainerGroup(string containerGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ContainerInstance.ContainerGroupResource>> GetContainerGroupAsync(string containerGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ContainerInstance.ContainerGroupCollection GetContainerGroups() { throw null; }
     }
-    public partial class ContainerInstanceSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableContainerInstanceSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ContainerInstanceSubscriptionMockingExtension() { }
+        protected MockableContainerInstanceSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.CachedImages> GetCachedImagesWithLocation(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ContainerInstance.Models.CachedImages> GetCachedImagesWithLocationAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ContainerInstance.Models.ContainerCapabilities> GetCapabilitiesWithLocation(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -106,22 +106,22 @@ namespace Azure.ResourceManager.Attestation
 }
 namespace Azure.ResourceManager.Attestation.Mocking
 {
-    public partial class AttestationArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAttestationArmClient : Azure.ResourceManager.ArmResource
     {
-        protected AttestationArmClientMockingExtension() { }
+        protected MockableAttestationArmClient() { }
         public virtual Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionResource GetAttestationPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Attestation.AttestationProviderResource GetAttestationProviderResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class AttestationResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAttestationResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected AttestationResourceGroupMockingExtension() { }
+        protected MockableAttestationResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProvider(string providerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource>> GetAttestationProviderAsync(string providerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Attestation.AttestationProviderCollection GetAttestationProviders() { throw null; }
     }
-    public partial class AttestationSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAttestationSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected AttestationSubscriptionMockingExtension() { }
+        protected MockableAttestationSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProviders(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProvidersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProvidersByDefaultProvider(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

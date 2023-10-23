@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.DeviceProvisioningServices. </summary>
     public static partial class DeviceProvisioningServicesExtensions
     {
-        private static DeviceProvisioningServicesArmClientMockingExtension GetDeviceProvisioningServicesArmClientMockingExtension(ArmClient client)
+        private static MockableDeviceProvisioningServicesArmClient GetMockableDeviceProvisioningServicesArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new DeviceProvisioningServicesArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableDeviceProvisioningServicesArmClient(client0));
         }
 
-        private static DeviceProvisioningServicesResourceGroupMockingExtension GetDeviceProvisioningServicesResourceGroupMockingExtension(ArmResource resource)
+        private static MockableDeviceProvisioningServicesResourceGroupResource GetMockableDeviceProvisioningServicesResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DeviceProvisioningServicesResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDeviceProvisioningServicesResourceGroupResource(client, resource.Id));
         }
 
-        private static DeviceProvisioningServicesSubscriptionMockingExtension GetDeviceProvisioningServicesSubscriptionMockingExtension(ArmResource resource)
+        private static MockableDeviceProvisioningServicesSubscriptionResource GetMockableDeviceProvisioningServicesSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DeviceProvisioningServicesSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDeviceProvisioningServicesSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// You can use <see cref="DeviceProvisioningServicesCertificateResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DeviceProvisioningServicesArmClientMockingExtension.GetDeviceProvisioningServicesCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesArmClient.GetDeviceProvisioningServicesCertificateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> Returns a <see cref="DeviceProvisioningServicesCertificateResource" /> object. </returns>
         public static DeviceProvisioningServicesCertificateResource GetDeviceProvisioningServicesCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDeviceProvisioningServicesArmClientMockingExtension(client).GetDeviceProvisioningServicesCertificateResource(id);
+            return GetMockableDeviceProvisioningServicesArmClient(client).GetDeviceProvisioningServicesCertificateResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// You can use <see cref="DeviceProvisioningServiceResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DeviceProvisioningServicesArmClientMockingExtension.GetDeviceProvisioningServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesArmClient.GetDeviceProvisioningServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> Returns a <see cref="DeviceProvisioningServiceResource" /> object. </returns>
         public static DeviceProvisioningServiceResource GetDeviceProvisioningServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDeviceProvisioningServicesArmClientMockingExtension(client).GetDeviceProvisioningServiceResource(id);
+            return GetMockableDeviceProvisioningServicesArmClient(client).GetDeviceProvisioningServiceResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// You can use <see cref="DeviceProvisioningServicesPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DeviceProvisioningServicesArmClientMockingExtension.GetDeviceProvisioningServicesPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesArmClient.GetDeviceProvisioningServicesPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateLinkResource" /> object. </returns>
         public static DeviceProvisioningServicesPrivateLinkResource GetDeviceProvisioningServicesPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDeviceProvisioningServicesArmClientMockingExtension(client).GetDeviceProvisioningServicesPrivateLinkResource(id);
+            return GetMockableDeviceProvisioningServicesArmClient(client).GetDeviceProvisioningServicesPrivateLinkResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// You can use <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DeviceProvisioningServicesArmClientMockingExtension.GetDeviceProvisioningServicesPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesArmClient.GetDeviceProvisioningServicesPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,21 +96,21 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> Returns a <see cref="DeviceProvisioningServicesPrivateEndpointConnectionResource" /> object. </returns>
         public static DeviceProvisioningServicesPrivateEndpointConnectionResource GetDeviceProvisioningServicesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDeviceProvisioningServicesArmClientMockingExtension(client).GetDeviceProvisioningServicesPrivateEndpointConnectionResource(id);
+            return GetMockableDeviceProvisioningServicesArmClient(client).GetDeviceProvisioningServicesPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
         /// Gets a collection of DeviceProvisioningServiceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DeviceProvisioningServicesResourceGroupMockingExtension.GetDeviceProvisioningServices()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesResourceGroupResource.GetDeviceProvisioningServices()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeviceProvisioningServiceResources and their operations over a DeviceProvisioningServiceResource. </returns>
         public static DeviceProvisioningServiceCollection GetDeviceProvisioningServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetDeviceProvisioningServicesResourceGroupMockingExtension(resourceGroupResource).GetDeviceProvisioningServices();
+            return GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GetDeviceProvisioningServices();
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DeviceProvisioningServicesResourceGroupMockingExtension.GetDeviceProvisioningServiceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesResourceGroupResource.GetDeviceProvisioningServiceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         [ForwardsClientCalls]
         public static async Task<Response<DeviceProvisioningServiceResource>> GetDeviceProvisioningServiceAsync(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            return await GetDeviceProvisioningServicesResourceGroupMockingExtension(resourceGroupResource).GetDeviceProvisioningServiceAsync(provisioningServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GetDeviceProvisioningServiceAsync(provisioningServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DeviceProvisioningServicesResourceGroupMockingExtension.GetDeviceProvisioningService(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesResourceGroupResource.GetDeviceProvisioningService(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         [ForwardsClientCalls]
         public static Response<DeviceProvisioningServiceResource> GetDeviceProvisioningService(this ResourceGroupResource resourceGroupResource, string provisioningServiceName, CancellationToken cancellationToken = default)
         {
-            return GetDeviceProvisioningServicesResourceGroupMockingExtension(resourceGroupResource).GetDeviceProvisioningService(provisioningServiceName, cancellationToken);
+            return GetMockableDeviceProvisioningServicesResourceGroupResource(resourceGroupResource).GetDeviceProvisioningService(provisioningServiceName, cancellationToken);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DeviceProvisioningServicesSubscriptionMockingExtension.GetDeviceProvisioningServices(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesSubscriptionResource.GetDeviceProvisioningServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> An async collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetDeviceProvisioningServicesSubscriptionMockingExtension(subscriptionResource).GetDeviceProvisioningServicesAsync(cancellationToken);
+            return GetMockableDeviceProvisioningServicesSubscriptionResource(subscriptionResource).GetDeviceProvisioningServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DeviceProvisioningServicesSubscriptionMockingExtension.GetDeviceProvisioningServices(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesSubscriptionResource.GetDeviceProvisioningServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <returns> A collection of <see cref="DeviceProvisioningServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeviceProvisioningServiceResource> GetDeviceProvisioningServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetDeviceProvisioningServicesSubscriptionMockingExtension(subscriptionResource).GetDeviceProvisioningServices(cancellationToken);
+            return GetMockableDeviceProvisioningServicesSubscriptionResource(subscriptionResource).GetDeviceProvisioningServices(cancellationToken);
         }
 
         /// <summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DeviceProvisioningServicesSubscriptionMockingExtension.CheckDeviceProvisioningServicesNameAvailability(DeviceProvisioningServicesNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesSubscriptionResource.CheckDeviceProvisioningServicesNameAvailability(DeviceProvisioningServicesNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<DeviceProvisioningServicesNameAvailabilityResult>> CheckDeviceProvisioningServicesNameAvailabilityAsync(this SubscriptionResource subscriptionResource, DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetDeviceProvisioningServicesSubscriptionMockingExtension(subscriptionResource).CheckDeviceProvisioningServicesNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDeviceProvisioningServicesSubscriptionResource(subscriptionResource).CheckDeviceProvisioningServicesNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DeviceProvisioningServicesSubscriptionMockingExtension.CheckDeviceProvisioningServicesNameAvailability(DeviceProvisioningServicesNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDeviceProvisioningServicesSubscriptionResource.CheckDeviceProvisioningServicesNameAvailability(DeviceProvisioningServicesNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<DeviceProvisioningServicesNameAvailabilityResult> CheckDeviceProvisioningServicesNameAvailability(this SubscriptionResource subscriptionResource, DeviceProvisioningServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetDeviceProvisioningServicesSubscriptionMockingExtension(subscriptionResource).CheckDeviceProvisioningServicesNameAvailability(content, cancellationToken);
+            return GetMockableDeviceProvisioningServicesSubscriptionResource(subscriptionResource).CheckDeviceProvisioningServicesNameAvailability(content, cancellationToken);
         }
     }
 }

@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.Quota
 }
 namespace Azure.ResourceManager.Quota.Mocking
 {
-    public partial class QuotaArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableQuotaArmClient : Azure.ResourceManager.ArmResource
     {
-        protected QuotaArmClientMockingExtension() { }
+        protected MockableQuotaArmClient() { }
         public virtual Azure.Response<Azure.ResourceManager.Quota.CurrentQuotaLimitBaseResource> GetCurrentQuotaLimitBase(Azure.Core.ResourceIdentifier scope, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Quota.CurrentQuotaLimitBaseResource>> GetCurrentQuotaLimitBaseAsync(Azure.Core.ResourceIdentifier scope, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Quota.CurrentQuotaLimitBaseResource GetCurrentQuotaLimitBaseResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -134,9 +134,9 @@ namespace Azure.ResourceManager.Quota.Mocking
         public virtual Azure.ResourceManager.Quota.QuotaRequestDetailResource GetQuotaRequestDetailResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Quota.QuotaRequestDetailCollection GetQuotaRequestDetails(Azure.Core.ResourceIdentifier scope) { throw null; }
     }
-    public partial class QuotaTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableQuotaTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected QuotaTenantMockingExtension() { }
+        protected MockableQuotaTenantResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Quota.Models.QuotaOperationResult> GetQuotaOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Quota.Models.QuotaOperationResult> GetQuotaOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

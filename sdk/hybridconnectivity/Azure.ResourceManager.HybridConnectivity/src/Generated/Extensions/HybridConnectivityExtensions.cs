@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.HybridConnectivity
     /// <summary> A class to add extension methods to Azure.ResourceManager.HybridConnectivity. </summary>
     public static partial class HybridConnectivityExtensions
     {
-        private static HybridConnectivityArmClientMockingExtension GetHybridConnectivityArmClientMockingExtension(ArmClient client)
+        private static MockableHybridConnectivityArmClient GetMockableHybridConnectivityArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new HybridConnectivityArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableHybridConnectivityArmClient(client0));
         }
 
         /// <summary>
         /// Gets a collection of EndpointResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridConnectivityArmClientMockingExtension.GetEndpointResources(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetEndpointResources(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <returns> An object representing collection of EndpointResources and their operations over a EndpointResource. </returns>
         public static EndpointResourceCollection GetEndpointResources(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetHybridConnectivityArmClientMockingExtension(client).GetEndpointResources(scope);
+            return GetMockableHybridConnectivityArmClient(client).GetEndpointResources(scope);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridConnectivityArmClientMockingExtension.GetEndpointResourceAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetEndpointResourceAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         [ForwardsClientCalls]
         public static async Task<Response<EndpointResource>> GetEndpointResourceAsync(this ArmClient client, ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
         {
-            return await GetHybridConnectivityArmClientMockingExtension(client).GetEndpointResourceAsync(scope, endpointName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridConnectivityArmClient(client).GetEndpointResourceAsync(scope, endpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridConnectivityArmClientMockingExtension.GetEndpointResource(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetEndpointResource(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         [ForwardsClientCalls]
         public static Response<EndpointResource> GetEndpointResource(this ArmClient client, ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
         {
-            return GetHybridConnectivityArmClientMockingExtension(client).GetEndpointResource(scope, endpointName, cancellationToken);
+            return GetMockableHybridConnectivityArmClient(client).GetEndpointResource(scope, endpointName, cancellationToken);
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// You can use <see cref="EndpointResource.CreateResourceIdentifier" /> to create an <see cref="EndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="HybridConnectivityArmClientMockingExtension.GetEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridConnectivityArmClient.GetEndpointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <returns> Returns a <see cref="EndpointResource" /> object. </returns>
         public static EndpointResource GetEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetHybridConnectivityArmClientMockingExtension(client).GetEndpointResource(id);
+            return GetMockableHybridConnectivityArmClient(client).GetEndpointResource(id);
         }
     }
 }

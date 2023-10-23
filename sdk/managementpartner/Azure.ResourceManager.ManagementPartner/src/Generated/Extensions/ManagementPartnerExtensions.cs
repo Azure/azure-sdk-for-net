@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.ManagementPartner
     /// <summary> A class to add extension methods to Azure.ResourceManager.ManagementPartner. </summary>
     public static partial class ManagementPartnerExtensions
     {
-        private static ManagementPartnerArmClientMockingExtension GetManagementPartnerArmClientMockingExtension(ArmClient client)
+        private static MockableManagementPartnerArmClient GetMockableManagementPartnerArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ManagementPartnerArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableManagementPartnerArmClient(client0));
         }
 
-        private static ManagementPartnerTenantMockingExtension GetManagementPartnerTenantMockingExtension(ArmResource resource)
+        private static MockableManagementPartnerTenantResource GetMockableManagementPartnerTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ManagementPartnerTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableManagementPartnerTenantResource(client, resource.Id));
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// You can use <see cref="PartnerResponseResource.CreateResourceIdentifier" /> to create a <see cref="PartnerResponseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagementPartnerArmClientMockingExtension.GetPartnerResponseResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagementPartnerArmClient.GetPartnerResponseResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -43,21 +43,21 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <returns> Returns a <see cref="PartnerResponseResource" /> object. </returns>
         public static PartnerResponseResource GetPartnerResponseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetManagementPartnerArmClientMockingExtension(client).GetPartnerResponseResource(id);
+            return GetMockableManagementPartnerArmClient(client).GetPartnerResponseResource(id);
         }
 
         /// <summary>
         /// Gets a collection of PartnerResponseResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagementPartnerTenantMockingExtension.GetPartnerResponses()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagementPartnerTenantResource.GetPartnerResponses()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PartnerResponseResources and their operations over a PartnerResponseResource. </returns>
         public static PartnerResponseCollection GetPartnerResponses(this TenantResource tenantResource)
         {
-            return GetManagementPartnerTenantMockingExtension(tenantResource).GetPartnerResponses();
+            return GetMockableManagementPartnerTenantResource(tenantResource).GetPartnerResponses();
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagementPartnerTenantMockingExtension.GetPartnerResponseAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagementPartnerTenantResource.GetPartnerResponseAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.ManagementPartner
         [ForwardsClientCalls]
         public static async Task<Response<PartnerResponseResource>> GetPartnerResponseAsync(this TenantResource tenantResource, string partnerId, CancellationToken cancellationToken = default)
         {
-            return await GetManagementPartnerTenantMockingExtension(tenantResource).GetPartnerResponseAsync(partnerId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagementPartnerTenantResource(tenantResource).GetPartnerResponseAsync(partnerId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagementPartnerTenantMockingExtension.GetPartnerResponse(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagementPartnerTenantResource.GetPartnerResponse(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ManagementPartner
         [ForwardsClientCalls]
         public static Response<PartnerResponseResource> GetPartnerResponse(this TenantResource tenantResource, string partnerId, CancellationToken cancellationToken = default)
         {
-            return GetManagementPartnerTenantMockingExtension(tenantResource).GetPartnerResponse(partnerId, cancellationToken);
+            return GetMockableManagementPartnerTenantResource(tenantResource).GetPartnerResponse(partnerId, cancellationToken);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagementPartnerTenantMockingExtension.GetOperations(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagementPartnerTenantResource.GetOperations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <returns> An async collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationResponse> GetOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetManagementPartnerTenantMockingExtension(tenantResource).GetOperationsAsync(cancellationToken);
+            return GetMockableManagementPartnerTenantResource(tenantResource).GetOperationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagementPartnerTenantMockingExtension.GetOperations(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagementPartnerTenantResource.GetOperations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <returns> A collection of <see cref="OperationResponse" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationResponse> GetOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetManagementPartnerTenantMockingExtension(tenantResource).GetOperations(cancellationToken);
+            return GetMockableManagementPartnerTenantResource(tenantResource).GetOperations(cancellationToken);
         }
     }
 }

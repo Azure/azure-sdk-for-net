@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.ArcScVmm
     /// <summary> A class to add extension methods to Azure.ResourceManager.ArcScVmm. </summary>
     public static partial class ArcScVmmExtensions
     {
-        private static ArcScVmmArmClientMockingExtension GetArcScVmmArmClientMockingExtension(ArmClient client)
+        private static MockableArcScVmmArmClient GetMockableArcScVmmArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ArcScVmmArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableArcScVmmArmClient(client0));
         }
 
-        private static ArcScVmmResourceGroupMockingExtension GetArcScVmmResourceGroupMockingExtension(ArmResource resource)
+        private static MockableArcScVmmResourceGroupResource GetMockableArcScVmmResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ArcScVmmResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableArcScVmmResourceGroupResource(client, resource.Id));
         }
 
-        private static ArcScVmmSubscriptionMockingExtension GetArcScVmmSubscriptionMockingExtension(ArmResource resource)
+        private static MockableArcScVmmSubscriptionResource GetMockableArcScVmmSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ArcScVmmSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableArcScVmmSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// You can use <see cref="ScVmmServerResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmServerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmArmClientMockingExtension.GetScVmmServerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetScVmmServerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> Returns a <see cref="ScVmmServerResource" /> object. </returns>
         public static ScVmmServerResource GetScVmmServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetArcScVmmArmClientMockingExtension(client).GetScVmmServerResource(id);
+            return GetMockableArcScVmmArmClient(client).GetScVmmServerResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// You can use <see cref="ScVmmCloudResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmCloudResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmArmClientMockingExtension.GetScVmmCloudResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetScVmmCloudResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> Returns a <see cref="ScVmmCloudResource" /> object. </returns>
         public static ScVmmCloudResource GetScVmmCloudResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetArcScVmmArmClientMockingExtension(client).GetScVmmCloudResource(id);
+            return GetMockableArcScVmmArmClient(client).GetScVmmCloudResource(id);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// You can use <see cref="ScVmmVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmArmClientMockingExtension.GetScVmmVirtualNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetScVmmVirtualNetworkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> Returns a <see cref="ScVmmVirtualNetworkResource" /> object. </returns>
         public static ScVmmVirtualNetworkResource GetScVmmVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetArcScVmmArmClientMockingExtension(client).GetScVmmVirtualNetworkResource(id);
+            return GetMockableArcScVmmArmClient(client).GetScVmmVirtualNetworkResource(id);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// You can use <see cref="ScVmmVirtualMachineResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmVirtualMachineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmArmClientMockingExtension.GetScVmmVirtualMachineResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetScVmmVirtualMachineResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> Returns a <see cref="ScVmmVirtualMachineResource" /> object. </returns>
         public static ScVmmVirtualMachineResource GetScVmmVirtualMachineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetArcScVmmArmClientMockingExtension(client).GetScVmmVirtualMachineResource(id);
+            return GetMockableArcScVmmArmClient(client).GetScVmmVirtualMachineResource(id);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// You can use <see cref="ScVmmVirtualMachineTemplateResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmVirtualMachineTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmArmClientMockingExtension.GetScVmmVirtualMachineTemplateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetScVmmVirtualMachineTemplateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> Returns a <see cref="ScVmmVirtualMachineTemplateResource" /> object. </returns>
         public static ScVmmVirtualMachineTemplateResource GetScVmmVirtualMachineTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetArcScVmmArmClientMockingExtension(client).GetScVmmVirtualMachineTemplateResource(id);
+            return GetMockableArcScVmmArmClient(client).GetScVmmVirtualMachineTemplateResource(id);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// You can use <see cref="ScVmmAvailabilitySetResource.CreateResourceIdentifier" /> to create a <see cref="ScVmmAvailabilitySetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmArmClientMockingExtension.GetScVmmAvailabilitySetResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetScVmmAvailabilitySetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> Returns a <see cref="ScVmmAvailabilitySetResource" /> object. </returns>
         public static ScVmmAvailabilitySetResource GetScVmmAvailabilitySetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetArcScVmmArmClientMockingExtension(client).GetScVmmAvailabilitySetResource(id);
+            return GetMockableArcScVmmArmClient(client).GetScVmmAvailabilitySetResource(id);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// You can use <see cref="InventoryItemResource.CreateResourceIdentifier" /> to create an <see cref="InventoryItemResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmArmClientMockingExtension.GetInventoryItemResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmArmClient.GetInventoryItemResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -143,21 +143,21 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> Returns a <see cref="InventoryItemResource" /> object. </returns>
         public static InventoryItemResource GetInventoryItemResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetArcScVmmArmClientMockingExtension(client).GetInventoryItemResource(id);
+            return GetMockableArcScVmmArmClient(client).GetInventoryItemResource(id);
         }
 
         /// <summary>
         /// Gets a collection of ScVmmServerResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmServers()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmServers()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ScVmmServerResources and their operations over a ScVmmServerResource. </returns>
         public static ScVmmServerCollection GetScVmmServers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmServers();
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmServers();
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmServerAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmServerAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmServerResource>> GetScVmmServerAsync(this ResourceGroupResource resourceGroupResource, string vmmServerName, CancellationToken cancellationToken = default)
         {
-            return await GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmServerAsync(vmmServerName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmServerAsync(vmmServerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmServer(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmServer(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -213,21 +213,21 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static Response<ScVmmServerResource> GetScVmmServer(this ResourceGroupResource resourceGroupResource, string vmmServerName, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmServer(vmmServerName, cancellationToken);
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmServer(vmmServerName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ScVmmCloudResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmClouds()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmClouds()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ScVmmCloudResources and their operations over a ScVmmCloudResource. </returns>
         public static ScVmmCloudCollection GetScVmmClouds(this ResourceGroupResource resourceGroupResource)
         {
-            return GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmClouds();
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmClouds();
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmCloudAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmCloudAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmCloudResource>> GetScVmmCloudAsync(this ResourceGroupResource resourceGroupResource, string cloudName, CancellationToken cancellationToken = default)
         {
-            return await GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmCloudAsync(cloudName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmCloudAsync(cloudName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmCloud(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmCloud(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -283,21 +283,21 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static Response<ScVmmCloudResource> GetScVmmCloud(this ResourceGroupResource resourceGroupResource, string cloudName, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmCloud(cloudName, cancellationToken);
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmCloud(cloudName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ScVmmVirtualNetworkResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmVirtualNetworks()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmVirtualNetworks()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ScVmmVirtualNetworkResources and their operations over a ScVmmVirtualNetworkResource. </returns>
         public static ScVmmVirtualNetworkCollection GetScVmmVirtualNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmVirtualNetworks();
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualNetworks();
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmVirtualNetworkAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmVirtualNetworkAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmVirtualNetworkResource>> GetScVmmVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            return await GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmVirtualNetworkAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualNetworkAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmVirtualNetwork(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmVirtualNetwork(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -353,21 +353,21 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static Response<ScVmmVirtualNetworkResource> GetScVmmVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmVirtualNetwork(virtualNetworkName, cancellationToken);
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualNetwork(virtualNetworkName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ScVmmVirtualMachineResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmVirtualMachines()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmVirtualMachines()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ScVmmVirtualMachineResources and their operations over a ScVmmVirtualMachineResource. </returns>
         public static ScVmmVirtualMachineCollection GetScVmmVirtualMachines(this ResourceGroupResource resourceGroupResource)
         {
-            return GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmVirtualMachines();
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualMachines();
         }
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmVirtualMachineAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmVirtualMachineAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmVirtualMachineResource>> GetScVmmVirtualMachineAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return await GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmVirtualMachineAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualMachineAsync(virtualMachineName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmVirtualMachine(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmVirtualMachine(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -423,21 +423,21 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static Response<ScVmmVirtualMachineResource> GetScVmmVirtualMachine(this ResourceGroupResource resourceGroupResource, string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmVirtualMachine(virtualMachineName, cancellationToken);
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualMachine(virtualMachineName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ScVmmVirtualMachineTemplateResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmVirtualMachineTemplates()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmVirtualMachineTemplates()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ScVmmVirtualMachineTemplateResources and their operations over a ScVmmVirtualMachineTemplateResource. </returns>
         public static ScVmmVirtualMachineTemplateCollection GetScVmmVirtualMachineTemplates(this ResourceGroupResource resourceGroupResource)
         {
-            return GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmVirtualMachineTemplates();
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualMachineTemplates();
         }
 
         /// <summary>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmVirtualMachineTemplateAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmVirtualMachineTemplateAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmVirtualMachineTemplateResource>> GetScVmmVirtualMachineTemplateAsync(this ResourceGroupResource resourceGroupResource, string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            return await GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmVirtualMachineTemplateAsync(virtualMachineTemplateName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualMachineTemplateAsync(virtualMachineTemplateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmVirtualMachineTemplate(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmVirtualMachineTemplate(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -493,21 +493,21 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static Response<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplate(this ResourceGroupResource resourceGroupResource, string virtualMachineTemplateName, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmVirtualMachineTemplate(virtualMachineTemplateName, cancellationToken);
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmVirtualMachineTemplate(virtualMachineTemplateName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ScVmmAvailabilitySetResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmAvailabilitySets()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmAvailabilitySets()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ScVmmAvailabilitySetResources and their operations over a ScVmmAvailabilitySetResource. </returns>
         public static ScVmmAvailabilitySetCollection GetScVmmAvailabilitySets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmAvailabilitySets();
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmAvailabilitySets();
         }
 
         /// <summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmAvailabilitySetAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmAvailabilitySetAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static async Task<Response<ScVmmAvailabilitySetResource>> GetScVmmAvailabilitySetAsync(this ResourceGroupResource resourceGroupResource, string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            return await GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmAvailabilitySetAsync(availabilitySetName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmAvailabilitySetAsync(availabilitySetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmResourceGroupMockingExtension.GetScVmmAvailabilitySet(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmResourceGroupResource.GetScVmmAvailabilitySet(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.ArcScVmm
         [ForwardsClientCalls]
         public static Response<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySet(this ResourceGroupResource resourceGroupResource, string availabilitySetName, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmResourceGroupMockingExtension(resourceGroupResource).GetScVmmAvailabilitySet(availabilitySetName, cancellationToken);
+            return GetMockableArcScVmmResourceGroupResource(resourceGroupResource).GetScVmmAvailabilitySet(availabilitySetName, cancellationToken);
         }
 
         /// <summary>
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmSubscriptionMockingExtension.GetScVmmServers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmServers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmServerResource> GetScVmmServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmSubscriptionMockingExtension(subscriptionResource).GetScVmmServersAsync(cancellationToken);
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmServersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmSubscriptionMockingExtension.GetScVmmServers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmServers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmServerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmServerResource> GetScVmmServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmSubscriptionMockingExtension(subscriptionResource).GetScVmmServers(cancellationToken);
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmServers(cancellationToken);
         }
 
         /// <summary>
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmSubscriptionMockingExtension.GetScVmmClouds(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmClouds(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmCloudResource> GetScVmmCloudsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmSubscriptionMockingExtension(subscriptionResource).GetScVmmCloudsAsync(cancellationToken);
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmCloudsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmSubscriptionMockingExtension.GetScVmmClouds(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmClouds(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmCloudResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmCloudResource> GetScVmmClouds(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmSubscriptionMockingExtension(subscriptionResource).GetScVmmClouds(cancellationToken);
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmClouds(cancellationToken);
         }
 
         /// <summary>
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmSubscriptionMockingExtension.GetScVmmVirtualNetworks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmVirtualNetworks(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmVirtualNetworkResource> GetScVmmVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmSubscriptionMockingExtension(subscriptionResource).GetScVmmVirtualNetworksAsync(cancellationToken);
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmVirtualNetworksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmSubscriptionMockingExtension.GetScVmmVirtualNetworks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmVirtualNetworks(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmVirtualNetworkResource> GetScVmmVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmSubscriptionMockingExtension(subscriptionResource).GetScVmmVirtualNetworks(cancellationToken);
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmVirtualNetworks(cancellationToken);
         }
 
         /// <summary>
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmSubscriptionMockingExtension.GetScVmmVirtualMachines(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmVirtualMachines(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmVirtualMachineResource> GetScVmmVirtualMachinesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmSubscriptionMockingExtension(subscriptionResource).GetScVmmVirtualMachinesAsync(cancellationToken);
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmVirtualMachinesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmSubscriptionMockingExtension.GetScVmmVirtualMachines(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmVirtualMachines(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmVirtualMachineResource> GetScVmmVirtualMachines(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmSubscriptionMockingExtension(subscriptionResource).GetScVmmVirtualMachines(cancellationToken);
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmVirtualMachines(cancellationToken);
         }
 
         /// <summary>
@@ -780,7 +780,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmSubscriptionMockingExtension.GetScVmmVirtualMachineTemplates(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmVirtualMachineTemplates(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -788,7 +788,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmVirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplatesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmSubscriptionMockingExtension(subscriptionResource).GetScVmmVirtualMachineTemplatesAsync(cancellationToken);
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmVirtualMachineTemplatesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmSubscriptionMockingExtension.GetScVmmVirtualMachineTemplates(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmVirtualMachineTemplates(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmVirtualMachineTemplateResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmVirtualMachineTemplateResource> GetScVmmVirtualMachineTemplates(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmSubscriptionMockingExtension(subscriptionResource).GetScVmmVirtualMachineTemplates(cancellationToken);
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmVirtualMachineTemplates(cancellationToken);
         }
 
         /// <summary>
@@ -830,7 +830,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmSubscriptionMockingExtension.GetScVmmAvailabilitySets(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmAvailabilitySets(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -838,7 +838,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> An async collection of <see cref="ScVmmAvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySetsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmSubscriptionMockingExtension(subscriptionResource).GetScVmmAvailabilitySetsAsync(cancellationToken);
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmAvailabilitySetsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -855,7 +855,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ArcScVmmSubscriptionMockingExtension.GetScVmmAvailabilitySets(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableArcScVmmSubscriptionResource.GetScVmmAvailabilitySets(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <returns> A collection of <see cref="ScVmmAvailabilitySetResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScVmmAvailabilitySetResource> GetScVmmAvailabilitySets(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetArcScVmmSubscriptionMockingExtension(subscriptionResource).GetScVmmAvailabilitySets(cancellationToken);
+            return GetMockableArcScVmmSubscriptionResource(subscriptionResource).GetScVmmAvailabilitySets(cancellationToken);
         }
     }
 }

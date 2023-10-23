@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.Grafana
     /// <summary> A class to add extension methods to Azure.ResourceManager.Grafana. </summary>
     public static partial class GrafanaExtensions
     {
-        private static GrafanaArmClientMockingExtension GetGrafanaArmClientMockingExtension(ArmClient client)
+        private static MockableGrafanaArmClient GetMockableGrafanaArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new GrafanaArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableGrafanaArmClient(client0));
         }
 
-        private static GrafanaResourceGroupMockingExtension GetGrafanaResourceGroupMockingExtension(ArmResource resource)
+        private static MockableGrafanaResourceGroupResource GetMockableGrafanaResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new GrafanaResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableGrafanaResourceGroupResource(client, resource.Id));
         }
 
-        private static GrafanaSubscriptionMockingExtension GetGrafanaSubscriptionMockingExtension(ArmResource resource)
+        private static MockableGrafanaSubscriptionResource GetMockableGrafanaSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new GrafanaSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableGrafanaSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Grafana
         /// You can use <see cref="ManagedGrafanaResource.CreateResourceIdentifier" /> to create a <see cref="ManagedGrafanaResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GrafanaArmClientMockingExtension.GetManagedGrafanaResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGrafanaArmClient.GetManagedGrafanaResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> Returns a <see cref="ManagedGrafanaResource" /> object. </returns>
         public static ManagedGrafanaResource GetManagedGrafanaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetGrafanaArmClientMockingExtension(client).GetManagedGrafanaResource(id);
+            return GetMockableGrafanaArmClient(client).GetManagedGrafanaResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Grafana
         /// You can use <see cref="GrafanaPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="GrafanaPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GrafanaArmClientMockingExtension.GetGrafanaPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGrafanaArmClient.GetGrafanaPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> Returns a <see cref="GrafanaPrivateEndpointConnectionResource" /> object. </returns>
         public static GrafanaPrivateEndpointConnectionResource GetGrafanaPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetGrafanaArmClientMockingExtension(client).GetGrafanaPrivateEndpointConnectionResource(id);
+            return GetMockableGrafanaArmClient(client).GetGrafanaPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Grafana
         /// You can use <see cref="GrafanaPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="GrafanaPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GrafanaArmClientMockingExtension.GetGrafanaPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGrafanaArmClient.GetGrafanaPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -79,21 +79,21 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> Returns a <see cref="GrafanaPrivateLinkResource" /> object. </returns>
         public static GrafanaPrivateLinkResource GetGrafanaPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetGrafanaArmClientMockingExtension(client).GetGrafanaPrivateLinkResource(id);
+            return GetMockableGrafanaArmClient(client).GetGrafanaPrivateLinkResource(id);
         }
 
         /// <summary>
         /// Gets a collection of ManagedGrafanaResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GrafanaResourceGroupMockingExtension.GetManagedGrafanas()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGrafanaResourceGroupResource.GetManagedGrafanas()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ManagedGrafanaResources and their operations over a ManagedGrafanaResource. </returns>
         public static ManagedGrafanaCollection GetManagedGrafanas(this ResourceGroupResource resourceGroupResource)
         {
-            return GetGrafanaResourceGroupMockingExtension(resourceGroupResource).GetManagedGrafanas();
+            return GetMockableGrafanaResourceGroupResource(resourceGroupResource).GetManagedGrafanas();
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Grafana
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GrafanaResourceGroupMockingExtension.GetManagedGrafanaAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGrafanaResourceGroupResource.GetManagedGrafanaAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Grafana
         [ForwardsClientCalls]
         public static async Task<Response<ManagedGrafanaResource>> GetManagedGrafanaAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await GetGrafanaResourceGroupMockingExtension(resourceGroupResource).GetManagedGrafanaAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableGrafanaResourceGroupResource(resourceGroupResource).GetManagedGrafanaAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Grafana
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GrafanaResourceGroupMockingExtension.GetManagedGrafana(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGrafanaResourceGroupResource.GetManagedGrafana(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Grafana
         [ForwardsClientCalls]
         public static Response<ManagedGrafanaResource> GetManagedGrafana(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return GetGrafanaResourceGroupMockingExtension(resourceGroupResource).GetManagedGrafana(workspaceName, cancellationToken);
+            return GetMockableGrafanaResourceGroupResource(resourceGroupResource).GetManagedGrafana(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Grafana
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GrafanaSubscriptionMockingExtension.GetManagedGrafanas(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGrafanaSubscriptionResource.GetManagedGrafanas(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> An async collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedGrafanaResource> GetManagedGrafanasAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetGrafanaSubscriptionMockingExtension(subscriptionResource).GetManagedGrafanasAsync(cancellationToken);
+            return GetMockableGrafanaSubscriptionResource(subscriptionResource).GetManagedGrafanasAsync(cancellationToken);
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Grafana
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GrafanaSubscriptionMockingExtension.GetManagedGrafanas(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGrafanaSubscriptionResource.GetManagedGrafanas(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Grafana
         /// <returns> A collection of <see cref="ManagedGrafanaResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedGrafanaResource> GetManagedGrafanas(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetGrafanaSubscriptionMockingExtension(subscriptionResource).GetManagedGrafanas(cancellationToken);
+            return GetMockableGrafanaSubscriptionResource(subscriptionResource).GetManagedGrafanas(cancellationToken);
         }
     }
 }

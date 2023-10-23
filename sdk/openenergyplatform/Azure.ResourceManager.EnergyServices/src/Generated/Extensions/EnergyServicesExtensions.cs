@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.EnergyServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.EnergyServices. </summary>
     public static partial class EnergyServicesExtensions
     {
-        private static EnergyServicesArmClientMockingExtension GetEnergyServicesArmClientMockingExtension(ArmClient client)
+        private static MockableEnergyServicesArmClient GetMockableEnergyServicesArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new EnergyServicesArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableEnergyServicesArmClient(client0));
         }
 
-        private static EnergyServicesResourceGroupMockingExtension GetEnergyServicesResourceGroupMockingExtension(ArmResource resource)
+        private static MockableEnergyServicesResourceGroupResource GetMockableEnergyServicesResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new EnergyServicesResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableEnergyServicesResourceGroupResource(client, resource.Id));
         }
 
-        private static EnergyServicesSubscriptionMockingExtension GetEnergyServicesSubscriptionMockingExtension(ArmResource resource)
+        private static MockableEnergyServicesSubscriptionResource GetMockableEnergyServicesSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new EnergyServicesSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableEnergyServicesSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// You can use <see cref="EnergyServiceResource.CreateResourceIdentifier" /> to create an <see cref="EnergyServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EnergyServicesArmClientMockingExtension.GetEnergyServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEnergyServicesArmClient.GetEnergyServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,21 +48,21 @@ namespace Azure.ResourceManager.EnergyServices
         /// <returns> Returns a <see cref="EnergyServiceResource" /> object. </returns>
         public static EnergyServiceResource GetEnergyServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetEnergyServicesArmClientMockingExtension(client).GetEnergyServiceResource(id);
+            return GetMockableEnergyServicesArmClient(client).GetEnergyServiceResource(id);
         }
 
         /// <summary>
         /// Gets a collection of EnergyServiceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EnergyServicesResourceGroupMockingExtension.GetEnergyServices()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEnergyServicesResourceGroupResource.GetEnergyServices()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of EnergyServiceResources and their operations over a EnergyServiceResource. </returns>
         public static EnergyServiceCollection GetEnergyServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetEnergyServicesResourceGroupMockingExtension(resourceGroupResource).GetEnergyServices();
+            return GetMockableEnergyServicesResourceGroupResource(resourceGroupResource).GetEnergyServices();
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EnergyServicesResourceGroupMockingExtension.GetEnergyServiceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEnergyServicesResourceGroupResource.GetEnergyServiceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EnergyServices
         [ForwardsClientCalls]
         public static async Task<Response<EnergyServiceResource>> GetEnergyServiceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetEnergyServicesResourceGroupMockingExtension(resourceGroupResource).GetEnergyServiceAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableEnergyServicesResourceGroupResource(resourceGroupResource).GetEnergyServiceAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EnergyServicesResourceGroupMockingExtension.GetEnergyService(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEnergyServicesResourceGroupResource.GetEnergyService(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.EnergyServices
         [ForwardsClientCalls]
         public static Response<EnergyServiceResource> GetEnergyService(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetEnergyServicesResourceGroupMockingExtension(resourceGroupResource).GetEnergyService(resourceName, cancellationToken);
+            return GetMockableEnergyServicesResourceGroupResource(resourceGroupResource).GetEnergyService(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EnergyServicesSubscriptionMockingExtension.CheckNameAvailabilityLocation(EnergyServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEnergyServicesSubscriptionResource.CheckNameAvailabilityLocation(EnergyServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<EnergyServiceNameAvailabilityResult>> CheckNameAvailabilityLocationAsync(this SubscriptionResource subscriptionResource, EnergyServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetEnergyServicesSubscriptionMockingExtension(subscriptionResource).CheckNameAvailabilityLocationAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableEnergyServicesSubscriptionResource(subscriptionResource).CheckNameAvailabilityLocationAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EnergyServicesSubscriptionMockingExtension.CheckNameAvailabilityLocation(EnergyServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEnergyServicesSubscriptionResource.CheckNameAvailabilityLocation(EnergyServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<EnergyServiceNameAvailabilityResult> CheckNameAvailabilityLocation(this SubscriptionResource subscriptionResource, EnergyServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetEnergyServicesSubscriptionMockingExtension(subscriptionResource).CheckNameAvailabilityLocation(content, cancellationToken);
+            return GetMockableEnergyServicesSubscriptionResource(subscriptionResource).CheckNameAvailabilityLocation(content, cancellationToken);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EnergyServicesSubscriptionMockingExtension.GetEnergyServices(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEnergyServicesSubscriptionResource.GetEnergyServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// <returns> An async collection of <see cref="EnergyServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EnergyServiceResource> GetEnergyServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetEnergyServicesSubscriptionMockingExtension(subscriptionResource).GetEnergyServicesAsync(cancellationToken);
+            return GetMockableEnergyServicesSubscriptionResource(subscriptionResource).GetEnergyServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="EnergyServicesSubscriptionMockingExtension.GetEnergyServices(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableEnergyServicesSubscriptionResource.GetEnergyServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.EnergyServices
         /// <returns> A collection of <see cref="EnergyServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EnergyServiceResource> GetEnergyServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetEnergyServicesSubscriptionMockingExtension(subscriptionResource).GetEnergyServices(cancellationToken);
+            return GetMockableEnergyServicesSubscriptionResource(subscriptionResource).GetEnergyServices(cancellationToken);
         }
     }
 }

@@ -321,9 +321,9 @@ namespace Azure.ResourceManager.CostManagement
 }
 namespace Azure.ResourceManager.CostManagement.Mocking
 {
-    public partial class CostManagementArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableCostManagementArmClient : Azure.ResourceManager.ArmResource
     {
-        protected CostManagementArmClientMockingExtension() { }
+        protected MockableCostManagementArmClient() { }
         public virtual Azure.Response<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult> CheckCostManagementNameAvailabilityByScopeScheduledAction(Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult>> CheckCostManagementNameAvailabilityByScopeScheduledActionAsync(Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CostManagement.CostManagementViewsCollection GetAllCostManagementViews(Azure.Core.ResourceIdentifier scope) { throw null; }
@@ -353,9 +353,9 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         public virtual Azure.Response<Azure.ResourceManager.CostManagement.Models.QueryResult> UsageQuery(Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.CostManagement.Models.QueryDefinition queryDefinition, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CostManagement.Models.QueryResult>> UsageQueryAsync(Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.CostManagement.Models.QueryDefinition queryDefinition, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class CostManagementTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableCostManagementTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected CostManagementTenantMockingExtension() { }
+        protected MockableCostManagementTenantResource() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CostManagement.Models.OperationStatus> ByBillingAccountIdGenerateReservationDetailsReport(Azure.WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CostManagement.Models.OperationStatus>> ByBillingAccountIdGenerateReservationDetailsReportAsync(Azure.WaitUntil waitUntil, string billingAccountId, string startDate, string endDate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.CostManagement.Models.OperationStatus> ByBillingProfileIdGenerateReservationDetailsReport(Azure.WaitUntil waitUntil, string billingAccountId, string billingProfileId, string startDate, string endDate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

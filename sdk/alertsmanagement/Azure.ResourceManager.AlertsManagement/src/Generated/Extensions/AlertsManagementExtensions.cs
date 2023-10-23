@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.AlertsManagement
     /// <summary> A class to add extension methods to Azure.ResourceManager.AlertsManagement. </summary>
     public static partial class AlertsManagementExtensions
     {
-        private static AlertsManagementArmClientMockingExtension GetAlertsManagementArmClientMockingExtension(ArmClient client)
+        private static MockableAlertsManagementArmClient GetMockableAlertsManagementArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new AlertsManagementArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableAlertsManagementArmClient(client0));
         }
 
-        private static AlertsManagementResourceGroupMockingExtension GetAlertsManagementResourceGroupMockingExtension(ArmResource resource)
+        private static MockableAlertsManagementResourceGroupResource GetMockableAlertsManagementResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AlertsManagementResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAlertsManagementResourceGroupResource(client, resource.Id));
         }
 
-        private static AlertsManagementSubscriptionMockingExtension GetAlertsManagementSubscriptionMockingExtension(ArmResource resource)
+        private static MockableAlertsManagementSubscriptionResource GetMockableAlertsManagementSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AlertsManagementSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAlertsManagementSubscriptionResource(client, resource.Id));
         }
 
-        private static AlertsManagementTenantMockingExtension GetAlertsManagementTenantMockingExtension(ArmResource resource)
+        private static MockableAlertsManagementTenantResource GetMockableAlertsManagementTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AlertsManagementTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAlertsManagementTenantResource(client, resource.Id));
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// You can use <see cref="AlertProcessingRuleResource.CreateResourceIdentifier" /> to create an <see cref="AlertProcessingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementArmClientMockingExtension.GetAlertProcessingRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetAlertProcessingRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> Returns a <see cref="AlertProcessingRuleResource" /> object. </returns>
         public static AlertProcessingRuleResource GetAlertProcessingRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAlertsManagementArmClientMockingExtension(client).GetAlertProcessingRuleResource(id);
+            return GetMockableAlertsManagementArmClient(client).GetAlertProcessingRuleResource(id);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// You can use <see cref="ServiceAlertResource.CreateResourceIdentifier" /> to create a <see cref="ServiceAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementArmClientMockingExtension.GetServiceAlertResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetServiceAlertResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> Returns a <see cref="ServiceAlertResource" /> object. </returns>
         public static ServiceAlertResource GetServiceAlertResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAlertsManagementArmClientMockingExtension(client).GetServiceAlertResource(id);
+            return GetMockableAlertsManagementArmClient(client).GetServiceAlertResource(id);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// You can use <see cref="SmartGroupResource.CreateResourceIdentifier" /> to create a <see cref="SmartGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementArmClientMockingExtension.GetSmartGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementArmClient.GetSmartGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -85,21 +85,21 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> Returns a <see cref="SmartGroupResource" /> object. </returns>
         public static SmartGroupResource GetSmartGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAlertsManagementArmClientMockingExtension(client).GetSmartGroupResource(id);
+            return GetMockableAlertsManagementArmClient(client).GetSmartGroupResource(id);
         }
 
         /// <summary>
         /// Gets a collection of AlertProcessingRuleResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementResourceGroupMockingExtension.GetAlertProcessingRules()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementResourceGroupResource.GetAlertProcessingRules()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AlertProcessingRuleResources and their operations over a AlertProcessingRuleResource. </returns>
         public static AlertProcessingRuleCollection GetAlertProcessingRules(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAlertsManagementResourceGroupMockingExtension(resourceGroupResource).GetAlertProcessingRules();
+            return GetMockableAlertsManagementResourceGroupResource(resourceGroupResource).GetAlertProcessingRules();
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementResourceGroupMockingExtension.GetAlertProcessingRuleAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementResourceGroupResource.GetAlertProcessingRuleAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AlertsManagement
         [ForwardsClientCalls]
         public static async Task<Response<AlertProcessingRuleResource>> GetAlertProcessingRuleAsync(this ResourceGroupResource resourceGroupResource, string alertProcessingRuleName, CancellationToken cancellationToken = default)
         {
-            return await GetAlertsManagementResourceGroupMockingExtension(resourceGroupResource).GetAlertProcessingRuleAsync(alertProcessingRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAlertsManagementResourceGroupResource(resourceGroupResource).GetAlertProcessingRuleAsync(alertProcessingRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementResourceGroupMockingExtension.GetAlertProcessingRule(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementResourceGroupResource.GetAlertProcessingRule(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -155,21 +155,21 @@ namespace Azure.ResourceManager.AlertsManagement
         [ForwardsClientCalls]
         public static Response<AlertProcessingRuleResource> GetAlertProcessingRule(this ResourceGroupResource resourceGroupResource, string alertProcessingRuleName, CancellationToken cancellationToken = default)
         {
-            return GetAlertsManagementResourceGroupMockingExtension(resourceGroupResource).GetAlertProcessingRule(alertProcessingRuleName, cancellationToken);
+            return GetMockableAlertsManagementResourceGroupResource(resourceGroupResource).GetAlertProcessingRule(alertProcessingRuleName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ServiceAlertResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementSubscriptionMockingExtension.GetServiceAlerts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementSubscriptionResource.GetServiceAlerts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ServiceAlertResources and their operations over a ServiceAlertResource. </returns>
         public static ServiceAlertCollection GetServiceAlerts(this SubscriptionResource subscriptionResource)
         {
-            return GetAlertsManagementSubscriptionMockingExtension(subscriptionResource).GetServiceAlerts();
+            return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlerts();
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementSubscriptionMockingExtension.GetServiceAlertAsync(Guid,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementSubscriptionResource.GetServiceAlertAsync(Guid,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AlertsManagement
         [ForwardsClientCalls]
         public static async Task<Response<ServiceAlertResource>> GetServiceAlertAsync(this SubscriptionResource subscriptionResource, Guid alertId, CancellationToken cancellationToken = default)
         {
-            return await GetAlertsManagementSubscriptionMockingExtension(subscriptionResource).GetServiceAlertAsync(alertId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlertAsync(alertId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementSubscriptionMockingExtension.GetServiceAlert(Guid,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementSubscriptionResource.GetServiceAlert(Guid,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -221,21 +221,21 @@ namespace Azure.ResourceManager.AlertsManagement
         [ForwardsClientCalls]
         public static Response<ServiceAlertResource> GetServiceAlert(this SubscriptionResource subscriptionResource, Guid alertId, CancellationToken cancellationToken = default)
         {
-            return GetAlertsManagementSubscriptionMockingExtension(subscriptionResource).GetServiceAlert(alertId, cancellationToken);
+            return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlert(alertId, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of SmartGroupResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementSubscriptionMockingExtension.GetSmartGroups()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementSubscriptionResource.GetSmartGroups()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SmartGroupResources and their operations over a SmartGroupResource. </returns>
         public static SmartGroupCollection GetSmartGroups(this SubscriptionResource subscriptionResource)
         {
-            return GetAlertsManagementSubscriptionMockingExtension(subscriptionResource).GetSmartGroups();
+            return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetSmartGroups();
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementSubscriptionMockingExtension.GetSmartGroupAsync(Guid,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementSubscriptionResource.GetSmartGroupAsync(Guid,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AlertsManagement
         [ForwardsClientCalls]
         public static async Task<Response<SmartGroupResource>> GetSmartGroupAsync(this SubscriptionResource subscriptionResource, Guid smartGroupId, CancellationToken cancellationToken = default)
         {
-            return await GetAlertsManagementSubscriptionMockingExtension(subscriptionResource).GetSmartGroupAsync(smartGroupId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetSmartGroupAsync(smartGroupId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementSubscriptionMockingExtension.GetSmartGroup(Guid,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementSubscriptionResource.GetSmartGroup(Guid,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AlertsManagement
         [ForwardsClientCalls]
         public static Response<SmartGroupResource> GetSmartGroup(this SubscriptionResource subscriptionResource, Guid smartGroupId, CancellationToken cancellationToken = default)
         {
-            return GetAlertsManagementSubscriptionMockingExtension(subscriptionResource).GetSmartGroup(smartGroupId, cancellationToken);
+            return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetSmartGroup(smartGroupId, cancellationToken);
         }
 
         /// <summary>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementSubscriptionMockingExtension.GetAlertProcessingRules(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementSubscriptionResource.GetAlertProcessingRules(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> An async collection of <see cref="AlertProcessingRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AlertProcessingRuleResource> GetAlertProcessingRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAlertsManagementSubscriptionMockingExtension(subscriptionResource).GetAlertProcessingRulesAsync(cancellationToken);
+            return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetAlertProcessingRulesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementSubscriptionMockingExtension.GetAlertProcessingRules(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementSubscriptionResource.GetAlertProcessingRules(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <returns> A collection of <see cref="AlertProcessingRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AlertProcessingRuleResource> GetAlertProcessingRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAlertsManagementSubscriptionMockingExtension(subscriptionResource).GetAlertProcessingRules(cancellationToken);
+            return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetAlertProcessingRules(cancellationToken);
         }
 
         /// <summary>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementSubscriptionMockingExtension.GetServiceAlertSummary(SubscriptionResourceGetServiceAlertSummaryOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementSubscriptionResource.GetServiceAlertSummary(SubscriptionResourceGetServiceAlertSummaryOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public static async Task<Response<ServiceAlertSummary>> GetServiceAlertSummaryAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
-            return await GetAlertsManagementSubscriptionMockingExtension(subscriptionResource).GetServiceAlertSummaryAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlertSummaryAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementSubscriptionMockingExtension.GetServiceAlertSummary(SubscriptionResourceGetServiceAlertSummaryOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementSubscriptionResource.GetServiceAlertSummary(SubscriptionResourceGetServiceAlertSummaryOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         public static Response<ServiceAlertSummary> GetServiceAlertSummary(this SubscriptionResource subscriptionResource, SubscriptionResourceGetServiceAlertSummaryOptions options, CancellationToken cancellationToken = default)
         {
-            return GetAlertsManagementSubscriptionMockingExtension(subscriptionResource).GetServiceAlertSummary(options, cancellationToken);
+            return GetMockableAlertsManagementSubscriptionResource(subscriptionResource).GetServiceAlertSummary(options, cancellationToken);
         }
 
         /// <summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementTenantMockingExtension.GetServiceAlertMetadata(RetrievedInformationIdentifier,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementTenantResource.GetServiceAlertMetadata(RetrievedInformationIdentifier,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<ServiceAlertMetadata>> GetServiceAlertMetadataAsync(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            return await GetAlertsManagementTenantMockingExtension(tenantResource).GetServiceAlertMetadataAsync(identifier, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAlertsManagementTenantResource(tenantResource).GetServiceAlertMetadataAsync(identifier, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AlertsManagementTenantMockingExtension.GetServiceAlertMetadata(RetrievedInformationIdentifier,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAlertsManagementTenantResource.GetServiceAlertMetadata(RetrievedInformationIdentifier,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<ServiceAlertMetadata> GetServiceAlertMetadata(this TenantResource tenantResource, RetrievedInformationIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            return GetAlertsManagementTenantMockingExtension(tenantResource).GetServiceAlertMetadata(identifier, cancellationToken);
+            return GetMockableAlertsManagementTenantResource(tenantResource).GetServiceAlertMetadata(identifier, cancellationToken);
         }
     }
 }

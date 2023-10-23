@@ -899,9 +899,9 @@ namespace Azure.ResourceManager.AppContainers
 }
 namespace Azure.ResourceManager.AppContainers.Mocking
 {
-    public partial class AppContainersArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAppContainersArmClient : Azure.ResourceManager.ArmResource
     {
-        protected AppContainersArmClientMockingExtension() { }
+        protected MockableAppContainersArmClient() { }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppAuthConfigResource GetContainerAppAuthConfigResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentCertificateResource GetContainerAppConnectedEnvironmentCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentDaprComponentResource GetContainerAppConnectedEnvironmentDaprComponentResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -924,9 +924,9 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         public virtual Azure.ResourceManager.AppContainers.ContainerAppRevisionResource GetContainerAppRevisionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppSourceControlResource GetContainerAppSourceControlResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class AppContainersResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAppContainersResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected AppContainersResourceGroupMockingExtension() { }
+        protected MockableAppContainersResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppResource> GetContainerApp(string containerAppName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppResource>> GetContainerAppAsync(string containerAppName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AppContainers.ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironment(string connectedEnvironmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -940,9 +940,9 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         public virtual Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentCollection GetContainerAppManagedEnvironments() { throw null; }
         public virtual Azure.ResourceManager.AppContainers.ContainerAppCollection GetContainerApps() { throw null; }
     }
-    public partial class AppContainersSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAppContainersSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected AppContainersSubscriptionMockingExtension() { }
+        protected MockableAppContainersSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.Models.ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfiles(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AppContainers.Models.ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfilesAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.AppContainers.Models.ContainerAppBillingMeter> GetBillingMeters(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

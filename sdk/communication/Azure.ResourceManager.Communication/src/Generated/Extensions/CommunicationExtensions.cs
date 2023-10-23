@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Communication
     /// <summary> A class to add extension methods to Azure.ResourceManager.Communication. </summary>
     public static partial class CommunicationExtensions
     {
-        private static CommunicationArmClientMockingExtension GetCommunicationArmClientMockingExtension(ArmClient client)
+        private static MockableCommunicationArmClient GetMockableCommunicationArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new CommunicationArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableCommunicationArmClient(client0));
         }
 
-        private static CommunicationResourceGroupMockingExtension GetCommunicationResourceGroupMockingExtension(ArmResource resource)
+        private static MockableCommunicationResourceGroupResource GetMockableCommunicationResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new CommunicationResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableCommunicationResourceGroupResource(client, resource.Id));
         }
 
-        private static CommunicationSubscriptionMockingExtension GetCommunicationSubscriptionMockingExtension(ArmResource resource)
+        private static MockableCommunicationSubscriptionResource GetMockableCommunicationSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new CommunicationSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableCommunicationSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Communication
         /// You can use <see cref="CommunicationServiceResource.CreateResourceIdentifier" /> to create a <see cref="CommunicationServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationArmClientMockingExtension.GetCommunicationServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationArmClient.GetCommunicationServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> Returns a <see cref="CommunicationServiceResource" /> object. </returns>
         public static CommunicationServiceResource GetCommunicationServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCommunicationArmClientMockingExtension(client).GetCommunicationServiceResource(id);
+            return GetMockableCommunicationArmClient(client).GetCommunicationServiceResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Communication
         /// You can use <see cref="CommunicationDomainResource.CreateResourceIdentifier" /> to create a <see cref="CommunicationDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationArmClientMockingExtension.GetCommunicationDomainResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationArmClient.GetCommunicationDomainResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> Returns a <see cref="CommunicationDomainResource" /> object. </returns>
         public static CommunicationDomainResource GetCommunicationDomainResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCommunicationArmClientMockingExtension(client).GetCommunicationDomainResource(id);
+            return GetMockableCommunicationArmClient(client).GetCommunicationDomainResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Communication
         /// You can use <see cref="EmailServiceResource.CreateResourceIdentifier" /> to create an <see cref="EmailServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationArmClientMockingExtension.GetEmailServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationArmClient.GetEmailServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> Returns a <see cref="EmailServiceResource" /> object. </returns>
         public static EmailServiceResource GetEmailServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCommunicationArmClientMockingExtension(client).GetEmailServiceResource(id);
+            return GetMockableCommunicationArmClient(client).GetEmailServiceResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Communication
         /// You can use <see cref="SenderUsernameResource.CreateResourceIdentifier" /> to create a <see cref="SenderUsernameResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationArmClientMockingExtension.GetSenderUsernameResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationArmClient.GetSenderUsernameResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,21 +96,21 @@ namespace Azure.ResourceManager.Communication
         /// <returns> Returns a <see cref="SenderUsernameResource" /> object. </returns>
         public static SenderUsernameResource GetSenderUsernameResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCommunicationArmClientMockingExtension(client).GetSenderUsernameResource(id);
+            return GetMockableCommunicationArmClient(client).GetSenderUsernameResource(id);
         }
 
         /// <summary>
         /// Gets a collection of CommunicationServiceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationResourceGroupMockingExtension.GetCommunicationServiceResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationResourceGroupResource.GetCommunicationServiceResources()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CommunicationServiceResources and their operations over a CommunicationServiceResource. </returns>
         public static CommunicationServiceResourceCollection GetCommunicationServiceResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetCommunicationResourceGroupMockingExtension(resourceGroupResource).GetCommunicationServiceResources();
+            return GetMockableCommunicationResourceGroupResource(resourceGroupResource).GetCommunicationServiceResources();
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationResourceGroupMockingExtension.GetCommunicationServiceResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationResourceGroupResource.GetCommunicationServiceResourceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Communication
         [ForwardsClientCalls]
         public static async Task<Response<CommunicationServiceResource>> GetCommunicationServiceResourceAsync(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            return await GetCommunicationResourceGroupMockingExtension(resourceGroupResource).GetCommunicationServiceResourceAsync(communicationServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCommunicationResourceGroupResource(resourceGroupResource).GetCommunicationServiceResourceAsync(communicationServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationResourceGroupMockingExtension.GetCommunicationServiceResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationResourceGroupResource.GetCommunicationServiceResource(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -166,21 +166,21 @@ namespace Azure.ResourceManager.Communication
         [ForwardsClientCalls]
         public static Response<CommunicationServiceResource> GetCommunicationServiceResource(this ResourceGroupResource resourceGroupResource, string communicationServiceName, CancellationToken cancellationToken = default)
         {
-            return GetCommunicationResourceGroupMockingExtension(resourceGroupResource).GetCommunicationServiceResource(communicationServiceName, cancellationToken);
+            return GetMockableCommunicationResourceGroupResource(resourceGroupResource).GetCommunicationServiceResource(communicationServiceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of EmailServiceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationResourceGroupMockingExtension.GetEmailServiceResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationResourceGroupResource.GetEmailServiceResources()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of EmailServiceResources and their operations over a EmailServiceResource. </returns>
         public static EmailServiceResourceCollection GetEmailServiceResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetCommunicationResourceGroupMockingExtension(resourceGroupResource).GetEmailServiceResources();
+            return GetMockableCommunicationResourceGroupResource(resourceGroupResource).GetEmailServiceResources();
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationResourceGroupMockingExtension.GetEmailServiceResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationResourceGroupResource.GetEmailServiceResourceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Communication
         [ForwardsClientCalls]
         public static async Task<Response<EmailServiceResource>> GetEmailServiceResourceAsync(this ResourceGroupResource resourceGroupResource, string emailServiceName, CancellationToken cancellationToken = default)
         {
-            return await GetCommunicationResourceGroupMockingExtension(resourceGroupResource).GetEmailServiceResourceAsync(emailServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCommunicationResourceGroupResource(resourceGroupResource).GetEmailServiceResourceAsync(emailServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationResourceGroupMockingExtension.GetEmailServiceResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationResourceGroupResource.GetEmailServiceResource(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Communication
         [ForwardsClientCalls]
         public static Response<EmailServiceResource> GetEmailServiceResource(this ResourceGroupResource resourceGroupResource, string emailServiceName, CancellationToken cancellationToken = default)
         {
-            return GetCommunicationResourceGroupMockingExtension(resourceGroupResource).GetEmailServiceResource(emailServiceName, cancellationToken);
+            return GetMockableCommunicationResourceGroupResource(resourceGroupResource).GetEmailServiceResource(emailServiceName, cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationSubscriptionMockingExtension.CheckCommunicationNameAvailability(CommunicationServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationSubscriptionResource.CheckCommunicationNameAvailability(CommunicationServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<CommunicationNameAvailabilityResult>> CheckCommunicationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetCommunicationSubscriptionMockingExtension(subscriptionResource).CheckCommunicationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCommunicationSubscriptionResource(subscriptionResource).CheckCommunicationNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationSubscriptionMockingExtension.CheckCommunicationNameAvailability(CommunicationServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationSubscriptionResource.CheckCommunicationNameAvailability(CommunicationServiceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<CommunicationNameAvailabilityResult> CheckCommunicationNameAvailability(this SubscriptionResource subscriptionResource, CommunicationServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetCommunicationSubscriptionMockingExtension(subscriptionResource).CheckCommunicationNameAvailability(content, cancellationToken);
+            return GetMockableCommunicationSubscriptionResource(subscriptionResource).CheckCommunicationNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationSubscriptionMockingExtension.GetCommunicationServiceResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationSubscriptionResource.GetCommunicationServiceResources(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An async collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CommunicationServiceResource> GetCommunicationServiceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCommunicationSubscriptionMockingExtension(subscriptionResource).GetCommunicationServiceResourcesAsync(cancellationToken);
+            return GetMockableCommunicationSubscriptionResource(subscriptionResource).GetCommunicationServiceResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationSubscriptionMockingExtension.GetCommunicationServiceResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationSubscriptionResource.GetCommunicationServiceResources(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> A collection of <see cref="CommunicationServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CommunicationServiceResource> GetCommunicationServiceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCommunicationSubscriptionMockingExtension(subscriptionResource).GetCommunicationServiceResources(cancellationToken);
+            return GetMockableCommunicationSubscriptionResource(subscriptionResource).GetCommunicationServiceResources(cancellationToken);
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationSubscriptionMockingExtension.GetEmailServiceResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationSubscriptionResource.GetEmailServiceResources(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An async collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EmailServiceResource> GetEmailServiceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCommunicationSubscriptionMockingExtension(subscriptionResource).GetEmailServiceResourcesAsync(cancellationToken);
+            return GetMockableCommunicationSubscriptionResource(subscriptionResource).GetEmailServiceResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationSubscriptionMockingExtension.GetEmailServiceResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationSubscriptionResource.GetEmailServiceResources(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> A collection of <see cref="EmailServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EmailServiceResource> GetEmailServiceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCommunicationSubscriptionMockingExtension(subscriptionResource).GetEmailServiceResources(cancellationToken);
+            return GetMockableCommunicationSubscriptionResource(subscriptionResource).GetEmailServiceResources(cancellationToken);
         }
 
         /// <summary>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationSubscriptionMockingExtension.GetVerifiedExchangeOnlineDomainsEmailServices(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationSubscriptionResource.GetVerifiedExchangeOnlineDomainsEmailServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> An async collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<string> GetVerifiedExchangeOnlineDomainsEmailServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCommunicationSubscriptionMockingExtension(subscriptionResource).GetVerifiedExchangeOnlineDomainsEmailServicesAsync(cancellationToken);
+            return GetMockableCommunicationSubscriptionResource(subscriptionResource).GetVerifiedExchangeOnlineDomainsEmailServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Communication
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CommunicationSubscriptionMockingExtension.GetVerifiedExchangeOnlineDomainsEmailServices(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCommunicationSubscriptionResource.GetVerifiedExchangeOnlineDomainsEmailServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Communication
         /// <returns> A collection of <see cref="string" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<string> GetVerifiedExchangeOnlineDomainsEmailServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCommunicationSubscriptionMockingExtension(subscriptionResource).GetVerifiedExchangeOnlineDomainsEmailServices(cancellationToken);
+            return GetMockableCommunicationSubscriptionResource(subscriptionResource).GetVerifiedExchangeOnlineDomainsEmailServices(cancellationToken);
         }
     }
 }

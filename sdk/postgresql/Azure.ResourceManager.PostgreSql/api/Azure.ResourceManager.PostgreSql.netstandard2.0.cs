@@ -861,9 +861,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 }
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
 {
-    public partial class PostgreSqlFlexibleServersArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePostgreSqlFlexibleServersArmClient : Azure.ResourceManager.ArmResource
     {
-        protected PostgreSqlFlexibleServersArmClientMockingExtension() { }
+        protected MockablePostgreSqlFlexibleServersArmClient() { }
         public virtual Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerActiveDirectoryAdministratorResource GetPostgreSqlFlexibleServerActiveDirectoryAdministratorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerBackupResource GetPostgreSqlFlexibleServerBackupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerConfigurationResource GetPostgreSqlFlexibleServerConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -873,16 +873,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         public virtual Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlLtrServerBackupOperationResource GetPostgreSqlLtrServerBackupOperationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlMigrationResource GetPostgreSqlMigrationResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class PostgreSqlFlexibleServersResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePostgreSqlFlexibleServersResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected PostgreSqlFlexibleServersResourceGroupMockingExtension() { }
+        protected MockablePostgreSqlFlexibleServersResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServer(string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerResource>> GetPostgreSqlFlexibleServerAsync(string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerCollection GetPostgreSqlFlexibleServers() { throw null; }
     }
-    public partial class PostgreSqlFlexibleServersSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePostgreSqlFlexibleServersSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected PostgreSqlFlexibleServersSubscriptionMockingExtension() { }
+        protected MockablePostgreSqlFlexibleServersSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailability(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityAsync(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation(Azure.Core.AzureLocation locationName, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -894,9 +894,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         public virtual Azure.Pageable<Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerResource> GetPostgreSqlFlexibleServersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class PostgreSqlFlexibleServersTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePostgreSqlFlexibleServersTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected PostgreSqlFlexibleServersTenantMockingExtension() { }
+        protected MockablePostgreSqlFlexibleServersTenantResource() { }
         public virtual Azure.Response<string> ExecuteGetPrivateDnsZoneSuffix(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<string>> ExecuteGetPrivateDnsZoneSuffixAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -2148,9 +2148,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 }
 namespace Azure.ResourceManager.PostgreSql.Mocking
 {
-    public partial class PostgreSqlArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePostgreSqlArmClient : Azure.ResourceManager.ArmResource
     {
-        protected PostgreSqlArmClientMockingExtension() { }
+        protected MockablePostgreSqlArmClient() { }
         public virtual Azure.ResourceManager.PostgreSql.PostgreSqlConfigurationResource GetPostgreSqlConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PostgreSql.PostgreSqlDatabaseResource GetPostgreSqlDatabaseResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PostgreSql.PostgreSqlFirewallRuleResource GetPostgreSqlFirewallRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2162,16 +2162,16 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         public virtual Azure.ResourceManager.PostgreSql.PostgreSqlServerSecurityAlertPolicyResource GetPostgreSqlServerSecurityAlertPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PostgreSql.PostgreSqlVirtualNetworkRuleResource GetPostgreSqlVirtualNetworkRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class PostgreSqlResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePostgreSqlResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected PostgreSqlResourceGroupMockingExtension() { }
+        protected MockablePostgreSqlResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.PostgreSql.PostgreSqlServerResource> GetPostgreSqlServer(string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PostgreSql.PostgreSqlServerResource>> GetPostgreSqlServerAsync(string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.PostgreSql.PostgreSqlServerCollection GetPostgreSqlServers() { throw null; }
     }
-    public partial class PostgreSqlSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePostgreSqlSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected PostgreSqlSubscriptionMockingExtension() { }
+        protected MockablePostgreSqlSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.PostgreSql.Models.PostgreSqlNameAvailabilityResult> CheckPostgreSqlNameAvailability(Azure.ResourceManager.PostgreSql.Models.PostgreSqlNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PostgreSql.Models.PostgreSqlNameAvailabilityResult>> CheckPostgreSqlNameAvailabilityAsync(Azure.ResourceManager.PostgreSql.Models.PostgreSqlNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.PostgreSql.Models.PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiers(Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -92,14 +92,14 @@ namespace Azure.ResourceManager.DataBox
 }
 namespace Azure.ResourceManager.DataBox.Mocking
 {
-    public partial class DataBoxArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataBoxArmClient : Azure.ResourceManager.ArmResource
     {
-        protected DataBoxArmClientMockingExtension() { }
+        protected MockableDataBoxArmClient() { }
         public virtual Azure.ResourceManager.DataBox.DataBoxJobResource GetDataBoxJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DataBoxResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataBoxResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected DataBoxResourceGroupMockingExtension() { }
+        protected MockableDataBoxResourceGroupResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.DataBox.Models.DataBoxSkuInformation> GetAvailableSkus(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.AvailableSkusContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBox.Models.DataBoxSkuInformation> GetAvailableSkusAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.AvailableSkusContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBox.DataBoxJobResource> GetDataBoxJob(string jobName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -110,9 +110,9 @@ namespace Azure.ResourceManager.DataBox.Mocking
         public virtual Azure.Response<Azure.ResourceManager.DataBox.Models.DataBoxValidationResult> ValidateInputs(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.DataBoxValidationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.DataBoxValidationResult>> ValidateInputsAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.DataBoxValidationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class DataBoxSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataBoxSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected DataBoxSubscriptionMockingExtension() { }
+        protected MockableDataBoxSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.DataBox.DataBoxJobResource> GetDataBoxJobs(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBox.DataBoxJobResource> GetDataBoxJobsAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DataBox.Models.RegionConfigurationResult> GetRegionConfiguration(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.RegionConfigurationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

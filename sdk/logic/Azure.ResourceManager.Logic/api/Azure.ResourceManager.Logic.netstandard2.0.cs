@@ -1083,9 +1083,9 @@ namespace Azure.ResourceManager.Logic
 }
 namespace Azure.ResourceManager.Logic.Mocking
 {
-    public partial class LogicArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableLogicArmClient : Azure.ResourceManager.ArmResource
     {
-        protected LogicArmClientMockingExtension() { }
+        protected MockableLogicArmClient() { }
         public virtual Azure.ResourceManager.Logic.IntegrationAccountAgreementResource GetIntegrationAccountAgreementResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource GetIntegrationAccountAssemblyDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource GetIntegrationAccountBatchConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1109,9 +1109,9 @@ namespace Azure.ResourceManager.Logic.Mocking
         public virtual Azure.ResourceManager.Logic.LogicWorkflowTriggerResource GetLogicWorkflowTriggerResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Logic.LogicWorkflowVersionResource GetLogicWorkflowVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class LogicResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableLogicResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected LogicResourceGroupMockingExtension() { }
+        protected MockableLogicResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource> GetIntegrationAccount(string integrationAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource>> GetIntegrationAccountAsync(string integrationAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Logic.IntegrationAccountCollection GetIntegrationAccounts() { throw null; }
@@ -1124,9 +1124,9 @@ namespace Azure.ResourceManager.Logic.Mocking
         public virtual Azure.Response ValidateByLocationWorkflow(Azure.Core.AzureLocation location, string workflowName, Azure.ResourceManager.Logic.LogicWorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ValidateByLocationWorkflowAsync(Azure.Core.AzureLocation location, string workflowName, Azure.ResourceManager.Logic.LogicWorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class LogicSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableLogicSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected LogicSubscriptionMockingExtension() { }
+        protected MockableLogicSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationAccountResource> GetIntegrationAccounts(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationAccountResource> GetIntegrationAccountsAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironments(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

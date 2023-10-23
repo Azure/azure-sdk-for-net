@@ -20,31 +20,31 @@ namespace Azure.ResourceManager.Monitor
     /// <summary> A class to add extension methods to Azure.ResourceManager.Monitor. </summary>
     public static partial class MonitorExtensions
     {
-        private static MonitorArmClientMockingExtension GetMonitorArmClientMockingExtension(ArmClient client)
+        private static MockableMonitorArmClient GetMockableMonitorArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MonitorArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableMonitorArmClient(client0));
         }
 
-        private static MonitorResourceGroupMockingExtension GetMonitorResourceGroupMockingExtension(ArmResource resource)
+        private static MockableMonitorResourceGroupResource GetMockableMonitorResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MonitorResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMonitorResourceGroupResource(client, resource.Id));
         }
 
-        private static MonitorSubscriptionMockingExtension GetMonitorSubscriptionMockingExtension(ArmResource resource)
+        private static MockableMonitorSubscriptionResource GetMockableMonitorSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MonitorSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMonitorSubscriptionResource(client, resource.Id));
         }
 
-        private static MonitorTenantMockingExtension GetMonitorTenantMockingExtension(ArmResource resource)
+        private static MockableMonitorTenantResource GetMockableMonitorTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MonitorTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMonitorTenantResource(client, resource.Id));
         }
 
         /// <summary>
         /// Gets a collection of DiagnosticSettingResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetDiagnosticSettings(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettings(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of DiagnosticSettingResources and their operations over a DiagnosticSettingResource. </returns>
         public static DiagnosticSettingCollection GetDiagnosticSettings(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetMonitorArmClientMockingExtension(client).GetDiagnosticSettings(scope);
+            return GetMockableMonitorArmClient(client).GetDiagnosticSettings(scope);
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetDiagnosticSettingAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettingAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<DiagnosticSettingResource>> GetDiagnosticSettingAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return await GetMonitorArmClientMockingExtension(client).GetDiagnosticSettingAsync(scope, name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorArmClient(client).GetDiagnosticSettingAsync(scope, name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetDiagnosticSetting(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSetting(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<DiagnosticSettingResource> GetDiagnosticSetting(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return GetMonitorArmClientMockingExtension(client).GetDiagnosticSetting(scope, name, cancellationToken);
+            return GetMockableMonitorArmClient(client).GetDiagnosticSetting(scope, name, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of DiagnosticSettingsCategoryResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetDiagnosticSettingsCategories(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettingsCategories(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of DiagnosticSettingsCategoryResources and their operations over a DiagnosticSettingsCategoryResource. </returns>
         public static DiagnosticSettingsCategoryCollection GetDiagnosticSettingsCategories(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetMonitorArmClientMockingExtension(client).GetDiagnosticSettingsCategories(scope);
+            return GetMockableMonitorArmClient(client).GetDiagnosticSettingsCategories(scope);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetDiagnosticSettingsCategoryAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettingsCategoryAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<DiagnosticSettingsCategoryResource>> GetDiagnosticSettingsCategoryAsync(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return await GetMonitorArmClientMockingExtension(client).GetDiagnosticSettingsCategoryAsync(scope, name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorArmClient(client).GetDiagnosticSettingsCategoryAsync(scope, name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetDiagnosticSettingsCategory(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettingsCategory(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -183,14 +183,14 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<DiagnosticSettingsCategoryResource> GetDiagnosticSettingsCategory(this ArmClient client, ResourceIdentifier scope, string name, CancellationToken cancellationToken = default)
         {
-            return GetMonitorArmClientMockingExtension(client).GetDiagnosticSettingsCategory(scope, name, cancellationToken);
+            return GetMockableMonitorArmClient(client).GetDiagnosticSettingsCategory(scope, name, cancellationToken);
         }
 
         /// <summary>
         /// Gets an object representing a VmInsightsOnboardingStatusResource along with the instance operations that can be performed on it in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetVmInsightsOnboardingStatus(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetVmInsightsOnboardingStatus(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -198,14 +198,14 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource" /> object. </returns>
         public static VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatus(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetMonitorArmClientMockingExtension(client).GetVmInsightsOnboardingStatus(scope);
+            return GetMockableMonitorArmClient(client).GetVmInsightsOnboardingStatus(scope);
         }
 
         /// <summary>
         /// Gets a collection of DataCollectionRuleAssociationResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetDataCollectionRuleAssociations(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetDataCollectionRuleAssociations(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An object representing collection of DataCollectionRuleAssociationResources and their operations over a DataCollectionRuleAssociationResource. </returns>
         public static DataCollectionRuleAssociationCollection GetDataCollectionRuleAssociations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetMonitorArmClientMockingExtension(client).GetDataCollectionRuleAssociations(scope);
+            return GetMockableMonitorArmClient(client).GetDataCollectionRuleAssociations(scope);
         }
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetDataCollectionRuleAssociationAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetDataCollectionRuleAssociationAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<DataCollectionRuleAssociationResource>> GetDataCollectionRuleAssociationAsync(this ArmClient client, ResourceIdentifier scope, string associationName, CancellationToken cancellationToken = default)
         {
-            return await GetMonitorArmClientMockingExtension(client).GetDataCollectionRuleAssociationAsync(scope, associationName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorArmClient(client).GetDataCollectionRuleAssociationAsync(scope, associationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetDataCollectionRuleAssociation(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetDataCollectionRuleAssociation(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<DataCollectionRuleAssociationResource> GetDataCollectionRuleAssociation(this ArmClient client, ResourceIdentifier scope, string associationName, CancellationToken cancellationToken = default)
         {
-            return GetMonitorArmClientMockingExtension(client).GetDataCollectionRuleAssociation(scope, associationName, cancellationToken);
+            return GetMockableMonitorArmClient(client).GetDataCollectionRuleAssociation(scope, associationName, cancellationToken);
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetMonitorMetricDefinitions(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorMetricDefinitions(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<MonitorMetricDefinition> GetMonitorMetricDefinitionsAsync(this ArmClient client, ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
-            return GetMonitorArmClientMockingExtension(client).GetMonitorMetricDefinitionsAsync(scope, metricnamespace, cancellationToken);
+            return GetMockableMonitorArmClient(client).GetMonitorMetricDefinitionsAsync(scope, metricnamespace, cancellationToken);
         }
 
         /// <summary>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetMonitorMetricDefinitions(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorMetricDefinitions(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<MonitorMetricDefinition> GetMonitorMetricDefinitions(this ArmClient client, ResourceIdentifier scope, string metricnamespace = null, CancellationToken cancellationToken = default)
         {
-            return GetMonitorArmClientMockingExtension(client).GetMonitorMetricDefinitions(scope, metricnamespace, cancellationToken);
+            return GetMockableMonitorArmClient(client).GetMonitorMetricDefinitions(scope, metricnamespace, cancellationToken);
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetMonitorMetrics(ResourceIdentifier,ArmResourceGetMonitorMetricsOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorMetrics(ResourceIdentifier,ArmResourceGetMonitorMetricsOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<MonitorMetric> GetMonitorMetricsAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            return GetMonitorArmClientMockingExtension(client).GetMonitorMetricsAsync(scope, options, cancellationToken);
+            return GetMockableMonitorArmClient(client).GetMonitorMetricsAsync(scope, options, cancellationToken);
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetMonitorMetrics(ResourceIdentifier,ArmResourceGetMonitorMetricsOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorMetrics(ResourceIdentifier,ArmResourceGetMonitorMetricsOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<MonitorMetric> GetMonitorMetrics(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            return GetMonitorArmClientMockingExtension(client).GetMonitorMetrics(scope, options, cancellationToken);
+            return GetMockableMonitorArmClient(client).GetMonitorMetrics(scope, options, cancellationToken);
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetMonitorMetricBaselines(ResourceIdentifier,ArmResourceGetMonitorMetricBaselinesOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorMetricBaselines(ResourceIdentifier,ArmResourceGetMonitorMetricBaselinesOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselinesAsync(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
         {
-            return GetMonitorArmClientMockingExtension(client).GetMonitorMetricBaselinesAsync(scope, options, cancellationToken);
+            return GetMockableMonitorArmClient(client).GetMonitorMetricBaselinesAsync(scope, options, cancellationToken);
         }
 
         /// <summary>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetMonitorMetricBaselines(ResourceIdentifier,ArmResourceGetMonitorMetricBaselinesOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorMetricBaselines(ResourceIdentifier,ArmResourceGetMonitorMetricBaselinesOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<MonitorSingleMetricBaseline> GetMonitorMetricBaselines(this ArmClient client, ResourceIdentifier scope, ArmResourceGetMonitorMetricBaselinesOptions options, CancellationToken cancellationToken = default)
         {
-            return GetMonitorArmClientMockingExtension(client).GetMonitorMetricBaselines(scope, options, cancellationToken);
+            return GetMockableMonitorArmClient(client).GetMonitorMetricBaselines(scope, options, cancellationToken);
         }
 
         /// <summary>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetMonitorMetricNamespaces(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorMetricNamespaces(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<MonitorMetricNamespace> GetMonitorMetricNamespacesAsync(this ArmClient client, ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
         {
-            return GetMonitorArmClientMockingExtension(client).GetMonitorMetricNamespacesAsync(scope, startTime, cancellationToken);
+            return GetMockableMonitorArmClient(client).GetMonitorMetricNamespacesAsync(scope, startTime, cancellationToken);
         }
 
         /// <summary>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetMonitorMetricNamespaces(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorMetricNamespaces(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<MonitorMetricNamespace> GetMonitorMetricNamespaces(this ArmClient client, ResourceIdentifier scope, string startTime = null, CancellationToken cancellationToken = default)
         {
-            return GetMonitorArmClientMockingExtension(client).GetMonitorMetricNamespaces(scope, startTime, cancellationToken);
+            return GetMockableMonitorArmClient(client).GetMonitorMetricNamespaces(scope, startTime, cancellationToken);
         }
 
         /// <summary>
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="AutoscaleSettingResource.CreateResourceIdentifier" /> to create an <see cref="AutoscaleSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetAutoscaleSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetAutoscaleSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="AutoscaleSettingResource" /> object. </returns>
         public static AutoscaleSettingResource GetAutoscaleSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetAutoscaleSettingResource(id);
+            return GetMockableMonitorArmClient(client).GetAutoscaleSettingResource(id);
         }
 
         /// <summary>
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="AlertRuleResource.CreateResourceIdentifier" /> to create an <see cref="AlertRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetAlertRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetAlertRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="AlertRuleResource" /> object. </returns>
         public static AlertRuleResource GetAlertRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetAlertRuleResource(id);
+            return GetMockableMonitorArmClient(client).GetAlertRuleResource(id);
         }
 
         /// <summary>
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="LogProfileResource.CreateResourceIdentifier" /> to create a <see cref="LogProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetLogProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetLogProfileResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="LogProfileResource" /> object. </returns>
         public static LogProfileResource GetLogProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetLogProfileResource(id);
+            return GetMockableMonitorArmClient(client).GetLogProfileResource(id);
         }
 
         /// <summary>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="DiagnosticSettingResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetDiagnosticSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="DiagnosticSettingResource" /> object. </returns>
         public static DiagnosticSettingResource GetDiagnosticSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetDiagnosticSettingResource(id);
+            return GetMockableMonitorArmClient(client).GetDiagnosticSettingResource(id);
         }
 
         /// <summary>
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="DiagnosticSettingsCategoryResource.CreateResourceIdentifier" /> to create a <see cref="DiagnosticSettingsCategoryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetDiagnosticSettingsCategoryResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetDiagnosticSettingsCategoryResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="DiagnosticSettingsCategoryResource" /> object. </returns>
         public static DiagnosticSettingsCategoryResource GetDiagnosticSettingsCategoryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetDiagnosticSettingsCategoryResource(id);
+            return GetMockableMonitorArmClient(client).GetDiagnosticSettingsCategoryResource(id);
         }
 
         /// <summary>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="ActionGroupResource.CreateResourceIdentifier" /> to create an <see cref="ActionGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetActionGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetActionGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="ActionGroupResource" /> object. </returns>
         public static ActionGroupResource GetActionGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetActionGroupResource(id);
+            return GetMockableMonitorArmClient(client).GetActionGroupResource(id);
         }
 
         /// <summary>
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="MetricAlertResource.CreateResourceIdentifier" /> to create a <see cref="MetricAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetMetricAlertResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetMetricAlertResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="MetricAlertResource" /> object. </returns>
         public static MetricAlertResource GetMetricAlertResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetMetricAlertResource(id);
+            return GetMockableMonitorArmClient(client).GetMetricAlertResource(id);
         }
 
         /// <summary>
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="ScheduledQueryRuleResource.CreateResourceIdentifier" /> to create a <see cref="ScheduledQueryRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetScheduledQueryRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetScheduledQueryRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="ScheduledQueryRuleResource" /> object. </returns>
         public static ScheduledQueryRuleResource GetScheduledQueryRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetScheduledQueryRuleResource(id);
+            return GetMockableMonitorArmClient(client).GetScheduledQueryRuleResource(id);
         }
 
         /// <summary>
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="VmInsightsOnboardingStatusResource.CreateResourceIdentifier" /> to create a <see cref="VmInsightsOnboardingStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetVmInsightsOnboardingStatusResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetVmInsightsOnboardingStatusResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="VmInsightsOnboardingStatusResource" /> object. </returns>
         public static VmInsightsOnboardingStatusResource GetVmInsightsOnboardingStatusResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetVmInsightsOnboardingStatusResource(id);
+            return GetMockableMonitorArmClient(client).GetVmInsightsOnboardingStatusResource(id);
         }
 
         /// <summary>
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="MonitorPrivateLinkScopeResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkScopeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetMonitorPrivateLinkScopeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorPrivateLinkScopeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="MonitorPrivateLinkScopeResource" /> object. </returns>
         public static MonitorPrivateLinkScopeResource GetMonitorPrivateLinkScopeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetMonitorPrivateLinkScopeResource(id);
+            return GetMockableMonitorArmClient(client).GetMonitorPrivateLinkScopeResource(id);
         }
 
         /// <summary>
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="MonitorPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetMonitorPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="MonitorPrivateLinkResource" /> object. </returns>
         public static MonitorPrivateLinkResource GetMonitorPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetMonitorPrivateLinkResource(id);
+            return GetMockableMonitorArmClient(client).GetMonitorPrivateLinkResource(id);
         }
 
         /// <summary>
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="MonitorPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetMonitorPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="MonitorPrivateEndpointConnectionResource" /> object. </returns>
         public static MonitorPrivateEndpointConnectionResource GetMonitorPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetMonitorPrivateEndpointConnectionResource(id);
+            return GetMockableMonitorArmClient(client).GetMonitorPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="MonitorPrivateLinkScopedResource.CreateResourceIdentifier" /> to create a <see cref="MonitorPrivateLinkScopedResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetMonitorPrivateLinkScopedResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorPrivateLinkScopedResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="MonitorPrivateLinkScopedResource" /> object. </returns>
         public static MonitorPrivateLinkScopedResource GetMonitorPrivateLinkScopedResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetMonitorPrivateLinkScopedResource(id);
+            return GetMockableMonitorArmClient(client).GetMonitorPrivateLinkScopedResource(id);
         }
 
         /// <summary>
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="ActivityLogAlertResource.CreateResourceIdentifier" /> to create an <see cref="ActivityLogAlertResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetActivityLogAlertResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetActivityLogAlertResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="ActivityLogAlertResource" /> object. </returns>
         public static ActivityLogAlertResource GetActivityLogAlertResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetActivityLogAlertResource(id);
+            return GetMockableMonitorArmClient(client).GetActivityLogAlertResource(id);
         }
 
         /// <summary>
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="DataCollectionEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetDataCollectionEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetDataCollectionEndpointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="DataCollectionEndpointResource" /> object. </returns>
         public static DataCollectionEndpointResource GetDataCollectionEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetDataCollectionEndpointResource(id);
+            return GetMockableMonitorArmClient(client).GetDataCollectionEndpointResource(id);
         }
 
         /// <summary>
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="DataCollectionRuleAssociationResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionRuleAssociationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetDataCollectionRuleAssociationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetDataCollectionRuleAssociationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -735,7 +735,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="DataCollectionRuleAssociationResource" /> object. </returns>
         public static DataCollectionRuleAssociationResource GetDataCollectionRuleAssociationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetDataCollectionRuleAssociationResource(id);
+            return GetMockableMonitorArmClient(client).GetDataCollectionRuleAssociationResource(id);
         }
 
         /// <summary>
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="DataCollectionRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataCollectionRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetDataCollectionRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetDataCollectionRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="DataCollectionRuleResource" /> object. </returns>
         public static DataCollectionRuleResource GetDataCollectionRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetDataCollectionRuleResource(id);
+            return GetMockableMonitorArmClient(client).GetDataCollectionRuleResource(id);
         }
 
         /// <summary>
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.Monitor
         /// You can use <see cref="MonitorWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="MonitorWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorArmClientMockingExtension.GetMonitorWorkspaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorArmClient.GetMonitorWorkspaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -767,21 +767,21 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> Returns a <see cref="MonitorWorkspaceResource" /> object. </returns>
         public static MonitorWorkspaceResource GetMonitorWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMonitorArmClientMockingExtension(client).GetMonitorWorkspaceResource(id);
+            return GetMockableMonitorArmClient(client).GetMonitorWorkspaceResource(id);
         }
 
         /// <summary>
         /// Gets a collection of AutoscaleSettingResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetAutoscaleSettings()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetAutoscaleSettings()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AutoscaleSettingResources and their operations over a AutoscaleSettingResource. </returns>
         public static AutoscaleSettingCollection GetAutoscaleSettings(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetAutoscaleSettings();
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetAutoscaleSettings();
         }
 
         /// <summary>
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetAutoscaleSettingAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetAutoscaleSettingAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<AutoscaleSettingResource>> GetAutoscaleSettingAsync(this ResourceGroupResource resourceGroupResource, string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
-            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetAutoscaleSettingAsync(autoscaleSettingName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetAutoscaleSettingAsync(autoscaleSettingName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetAutoscaleSetting(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetAutoscaleSetting(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -837,21 +837,21 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<AutoscaleSettingResource> GetAutoscaleSetting(this ResourceGroupResource resourceGroupResource, string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetAutoscaleSetting(autoscaleSettingName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetAutoscaleSetting(autoscaleSettingName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of AlertRuleResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetAlertRules()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetAlertRules()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AlertRuleResources and their operations over a AlertRuleResource. </returns>
         public static AlertRuleCollection GetAlertRules(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetAlertRules();
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetAlertRules();
         }
 
         /// <summary>
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetAlertRuleAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetAlertRuleAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<AlertRuleResource>> GetAlertRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
-            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetAlertRuleAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetAlertRuleAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetAlertRule(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetAlertRule(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -907,21 +907,21 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<AlertRuleResource> GetAlertRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetAlertRule(ruleName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetAlertRule(ruleName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ActionGroupResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetActionGroups()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActionGroups()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ActionGroupResources and their operations over a ActionGroupResource. </returns>
         public static ActionGroupCollection GetActionGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetActionGroups();
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActionGroups();
         }
 
         /// <summary>
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetActionGroupAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActionGroupAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<ActionGroupResource>> GetActionGroupAsync(this ResourceGroupResource resourceGroupResource, string actionGroupName, CancellationToken cancellationToken = default)
         {
-            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetActionGroupAsync(actionGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActionGroupAsync(actionGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -966,7 +966,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetActionGroup(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActionGroup(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -977,21 +977,21 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<ActionGroupResource> GetActionGroup(this ResourceGroupResource resourceGroupResource, string actionGroupName, CancellationToken cancellationToken = default)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetActionGroup(actionGroupName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActionGroup(actionGroupName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of MetricAlertResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetMetricAlerts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetMetricAlerts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MetricAlertResources and their operations over a MetricAlertResource. </returns>
         public static MetricAlertCollection GetMetricAlerts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMetricAlerts();
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetMetricAlerts();
         }
 
         /// <summary>
@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetMetricAlertAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetMetricAlertAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<MetricAlertResource>> GetMetricAlertAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
-            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMetricAlertAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetMetricAlertAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1036,7 +1036,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetMetricAlert(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetMetricAlert(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1047,21 +1047,21 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<MetricAlertResource> GetMetricAlert(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMetricAlert(ruleName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetMetricAlert(ruleName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ScheduledQueryRuleResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetScheduledQueryRules()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetScheduledQueryRules()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ScheduledQueryRuleResources and their operations over a ScheduledQueryRuleResource. </returns>
         public static ScheduledQueryRuleCollection GetScheduledQueryRules(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetScheduledQueryRules();
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetScheduledQueryRules();
         }
 
         /// <summary>
@@ -1078,7 +1078,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetScheduledQueryRuleAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetScheduledQueryRuleAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1089,7 +1089,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<ScheduledQueryRuleResource>> GetScheduledQueryRuleAsync(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
-            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetScheduledQueryRuleAsync(ruleName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetScheduledQueryRuleAsync(ruleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetScheduledQueryRule(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetScheduledQueryRule(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1117,21 +1117,21 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<ScheduledQueryRuleResource> GetScheduledQueryRule(this ResourceGroupResource resourceGroupResource, string ruleName, CancellationToken cancellationToken = default)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetScheduledQueryRule(ruleName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetScheduledQueryRule(ruleName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of MonitorPrivateLinkScopeResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetMonitorPrivateLinkScopes()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetMonitorPrivateLinkScopes()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MonitorPrivateLinkScopeResources and their operations over a MonitorPrivateLinkScopeResource. </returns>
         public static MonitorPrivateLinkScopeCollection GetMonitorPrivateLinkScopes(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMonitorPrivateLinkScopes();
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetMonitorPrivateLinkScopes();
         }
 
         /// <summary>
@@ -1148,7 +1148,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetMonitorPrivateLinkScopeAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetMonitorPrivateLinkScopeAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1159,7 +1159,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<MonitorPrivateLinkScopeResource>> GetMonitorPrivateLinkScopeAsync(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
         {
-            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMonitorPrivateLinkScopeAsync(scopeName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetMonitorPrivateLinkScopeAsync(scopeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1176,7 +1176,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetMonitorPrivateLinkScope(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetMonitorPrivateLinkScope(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1187,21 +1187,21 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScope(this ResourceGroupResource resourceGroupResource, string scopeName, CancellationToken cancellationToken = default)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMonitorPrivateLinkScope(scopeName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetMonitorPrivateLinkScope(scopeName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ActivityLogAlertResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetActivityLogAlerts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActivityLogAlerts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ActivityLogAlertResources and their operations over a ActivityLogAlertResource. </returns>
         public static ActivityLogAlertCollection GetActivityLogAlerts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetActivityLogAlerts();
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActivityLogAlerts();
         }
 
         /// <summary>
@@ -1218,7 +1218,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetActivityLogAlertAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActivityLogAlertAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1229,7 +1229,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<ActivityLogAlertResource>> GetActivityLogAlertAsync(this ResourceGroupResource resourceGroupResource, string activityLogAlertName, CancellationToken cancellationToken = default)
         {
-            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetActivityLogAlertAsync(activityLogAlertName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActivityLogAlertAsync(activityLogAlertName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1246,7 +1246,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetActivityLogAlert(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetActivityLogAlert(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1257,21 +1257,21 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<ActivityLogAlertResource> GetActivityLogAlert(this ResourceGroupResource resourceGroupResource, string activityLogAlertName, CancellationToken cancellationToken = default)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetActivityLogAlert(activityLogAlertName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetActivityLogAlert(activityLogAlertName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of DataCollectionEndpointResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetDataCollectionEndpoints()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionEndpoints()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataCollectionEndpointResources and their operations over a DataCollectionEndpointResource. </returns>
         public static DataCollectionEndpointCollection GetDataCollectionEndpoints(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetDataCollectionEndpoints();
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionEndpoints();
         }
 
         /// <summary>
@@ -1288,7 +1288,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetDataCollectionEndpointAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionEndpointAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1299,7 +1299,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<DataCollectionEndpointResource>> GetDataCollectionEndpointAsync(this ResourceGroupResource resourceGroupResource, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetDataCollectionEndpointAsync(dataCollectionEndpointName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionEndpointAsync(dataCollectionEndpointName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1316,7 +1316,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetDataCollectionEndpoint(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionEndpoint(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1327,21 +1327,21 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<DataCollectionEndpointResource> GetDataCollectionEndpoint(this ResourceGroupResource resourceGroupResource, string dataCollectionEndpointName, CancellationToken cancellationToken = default)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetDataCollectionEndpoint(dataCollectionEndpointName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionEndpoint(dataCollectionEndpointName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of DataCollectionRuleResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetDataCollectionRules()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionRules()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataCollectionRuleResources and their operations over a DataCollectionRuleResource. </returns>
         public static DataCollectionRuleCollection GetDataCollectionRules(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetDataCollectionRules();
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionRules();
         }
 
         /// <summary>
@@ -1358,7 +1358,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetDataCollectionRuleAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionRuleAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1369,7 +1369,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<DataCollectionRuleResource>> GetDataCollectionRuleAsync(this ResourceGroupResource resourceGroupResource, string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
-            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetDataCollectionRuleAsync(dataCollectionRuleName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionRuleAsync(dataCollectionRuleName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1386,7 +1386,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetDataCollectionRule(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetDataCollectionRule(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1397,21 +1397,21 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<DataCollectionRuleResource> GetDataCollectionRule(this ResourceGroupResource resourceGroupResource, string dataCollectionRuleName, CancellationToken cancellationToken = default)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetDataCollectionRule(dataCollectionRuleName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetDataCollectionRule(dataCollectionRuleName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of MonitorWorkspaceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetMonitorWorkspaceResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetMonitorWorkspaceResources()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MonitorWorkspaceResources and their operations over a MonitorWorkspaceResource. </returns>
         public static MonitorWorkspaceResourceCollection GetMonitorWorkspaceResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMonitorWorkspaceResources();
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetMonitorWorkspaceResources();
         }
 
         /// <summary>
@@ -1428,7 +1428,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetMonitorWorkspaceResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetMonitorWorkspaceResourceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1439,7 +1439,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<MonitorWorkspaceResource>> GetMonitorWorkspaceResourceAsync(this ResourceGroupResource resourceGroupResource, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
-            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMonitorWorkspaceResourceAsync(azureMonitorWorkspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetMonitorWorkspaceResourceAsync(azureMonitorWorkspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1456,7 +1456,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetMonitorWorkspaceResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetMonitorWorkspaceResource(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1467,7 +1467,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<MonitorWorkspaceResource> GetMonitorWorkspaceResource(this ResourceGroupResource resourceGroupResource, string azureMonitorWorkspaceName, CancellationToken cancellationToken = default)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetMonitorWorkspaceResource(azureMonitorWorkspaceName, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetMonitorWorkspaceResource(azureMonitorWorkspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -1484,7 +1484,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetPrivateLinkScopeOperationStatus(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetPrivateLinkScopeOperationStatus(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1494,7 +1494,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
         public static async Task<Response<MonitorPrivateLinkScopeOperationStatus>> GetPrivateLinkScopeOperationStatusAsync(this ResourceGroupResource resourceGroupResource, string asyncOperationId, CancellationToken cancellationToken = default)
         {
-            return await GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetPrivateLinkScopeOperationStatusAsync(asyncOperationId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorResourceGroupResource(resourceGroupResource).GetPrivateLinkScopeOperationStatusAsync(asyncOperationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1511,7 +1511,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorResourceGroupMockingExtension.GetPrivateLinkScopeOperationStatus(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorResourceGroupResource.GetPrivateLinkScopeOperationStatus(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1521,21 +1521,21 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
         public static Response<MonitorPrivateLinkScopeOperationStatus> GetPrivateLinkScopeOperationStatus(this ResourceGroupResource resourceGroupResource, string asyncOperationId, CancellationToken cancellationToken = default)
         {
-            return GetMonitorResourceGroupMockingExtension(resourceGroupResource).GetPrivateLinkScopeOperationStatus(asyncOperationId, cancellationToken);
+            return GetMockableMonitorResourceGroupResource(resourceGroupResource).GetPrivateLinkScopeOperationStatus(asyncOperationId, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of LogProfileResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetLogProfiles()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetLogProfiles()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of LogProfileResources and their operations over a LogProfileResource. </returns>
         public static LogProfileCollection GetLogProfiles(this SubscriptionResource subscriptionResource)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetLogProfiles();
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetLogProfiles();
         }
 
         /// <summary>
@@ -1552,7 +1552,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetLogProfileAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetLogProfileAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1563,7 +1563,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static async Task<Response<LogProfileResource>> GetLogProfileAsync(this SubscriptionResource subscriptionResource, string logProfileName, CancellationToken cancellationToken = default)
         {
-            return await GetMonitorSubscriptionMockingExtension(subscriptionResource).GetLogProfileAsync(logProfileName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMonitorSubscriptionResource(subscriptionResource).GetLogProfileAsync(logProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1580,7 +1580,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetLogProfile(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetLogProfile(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1591,7 +1591,7 @@ namespace Azure.ResourceManager.Monitor
         [ForwardsClientCalls]
         public static Response<LogProfileResource> GetLogProfile(this SubscriptionResource subscriptionResource, string logProfileName, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetLogProfile(logProfileName, cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetLogProfile(logProfileName, cancellationToken);
         }
 
         /// <summary>
@@ -1608,7 +1608,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetAutoscaleSettings(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetAutoscaleSettings(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1616,7 +1616,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="AutoscaleSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutoscaleSettingResource> GetAutoscaleSettingsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetAutoscaleSettingsAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetAutoscaleSettingsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1633,7 +1633,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetAutoscaleSettings(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetAutoscaleSettings(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1641,7 +1641,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="AutoscaleSettingResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutoscaleSettingResource> GetAutoscaleSettings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetAutoscaleSettings(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetAutoscaleSettings(cancellationToken);
         }
 
         /// <summary>
@@ -1658,7 +1658,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetAlertRules(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetAlertRules(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1666,7 +1666,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="AlertRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AlertRuleResource> GetAlertRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetAlertRulesAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetAlertRulesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1683,7 +1683,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetAlertRules(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetAlertRules(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1691,7 +1691,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="AlertRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AlertRuleResource> GetAlertRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetAlertRules(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetAlertRules(cancellationToken);
         }
 
         /// <summary>
@@ -1708,7 +1708,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetActionGroups(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetActionGroups(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1716,7 +1716,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="ActionGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ActionGroupResource> GetActionGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetActionGroupsAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetActionGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1733,7 +1733,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetActionGroups(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetActionGroups(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1741,7 +1741,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="ActionGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ActionGroupResource> GetActionGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetActionGroups(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetActionGroups(cancellationToken);
         }
 
         /// <summary>
@@ -1758,7 +1758,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetActivityLogs(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetActivityLogs(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1769,7 +1769,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventDataInfo> GetActivityLogsAsync(this SubscriptionResource subscriptionResource, string filter, string select = null, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetActivityLogsAsync(filter, select, cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetActivityLogsAsync(filter, select, cancellationToken);
         }
 
         /// <summary>
@@ -1786,7 +1786,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetActivityLogs(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetActivityLogs(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1797,7 +1797,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventDataInfo> GetActivityLogs(this SubscriptionResource subscriptionResource, string filter, string select = null, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetActivityLogs(filter, select, cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetActivityLogs(filter, select, cancellationToken);
         }
 
         /// <summary>
@@ -1814,7 +1814,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetMonitorMetrics(SubscriptionResourceGetMonitorMetricsOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMonitorMetrics(SubscriptionResourceGetMonitorMetricsOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1824,7 +1824,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMonitorMetricsAsync(options, cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetMonitorMetricsAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -1841,7 +1841,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetMonitorMetrics(SubscriptionResourceGetMonitorMetricsOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMonitorMetrics(SubscriptionResourceGetMonitorMetricsOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1851,7 +1851,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SubscriptionMonitorMetric> GetMonitorMetrics(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsOptions options, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMonitorMetrics(options, cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetMonitorMetrics(options, cancellationToken);
         }
 
         /// <summary>
@@ -1868,7 +1868,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetMonitorMetricsWithPost(SubscriptionResourceGetMonitorMetricsWithPostOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMonitorMetricsWithPost(SubscriptionResourceGetMonitorMetricsWithPostOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1878,7 +1878,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPostAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMonitorMetricsWithPostAsync(options, cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetMonitorMetricsWithPostAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -1895,7 +1895,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetMonitorMetricsWithPost(SubscriptionResourceGetMonitorMetricsWithPostOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMonitorMetricsWithPost(SubscriptionResourceGetMonitorMetricsWithPostOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1905,7 +1905,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="SubscriptionMonitorMetric" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SubscriptionMonitorMetric> GetMonitorMetricsWithPost(this SubscriptionResource subscriptionResource, SubscriptionResourceGetMonitorMetricsWithPostOptions options, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMonitorMetricsWithPost(options, cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetMonitorMetricsWithPost(options, cancellationToken);
         }
 
         /// <summary>
@@ -1922,7 +1922,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetMetricAlerts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMetricAlerts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1930,7 +1930,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MetricAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MetricAlertResource> GetMetricAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMetricAlertsAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetMetricAlertsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1947,7 +1947,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetMetricAlerts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMetricAlerts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1955,7 +1955,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MetricAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MetricAlertResource> GetMetricAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMetricAlerts(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetMetricAlerts(cancellationToken);
         }
 
         /// <summary>
@@ -1972,7 +1972,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetScheduledQueryRules(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetScheduledQueryRules(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1980,7 +1980,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ScheduledQueryRuleResource> GetScheduledQueryRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetScheduledQueryRulesAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetScheduledQueryRulesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1997,7 +1997,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetScheduledQueryRules(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetScheduledQueryRules(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2005,7 +2005,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="ScheduledQueryRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ScheduledQueryRuleResource> GetScheduledQueryRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetScheduledQueryRules(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetScheduledQueryRules(cancellationToken);
         }
 
         /// <summary>
@@ -2022,7 +2022,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetMonitorPrivateLinkScopes(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMonitorPrivateLinkScopes(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2030,7 +2030,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMonitorPrivateLinkScopesAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetMonitorPrivateLinkScopesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2047,7 +2047,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetMonitorPrivateLinkScopes(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMonitorPrivateLinkScopes(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2055,7 +2055,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MonitorPrivateLinkScopeResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MonitorPrivateLinkScopeResource> GetMonitorPrivateLinkScopes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMonitorPrivateLinkScopes(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetMonitorPrivateLinkScopes(cancellationToken);
         }
 
         /// <summary>
@@ -2072,7 +2072,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetActivityLogAlerts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetActivityLogAlerts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2080,7 +2080,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="ActivityLogAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ActivityLogAlertResource> GetActivityLogAlertsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetActivityLogAlertsAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetActivityLogAlertsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2097,7 +2097,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetActivityLogAlerts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetActivityLogAlerts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2105,7 +2105,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="ActivityLogAlertResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ActivityLogAlertResource> GetActivityLogAlerts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetActivityLogAlerts(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetActivityLogAlerts(cancellationToken);
         }
 
         /// <summary>
@@ -2122,7 +2122,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetDataCollectionEndpoints(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetDataCollectionEndpoints(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2130,7 +2130,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="DataCollectionEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataCollectionEndpointResource> GetDataCollectionEndpointsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetDataCollectionEndpointsAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetDataCollectionEndpointsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2147,7 +2147,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetDataCollectionEndpoints(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetDataCollectionEndpoints(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2155,7 +2155,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="DataCollectionEndpointResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataCollectionEndpointResource> GetDataCollectionEndpoints(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetDataCollectionEndpoints(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetDataCollectionEndpoints(cancellationToken);
         }
 
         /// <summary>
@@ -2172,7 +2172,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetDataCollectionRules(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetDataCollectionRules(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2180,7 +2180,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="DataCollectionRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataCollectionRuleResource> GetDataCollectionRulesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetDataCollectionRulesAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetDataCollectionRulesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2197,7 +2197,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetDataCollectionRules(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetDataCollectionRules(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2205,7 +2205,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="DataCollectionRuleResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataCollectionRuleResource> GetDataCollectionRules(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetDataCollectionRules(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetDataCollectionRules(cancellationToken);
         }
 
         /// <summary>
@@ -2222,7 +2222,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetMonitorWorkspaceResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMonitorWorkspaceResources(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2230,7 +2230,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MonitorWorkspaceResource> GetMonitorWorkspaceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMonitorWorkspaceResourcesAsync(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetMonitorWorkspaceResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2247,7 +2247,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorSubscriptionMockingExtension.GetMonitorWorkspaceResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorSubscriptionResource.GetMonitorWorkspaceResources(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2255,7 +2255,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MonitorWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MonitorWorkspaceResource> GetMonitorWorkspaceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorSubscriptionMockingExtension(subscriptionResource).GetMonitorWorkspaceResources(cancellationToken);
+            return GetMockableMonitorSubscriptionResource(subscriptionResource).GetMonitorWorkspaceResources(cancellationToken);
         }
 
         /// <summary>
@@ -2272,7 +2272,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorTenantMockingExtension.GetEventCategories(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorTenantResource.GetEventCategories(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -2280,7 +2280,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="MonitorLocalizableString" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MonitorLocalizableString> GetEventCategoriesAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorTenantMockingExtension(tenantResource).GetEventCategoriesAsync(cancellationToken);
+            return GetMockableMonitorTenantResource(tenantResource).GetEventCategoriesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2297,7 +2297,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorTenantMockingExtension.GetEventCategories(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorTenantResource.GetEventCategories(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -2305,7 +2305,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="MonitorLocalizableString" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MonitorLocalizableString> GetEventCategories(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetMonitorTenantMockingExtension(tenantResource).GetEventCategories(cancellationToken);
+            return GetMockableMonitorTenantResource(tenantResource).GetEventCategories(cancellationToken);
         }
 
         /// <summary>
@@ -2322,7 +2322,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorTenantMockingExtension.GetTenantActivityLogs(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorTenantResource.GetTenantActivityLogs(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -2332,7 +2332,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> An async collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventDataInfo> GetTenantActivityLogsAsync(this TenantResource tenantResource, string filter = null, string select = null, CancellationToken cancellationToken = default)
         {
-            return GetMonitorTenantMockingExtension(tenantResource).GetTenantActivityLogsAsync(filter, select, cancellationToken);
+            return GetMockableMonitorTenantResource(tenantResource).GetTenantActivityLogsAsync(filter, select, cancellationToken);
         }
 
         /// <summary>
@@ -2349,7 +2349,7 @@ namespace Azure.ResourceManager.Monitor
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MonitorTenantMockingExtension.GetTenantActivityLogs(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMonitorTenantResource.GetTenantActivityLogs(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -2359,7 +2359,7 @@ namespace Azure.ResourceManager.Monitor
         /// <returns> A collection of <see cref="EventDataInfo" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventDataInfo> GetTenantActivityLogs(this TenantResource tenantResource, string filter = null, string select = null, CancellationToken cancellationToken = default)
         {
-            return GetMonitorTenantMockingExtension(tenantResource).GetTenantActivityLogs(filter, select, cancellationToken);
+            return GetMockableMonitorTenantResource(tenantResource).GetTenantActivityLogs(filter, select, cancellationToken);
         }
     }
 }

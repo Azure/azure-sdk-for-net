@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Support
     /// <summary> A class to add extension methods to Azure.ResourceManager.Support. </summary>
     public static partial class SupportExtensions
     {
-        private static SupportArmClientMockingExtension GetSupportArmClientMockingExtension(ArmClient client)
+        private static MockableSupportArmClient GetMockableSupportArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new SupportArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableSupportArmClient(client0));
         }
 
-        private static SupportSubscriptionMockingExtension GetSupportSubscriptionMockingExtension(ArmResource resource)
+        private static MockableSupportSubscriptionResource GetMockableSupportSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new SupportSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableSupportSubscriptionResource(client, resource.Id));
         }
 
-        private static SupportTenantMockingExtension GetSupportTenantMockingExtension(ArmResource resource)
+        private static MockableSupportTenantResource GetMockableSupportTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new SupportTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableSupportTenantResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Support
         /// You can use <see cref="SupportAzureServiceResource.CreateResourceIdentifier" /> to create a <see cref="SupportAzureServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SupportArmClientMockingExtension.GetSupportAzureServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSupportArmClient.GetSupportAzureServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="SupportAzureServiceResource" /> object. </returns>
         public static SupportAzureServiceResource GetSupportAzureServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSupportArmClientMockingExtension(client).GetSupportAzureServiceResource(id);
+            return GetMockableSupportArmClient(client).GetSupportAzureServiceResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Support
         /// You can use <see cref="ProblemClassificationResource.CreateResourceIdentifier" /> to create a <see cref="ProblemClassificationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SupportArmClientMockingExtension.GetProblemClassificationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSupportArmClient.GetProblemClassificationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="ProblemClassificationResource" /> object. </returns>
         public static ProblemClassificationResource GetProblemClassificationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSupportArmClientMockingExtension(client).GetProblemClassificationResource(id);
+            return GetMockableSupportArmClient(client).GetProblemClassificationResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Support
         /// You can use <see cref="SupportTicketResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SupportArmClientMockingExtension.GetSupportTicketResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSupportArmClient.GetSupportTicketResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="SupportTicketResource" /> object. </returns>
         public static SupportTicketResource GetSupportTicketResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSupportArmClientMockingExtension(client).GetSupportTicketResource(id);
+            return GetMockableSupportArmClient(client).GetSupportTicketResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Support
         /// You can use <see cref="SupportTicketCommunicationResource.CreateResourceIdentifier" /> to create a <see cref="SupportTicketCommunicationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SupportArmClientMockingExtension.GetSupportTicketCommunicationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSupportArmClient.GetSupportTicketCommunicationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,21 +96,21 @@ namespace Azure.ResourceManager.Support
         /// <returns> Returns a <see cref="SupportTicketCommunicationResource" /> object. </returns>
         public static SupportTicketCommunicationResource GetSupportTicketCommunicationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSupportArmClientMockingExtension(client).GetSupportTicketCommunicationResource(id);
+            return GetMockableSupportArmClient(client).GetSupportTicketCommunicationResource(id);
         }
 
         /// <summary>
         /// Gets a collection of SupportTicketResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SupportSubscriptionMockingExtension.GetSupportTickets()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.GetSupportTickets()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SupportTicketResources and their operations over a SupportTicketResource. </returns>
         public static SupportTicketCollection GetSupportTickets(this SubscriptionResource subscriptionResource)
         {
-            return GetSupportSubscriptionMockingExtension(subscriptionResource).GetSupportTickets();
+            return GetMockableSupportSubscriptionResource(subscriptionResource).GetSupportTickets();
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Support
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SupportSubscriptionMockingExtension.GetSupportTicketAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.GetSupportTicketAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Support
         [ForwardsClientCalls]
         public static async Task<Response<SupportTicketResource>> GetSupportTicketAsync(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
         {
-            return await GetSupportSubscriptionMockingExtension(subscriptionResource).GetSupportTicketAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSupportSubscriptionResource(subscriptionResource).GetSupportTicketAsync(supportTicketName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Support
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SupportSubscriptionMockingExtension.GetSupportTicket(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.GetSupportTicket(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Support
         [ForwardsClientCalls]
         public static Response<SupportTicketResource> GetSupportTicket(this SubscriptionResource subscriptionResource, string supportTicketName, CancellationToken cancellationToken = default)
         {
-            return GetSupportSubscriptionMockingExtension(subscriptionResource).GetSupportTicket(supportTicketName, cancellationToken);
+            return GetMockableSupportSubscriptionResource(subscriptionResource).GetSupportTicket(supportTicketName, cancellationToken);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Support
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SupportSubscriptionMockingExtension.CheckSupportTicketNameAvailability(SupportNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.CheckSupportTicketNameAvailability(SupportNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<SupportNameAvailabilityResult>> CheckSupportTicketNameAvailabilityAsync(this SubscriptionResource subscriptionResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetSupportSubscriptionMockingExtension(subscriptionResource).CheckSupportTicketNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSupportSubscriptionResource(subscriptionResource).CheckSupportTicketNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Support
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SupportSubscriptionMockingExtension.CheckSupportTicketNameAvailability(SupportNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSupportSubscriptionResource.CheckSupportTicketNameAvailability(SupportNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -218,21 +218,21 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<SupportNameAvailabilityResult> CheckSupportTicketNameAvailability(this SubscriptionResource subscriptionResource, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetSupportSubscriptionMockingExtension(subscriptionResource).CheckSupportTicketNameAvailability(content, cancellationToken);
+            return GetMockableSupportSubscriptionResource(subscriptionResource).CheckSupportTicketNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of SupportAzureServiceResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SupportTenantMockingExtension.GetSupportAzureServices()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.GetSupportAzureServices()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SupportAzureServiceResources and their operations over a SupportAzureServiceResource. </returns>
         public static SupportAzureServiceCollection GetSupportAzureServices(this TenantResource tenantResource)
         {
-            return GetSupportTenantMockingExtension(tenantResource).GetSupportAzureServices();
+            return GetMockableSupportTenantResource(tenantResource).GetSupportAzureServices();
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Support
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SupportTenantMockingExtension.GetSupportAzureServiceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.GetSupportAzureServiceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Support
         [ForwardsClientCalls]
         public static async Task<Response<SupportAzureServiceResource>> GetSupportAzureServiceAsync(this TenantResource tenantResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return await GetSupportTenantMockingExtension(tenantResource).GetSupportAzureServiceAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSupportTenantResource(tenantResource).GetSupportAzureServiceAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Support
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SupportTenantMockingExtension.GetSupportAzureService(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSupportTenantResource.GetSupportAzureService(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Support
         [ForwardsClientCalls]
         public static Response<SupportAzureServiceResource> GetSupportAzureService(this TenantResource tenantResource, string serviceName, CancellationToken cancellationToken = default)
         {
-            return GetSupportTenantMockingExtension(tenantResource).GetSupportAzureService(serviceName, cancellationToken);
+            return GetMockableSupportTenantResource(tenantResource).GetSupportAzureService(serviceName, cancellationToken);
         }
     }
 }

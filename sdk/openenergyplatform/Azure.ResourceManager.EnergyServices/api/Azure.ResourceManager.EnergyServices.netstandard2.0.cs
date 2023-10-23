@@ -62,21 +62,21 @@ namespace Azure.ResourceManager.EnergyServices
 }
 namespace Azure.ResourceManager.EnergyServices.Mocking
 {
-    public partial class EnergyServicesArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableEnergyServicesArmClient : Azure.ResourceManager.ArmResource
     {
-        protected EnergyServicesArmClientMockingExtension() { }
+        protected MockableEnergyServicesArmClient() { }
         public virtual Azure.ResourceManager.EnergyServices.EnergyServiceResource GetEnergyServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class EnergyServicesResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableEnergyServicesResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected EnergyServicesResourceGroupMockingExtension() { }
+        protected MockableEnergyServicesResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.EnergyServices.EnergyServiceResource> GetEnergyService(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EnergyServices.EnergyServiceResource>> GetEnergyServiceAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.EnergyServices.EnergyServiceCollection GetEnergyServices() { throw null; }
     }
-    public partial class EnergyServicesSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableEnergyServicesSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected EnergyServicesSubscriptionMockingExtension() { }
+        protected MockableEnergyServicesSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult> CheckNameAvailabilityLocation(Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult>> CheckNameAvailabilityLocationAsync(Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.EnergyServices.EnergyServiceResource> GetEnergyServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

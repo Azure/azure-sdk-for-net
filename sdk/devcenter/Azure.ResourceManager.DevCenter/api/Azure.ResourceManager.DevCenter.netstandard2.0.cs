@@ -749,9 +749,9 @@ namespace Azure.ResourceManager.DevCenter
 }
 namespace Azure.ResourceManager.DevCenter.Mocking
 {
-    public partial class DevCenterArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDevCenterArmClient : Azure.ResourceManager.ArmResource
     {
-        protected DevCenterArmClientMockingExtension() { }
+        protected MockableDevCenterArmClient() { }
         public virtual Azure.ResourceManager.DevCenter.AllowedEnvironmentTypeResource GetAllowedEnvironmentTypeResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevCenter.AttachedNetworkConnectionResource GetAttachedNetworkConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevCenter.DevBoxDefinitionResource GetDevBoxDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -770,9 +770,9 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         public virtual Azure.ResourceManager.DevCenter.ProjectAttachedNetworkConnectionResource GetProjectAttachedNetworkConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevCenter.ProjectDevBoxDefinitionResource GetProjectDevBoxDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DevCenterResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDevCenterResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected DevCenterResourceGroupMockingExtension() { }
+        protected MockableDevCenterResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.DevCenterResource> GetDevCenter(string devCenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.DevCenterResource>> GetDevCenterAsync(string devCenterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.DevCenterNetworkConnectionResource> GetDevCenterNetworkConnection(string networkConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -783,9 +783,9 @@ namespace Azure.ResourceManager.DevCenter.Mocking
         public virtual Azure.ResourceManager.DevCenter.DevCenterProjectCollection GetDevCenterProjects() { throw null; }
         public virtual Azure.ResourceManager.DevCenter.DevCenterCollection GetDevCenters() { throw null; }
     }
-    public partial class DevCenterSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDevCenterSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected DevCenterSubscriptionMockingExtension() { }
+        protected MockableDevCenterSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterNameAvailabilityResult> CheckDevCenterNameAvailability(Azure.ResourceManager.DevCenter.Models.DevCenterNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevCenter.Models.DevCenterNameAvailabilityResult>> CheckDevCenterNameAvailabilityAsync(Azure.ResourceManager.DevCenter.Models.DevCenterNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevCenter.DevCenterNetworkConnectionResource> GetDevCenterNetworkConnections(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

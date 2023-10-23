@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary> A class to add extension methods to Azure.ResourceManager.AppContainers. </summary>
     public static partial class AppContainersExtensions
     {
-        private static AppContainersArmClientMockingExtension GetAppContainersArmClientMockingExtension(ArmClient client)
+        private static MockableAppContainersArmClient GetMockableAppContainersArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new AppContainersArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableAppContainersArmClient(client0));
         }
 
-        private static AppContainersResourceGroupMockingExtension GetAppContainersResourceGroupMockingExtension(ArmResource resource)
+        private static MockableAppContainersResourceGroupResource GetMockableAppContainersResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AppContainersResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAppContainersResourceGroupResource(client, resource.Id));
         }
 
-        private static AppContainersSubscriptionMockingExtension GetAppContainersSubscriptionMockingExtension(ArmResource resource)
+        private static MockableAppContainersSubscriptionResource GetMockableAppContainersSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AppContainersSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAppContainersSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppAuthConfigResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppAuthConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppAuthConfigResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppAuthConfigResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppAuthConfigResource" /> object. </returns>
         public static ContainerAppAuthConfigResource GetContainerAppAuthConfigResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppAuthConfigResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppAuthConfigResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppConnectedEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppConnectedEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppConnectedEnvironmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppConnectedEnvironmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentResource" /> object. </returns>
         public static ContainerAppConnectedEnvironmentResource GetContainerAppConnectedEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppConnectedEnvironmentResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppConnectedEnvironmentResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppConnectedEnvironmentCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppConnectedEnvironmentCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppConnectedEnvironmentCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppConnectedEnvironmentCertificateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentCertificateResource" /> object. </returns>
         public static ContainerAppConnectedEnvironmentCertificateResource GetContainerAppConnectedEnvironmentCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppConnectedEnvironmentCertificateResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppConnectedEnvironmentCertificateResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppManagedEnvironmentCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppManagedEnvironmentCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppManagedEnvironmentCertificateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentCertificateResource" /> object. </returns>
         public static ContainerAppManagedEnvironmentCertificateResource GetContainerAppManagedEnvironmentCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppManagedEnvironmentCertificateResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentCertificateResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppConnectedEnvironmentDaprComponentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppConnectedEnvironmentDaprComponentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppConnectedEnvironmentDaprComponentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentDaprComponentResource" /> object. </returns>
         public static ContainerAppConnectedEnvironmentDaprComponentResource GetContainerAppConnectedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppConnectedEnvironmentDaprComponentResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppConnectedEnvironmentDaprComponentResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppManagedEnvironmentDaprComponentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentDaprComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppManagedEnvironmentDaprComponentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppManagedEnvironmentDaprComponentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDaprComponentResource" /> object. </returns>
         public static ContainerAppManagedEnvironmentDaprComponentResource GetContainerAppManagedEnvironmentDaprComponentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppManagedEnvironmentDaprComponentResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentDaprComponentResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppConnectedEnvironmentStorageResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppConnectedEnvironmentStorageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppConnectedEnvironmentStorageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppConnectedEnvironmentStorageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppConnectedEnvironmentStorageResource" /> object. </returns>
         public static ContainerAppConnectedEnvironmentStorageResource GetContainerAppConnectedEnvironmentStorageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppConnectedEnvironmentStorageResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppConnectedEnvironmentStorageResource(id);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppResource" /> object. </returns>
         public static ContainerAppResource GetContainerAppResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppResource(id);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppDetectorPropertyResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppDetectorPropertyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppDetectorPropertyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppDetectorPropertyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppDetectorPropertyResource" /> object. </returns>
         public static ContainerAppDetectorPropertyResource GetContainerAppDetectorPropertyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppDetectorPropertyResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppDetectorPropertyResource(id);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppRevisionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppRevisionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppRevisionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppRevisionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppRevisionResource" /> object. </returns>
         public static ContainerAppRevisionResource GetContainerAppRevisionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppRevisionResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppRevisionResource(id);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppDetectorPropertyRevisionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppDetectorPropertyRevisionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppDetectorPropertyRevisionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppDetectorPropertyRevisionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppDetectorPropertyRevisionResource" /> object. </returns>
         public static ContainerAppDetectorPropertyRevisionResource GetContainerAppDetectorPropertyRevisionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppDetectorPropertyRevisionResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppDetectorPropertyRevisionResource(id);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppReplicaResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppReplicaResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppReplicaResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppReplicaResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppReplicaResource" /> object. </returns>
         public static ContainerAppReplicaResource GetContainerAppReplicaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppReplicaResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppReplicaResource(id);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppDetectorResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppDetectorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppDetectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppDetectorResource" /> object. </returns>
         public static ContainerAppDetectorResource GetContainerAppDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppDetectorResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppDetectorResource(id);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppManagedEnvironmentDetectorResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppManagedEnvironmentDetectorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppManagedEnvironmentDetectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResource" /> object. </returns>
         public static ContainerAppManagedEnvironmentDetectorResource GetContainerAppManagedEnvironmentDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppManagedEnvironmentDetectorResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentDetectorResource(id);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppManagedEnvironmentDetectorResourcePropertyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppManagedEnvironmentDetectorResourcePropertyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentDetectorResourcePropertyResource" /> object. </returns>
         public static ContainerAppManagedEnvironmentDetectorResourcePropertyResource GetContainerAppManagedEnvironmentDetectorResourcePropertyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppManagedEnvironmentDetectorResourcePropertyResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentDetectorResourcePropertyResource(id);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppManagedEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppManagedEnvironmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppManagedEnvironmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentResource" /> object. </returns>
         public static ContainerAppManagedEnvironmentResource GetContainerAppManagedEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppManagedEnvironmentResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentResource(id);
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppJobResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppJobResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppJobResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppJobResource" /> object. </returns>
         public static ContainerAppJobResource GetContainerAppJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppJobResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppJobResource(id);
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppJobExecutionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppJobExecutionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppJobExecutionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppJobExecutionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppJobExecutionResource" /> object. </returns>
         public static ContainerAppJobExecutionResource GetContainerAppJobExecutionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppJobExecutionResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppJobExecutionResource(id);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppManagedCertificateResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppManagedCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppManagedCertificateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedCertificateResource" /> object. </returns>
         public static ContainerAppManagedCertificateResource GetContainerAppManagedCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppManagedCertificateResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppManagedCertificateResource(id);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppManagedEnvironmentStorageResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppManagedEnvironmentStorageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppManagedEnvironmentStorageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppManagedEnvironmentStorageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppManagedEnvironmentStorageResource" /> object. </returns>
         public static ContainerAppManagedEnvironmentStorageResource GetContainerAppManagedEnvironmentStorageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppManagedEnvironmentStorageResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppManagedEnvironmentStorageResource(id);
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.AppContainers
         /// You can use <see cref="ContainerAppSourceControlResource.CreateResourceIdentifier" /> to create a <see cref="ContainerAppSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersArmClientMockingExtension.GetContainerAppSourceControlResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppSourceControlResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -368,21 +368,21 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> Returns a <see cref="ContainerAppSourceControlResource" /> object. </returns>
         public static ContainerAppSourceControlResource GetContainerAppSourceControlResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppContainersArmClientMockingExtension(client).GetContainerAppSourceControlResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppSourceControlResource(id);
         }
 
         /// <summary>
         /// Gets a collection of ContainerAppConnectedEnvironmentResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersResourceGroupMockingExtension.GetContainerAppConnectedEnvironments()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerAppConnectedEnvironments()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ContainerAppConnectedEnvironmentResources and their operations over a ContainerAppConnectedEnvironmentResource. </returns>
         public static ContainerAppConnectedEnvironmentCollection GetContainerAppConnectedEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppConnectedEnvironments();
+            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppConnectedEnvironments();
         }
 
         /// <summary>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersResourceGroupMockingExtension.GetContainerAppConnectedEnvironmentAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerAppConnectedEnvironmentAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static async Task<Response<ContainerAppConnectedEnvironmentResource>> GetContainerAppConnectedEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
-            return await GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppConnectedEnvironmentAsync(connectedEnvironmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppConnectedEnvironmentAsync(connectedEnvironmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersResourceGroupMockingExtension.GetContainerAppConnectedEnvironment(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerAppConnectedEnvironment(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -438,21 +438,21 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static Response<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironment(this ResourceGroupResource resourceGroupResource, string connectedEnvironmentName, CancellationToken cancellationToken = default)
         {
-            return GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppConnectedEnvironment(connectedEnvironmentName, cancellationToken);
+            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppConnectedEnvironment(connectedEnvironmentName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ContainerAppResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersResourceGroupMockingExtension.GetContainerApps()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerApps()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ContainerAppResources and their operations over a ContainerAppResource. </returns>
         public static ContainerAppCollection GetContainerApps(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerApps();
+            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerApps();
         }
 
         /// <summary>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersResourceGroupMockingExtension.GetContainerAppAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerAppAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static async Task<Response<ContainerAppResource>> GetContainerAppAsync(this ResourceGroupResource resourceGroupResource, string containerAppName, CancellationToken cancellationToken = default)
         {
-            return await GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppAsync(containerAppName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppAsync(containerAppName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersResourceGroupMockingExtension.GetContainerApp(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerApp(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -508,21 +508,21 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static Response<ContainerAppResource> GetContainerApp(this ResourceGroupResource resourceGroupResource, string containerAppName, CancellationToken cancellationToken = default)
         {
-            return GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerApp(containerAppName, cancellationToken);
+            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerApp(containerAppName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ContainerAppManagedEnvironmentResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersResourceGroupMockingExtension.GetContainerAppManagedEnvironments()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerAppManagedEnvironments()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ContainerAppManagedEnvironmentResources and their operations over a ContainerAppManagedEnvironmentResource. </returns>
         public static ContainerAppManagedEnvironmentCollection GetContainerAppManagedEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppManagedEnvironments();
+            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppManagedEnvironments();
         }
 
         /// <summary>
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersResourceGroupMockingExtension.GetContainerAppManagedEnvironmentAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerAppManagedEnvironmentAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static async Task<Response<ContainerAppManagedEnvironmentResource>> GetContainerAppManagedEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string environmentName, CancellationToken cancellationToken = default)
         {
-            return await GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppManagedEnvironmentAsync(environmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppManagedEnvironmentAsync(environmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersResourceGroupMockingExtension.GetContainerAppManagedEnvironment(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerAppManagedEnvironment(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -578,21 +578,21 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static Response<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironment(this ResourceGroupResource resourceGroupResource, string environmentName, CancellationToken cancellationToken = default)
         {
-            return GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppManagedEnvironment(environmentName, cancellationToken);
+            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppManagedEnvironment(environmentName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ContainerAppJobResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersResourceGroupMockingExtension.GetContainerAppJobs()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerAppJobs()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ContainerAppJobResources and their operations over a ContainerAppJobResource. </returns>
         public static ContainerAppJobCollection GetContainerAppJobs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppJobs();
+            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppJobs();
         }
 
         /// <summary>
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersResourceGroupMockingExtension.GetContainerAppJobAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerAppJobAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static async Task<Response<ContainerAppJobResource>> GetContainerAppJobAsync(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
         {
-            return await GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppJobAsync(jobName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppJobAsync(jobName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersResourceGroupMockingExtension.GetContainerAppJob(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersResourceGroupResource.GetContainerAppJob(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.AppContainers
         [ForwardsClientCalls]
         public static Response<ContainerAppJobResource> GetContainerAppJob(this ResourceGroupResource resourceGroupResource, string jobName, CancellationToken cancellationToken = default)
         {
-            return GetAppContainersResourceGroupMockingExtension(resourceGroupResource).GetContainerAppJob(jobName, cancellationToken);
+            return GetMockableAppContainersResourceGroupResource(resourceGroupResource).GetContainerAppJob(jobName, cancellationToken);
         }
 
         /// <summary>
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersSubscriptionMockingExtension.GetAvailableWorkloadProfiles(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetAvailableWorkloadProfiles(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppAvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfilesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetAvailableWorkloadProfilesAsync(location, cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetAvailableWorkloadProfilesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersSubscriptionMockingExtension.GetAvailableWorkloadProfiles(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetAvailableWorkloadProfiles(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppAvailableWorkloadProfile" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppAvailableWorkloadProfile> GetAvailableWorkloadProfiles(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetAvailableWorkloadProfiles(location, cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetAvailableWorkloadProfiles(location, cancellationToken);
         }
 
         /// <summary>
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersSubscriptionMockingExtension.GetBillingMeters(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetBillingMeters(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppBillingMeter" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppBillingMeter> GetBillingMetersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetBillingMetersAsync(location, cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetBillingMetersAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersSubscriptionMockingExtension.GetBillingMeters(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetBillingMeters(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppBillingMeter" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppBillingMeter> GetBillingMeters(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetBillingMeters(location, cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetBillingMeters(location, cancellationToken);
         }
 
         /// <summary>
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersSubscriptionMockingExtension.GetContainerAppConnectedEnvironments(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetContainerAppConnectedEnvironments(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetContainerAppConnectedEnvironmentsAsync(cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppConnectedEnvironmentsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersSubscriptionMockingExtension.GetContainerAppConnectedEnvironments(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetContainerAppConnectedEnvironments(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppConnectedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppConnectedEnvironmentResource> GetContainerAppConnectedEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetContainerAppConnectedEnvironments(cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppConnectedEnvironments(cancellationToken);
         }
 
         /// <summary>
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersSubscriptionMockingExtension.GetContainerApps(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetContainerApps(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppResource> GetContainerAppsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetContainerAppsAsync(cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersSubscriptionMockingExtension.GetContainerApps(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetContainerApps(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppResource> GetContainerApps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetContainerApps(cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerApps(cancellationToken);
         }
 
         /// <summary>
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersSubscriptionMockingExtension.GetContainerAppJobs(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetContainerAppJobs(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppJobResource> GetContainerAppJobsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetContainerAppJobsAsync(cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppJobsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersSubscriptionMockingExtension.GetContainerAppJobs(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetContainerAppJobs(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -902,7 +902,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppJobResource> GetContainerAppJobs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetContainerAppJobs(cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppJobs(cancellationToken);
         }
 
         /// <summary>
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersSubscriptionMockingExtension.GetContainerAppManagedEnvironments(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetContainerAppManagedEnvironments(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> An async collection of <see cref="ContainerAppManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetContainerAppManagedEnvironmentsAsync(cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppManagedEnvironmentsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppContainersSubscriptionMockingExtension.GetContainerAppManagedEnvironments(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetContainerAppManagedEnvironments(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -952,7 +952,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <returns> A collection of <see cref="ContainerAppManagedEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerAppManagedEnvironmentResource> GetContainerAppManagedEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppContainersSubscriptionMockingExtension(subscriptionResource).GetContainerAppManagedEnvironments(cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetContainerAppManagedEnvironments(cancellationToken);
         }
     }
 }

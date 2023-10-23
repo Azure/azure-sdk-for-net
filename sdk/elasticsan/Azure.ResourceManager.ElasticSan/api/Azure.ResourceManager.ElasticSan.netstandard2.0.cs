@@ -198,24 +198,24 @@ namespace Azure.ResourceManager.ElasticSan
 }
 namespace Azure.ResourceManager.ElasticSan.Mocking
 {
-    public partial class ElasticSanArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableElasticSanArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ElasticSanArmClientMockingExtension() { }
+        protected MockableElasticSanArmClient() { }
         public virtual Azure.ResourceManager.ElasticSan.ElasticSanPrivateEndpointConnectionResource GetElasticSanPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ElasticSan.ElasticSanResource GetElasticSanResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupResource GetElasticSanVolumeGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource GetElasticSanVolumeResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ElasticSanResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableElasticSanResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ElasticSanResourceGroupMockingExtension() { }
+        protected MockableElasticSanResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ElasticSan.ElasticSanResource> GetElasticSan(string elasticSanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ElasticSan.ElasticSanResource>> GetElasticSanAsync(string elasticSanName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ElasticSan.ElasticSanCollection GetElasticSans() { throw null; }
     }
-    public partial class ElasticSanSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableElasticSanSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ElasticSanSubscriptionMockingExtension() { }
+        protected MockableElasticSanSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ElasticSan.ElasticSanResource> GetElasticSans(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ElasticSan.ElasticSanResource> GetElasticSansAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ElasticSan.Models.ElasticSanSkuInformation> GetSkus(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

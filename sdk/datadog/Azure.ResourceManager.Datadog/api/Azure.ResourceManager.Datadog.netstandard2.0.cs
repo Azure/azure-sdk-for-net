@@ -150,23 +150,23 @@ namespace Azure.ResourceManager.Datadog
 }
 namespace Azure.ResourceManager.Datadog.Mocking
 {
-    public partial class DatadogArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDatadogArmClient : Azure.ResourceManager.ArmResource
     {
-        protected DatadogArmClientMockingExtension() { }
+        protected MockableDatadogArmClient() { }
         public virtual Azure.ResourceManager.Datadog.DatadogMonitorResource GetDatadogMonitorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Datadog.DatadogSingleSignOnResource GetDatadogSingleSignOnResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Datadog.MonitoringTagRuleResource GetMonitoringTagRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DatadogResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDatadogResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected DatadogResourceGroupMockingExtension() { }
+        protected MockableDatadogResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Datadog.DatadogMonitorResource> GetDatadogMonitorResource(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.DatadogMonitorResource>> GetDatadogMonitorResourceAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Datadog.DatadogMonitorResourceCollection GetDatadogMonitorResources() { throw null; }
     }
-    public partial class DatadogSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDatadogSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected DatadogSubscriptionMockingExtension() { }
+        protected MockableDatadogSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties> CreateOrUpdateMarketplaceAgreement(Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties>> CreateOrUpdateMarketplaceAgreementAsync(Azure.ResourceManager.Datadog.Models.DatadogAgreementResourceProperties body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Datadog.DatadogMonitorResource> GetDatadogMonitorResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

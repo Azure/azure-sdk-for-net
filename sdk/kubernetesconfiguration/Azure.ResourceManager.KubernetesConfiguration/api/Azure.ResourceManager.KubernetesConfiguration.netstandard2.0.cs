@@ -170,16 +170,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 }
 namespace Azure.ResourceManager.KubernetesConfiguration.Mocking
 {
-    public partial class KubernetesConfigurationArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableKubernetesConfigurationArmClient : Azure.ResourceManager.ArmResource
     {
-        protected KubernetesConfigurationArmClientMockingExtension() { }
+        protected MockableKubernetesConfigurationArmClient() { }
         public virtual Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionResource GetKubernetesClusterExtensionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.KubernetesConfiguration.KubernetesFluxConfigurationResource GetKubernetesFluxConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.KubernetesConfiguration.KubernetesSourceControlConfigurationResource GetKubernetesSourceControlConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class KubernetesConfigurationResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableKubernetesConfigurationResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected KubernetesConfigurationResourceGroupMockingExtension() { }
+        protected MockableKubernetesConfigurationResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionResource> GetKubernetesClusterExtension(string clusterRp, string clusterResourceName, string clusterName, string extensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionResource>> GetKubernetesClusterExtensionAsync(string clusterRp, string clusterResourceName, string clusterName, string extensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.KubernetesConfiguration.KubernetesClusterExtensionCollection GetKubernetesClusterExtensions(string clusterRp, string clusterResourceName, string clusterName) { throw null; }

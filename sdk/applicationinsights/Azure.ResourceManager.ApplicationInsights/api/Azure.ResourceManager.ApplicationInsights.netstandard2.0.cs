@@ -448,9 +448,9 @@ namespace Azure.ResourceManager.ApplicationInsights
 }
 namespace Azure.ResourceManager.ApplicationInsights.Mocking
 {
-    public partial class ApplicationInsightsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableApplicationInsightsArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ApplicationInsightsArmClientMockingExtension() { }
+        protected MockableApplicationInsightsArmClient() { }
         public virtual Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource GetApplicationInsightsComponentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountResource GetComponentLinkedStorageAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResponse> GetLiveToken(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -461,9 +461,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         public virtual Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource GetWorkbookRevisionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource GetWorkbookTemplateResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ApplicationInsightsResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableApplicationInsightsResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ApplicationInsightsResourceGroupMockingExtension() { }
+        protected MockableApplicationInsightsResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> GetApplicationInsightsComponent(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>> GetApplicationInsightsComponentAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentCollection GetApplicationInsightsComponents() { throw null; }
@@ -480,9 +480,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource>> GetWorkbookTemplateAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ApplicationInsights.WorkbookTemplateCollection GetWorkbookTemplates() { throw null; }
     }
-    public partial class ApplicationInsightsSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableApplicationInsightsSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ApplicationInsightsSubscriptionMockingExtension() { }
+        protected MockableApplicationInsightsSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> GetApplicationInsightsComponents(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> GetApplicationInsightsComponentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource> GetMyWorkbooks(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

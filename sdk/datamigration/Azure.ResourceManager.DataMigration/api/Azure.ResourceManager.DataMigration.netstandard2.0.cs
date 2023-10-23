@@ -429,9 +429,9 @@ namespace Azure.ResourceManager.DataMigration
 }
 namespace Azure.ResourceManager.DataMigration.Mocking
 {
-    public partial class DataMigrationArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataMigrationArmClient : Azure.ResourceManager.ArmResource
     {
-        protected DataMigrationArmClientMockingExtension() { }
+        protected MockableDataMigrationArmClient() { }
         public virtual Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource GetDatabaseMigrationSqlDBResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataMigration.DatabaseMigrationSqlMIResource GetDatabaseMigrationSqlMIResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataMigration.DatabaseMigrationSqlVmResource GetDatabaseMigrationSqlVmResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -442,9 +442,9 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         public virtual Azure.ResourceManager.DataMigration.ServiceServiceTaskResource GetServiceServiceTaskResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataMigration.SqlMigrationServiceResource GetSqlMigrationServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DataMigrationResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataMigrationResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected DataMigrationResourceGroupMockingExtension() { }
+        protected MockableDataMigrationResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource> GetDatabaseMigrationSqlDB(string sqlDBInstanceName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBResource>> GetDatabaseMigrationSqlDBAsync(string sqlDBInstanceName, string targetDBName, System.Guid? migrationOperationId = default(System.Guid?), string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataMigration.DatabaseMigrationSqlDBCollection GetDatabaseMigrationSqlDBs() { throw null; }
@@ -461,9 +461,9 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.SqlMigrationServiceResource>> GetSqlMigrationServiceAsync(string sqlMigrationServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataMigration.SqlMigrationServiceCollection GetSqlMigrationServices() { throw null; }
     }
-    public partial class DataMigrationSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataMigrationSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected DataMigrationSubscriptionMockingExtension() { }
+        protected MockableDataMigrationSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DataMigration.Models.NameAvailabilityResponse> CheckNameAvailabilityService(Azure.Core.AzureLocation location, Azure.ResourceManager.DataMigration.Models.NameAvailabilityRequest nameAvailabilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataMigration.Models.NameAvailabilityResponse>> CheckNameAvailabilityServiceAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataMigration.Models.NameAvailabilityRequest nameAvailabilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataMigration.DataMigrationServiceResource> GetDataMigrationServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

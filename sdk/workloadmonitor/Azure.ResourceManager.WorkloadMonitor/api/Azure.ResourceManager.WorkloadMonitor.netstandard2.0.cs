@@ -92,15 +92,15 @@ namespace Azure.ResourceManager.WorkloadMonitor
 }
 namespace Azure.ResourceManager.WorkloadMonitor.Mocking
 {
-    public partial class WorkloadMonitorArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableWorkloadMonitorArmClient : Azure.ResourceManager.ArmResource
     {
-        protected WorkloadMonitorArmClientMockingExtension() { }
+        protected MockableWorkloadMonitorArmClient() { }
         public virtual Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource GetHealthMonitorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.WorkloadMonitor.HealthMonitorStateChangeResource GetHealthMonitorStateChangeResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class WorkloadMonitorResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableWorkloadMonitorResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected WorkloadMonitorResourceGroupMockingExtension() { }
+        protected MockableWorkloadMonitorResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource> GetHealthMonitor(string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadMonitor.HealthMonitorResource>> GetHealthMonitorAsync(string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.WorkloadMonitor.HealthMonitorCollection GetHealthMonitors(string providerName, string resourceCollectionName, string resourceName) { throw null; }

@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Peering
     /// <summary> A class to add extension methods to Azure.ResourceManager.Peering. </summary>
     public static partial class PeeringExtensions
     {
-        private static PeeringArmClientMockingExtension GetPeeringArmClientMockingExtension(ArmClient client)
+        private static MockablePeeringArmClient GetMockablePeeringArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new PeeringArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockablePeeringArmClient(client0));
         }
 
-        private static PeeringResourceGroupMockingExtension GetPeeringResourceGroupMockingExtension(ArmResource resource)
+        private static MockablePeeringResourceGroupResource GetMockablePeeringResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new PeeringResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockablePeeringResourceGroupResource(client, resource.Id));
         }
 
-        private static PeeringSubscriptionMockingExtension GetPeeringSubscriptionMockingExtension(ArmResource resource)
+        private static MockablePeeringSubscriptionResource GetMockablePeeringSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new PeeringSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockablePeeringSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Peering
         /// You can use <see cref="PeerAsnResource.CreateResourceIdentifier" /> to create a <see cref="PeerAsnResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringArmClientMockingExtension.GetPeerAsnResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringArmClient.GetPeerAsnResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> Returns a <see cref="PeerAsnResource" /> object. </returns>
         public static PeerAsnResource GetPeerAsnResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetPeeringArmClientMockingExtension(client).GetPeerAsnResource(id);
+            return GetMockablePeeringArmClient(client).GetPeerAsnResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Peering
         /// You can use <see cref="PeeringRegisteredAsnResource.CreateResourceIdentifier" /> to create a <see cref="PeeringRegisteredAsnResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringArmClientMockingExtension.GetPeeringRegisteredAsnResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringArmClient.GetPeeringRegisteredAsnResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> Returns a <see cref="PeeringRegisteredAsnResource" /> object. </returns>
         public static PeeringRegisteredAsnResource GetPeeringRegisteredAsnResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetPeeringArmClientMockingExtension(client).GetPeeringRegisteredAsnResource(id);
+            return GetMockablePeeringArmClient(client).GetPeeringRegisteredAsnResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Peering
         /// You can use <see cref="PeeringRegisteredPrefixResource.CreateResourceIdentifier" /> to create a <see cref="PeeringRegisteredPrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringArmClientMockingExtension.GetPeeringRegisteredPrefixResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringArmClient.GetPeeringRegisteredPrefixResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> Returns a <see cref="PeeringRegisteredPrefixResource" /> object. </returns>
         public static PeeringRegisteredPrefixResource GetPeeringRegisteredPrefixResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetPeeringArmClientMockingExtension(client).GetPeeringRegisteredPrefixResource(id);
+            return GetMockablePeeringArmClient(client).GetPeeringRegisteredPrefixResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Peering
         /// You can use <see cref="PeeringResource.CreateResourceIdentifier" /> to create a <see cref="PeeringResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringArmClientMockingExtension.GetPeeringResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringArmClient.GetPeeringResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> Returns a <see cref="PeeringResource" /> object. </returns>
         public static PeeringResource GetPeeringResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetPeeringArmClientMockingExtension(client).GetPeeringResource(id);
+            return GetMockablePeeringArmClient(client).GetPeeringResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Peering
         /// You can use <see cref="ConnectionMonitorTestResource.CreateResourceIdentifier" /> to create a <see cref="ConnectionMonitorTestResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringArmClientMockingExtension.GetConnectionMonitorTestResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringArmClient.GetConnectionMonitorTestResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> Returns a <see cref="ConnectionMonitorTestResource" /> object. </returns>
         public static ConnectionMonitorTestResource GetConnectionMonitorTestResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetPeeringArmClientMockingExtension(client).GetConnectionMonitorTestResource(id);
+            return GetMockablePeeringArmClient(client).GetConnectionMonitorTestResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Peering
         /// You can use <see cref="PeeringServicePrefixResource.CreateResourceIdentifier" /> to create a <see cref="PeeringServicePrefixResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringArmClientMockingExtension.GetPeeringServicePrefixResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringArmClient.GetPeeringServicePrefixResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> Returns a <see cref="PeeringServicePrefixResource" /> object. </returns>
         public static PeeringServicePrefixResource GetPeeringServicePrefixResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetPeeringArmClientMockingExtension(client).GetPeeringServicePrefixResource(id);
+            return GetMockablePeeringArmClient(client).GetPeeringServicePrefixResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Peering
         /// You can use <see cref="PeeringServiceResource.CreateResourceIdentifier" /> to create a <see cref="PeeringServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringArmClientMockingExtension.GetPeeringServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringArmClient.GetPeeringServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,21 +144,21 @@ namespace Azure.ResourceManager.Peering
         /// <returns> Returns a <see cref="PeeringServiceResource" /> object. </returns>
         public static PeeringServiceResource GetPeeringServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetPeeringArmClientMockingExtension(client).GetPeeringServiceResource(id);
+            return GetMockablePeeringArmClient(client).GetPeeringServiceResource(id);
         }
 
         /// <summary>
         /// Gets a collection of PeeringResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringResourceGroupMockingExtension.GetPeerings()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringResourceGroupResource.GetPeerings()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PeeringResources and their operations over a PeeringResource. </returns>
         public static PeeringCollection GetPeerings(this ResourceGroupResource resourceGroupResource)
         {
-            return GetPeeringResourceGroupMockingExtension(resourceGroupResource).GetPeerings();
+            return GetMockablePeeringResourceGroupResource(resourceGroupResource).GetPeerings();
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringResourceGroupMockingExtension.GetPeeringAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringResourceGroupResource.GetPeeringAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Peering
         [ForwardsClientCalls]
         public static async Task<Response<PeeringResource>> GetPeeringAsync(this ResourceGroupResource resourceGroupResource, string peeringName, CancellationToken cancellationToken = default)
         {
-            return await GetPeeringResourceGroupMockingExtension(resourceGroupResource).GetPeeringAsync(peeringName, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePeeringResourceGroupResource(resourceGroupResource).GetPeeringAsync(peeringName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringResourceGroupMockingExtension.GetPeering(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringResourceGroupResource.GetPeering(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -214,21 +214,21 @@ namespace Azure.ResourceManager.Peering
         [ForwardsClientCalls]
         public static Response<PeeringResource> GetPeering(this ResourceGroupResource resourceGroupResource, string peeringName, CancellationToken cancellationToken = default)
         {
-            return GetPeeringResourceGroupMockingExtension(resourceGroupResource).GetPeering(peeringName, cancellationToken);
+            return GetMockablePeeringResourceGroupResource(resourceGroupResource).GetPeering(peeringName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of PeeringServiceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringResourceGroupMockingExtension.GetPeeringServices()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringResourceGroupResource.GetPeeringServices()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PeeringServiceResources and their operations over a PeeringServiceResource. </returns>
         public static PeeringServiceCollection GetPeeringServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetPeeringResourceGroupMockingExtension(resourceGroupResource).GetPeeringServices();
+            return GetMockablePeeringResourceGroupResource(resourceGroupResource).GetPeeringServices();
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringResourceGroupMockingExtension.GetPeeringServiceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringResourceGroupResource.GetPeeringServiceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Peering
         [ForwardsClientCalls]
         public static async Task<Response<PeeringServiceResource>> GetPeeringServiceAsync(this ResourceGroupResource resourceGroupResource, string peeringServiceName, CancellationToken cancellationToken = default)
         {
-            return await GetPeeringResourceGroupMockingExtension(resourceGroupResource).GetPeeringServiceAsync(peeringServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePeeringResourceGroupResource(resourceGroupResource).GetPeeringServiceAsync(peeringServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringResourceGroupMockingExtension.GetPeeringService(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringResourceGroupResource.GetPeeringService(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -284,21 +284,21 @@ namespace Azure.ResourceManager.Peering
         [ForwardsClientCalls]
         public static Response<PeeringServiceResource> GetPeeringService(this ResourceGroupResource resourceGroupResource, string peeringServiceName, CancellationToken cancellationToken = default)
         {
-            return GetPeeringResourceGroupMockingExtension(resourceGroupResource).GetPeeringService(peeringServiceName, cancellationToken);
+            return GetMockablePeeringResourceGroupResource(resourceGroupResource).GetPeeringService(peeringServiceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of PeerAsnResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeerAsns()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeerAsns()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PeerAsnResources and their operations over a PeerAsnResource. </returns>
         public static PeerAsnCollection GetPeerAsns(this SubscriptionResource subscriptionResource)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeerAsns();
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeerAsns();
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeerAsnAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeerAsnAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Peering
         [ForwardsClientCalls]
         public static async Task<Response<PeerAsnResource>> GetPeerAsnAsync(this SubscriptionResource subscriptionResource, string peerAsnName, CancellationToken cancellationToken = default)
         {
-            return await GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeerAsnAsync(peerAsnName, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeerAsnAsync(peerAsnName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeerAsn(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeerAsn(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Peering
         [ForwardsClientCalls]
         public static Response<PeerAsnResource> GetPeerAsn(this SubscriptionResource subscriptionResource, string peerAsnName, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeerAsn(peerAsnName, cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeerAsn(peerAsnName, cancellationToken);
         }
 
         /// <summary>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetCdnPeeringPrefixes(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetCdnPeeringPrefixes(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="CdnPeeringPrefix" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CdnPeeringPrefix> GetCdnPeeringPrefixesAsync(this SubscriptionResource subscriptionResource, string peeringLocation, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetCdnPeeringPrefixesAsync(peeringLocation, cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetCdnPeeringPrefixesAsync(peeringLocation, cancellationToken);
         }
 
         /// <summary>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetCdnPeeringPrefixes(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetCdnPeeringPrefixes(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="CdnPeeringPrefix" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CdnPeeringPrefix> GetCdnPeeringPrefixes(this SubscriptionResource subscriptionResource, string peeringLocation, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetCdnPeeringPrefixes(peeringLocation, cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetCdnPeeringPrefixes(peeringLocation, cancellationToken);
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.CheckPeeringServiceProviderAvailability(CheckPeeringServiceProviderAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.CheckPeeringServiceProviderAvailability(CheckPeeringServiceProviderAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<PeeringServiceProviderAvailability>> CheckPeeringServiceProviderAvailabilityAsync(this SubscriptionResource subscriptionResource, CheckPeeringServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetPeeringSubscriptionMockingExtension(subscriptionResource).CheckPeeringServiceProviderAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePeeringSubscriptionResource(subscriptionResource).CheckPeeringServiceProviderAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.CheckPeeringServiceProviderAvailability(CheckPeeringServiceProviderAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.CheckPeeringServiceProviderAvailability(CheckPeeringServiceProviderAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<PeeringServiceProviderAvailability> CheckPeeringServiceProviderAvailability(this SubscriptionResource subscriptionResource, CheckPeeringServiceProviderAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).CheckPeeringServiceProviderAvailability(content, cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).CheckPeeringServiceProviderAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeeringsByLegacyPeering(string,LegacyPeeringsKind,int?,DirectPeeringType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringsByLegacyPeering(string,LegacyPeeringsKind,int?,DirectPeeringType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringResource> GetPeeringsByLegacyPeeringAsync(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringsByLegacyPeeringAsync(peeringLocation, kind, asn, directPeeringType, cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringsByLegacyPeeringAsync(peeringLocation, kind, asn, directPeeringType, cancellationToken);
         }
 
         /// <summary>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeeringsByLegacyPeering(string,LegacyPeeringsKind,int?,DirectPeeringType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringsByLegacyPeering(string,LegacyPeeringsKind,int?,DirectPeeringType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringResource> GetPeeringsByLegacyPeering(this SubscriptionResource subscriptionResource, string peeringLocation, LegacyPeeringsKind kind, int? asn = null, DirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringsByLegacyPeering(peeringLocation, kind, asn, directPeeringType, cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringsByLegacyPeering(peeringLocation, kind, asn, directPeeringType, cancellationToken);
         }
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.InvokeLookingGlass(LookingGlassCommand,LookingGlassSourceType,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InvokeLookingGlass(LookingGlassCommand,LookingGlassSourceType,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
         public static async Task<Response<LookingGlassOutput>> InvokeLookingGlassAsync(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
         {
-            return await GetPeeringSubscriptionMockingExtension(subscriptionResource).InvokeLookingGlassAsync(command, sourceType, sourceLocation, destinationIP, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePeeringSubscriptionResource(subscriptionResource).InvokeLookingGlassAsync(command, sourceType, sourceLocation, destinationIP, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.InvokeLookingGlass(LookingGlassCommand,LookingGlassSourceType,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InvokeLookingGlass(LookingGlassCommand,LookingGlassSourceType,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="sourceLocation"/> or <paramref name="destinationIP"/> is null. </exception>
         public static Response<LookingGlassOutput> InvokeLookingGlass(this SubscriptionResource subscriptionResource, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).InvokeLookingGlass(command, sourceType, sourceLocation, destinationIP, cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).InvokeLookingGlass(command, sourceType, sourceLocation, destinationIP, cancellationToken);
         }
 
         /// <summary>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeeringLocations(PeeringLocationsKind,PeeringLocationsDirectPeeringType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringLocations(PeeringLocationsKind,PeeringLocationsDirectPeeringType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringLocation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringLocation> GetPeeringLocationsAsync(this SubscriptionResource subscriptionResource, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringLocationsAsync(kind, directPeeringType, cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringLocationsAsync(kind, directPeeringType, cancellationToken);
         }
 
         /// <summary>
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeeringLocations(PeeringLocationsKind,PeeringLocationsDirectPeeringType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringLocations(PeeringLocationsKind,PeeringLocationsDirectPeeringType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringLocation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringLocation> GetPeeringLocations(this SubscriptionResource subscriptionResource, PeeringLocationsKind kind, PeeringLocationsDirectPeeringType? directPeeringType = null, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringLocations(kind, directPeeringType, cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringLocations(kind, directPeeringType, cancellationToken);
         }
 
         /// <summary>
@@ -649,7 +649,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeerings(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeerings(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringResource> GetPeeringsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringsAsync(cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeerings(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeerings(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringResource> GetPeerings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeerings(cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeerings(cancellationToken);
         }
 
         /// <summary>
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeeringServiceCountries(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceCountries(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringServiceCountry" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringServiceCountry> GetPeeringServiceCountriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringServiceCountriesAsync(cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceCountriesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeeringServiceCountries(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceCountries(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringServiceCountry" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringServiceCountry> GetPeeringServiceCountries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringServiceCountries(cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceCountries(cancellationToken);
         }
 
         /// <summary>
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeeringServiceLocations(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceLocations(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringServiceLocation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringServiceLocation> GetPeeringServiceLocationsAsync(this SubscriptionResource subscriptionResource, string country = null, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringServiceLocationsAsync(country, cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceLocationsAsync(country, cancellationToken);
         }
 
         /// <summary>
@@ -775,7 +775,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeeringServiceLocations(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceLocations(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringServiceLocation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringServiceLocation> GetPeeringServiceLocations(this SubscriptionResource subscriptionResource, string country = null, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringServiceLocations(country, cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceLocations(country, cancellationToken);
         }
 
         /// <summary>
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeeringServiceProviders(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceProviders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringServiceProvider" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringServiceProvider> GetPeeringServiceProvidersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringServiceProvidersAsync(cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceProvidersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -826,7 +826,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeeringServiceProviders(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServiceProviders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringServiceProvider" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringServiceProvider> GetPeeringServiceProviders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringServiceProviders(cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServiceProviders(cancellationToken);
         }
 
         /// <summary>
@@ -851,7 +851,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeeringServices(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -859,7 +859,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> An async collection of <see cref="PeeringServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PeeringServiceResource> GetPeeringServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringServicesAsync(cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.GetPeeringServices(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.GetPeeringServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.Peering
         /// <returns> A collection of <see cref="PeeringServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PeeringServiceResource> GetPeeringServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).GetPeeringServices(cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).GetPeeringServices(cancellationToken);
         }
 
         /// <summary>
@@ -901,14 +901,14 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.InitializePeeringServiceConnectionMonitor(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InitializePeeringServiceConnectionMonitor(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response> InitializePeeringServiceConnectionMonitorAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetPeeringSubscriptionMockingExtension(subscriptionResource).InitializePeeringServiceConnectionMonitorAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockablePeeringSubscriptionResource(subscriptionResource).InitializePeeringServiceConnectionMonitorAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -925,14 +925,14 @@ namespace Azure.ResourceManager.Peering
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PeeringSubscriptionMockingExtension.InitializePeeringServiceConnectionMonitor(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePeeringSubscriptionResource.InitializePeeringServiceConnectionMonitor(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response InitializePeeringServiceConnectionMonitor(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetPeeringSubscriptionMockingExtension(subscriptionResource).InitializePeeringServiceConnectionMonitor(cancellationToken);
+            return GetMockablePeeringSubscriptionResource(subscriptionResource).InitializePeeringServiceConnectionMonitor(cancellationToken);
         }
     }
 }

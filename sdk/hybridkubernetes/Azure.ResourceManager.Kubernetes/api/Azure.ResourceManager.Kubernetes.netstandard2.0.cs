@@ -70,21 +70,21 @@ namespace Azure.ResourceManager.Kubernetes
 }
 namespace Azure.ResourceManager.Kubernetes.Mocking
 {
-    public partial class KubernetesArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableKubernetesArmClient : Azure.ResourceManager.ArmResource
     {
-        protected KubernetesArmClientMockingExtension() { }
+        protected MockableKubernetesArmClient() { }
         public virtual Azure.ResourceManager.Kubernetes.ConnectedClusterResource GetConnectedClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class KubernetesResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableKubernetesResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected KubernetesResourceGroupMockingExtension() { }
+        protected MockableKubernetesResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Kubernetes.ConnectedClusterResource> GetConnectedCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Kubernetes.ConnectedClusterResource>> GetConnectedClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Kubernetes.ConnectedClusterCollection GetConnectedClusters() { throw null; }
     }
-    public partial class KubernetesSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableKubernetesSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected KubernetesSubscriptionMockingExtension() { }
+        protected MockableKubernetesSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Kubernetes.ConnectedClusterResource> GetConnectedClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Kubernetes.ConnectedClusterResource> GetConnectedClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

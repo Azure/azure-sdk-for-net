@@ -2406,9 +2406,9 @@ namespace Azure.ResourceManager.Compute
 }
 namespace Azure.ResourceManager.Compute.Mocking
 {
-    public partial class ComputeArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableComputeArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ComputeArmClientMockingExtension() { }
+        protected MockableComputeArmClient() { }
         public virtual Azure.ResourceManager.Compute.AvailabilitySetResource GetAvailabilitySetResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Compute.CapacityReservationGroupResource GetCapacityReservationGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Compute.CapacityReservationResource GetCapacityReservationResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2452,9 +2452,9 @@ namespace Azure.ResourceManager.Compute.Mocking
         public virtual Azure.ResourceManager.Compute.VirtualMachineScaleSetVmResource GetVirtualMachineScaleSetVmResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Compute.VirtualMachineScaleSetVmRunCommandResource GetVirtualMachineScaleSetVmRunCommandResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ComputeResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableComputeResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ComputeResourceGroupMockingExtension() { }
+        protected MockableComputeResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Compute.AvailabilitySetResource> GetAvailabilitySet(string availabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.AvailabilitySetResource>> GetAvailabilitySetAsync(string availabilitySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.AvailabilitySetCollection GetAvailabilitySets() { throw null; }
@@ -2501,9 +2501,9 @@ namespace Azure.ResourceManager.Compute.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Compute.VirtualMachineScaleSetResource>> GetVirtualMachineScaleSetAsync(string virtualMachineScaleSetName, Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetGetExpand? expand = default(Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetGetExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Compute.VirtualMachineScaleSetCollection GetVirtualMachineScaleSets() { throw null; }
     }
-    public partial class ComputeSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableComputeSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ComputeSubscriptionMockingExtension() { }
+        protected MockableComputeSubscriptionResource() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Models.LogAnalytics> ExportLogAnalyticsRequestRateByInterval(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.RequestRateByIntervalContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Models.LogAnalytics>> ExportLogAnalyticsRequestRateByIntervalAsync(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.RequestRateByIntervalContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Compute.Models.LogAnalytics> ExportLogAnalyticsThrottledRequests(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Compute.Models.ThrottledRequestsContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

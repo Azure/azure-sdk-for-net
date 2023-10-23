@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.StreamAnalytics
     /// <summary> A class to add extension methods to Azure.ResourceManager.StreamAnalytics. </summary>
     public static partial class StreamAnalyticsExtensions
     {
-        private static StreamAnalyticsArmClientMockingExtension GetStreamAnalyticsArmClientMockingExtension(ArmClient client)
+        private static MockableStreamAnalyticsArmClient GetMockableStreamAnalyticsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new StreamAnalyticsArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableStreamAnalyticsArmClient(client0));
         }
 
-        private static StreamAnalyticsResourceGroupMockingExtension GetStreamAnalyticsResourceGroupMockingExtension(ArmResource resource)
+        private static MockableStreamAnalyticsResourceGroupResource GetMockableStreamAnalyticsResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new StreamAnalyticsResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableStreamAnalyticsResourceGroupResource(client, resource.Id));
         }
 
-        private static StreamAnalyticsSubscriptionMockingExtension GetStreamAnalyticsSubscriptionMockingExtension(ArmResource resource)
+        private static MockableStreamAnalyticsSubscriptionResource GetMockableStreamAnalyticsSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new StreamAnalyticsSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableStreamAnalyticsSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// You can use <see cref="StreamingJobFunctionResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobFunctionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsArmClientMockingExtension.GetStreamingJobFunctionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsArmClient.GetStreamingJobFunctionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamingJobFunctionResource" /> object. </returns>
         public static StreamingJobFunctionResource GetStreamingJobFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetStreamAnalyticsArmClientMockingExtension(client).GetStreamingJobFunctionResource(id);
+            return GetMockableStreamAnalyticsArmClient(client).GetStreamingJobFunctionResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// You can use <see cref="StreamingJobInputResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobInputResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsArmClientMockingExtension.GetStreamingJobInputResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsArmClient.GetStreamingJobInputResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamingJobInputResource" /> object. </returns>
         public static StreamingJobInputResource GetStreamingJobInputResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetStreamAnalyticsArmClientMockingExtension(client).GetStreamingJobInputResource(id);
+            return GetMockableStreamAnalyticsArmClient(client).GetStreamingJobInputResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// You can use <see cref="StreamingJobOutputResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobOutputResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsArmClientMockingExtension.GetStreamingJobOutputResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsArmClient.GetStreamingJobOutputResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamingJobOutputResource" /> object. </returns>
         public static StreamingJobOutputResource GetStreamingJobOutputResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetStreamAnalyticsArmClientMockingExtension(client).GetStreamingJobOutputResource(id);
+            return GetMockableStreamAnalyticsArmClient(client).GetStreamingJobOutputResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// You can use <see cref="StreamingJobResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsArmClientMockingExtension.GetStreamingJobResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsArmClient.GetStreamingJobResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamingJobResource" /> object. </returns>
         public static StreamingJobResource GetStreamingJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetStreamAnalyticsArmClientMockingExtension(client).GetStreamingJobResource(id);
+            return GetMockableStreamAnalyticsArmClient(client).GetStreamingJobResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// You can use <see cref="StreamingJobTransformationResource.CreateResourceIdentifier" /> to create a <see cref="StreamingJobTransformationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsArmClientMockingExtension.GetStreamingJobTransformationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsArmClient.GetStreamingJobTransformationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamingJobTransformationResource" /> object. </returns>
         public static StreamingJobTransformationResource GetStreamingJobTransformationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetStreamAnalyticsArmClientMockingExtension(client).GetStreamingJobTransformationResource(id);
+            return GetMockableStreamAnalyticsArmClient(client).GetStreamingJobTransformationResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// You can use <see cref="StreamAnalyticsClusterResource.CreateResourceIdentifier" /> to create a <see cref="StreamAnalyticsClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsArmClientMockingExtension.GetStreamAnalyticsClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsArmClient.GetStreamAnalyticsClusterResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamAnalyticsClusterResource" /> object. </returns>
         public static StreamAnalyticsClusterResource GetStreamAnalyticsClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetStreamAnalyticsArmClientMockingExtension(client).GetStreamAnalyticsClusterResource(id);
+            return GetMockableStreamAnalyticsArmClient(client).GetStreamAnalyticsClusterResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// You can use <see cref="StreamAnalyticsPrivateEndpointResource.CreateResourceIdentifier" /> to create a <see cref="StreamAnalyticsPrivateEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsArmClientMockingExtension.GetStreamAnalyticsPrivateEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsArmClient.GetStreamAnalyticsPrivateEndpointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,21 +144,21 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> Returns a <see cref="StreamAnalyticsPrivateEndpointResource" /> object. </returns>
         public static StreamAnalyticsPrivateEndpointResource GetStreamAnalyticsPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetStreamAnalyticsArmClientMockingExtension(client).GetStreamAnalyticsPrivateEndpointResource(id);
+            return GetMockableStreamAnalyticsArmClient(client).GetStreamAnalyticsPrivateEndpointResource(id);
         }
 
         /// <summary>
         /// Gets a collection of StreamingJobResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsResourceGroupMockingExtension.GetStreamingJobs()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsResourceGroupResource.GetStreamingJobs()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of StreamingJobResources and their operations over a StreamingJobResource. </returns>
         public static StreamingJobCollection GetStreamingJobs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetStreamAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetStreamingJobs();
+            return GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamingJobs();
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsResourceGroupMockingExtension.GetStreamingJobAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsResourceGroupResource.GetStreamingJobAsync(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         [ForwardsClientCalls]
         public static async Task<Response<StreamingJobResource>> GetStreamingJobAsync(this ResourceGroupResource resourceGroupResource, string jobName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetStreamAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetStreamingJobAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamingJobAsync(jobName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsResourceGroupMockingExtension.GetStreamingJob(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsResourceGroupResource.GetStreamingJob(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -216,21 +216,21 @@ namespace Azure.ResourceManager.StreamAnalytics
         [ForwardsClientCalls]
         public static Response<StreamingJobResource> GetStreamingJob(this ResourceGroupResource resourceGroupResource, string jobName, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetStreamAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetStreamingJob(jobName, expand, cancellationToken);
+            return GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamingJob(jobName, expand, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of StreamAnalyticsClusterResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsResourceGroupMockingExtension.GetStreamAnalyticsClusters()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsResourceGroupResource.GetStreamAnalyticsClusters()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of StreamAnalyticsClusterResources and their operations over a StreamAnalyticsClusterResource. </returns>
         public static StreamAnalyticsClusterCollection GetStreamAnalyticsClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetStreamAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetStreamAnalyticsClusters();
+            return GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamAnalyticsClusters();
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsResourceGroupMockingExtension.GetStreamAnalyticsClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsResourceGroupResource.GetStreamAnalyticsClusterAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         [ForwardsClientCalls]
         public static async Task<Response<StreamAnalyticsClusterResource>> GetStreamAnalyticsClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await GetStreamAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetStreamAnalyticsClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamAnalyticsClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsResourceGroupMockingExtension.GetStreamAnalyticsCluster(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsResourceGroupResource.GetStreamAnalyticsCluster(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         [ForwardsClientCalls]
         public static Response<StreamAnalyticsClusterResource> GetStreamAnalyticsCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return GetStreamAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetStreamAnalyticsCluster(clusterName, cancellationToken);
+            return GetMockableStreamAnalyticsResourceGroupResource(resourceGroupResource).GetStreamAnalyticsCluster(clusterName, cancellationToken);
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsSubscriptionMockingExtension.GetStreamingJobs(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.GetStreamingJobs(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An async collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StreamingJobResource> GetStreamingJobsAsync(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).GetStreamingJobsAsync(expand, cancellationToken);
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetStreamingJobsAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsSubscriptionMockingExtension.GetStreamingJobs(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.GetStreamingJobs(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> A collection of <see cref="StreamingJobResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StreamingJobResource> GetStreamingJobs(this SubscriptionResource subscriptionResource, string expand = null, CancellationToken cancellationToken = default)
         {
-            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).GetStreamingJobs(expand, cancellationToken);
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetStreamingJobs(expand, cancellationToken);
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsSubscriptionMockingExtension.GetQuotasSubscriptions(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.GetQuotasSubscriptions(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An async collection of <see cref="StreamAnalyticsSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptionsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).GetQuotasSubscriptionsAsync(location, cancellationToken);
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetQuotasSubscriptionsAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsSubscriptionMockingExtension.GetQuotasSubscriptions(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.GetQuotasSubscriptions(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> A collection of <see cref="StreamAnalyticsSubscriptionQuota" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StreamAnalyticsSubscriptionQuota> GetQuotasSubscriptions(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).GetQuotasSubscriptions(location, cancellationToken);
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetQuotasSubscriptions(location, cancellationToken);
         }
 
         /// <summary>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsSubscriptionMockingExtension.TestQuerySubscription(WaitUntil,AzureLocation,StreamAnalyticsTestQuery,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.TestQuerySubscription(WaitUntil,AzureLocation,StreamAnalyticsTestQuery,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="testQuery"/> is null. </exception>
         public static async Task<ArmOperation<StreamAnalyticsQueryTestingResult>> TestQuerySubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestQuery testQuery, CancellationToken cancellationToken = default)
         {
-            return await GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).TestQuerySubscriptionAsync(waitUntil, location, testQuery, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestQuerySubscriptionAsync(waitUntil, location, testQuery, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsSubscriptionMockingExtension.TestQuerySubscription(WaitUntil,AzureLocation,StreamAnalyticsTestQuery,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.TestQuerySubscription(WaitUntil,AzureLocation,StreamAnalyticsTestQuery,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="testQuery"/> is null. </exception>
         public static ArmOperation<StreamAnalyticsQueryTestingResult> TestQuerySubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestQuery testQuery, CancellationToken cancellationToken = default)
         {
-            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).TestQuerySubscription(waitUntil, location, testQuery, cancellationToken);
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestQuerySubscription(waitUntil, location, testQuery, cancellationToken);
         }
 
         /// <summary>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsSubscriptionMockingExtension.CompileQuerySubscription(AzureLocation,StreamAnalyticsCompileQuery,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.CompileQuerySubscription(AzureLocation,StreamAnalyticsCompileQuery,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="compileQuery"/> is null. </exception>
         public static async Task<Response<StreamAnalyticsQueryCompilationResult>> CompileQuerySubscriptionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, StreamAnalyticsCompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
-            return await GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).CompileQuerySubscriptionAsync(location, compileQuery, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).CompileQuerySubscriptionAsync(location, compileQuery, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsSubscriptionMockingExtension.CompileQuerySubscription(AzureLocation,StreamAnalyticsCompileQuery,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.CompileQuerySubscription(AzureLocation,StreamAnalyticsCompileQuery,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="compileQuery"/> is null. </exception>
         public static Response<StreamAnalyticsQueryCompilationResult> CompileQuerySubscription(this SubscriptionResource subscriptionResource, AzureLocation location, StreamAnalyticsCompileQuery compileQuery, CancellationToken cancellationToken = default)
         {
-            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).CompileQuerySubscription(location, compileQuery, cancellationToken);
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).CompileQuerySubscription(location, compileQuery, cancellationToken);
         }
 
         /// <summary>
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsSubscriptionMockingExtension.SampleInputSubscription(WaitUntil,AzureLocation,StreamAnalyticsSampleInputContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.SampleInputSubscription(WaitUntil,AzureLocation,StreamAnalyticsSampleInputContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<StreamAnalyticsSampleInputResult>> SampleInputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsSampleInputContent content, CancellationToken cancellationToken = default)
         {
-            return await GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).SampleInputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).SampleInputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsSubscriptionMockingExtension.SampleInputSubscription(WaitUntil,AzureLocation,StreamAnalyticsSampleInputContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.SampleInputSubscription(WaitUntil,AzureLocation,StreamAnalyticsSampleInputContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static ArmOperation<StreamAnalyticsSampleInputResult> SampleInputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsSampleInputContent content, CancellationToken cancellationToken = default)
         {
-            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).SampleInputSubscription(waitUntil, location, content, cancellationToken);
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).SampleInputSubscription(waitUntil, location, content, cancellationToken);
         }
 
         /// <summary>
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsSubscriptionMockingExtension.TestInputSubscription(WaitUntil,AzureLocation,StreamAnalyticsTestContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.TestInputSubscription(WaitUntil,AzureLocation,StreamAnalyticsTestContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation<StreamAnalyticsTestDatasourceResult>> TestInputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestContent content, CancellationToken cancellationToken = default)
         {
-            return await GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).TestInputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestInputSubscriptionAsync(waitUntil, location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsSubscriptionMockingExtension.TestInputSubscription(WaitUntil,AzureLocation,StreamAnalyticsTestContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.TestInputSubscription(WaitUntil,AzureLocation,StreamAnalyticsTestContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static ArmOperation<StreamAnalyticsTestDatasourceResult> TestInputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestContent content, CancellationToken cancellationToken = default)
         {
-            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).TestInputSubscription(waitUntil, location, content, cancellationToken);
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestInputSubscription(waitUntil, location, content, cancellationToken);
         }
 
         /// <summary>
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsSubscriptionMockingExtension.TestOutputSubscription(WaitUntil,AzureLocation,StreamAnalyticsTestOutput,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.TestOutputSubscription(WaitUntil,AzureLocation,StreamAnalyticsTestOutput,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="testOutput"/> is null. </exception>
         public static async Task<ArmOperation<StreamAnalyticsTestDatasourceResult>> TestOutputSubscriptionAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestOutput testOutput, CancellationToken cancellationToken = default)
         {
-            return await GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).TestOutputSubscriptionAsync(waitUntil, location, testOutput, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestOutputSubscriptionAsync(waitUntil, location, testOutput, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsSubscriptionMockingExtension.TestOutputSubscription(WaitUntil,AzureLocation,StreamAnalyticsTestOutput,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.TestOutputSubscription(WaitUntil,AzureLocation,StreamAnalyticsTestOutput,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="testOutput"/> is null. </exception>
         public static ArmOperation<StreamAnalyticsTestDatasourceResult> TestOutputSubscription(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, AzureLocation location, StreamAnalyticsTestOutput testOutput, CancellationToken cancellationToken = default)
         {
-            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).TestOutputSubscription(waitUntil, location, testOutput, cancellationToken);
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).TestOutputSubscription(waitUntil, location, testOutput, cancellationToken);
         }
 
         /// <summary>
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsSubscriptionMockingExtension.GetStreamAnalyticsClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.GetStreamAnalyticsClusters(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> An async collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).GetStreamAnalyticsClustersAsync(cancellationToken);
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetStreamAnalyticsClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StreamAnalyticsSubscriptionMockingExtension.GetStreamAnalyticsClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStreamAnalyticsSubscriptionResource.GetStreamAnalyticsClusters(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -718,7 +718,7 @@ namespace Azure.ResourceManager.StreamAnalytics
         /// <returns> A collection of <see cref="StreamAnalyticsClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StreamAnalyticsClusterResource> GetStreamAnalyticsClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetStreamAnalyticsSubscriptionMockingExtension(subscriptionResource).GetStreamAnalyticsClusters(cancellationToken);
+            return GetMockableStreamAnalyticsSubscriptionResource(subscriptionResource).GetStreamAnalyticsClusters(cancellationToken);
         }
     }
 }

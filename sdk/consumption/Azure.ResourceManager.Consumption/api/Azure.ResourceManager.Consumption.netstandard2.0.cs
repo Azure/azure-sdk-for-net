@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.Consumption
 }
 namespace Azure.ResourceManager.Consumption.Mocking
 {
-    public partial class ConsumptionArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableConsumptionArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ConsumptionArmClientMockingExtension() { }
+        protected MockableConsumptionArmClient() { }
         public virtual Azure.ResourceManager.Consumption.BillingAccountConsumptionResource GetBillingAccountConsumptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Consumption.BillingCustomerConsumptionResource GetBillingCustomerConsumptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Consumption.BillingProfileConsumptionResource GetBillingProfileConsumptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -186,21 +186,21 @@ namespace Azure.ResourceManager.Consumption.Mocking
         public virtual Azure.ResourceManager.Consumption.SubscriptionBillingPeriodConsumptionResource GetSubscriptionBillingPeriodConsumptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Consumption.TenantBillingPeriodConsumptionResource GetTenantBillingPeriodConsumptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ConsumptionManagementGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableConsumptionManagementGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ConsumptionManagementGroupMockingExtension() { }
+        protected MockableConsumptionManagementGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult> GetAggregatedCost(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult>> GetAggregatedCostAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ConsumptionSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableConsumptionSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ConsumptionSubscriptionMockingExtension() { }
+        protected MockableConsumptionSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult> GetPriceSheet(string expand = null, string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult>> GetPriceSheetAsync(string expand = null, string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ConsumptionTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableConsumptionTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected ConsumptionTenantMockingExtension() { }
+        protected MockableConsumptionTenantResource() { }
     }
 }
 namespace Azure.ResourceManager.Consumption.Models

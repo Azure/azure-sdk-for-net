@@ -239,25 +239,25 @@ namespace Azure.ResourceManager.DeviceUpdate
 }
 namespace Azure.ResourceManager.DeviceUpdate.Mocking
 {
-    public partial class DeviceUpdateArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDeviceUpdateArmClient : Azure.ResourceManager.ArmResource
     {
-        protected DeviceUpdateArmClientMockingExtension() { }
+        protected MockableDeviceUpdateArmClient() { }
         public virtual Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource GetDeviceUpdateAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DeviceUpdate.DeviceUpdateInstanceResource GetDeviceUpdateInstanceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DeviceUpdate.DeviceUpdatePrivateEndpointConnectionResource GetDeviceUpdatePrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DeviceUpdate.PrivateEndpointConnectionProxyResource GetPrivateEndpointConnectionProxyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DeviceUpdate.PrivateLinkResource GetPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DeviceUpdateResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDeviceUpdateResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected DeviceUpdateResourceGroupMockingExtension() { }
+        protected MockableDeviceUpdateResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource> GetDeviceUpdateAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource>> GetDeviceUpdateAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountCollection GetDeviceUpdateAccounts() { throw null; }
     }
-    public partial class DeviceUpdateSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDeviceUpdateSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected DeviceUpdateSubscriptionMockingExtension() { }
+        protected MockableDeviceUpdateSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DeviceUpdate.Models.CheckNameAvailabilityResponse> CheckDeviceUpdateNameAvailability(Azure.ResourceManager.DeviceUpdate.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceUpdate.Models.CheckNameAvailabilityResponse>> CheckDeviceUpdateNameAvailabilityAsync(Azure.ResourceManager.DeviceUpdate.Models.CheckNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DeviceUpdate.DeviceUpdateAccountResource> GetDeviceUpdateAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

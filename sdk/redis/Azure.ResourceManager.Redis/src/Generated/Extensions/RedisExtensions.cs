@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Redis
     /// <summary> A class to add extension methods to Azure.ResourceManager.Redis. </summary>
     public static partial class RedisExtensions
     {
-        private static RedisArmClientMockingExtension GetRedisArmClientMockingExtension(ArmClient client)
+        private static MockableRedisArmClient GetMockableRedisArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new RedisArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableRedisArmClient(client0));
         }
 
-        private static RedisResourceGroupMockingExtension GetRedisResourceGroupMockingExtension(ArmResource resource)
+        private static MockableRedisResourceGroupResource GetMockableRedisResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new RedisResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableRedisResourceGroupResource(client, resource.Id));
         }
 
-        private static RedisSubscriptionMockingExtension GetRedisSubscriptionMockingExtension(ArmResource resource)
+        private static MockableRedisSubscriptionResource GetMockableRedisSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new RedisSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableRedisSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Redis
         /// You can use <see cref="RedisResource.CreateResourceIdentifier" /> to create a <see cref="RedisResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RedisArmClientMockingExtension.GetRedisResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedisArmClient.GetRedisResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> Returns a <see cref="RedisResource" /> object. </returns>
         public static RedisResource GetRedisResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRedisArmClientMockingExtension(client).GetRedisResource(id);
+            return GetMockableRedisArmClient(client).GetRedisResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Redis
         /// You can use <see cref="RedisFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="RedisFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RedisArmClientMockingExtension.GetRedisFirewallRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedisArmClient.GetRedisFirewallRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> Returns a <see cref="RedisFirewallRuleResource" /> object. </returns>
         public static RedisFirewallRuleResource GetRedisFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRedisArmClientMockingExtension(client).GetRedisFirewallRuleResource(id);
+            return GetMockableRedisArmClient(client).GetRedisFirewallRuleResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Redis
         /// You can use <see cref="RedisPatchScheduleResource.CreateResourceIdentifier" /> to create a <see cref="RedisPatchScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RedisArmClientMockingExtension.GetRedisPatchScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedisArmClient.GetRedisPatchScheduleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> Returns a <see cref="RedisPatchScheduleResource" /> object. </returns>
         public static RedisPatchScheduleResource GetRedisPatchScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRedisArmClientMockingExtension(client).GetRedisPatchScheduleResource(id);
+            return GetMockableRedisArmClient(client).GetRedisPatchScheduleResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Redis
         /// You can use <see cref="RedisLinkedServerWithPropertyResource.CreateResourceIdentifier" /> to create a <see cref="RedisLinkedServerWithPropertyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RedisArmClientMockingExtension.GetRedisLinkedServerWithPropertyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedisArmClient.GetRedisLinkedServerWithPropertyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> Returns a <see cref="RedisLinkedServerWithPropertyResource" /> object. </returns>
         public static RedisLinkedServerWithPropertyResource GetRedisLinkedServerWithPropertyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRedisArmClientMockingExtension(client).GetRedisLinkedServerWithPropertyResource(id);
+            return GetMockableRedisArmClient(client).GetRedisLinkedServerWithPropertyResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Redis
         /// You can use <see cref="RedisPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RedisPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RedisArmClientMockingExtension.GetRedisPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedisArmClient.GetRedisPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,21 +112,21 @@ namespace Azure.ResourceManager.Redis
         /// <returns> Returns a <see cref="RedisPrivateEndpointConnectionResource" /> object. </returns>
         public static RedisPrivateEndpointConnectionResource GetRedisPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRedisArmClientMockingExtension(client).GetRedisPrivateEndpointConnectionResource(id);
+            return GetMockableRedisArmClient(client).GetRedisPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
         /// Gets a collection of RedisResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RedisResourceGroupMockingExtension.GetAllRedis()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedisResourceGroupResource.GetAllRedis()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RedisResources and their operations over a RedisResource. </returns>
         public static RedisCollection GetAllRedis(this ResourceGroupResource resourceGroupResource)
         {
-            return GetRedisResourceGroupMockingExtension(resourceGroupResource).GetAllRedis();
+            return GetMockableRedisResourceGroupResource(resourceGroupResource).GetAllRedis();
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RedisResourceGroupMockingExtension.GetRedisAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedisResourceGroupResource.GetRedisAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Redis
         [ForwardsClientCalls]
         public static async Task<Response<RedisResource>> GetRedisAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await GetRedisResourceGroupMockingExtension(resourceGroupResource).GetRedisAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRedisResourceGroupResource(resourceGroupResource).GetRedisAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RedisResourceGroupMockingExtension.GetRedis(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedisResourceGroupResource.GetRedis(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Redis
         [ForwardsClientCalls]
         public static Response<RedisResource> GetRedis(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return GetRedisResourceGroupMockingExtension(resourceGroupResource).GetRedis(name, cancellationToken);
+            return GetMockableRedisResourceGroupResource(resourceGroupResource).GetRedis(name, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RedisSubscriptionMockingExtension.CheckRedisNameAvailability(RedisNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedisSubscriptionResource.CheckRedisNameAvailability(RedisNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response> CheckRedisNameAvailabilityAsync(this SubscriptionResource subscriptionResource, RedisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetRedisSubscriptionMockingExtension(subscriptionResource).CheckRedisNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRedisSubscriptionResource(subscriptionResource).CheckRedisNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RedisSubscriptionMockingExtension.CheckRedisNameAvailability(RedisNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedisSubscriptionResource.CheckRedisNameAvailability(RedisNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response CheckRedisNameAvailability(this SubscriptionResource subscriptionResource, RedisNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetRedisSubscriptionMockingExtension(subscriptionResource).CheckRedisNameAvailability(content, cancellationToken);
+            return GetMockableRedisSubscriptionResource(subscriptionResource).CheckRedisNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RedisSubscriptionMockingExtension.GetAllRedis(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedisSubscriptionResource.GetAllRedis(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An async collection of <see cref="RedisResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RedisResource> GetAllRedisAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetRedisSubscriptionMockingExtension(subscriptionResource).GetAllRedisAsync(cancellationToken);
+            return GetMockableRedisSubscriptionResource(subscriptionResource).GetAllRedisAsync(cancellationToken);
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RedisSubscriptionMockingExtension.GetAllRedis(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedisSubscriptionResource.GetAllRedis(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> A collection of <see cref="RedisResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RedisResource> GetAllRedis(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetRedisSubscriptionMockingExtension(subscriptionResource).GetAllRedis(cancellationToken);
+            return GetMockableRedisSubscriptionResource(subscriptionResource).GetAllRedis(cancellationToken);
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RedisSubscriptionMockingExtension.GetAsyncOperationStatus(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedisSubscriptionResource.GetAsyncOperationStatus(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public static async Task<Response<RedisOperationStatus>> GetAsyncOperationStatusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            return await GetRedisSubscriptionMockingExtension(subscriptionResource).GetAsyncOperationStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRedisSubscriptionResource(subscriptionResource).GetAsyncOperationStatusAsync(location, operationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Redis
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RedisSubscriptionMockingExtension.GetAsyncOperationStatus(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRedisSubscriptionResource.GetAsyncOperationStatus(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         public static Response<RedisOperationStatus> GetAsyncOperationStatus(this SubscriptionResource subscriptionResource, AzureLocation location, string operationId, CancellationToken cancellationToken = default)
         {
-            return GetRedisSubscriptionMockingExtension(subscriptionResource).GetAsyncOperationStatus(location, operationId, cancellationToken);
+            return GetMockableRedisSubscriptionResource(subscriptionResource).GetAsyncOperationStatus(location, operationId, cancellationToken);
         }
     }
 }

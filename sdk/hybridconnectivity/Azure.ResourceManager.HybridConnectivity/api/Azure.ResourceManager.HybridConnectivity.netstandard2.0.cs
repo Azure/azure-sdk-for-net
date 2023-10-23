@@ -56,9 +56,9 @@ namespace Azure.ResourceManager.HybridConnectivity
 }
 namespace Azure.ResourceManager.HybridConnectivity.Mocking
 {
-    public partial class HybridConnectivityArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHybridConnectivityArmClient : Azure.ResourceManager.ArmResource
     {
-        protected HybridConnectivityArmClientMockingExtension() { }
+        protected MockableHybridConnectivityArmClient() { }
         public virtual Azure.ResourceManager.HybridConnectivity.EndpointResource GetEndpointResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridConnectivity.EndpointResource> GetEndpointResource(Azure.Core.ResourceIdentifier scope, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridConnectivity.EndpointResource>> GetEndpointResourceAsync(Azure.Core.ResourceIdentifier scope, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

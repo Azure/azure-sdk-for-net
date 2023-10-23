@@ -223,24 +223,24 @@ namespace Azure.ResourceManager.NotificationHubs
 }
 namespace Azure.ResourceManager.NotificationHubs.Mocking
 {
-    public partial class NotificationHubsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNotificationHubsArmClient : Azure.ResourceManager.ArmResource
     {
-        protected NotificationHubsArmClientMockingExtension() { }
+        protected MockableNotificationHubsArmClient() { }
         public virtual Azure.ResourceManager.NotificationHubs.NotificationHubAuthorizationRuleResource GetNotificationHubAuthorizationRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceAuthorizationRuleResource GetNotificationHubNamespaceAuthorizationRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource GetNotificationHubNamespaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NotificationHubs.NotificationHubResource GetNotificationHubResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class NotificationHubsResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNotificationHubsResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected NotificationHubsResourceGroupMockingExtension() { }
+        protected MockableNotificationHubsResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> GetNotificationHubNamespace(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource>> GetNotificationHubNamespaceAsync(string namespaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceCollection GetNotificationHubNamespaces() { throw null; }
     }
-    public partial class NotificationHubsSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNotificationHubsSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected NotificationHubsSubscriptionMockingExtension() { }
+        protected MockableNotificationHubsSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.NotificationHubs.Models.NotificationHubAvailabilityResult> CheckNotificationHubNamespaceAvailability(Azure.ResourceManager.NotificationHubs.Models.NotificationHubAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NotificationHubs.Models.NotificationHubAvailabilityResult>> CheckNotificationHubNamespaceAvailabilityAsync(Azure.ResourceManager.NotificationHubs.Models.NotificationHubAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NotificationHubs.NotificationHubNamespaceResource> GetNotificationHubNamespaces(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

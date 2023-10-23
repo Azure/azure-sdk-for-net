@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.DataShare
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataShare. </summary>
     public static partial class DataShareExtensions
     {
-        private static DataShareArmClientMockingExtension GetDataShareArmClientMockingExtension(ArmClient client)
+        private static MockableDataShareArmClient GetMockableDataShareArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new DataShareArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableDataShareArmClient(client0));
         }
 
-        private static DataShareResourceGroupMockingExtension GetDataShareResourceGroupMockingExtension(ArmResource resource)
+        private static MockableDataShareResourceGroupResource GetMockableDataShareResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DataShareResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDataShareResourceGroupResource(client, resource.Id));
         }
 
-        private static DataShareSubscriptionMockingExtension GetDataShareSubscriptionMockingExtension(ArmResource resource)
+        private static MockableDataShareSubscriptionResource GetMockableDataShareSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DataShareSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDataShareSubscriptionResource(client, resource.Id));
         }
 
-        private static DataShareTenantMockingExtension GetDataShareTenantMockingExtension(ArmResource resource)
+        private static MockableDataShareTenantResource GetMockableDataShareTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DataShareTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDataShareTenantResource(client, resource.Id));
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataShare
         /// You can use <see cref="DataShareAccountResource.CreateResourceIdentifier" /> to create a <see cref="DataShareAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetDataShareAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareArmClient.GetDataShareAccountResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="DataShareAccountResource" /> object. </returns>
         public static DataShareAccountResource GetDataShareAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataShareArmClientMockingExtension(client).GetDataShareAccountResource(id);
+            return GetMockableDataShareArmClient(client).GetDataShareAccountResource(id);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataShare
         /// You can use <see cref="DataShareConsumerInvitationResource.CreateResourceIdentifier" /> to create a <see cref="DataShareConsumerInvitationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetDataShareConsumerInvitationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareArmClient.GetDataShareConsumerInvitationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="DataShareConsumerInvitationResource" /> object. </returns>
         public static DataShareConsumerInvitationResource GetDataShareConsumerInvitationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataShareArmClientMockingExtension(client).GetDataShareConsumerInvitationResource(id);
+            return GetMockableDataShareArmClient(client).GetDataShareConsumerInvitationResource(id);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataShare
         /// You can use <see cref="ShareDataSetResource.CreateResourceIdentifier" /> to create a <see cref="ShareDataSetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetShareDataSetResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareArmClient.GetShareDataSetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="ShareDataSetResource" /> object. </returns>
         public static ShareDataSetResource GetShareDataSetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataShareArmClientMockingExtension(client).GetShareDataSetResource(id);
+            return GetMockableDataShareArmClient(client).GetShareDataSetResource(id);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataShare
         /// You can use <see cref="ShareDataSetMappingResource.CreateResourceIdentifier" /> to create a <see cref="ShareDataSetMappingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetShareDataSetMappingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareArmClient.GetShareDataSetMappingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="ShareDataSetMappingResource" /> object. </returns>
         public static ShareDataSetMappingResource GetShareDataSetMappingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataShareArmClientMockingExtension(client).GetShareDataSetMappingResource(id);
+            return GetMockableDataShareArmClient(client).GetShareDataSetMappingResource(id);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataShare
         /// You can use <see cref="DataShareInvitationResource.CreateResourceIdentifier" /> to create a <see cref="DataShareInvitationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetDataShareInvitationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareArmClient.GetDataShareInvitationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="DataShareInvitationResource" /> object. </returns>
         public static DataShareInvitationResource GetDataShareInvitationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataShareArmClientMockingExtension(client).GetDataShareInvitationResource(id);
+            return GetMockableDataShareArmClient(client).GetDataShareInvitationResource(id);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataShare
         /// You can use <see cref="DataShareResource.CreateResourceIdentifier" /> to create a <see cref="DataShareResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetDataShareResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareArmClient.GetDataShareResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="DataShareResource" /> object. </returns>
         public static DataShareResource GetDataShareResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataShareArmClientMockingExtension(client).GetDataShareResource(id);
+            return GetMockableDataShareArmClient(client).GetDataShareResource(id);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataShare
         /// You can use <see cref="ProviderShareSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="ProviderShareSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetProviderShareSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareArmClient.GetProviderShareSubscriptionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="ProviderShareSubscriptionResource" /> object. </returns>
         public static ProviderShareSubscriptionResource GetProviderShareSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataShareArmClientMockingExtension(client).GetProviderShareSubscriptionResource(id);
+            return GetMockableDataShareArmClient(client).GetProviderShareSubscriptionResource(id);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataShare
         /// You can use <see cref="ShareSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="ShareSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetShareSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareArmClient.GetShareSubscriptionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="ShareSubscriptionResource" /> object. </returns>
         public static ShareSubscriptionResource GetShareSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataShareArmClientMockingExtension(client).GetShareSubscriptionResource(id);
+            return GetMockableDataShareArmClient(client).GetShareSubscriptionResource(id);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DataShare
         /// You can use <see cref="DataShareSynchronizationSettingResource.CreateResourceIdentifier" /> to create a <see cref="DataShareSynchronizationSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetDataShareSynchronizationSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareArmClient.GetDataShareSynchronizationSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="DataShareSynchronizationSettingResource" /> object. </returns>
         public static DataShareSynchronizationSettingResource GetDataShareSynchronizationSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataShareArmClientMockingExtension(client).GetDataShareSynchronizationSettingResource(id);
+            return GetMockableDataShareArmClient(client).GetDataShareSynchronizationSettingResource(id);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.DataShare
         /// You can use <see cref="DataShareTriggerResource.CreateResourceIdentifier" /> to create a <see cref="DataShareTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareArmClientMockingExtension.GetDataShareTriggerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareArmClient.GetDataShareTriggerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -197,21 +197,21 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> Returns a <see cref="DataShareTriggerResource" /> object. </returns>
         public static DataShareTriggerResource GetDataShareTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataShareArmClientMockingExtension(client).GetDataShareTriggerResource(id);
+            return GetMockableDataShareArmClient(client).GetDataShareTriggerResource(id);
         }
 
         /// <summary>
         /// Gets a collection of DataShareAccountResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareResourceGroupMockingExtension.GetDataShareAccounts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareResourceGroupResource.GetDataShareAccounts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataShareAccountResources and their operations over a DataShareAccountResource. </returns>
         public static DataShareAccountCollection GetDataShareAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetDataShareResourceGroupMockingExtension(resourceGroupResource).GetDataShareAccounts();
+            return GetMockableDataShareResourceGroupResource(resourceGroupResource).GetDataShareAccounts();
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataShare
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareResourceGroupMockingExtension.GetDataShareAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareResourceGroupResource.GetDataShareAccountAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.DataShare
         [ForwardsClientCalls]
         public static async Task<Response<DataShareAccountResource>> GetDataShareAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await GetDataShareResourceGroupMockingExtension(resourceGroupResource).GetDataShareAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataShareResourceGroupResource(resourceGroupResource).GetDataShareAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DataShare
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareResourceGroupMockingExtension.GetDataShareAccount(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareResourceGroupResource.GetDataShareAccount(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DataShare
         [ForwardsClientCalls]
         public static Response<DataShareAccountResource> GetDataShareAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return GetDataShareResourceGroupMockingExtension(resourceGroupResource).GetDataShareAccount(accountName, cancellationToken);
+            return GetMockableDataShareResourceGroupResource(resourceGroupResource).GetDataShareAccount(accountName, cancellationToken);
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DataShare
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareSubscriptionMockingExtension.GetDataShareAccounts(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareSubscriptionResource.GetDataShareAccounts(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> An async collection of <see cref="DataShareAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataShareAccountResource> GetDataShareAccountsAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetDataShareSubscriptionMockingExtension(subscriptionResource).GetDataShareAccountsAsync(skipToken, cancellationToken);
+            return GetMockableDataShareSubscriptionResource(subscriptionResource).GetDataShareAccountsAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DataShare
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareSubscriptionMockingExtension.GetDataShareAccounts(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareSubscriptionResource.GetDataShareAccounts(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -319,21 +319,21 @@ namespace Azure.ResourceManager.DataShare
         /// <returns> A collection of <see cref="DataShareAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataShareAccountResource> GetDataShareAccounts(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetDataShareSubscriptionMockingExtension(subscriptionResource).GetDataShareAccounts(skipToken, cancellationToken);
+            return GetMockableDataShareSubscriptionResource(subscriptionResource).GetDataShareAccounts(skipToken, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of DataShareConsumerInvitationResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.GetDataShareConsumerInvitations()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareTenantResource.GetDataShareConsumerInvitations()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataShareConsumerInvitationResources and their operations over a DataShareConsumerInvitationResource. </returns>
         public static DataShareConsumerInvitationCollection GetDataShareConsumerInvitations(this TenantResource tenantResource)
         {
-            return GetDataShareTenantMockingExtension(tenantResource).GetDataShareConsumerInvitations();
+            return GetMockableDataShareTenantResource(tenantResource).GetDataShareConsumerInvitations();
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.DataShare
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.GetDataShareConsumerInvitationAsync(AzureLocation,Guid,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareTenantResource.GetDataShareConsumerInvitationAsync(AzureLocation,Guid,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.DataShare
         [ForwardsClientCalls]
         public static async Task<Response<DataShareConsumerInvitationResource>> GetDataShareConsumerInvitationAsync(this TenantResource tenantResource, AzureLocation location, Guid invitationId, CancellationToken cancellationToken = default)
         {
-            return await GetDataShareTenantMockingExtension(tenantResource).GetDataShareConsumerInvitationAsync(location, invitationId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataShareTenantResource(tenantResource).GetDataShareConsumerInvitationAsync(location, invitationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.DataShare
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.GetDataShareConsumerInvitation(AzureLocation,Guid,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareTenantResource.GetDataShareConsumerInvitation(AzureLocation,Guid,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.DataShare
         [ForwardsClientCalls]
         public static Response<DataShareConsumerInvitationResource> GetDataShareConsumerInvitation(this TenantResource tenantResource, AzureLocation location, Guid invitationId, CancellationToken cancellationToken = default)
         {
-            return GetDataShareTenantMockingExtension(tenantResource).GetDataShareConsumerInvitation(location, invitationId, cancellationToken);
+            return GetMockableDataShareTenantResource(tenantResource).GetDataShareConsumerInvitation(location, invitationId, cancellationToken);
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.DataShare
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.RejectConsumerInvitation(AzureLocation,DataShareConsumerInvitationData,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareTenantResource.RejectConsumerInvitation(AzureLocation,DataShareConsumerInvitationData,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public static async Task<Response<DataShareConsumerInvitationResource>> RejectConsumerInvitationAsync(this TenantResource tenantResource, AzureLocation location, DataShareConsumerInvitationData data, CancellationToken cancellationToken = default)
         {
-            return await GetDataShareTenantMockingExtension(tenantResource).RejectConsumerInvitationAsync(location, data, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataShareTenantResource(tenantResource).RejectConsumerInvitationAsync(location, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.DataShare
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.RejectConsumerInvitation(AzureLocation,DataShareConsumerInvitationData,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareTenantResource.RejectConsumerInvitation(AzureLocation,DataShareConsumerInvitationData,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public static Response<DataShareConsumerInvitationResource> RejectConsumerInvitation(this TenantResource tenantResource, AzureLocation location, DataShareConsumerInvitationData data, CancellationToken cancellationToken = default)
         {
-            return GetDataShareTenantMockingExtension(tenantResource).RejectConsumerInvitation(location, data, cancellationToken);
+            return GetMockableDataShareTenantResource(tenantResource).RejectConsumerInvitation(location, data, cancellationToken);
         }
 
         /// <summary>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.DataShare
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.ActivateEmail(AzureLocation,DataShareEmailRegistration,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareTenantResource.ActivateEmail(AzureLocation,DataShareEmailRegistration,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="emailRegistration"/> is null. </exception>
         public static async Task<Response<DataShareEmailRegistration>> ActivateEmailAsync(this TenantResource tenantResource, AzureLocation location, DataShareEmailRegistration emailRegistration, CancellationToken cancellationToken = default)
         {
-            return await GetDataShareTenantMockingExtension(tenantResource).ActivateEmailAsync(location, emailRegistration, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataShareTenantResource(tenantResource).ActivateEmailAsync(location, emailRegistration, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.DataShare
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.ActivateEmail(AzureLocation,DataShareEmailRegistration,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareTenantResource.ActivateEmail(AzureLocation,DataShareEmailRegistration,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentNullException"> <paramref name="emailRegistration"/> is null. </exception>
         public static Response<DataShareEmailRegistration> ActivateEmail(this TenantResource tenantResource, AzureLocation location, DataShareEmailRegistration emailRegistration, CancellationToken cancellationToken = default)
         {
-            return GetDataShareTenantMockingExtension(tenantResource).ActivateEmail(location, emailRegistration, cancellationToken);
+            return GetMockableDataShareTenantResource(tenantResource).ActivateEmail(location, emailRegistration, cancellationToken);
         }
 
         /// <summary>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.DataShare
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.RegisterEmail(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareTenantResource.RegisterEmail(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<DataShareEmailRegistration>> RegisterEmailAsync(this TenantResource tenantResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetDataShareTenantMockingExtension(tenantResource).RegisterEmailAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataShareTenantResource(tenantResource).RegisterEmailAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.DataShare
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataShareTenantMockingExtension.RegisterEmail(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataShareTenantResource.RegisterEmail(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.DataShare
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<DataShareEmailRegistration> RegisterEmail(this TenantResource tenantResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetDataShareTenantMockingExtension(tenantResource).RegisterEmail(location, cancellationToken);
+            return GetMockableDataShareTenantResource(tenantResource).RegisterEmail(location, cancellationToken);
         }
     }
 }

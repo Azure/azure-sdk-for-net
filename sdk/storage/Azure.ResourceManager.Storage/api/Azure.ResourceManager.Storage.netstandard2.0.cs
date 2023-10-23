@@ -729,9 +729,9 @@ namespace Azure.ResourceManager.Storage
 }
 namespace Azure.ResourceManager.Storage.Mocking
 {
-    public partial class StorageArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableStorageArmClient : Azure.ResourceManager.ArmResource
     {
-        protected StorageArmClientMockingExtension() { }
+        protected MockableStorageArmClient() { }
         public virtual Azure.ResourceManager.Storage.BlobContainerResource GetBlobContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Storage.BlobInventoryPolicyResource GetBlobInventoryPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Storage.BlobServiceResource GetBlobServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -750,16 +750,16 @@ namespace Azure.ResourceManager.Storage.Mocking
         public virtual Azure.ResourceManager.Storage.TableResource GetTableResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Storage.TableServiceResource GetTableServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class StorageResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableStorageResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected StorageResourceGroupMockingExtension() { }
+        protected MockableStorageResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource> GetStorageAccount(string accountName, Azure.ResourceManager.Storage.Models.StorageAccountExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageAccountExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.StorageAccountResource>> GetStorageAccountAsync(string accountName, Azure.ResourceManager.Storage.Models.StorageAccountExpand? expand = default(Azure.ResourceManager.Storage.Models.StorageAccountExpand?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Storage.StorageAccountCollection GetStorageAccounts() { throw null; }
     }
-    public partial class StorageSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableStorageSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected StorageSubscriptionMockingExtension() { }
+        protected MockableStorageSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityResult> CheckStorageAccountNameAvailability(Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityResult>> CheckStorageAccountNameAvailabilityAsync(Azure.ResourceManager.Storage.Models.StorageAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Storage.DeletedAccountResource> GetDeletedAccount(Azure.Core.AzureLocation location, string deletedAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -818,9 +818,9 @@ namespace Azure.ResourceManager.Cdn
 }
 namespace Azure.ResourceManager.Cdn.Mocking
 {
-    public partial class CdnArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableCdnArmClient : Azure.ResourceManager.ArmResource
     {
-        protected CdnArmClientMockingExtension() { }
+        protected MockableCdnArmClient() { }
         public virtual Azure.ResourceManager.Cdn.CdnCustomDomainResource GetCdnCustomDomainResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Cdn.CdnEndpointResource GetCdnEndpointResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Cdn.CdnOriginGroupResource GetCdnOriginGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -837,9 +837,9 @@ namespace Azure.ResourceManager.Cdn.Mocking
         public virtual Azure.ResourceManager.Cdn.FrontDoorSecurityPolicyResource GetFrontDoorSecurityPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Cdn.ProfileResource GetProfileResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class CdnResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableCdnResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected CdnResourceGroupMockingExtension() { }
+        protected MockableCdnResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.EndpointNameAvailabilityResult> CheckEndpointNameAvailability(Azure.ResourceManager.Cdn.Models.EndpointNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.EndpointNameAvailabilityResult>> CheckEndpointNameAvailabilityAsync(Azure.ResourceManager.Cdn.Models.EndpointNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.CdnWebApplicationFirewallPolicyCollection GetCdnWebApplicationFirewallPolicies() { throw null; }
@@ -849,9 +849,9 @@ namespace Azure.ResourceManager.Cdn.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.ProfileResource>> GetProfileAsync(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Cdn.ProfileCollection GetProfiles() { throw null; }
     }
-    public partial class CdnSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableCdnSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected CdnSubscriptionMockingExtension() { }
+        protected MockableCdnSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult> CheckCdnNameAvailabilityWithSubscription(Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult>> CheckCdnNameAvailabilityWithSubscriptionAsync(Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.ManagedRuleSetDefinition> GetManagedRuleSets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -863,9 +863,9 @@ namespace Azure.ResourceManager.Cdn.Mocking
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateProbeResult> ValidateProbe(Azure.ResourceManager.Cdn.Models.ValidateProbeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.ValidateProbeResult>> ValidateProbeAsync(Azure.ResourceManager.Cdn.Models.ValidateProbeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class CdnTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableCdnTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected CdnTenantMockingExtension() { }
+        protected MockableCdnTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult> CheckCdnNameAvailability(Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityResult>> CheckCdnNameAvailabilityAsync(Azure.ResourceManager.Cdn.Models.CdnNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Cdn.Models.EdgeNode> GetEdgeNodes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

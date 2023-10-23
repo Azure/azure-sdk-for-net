@@ -106,22 +106,22 @@ namespace Azure.ResourceManager.NetworkFunction
 }
 namespace Azure.ResourceManager.NetworkFunction.Mocking
 {
-    public partial class NetworkFunctionArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNetworkFunctionArmClient : Azure.ResourceManager.ArmResource
     {
-        protected NetworkFunctionArmClientMockingExtension() { }
+        protected MockableNetworkFunctionArmClient() { }
         public virtual Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource GetAzureTrafficCollectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NetworkFunction.CollectorPolicyResource GetCollectorPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class NetworkFunctionResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNetworkFunctionResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected NetworkFunctionResourceGroupMockingExtension() { }
+        protected MockableNetworkFunctionResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource> GetAzureTrafficCollector(string azureTrafficCollectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource>> GetAzureTrafficCollectorAsync(string azureTrafficCollectorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorCollection GetAzureTrafficCollectors() { throw null; }
     }
-    public partial class NetworkFunctionSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNetworkFunctionSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected NetworkFunctionSubscriptionMockingExtension() { }
+        protected MockableNetworkFunctionSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource> GetAzureTrafficCollectors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkFunction.AzureTrafficCollectorResource> GetAzureTrafficCollectorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

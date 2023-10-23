@@ -19,16 +19,16 @@ namespace Azure.ResourceManager.SelfHelp
     /// <summary> A class to add extension methods to Azure.ResourceManager.SelfHelp. </summary>
     public static partial class SelfHelpExtensions
     {
-        private static SelfHelpArmClientMockingExtension GetSelfHelpArmClientMockingExtension(ArmClient client)
+        private static MockableSelfHelpArmClient GetMockableSelfHelpArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new SelfHelpArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableSelfHelpArmClient(client0));
         }
 
         /// <summary>
         /// Gets a collection of SelfHelpDiagnosticResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SelfHelpArmClientMockingExtension.GetSelfHelpDiagnostics(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetSelfHelpDiagnostics(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <returns> An object representing collection of SelfHelpDiagnosticResources and their operations over a SelfHelpDiagnosticResource. </returns>
         public static SelfHelpDiagnosticCollection GetSelfHelpDiagnostics(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetSelfHelpArmClientMockingExtension(client).GetSelfHelpDiagnostics(scope);
+            return GetMockableSelfHelpArmClient(client).GetSelfHelpDiagnostics(scope);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SelfHelpArmClientMockingExtension.GetSelfHelpDiagnosticAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetSelfHelpDiagnosticAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.SelfHelp
         [ForwardsClientCalls]
         public static async Task<Response<SelfHelpDiagnosticResource>> GetSelfHelpDiagnosticAsync(this ArmClient client, ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            return await GetSelfHelpArmClientMockingExtension(client).GetSelfHelpDiagnosticAsync(scope, diagnosticsResourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSelfHelpArmClient(client).GetSelfHelpDiagnosticAsync(scope, diagnosticsResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SelfHelpArmClientMockingExtension.GetSelfHelpDiagnostic(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetSelfHelpDiagnostic(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SelfHelp
         [ForwardsClientCalls]
         public static Response<SelfHelpDiagnosticResource> GetSelfHelpDiagnostic(this ArmClient client, ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
         {
-            return GetSelfHelpArmClientMockingExtension(client).GetSelfHelpDiagnostic(scope, diagnosticsResourceName, cancellationToken);
+            return GetMockableSelfHelpArmClient(client).GetSelfHelpDiagnostic(scope, diagnosticsResourceName, cancellationToken);
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SelfHelpArmClientMockingExtension.CheckSelfHelpNameAvailability(ResourceIdentifier,SelfHelpNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.CheckSelfHelpNameAvailability(ResourceIdentifier,SelfHelpNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SelfHelpNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetSelfHelpArmClientMockingExtension(client).CheckSelfHelpNameAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSelfHelpArmClient(client).CheckSelfHelpNameAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SelfHelpArmClientMockingExtension.CheckSelfHelpNameAvailability(ResourceIdentifier,SelfHelpNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.CheckSelfHelpNameAvailability(ResourceIdentifier,SelfHelpNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SelfHelpNameAvailabilityResult> CheckSelfHelpNameAvailability(this ArmClient client, ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetSelfHelpArmClientMockingExtension(client).CheckSelfHelpNameAvailability(scope, content, cancellationToken);
+            return GetMockableSelfHelpArmClient(client).CheckSelfHelpNameAvailability(scope, content, cancellationToken);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SelfHelpArmClientMockingExtension.GetSelfHelpDiscoverySolutions(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetSelfHelpDiscoverySolutions(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static AsyncPageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutionsAsync(this ArmClient client, ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetSelfHelpArmClientMockingExtension(client).GetSelfHelpDiscoverySolutionsAsync(scope, filter, skiptoken, cancellationToken);
+            return GetMockableSelfHelpArmClient(client).GetSelfHelpDiscoverySolutionsAsync(scope, filter, skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SelfHelpArmClientMockingExtension.GetSelfHelpDiscoverySolutions(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetSelfHelpDiscoverySolutions(ResourceIdentifier,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Pageable<SelfHelpSolutionMetadata> GetSelfHelpDiscoverySolutions(this ArmClient client, ResourceIdentifier scope, string filter = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetSelfHelpArmClientMockingExtension(client).GetSelfHelpDiscoverySolutions(scope, filter, skiptoken, cancellationToken);
+            return GetMockableSelfHelpArmClient(client).GetSelfHelpDiscoverySolutions(scope, filter, skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// You can use <see cref="SelfHelpDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SelfHelpDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SelfHelpArmClientMockingExtension.GetSelfHelpDiagnosticResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSelfHelpArmClient.GetSelfHelpDiagnosticResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <returns> Returns a <see cref="SelfHelpDiagnosticResource" /> object. </returns>
         public static SelfHelpDiagnosticResource GetSelfHelpDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSelfHelpArmClientMockingExtension(client).GetSelfHelpDiagnosticResource(id);
+            return GetMockableSelfHelpArmClient(client).GetSelfHelpDiagnosticResource(id);
         }
     }
 }

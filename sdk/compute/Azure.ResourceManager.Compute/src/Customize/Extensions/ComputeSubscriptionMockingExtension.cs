@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.Models;
 namespace Azure.ResourceManager.Compute.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    public partial class ComputeSubscriptionMockingExtension : ArmResource
+    public partial class MockableComputeSubscriptionResource : ArmResource
     {
         /// <summary>
         /// Lists all of the virtual machines in the specified subscription. Use the nextLink property in the response to get the next page of virtual machines.

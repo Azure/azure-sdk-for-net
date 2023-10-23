@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.VoiceServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.VoiceServices. </summary>
     public static partial class VoiceServicesExtensions
     {
-        private static VoiceServicesArmClientMockingExtension GetVoiceServicesArmClientMockingExtension(ArmClient client)
+        private static MockableVoiceServicesArmClient GetMockableVoiceServicesArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new VoiceServicesArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableVoiceServicesArmClient(client0));
         }
 
-        private static VoiceServicesResourceGroupMockingExtension GetVoiceServicesResourceGroupMockingExtension(ArmResource resource)
+        private static MockableVoiceServicesResourceGroupResource GetMockableVoiceServicesResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new VoiceServicesResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableVoiceServicesResourceGroupResource(client, resource.Id));
         }
 
-        private static VoiceServicesSubscriptionMockingExtension GetVoiceServicesSubscriptionMockingExtension(ArmResource resource)
+        private static MockableVoiceServicesSubscriptionResource GetMockableVoiceServicesSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new VoiceServicesSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableVoiceServicesSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// You can use <see cref="VoiceServicesCommunicationsGatewayResource.CreateResourceIdentifier" /> to create a <see cref="VoiceServicesCommunicationsGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="VoiceServicesArmClientMockingExtension.GetVoiceServicesCommunicationsGatewayResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableVoiceServicesArmClient.GetVoiceServicesCommunicationsGatewayResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> Returns a <see cref="VoiceServicesCommunicationsGatewayResource" /> object. </returns>
         public static VoiceServicesCommunicationsGatewayResource GetVoiceServicesCommunicationsGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetVoiceServicesArmClientMockingExtension(client).GetVoiceServicesCommunicationsGatewayResource(id);
+            return GetMockableVoiceServicesArmClient(client).GetVoiceServicesCommunicationsGatewayResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// You can use <see cref="VoiceServicesTestLineResource.CreateResourceIdentifier" /> to create a <see cref="VoiceServicesTestLineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="VoiceServicesArmClientMockingExtension.GetVoiceServicesTestLineResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableVoiceServicesArmClient.GetVoiceServicesTestLineResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,21 +64,21 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> Returns a <see cref="VoiceServicesTestLineResource" /> object. </returns>
         public static VoiceServicesTestLineResource GetVoiceServicesTestLineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetVoiceServicesArmClientMockingExtension(client).GetVoiceServicesTestLineResource(id);
+            return GetMockableVoiceServicesArmClient(client).GetVoiceServicesTestLineResource(id);
         }
 
         /// <summary>
         /// Gets a collection of VoiceServicesCommunicationsGatewayResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="VoiceServicesResourceGroupMockingExtension.GetVoiceServicesCommunicationsGateways()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableVoiceServicesResourceGroupResource.GetVoiceServicesCommunicationsGateways()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of VoiceServicesCommunicationsGatewayResources and their operations over a VoiceServicesCommunicationsGatewayResource. </returns>
         public static VoiceServicesCommunicationsGatewayCollection GetVoiceServicesCommunicationsGateways(this ResourceGroupResource resourceGroupResource)
         {
-            return GetVoiceServicesResourceGroupMockingExtension(resourceGroupResource).GetVoiceServicesCommunicationsGateways();
+            return GetMockableVoiceServicesResourceGroupResource(resourceGroupResource).GetVoiceServicesCommunicationsGateways();
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="VoiceServicesResourceGroupMockingExtension.GetVoiceServicesCommunicationsGatewayAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableVoiceServicesResourceGroupResource.GetVoiceServicesCommunicationsGatewayAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.VoiceServices
         [ForwardsClientCalls]
         public static async Task<Response<VoiceServicesCommunicationsGatewayResource>> GetVoiceServicesCommunicationsGatewayAsync(this ResourceGroupResource resourceGroupResource, string communicationsGatewayName, CancellationToken cancellationToken = default)
         {
-            return await GetVoiceServicesResourceGroupMockingExtension(resourceGroupResource).GetVoiceServicesCommunicationsGatewayAsync(communicationsGatewayName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableVoiceServicesResourceGroupResource(resourceGroupResource).GetVoiceServicesCommunicationsGatewayAsync(communicationsGatewayName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="VoiceServicesResourceGroupMockingExtension.GetVoiceServicesCommunicationsGateway(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableVoiceServicesResourceGroupResource.GetVoiceServicesCommunicationsGateway(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.VoiceServices
         [ForwardsClientCalls]
         public static Response<VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGateway(this ResourceGroupResource resourceGroupResource, string communicationsGatewayName, CancellationToken cancellationToken = default)
         {
-            return GetVoiceServicesResourceGroupMockingExtension(resourceGroupResource).GetVoiceServicesCommunicationsGateway(communicationsGatewayName, cancellationToken);
+            return GetMockableVoiceServicesResourceGroupResource(resourceGroupResource).GetVoiceServicesCommunicationsGateway(communicationsGatewayName, cancellationToken);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="VoiceServicesSubscriptionMockingExtension.GetVoiceServicesCommunicationsGateways(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableVoiceServicesSubscriptionResource.GetVoiceServicesCommunicationsGateways(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> An async collection of <see cref="VoiceServicesCommunicationsGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGatewaysAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetVoiceServicesSubscriptionMockingExtension(subscriptionResource).GetVoiceServicesCommunicationsGatewaysAsync(cancellationToken);
+            return GetMockableVoiceServicesSubscriptionResource(subscriptionResource).GetVoiceServicesCommunicationsGatewaysAsync(cancellationToken);
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="VoiceServicesSubscriptionMockingExtension.GetVoiceServicesCommunicationsGateways(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableVoiceServicesSubscriptionResource.GetVoiceServicesCommunicationsGateways(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <returns> A collection of <see cref="VoiceServicesCommunicationsGatewayResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<VoiceServicesCommunicationsGatewayResource> GetVoiceServicesCommunicationsGateways(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetVoiceServicesSubscriptionMockingExtension(subscriptionResource).GetVoiceServicesCommunicationsGateways(cancellationToken);
+            return GetMockableVoiceServicesSubscriptionResource(subscriptionResource).GetVoiceServicesCommunicationsGateways(cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="VoiceServicesSubscriptionMockingExtension.CheckVoiceServicesNameAvailability(AzureLocation,VoiceServicesCheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableVoiceServicesSubscriptionResource.CheckVoiceServicesNameAvailability(AzureLocation,VoiceServicesCheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<VoiceServicesCheckNameAvailabilityResult>> CheckVoiceServicesNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetVoiceServicesSubscriptionMockingExtension(subscriptionResource).CheckVoiceServicesNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableVoiceServicesSubscriptionResource(subscriptionResource).CheckVoiceServicesNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="VoiceServicesSubscriptionMockingExtension.CheckVoiceServicesNameAvailability(AzureLocation,VoiceServicesCheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableVoiceServicesSubscriptionResource.CheckVoiceServicesNameAvailability(AzureLocation,VoiceServicesCheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.VoiceServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<VoiceServicesCheckNameAvailabilityResult> CheckVoiceServicesNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, VoiceServicesCheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetVoiceServicesSubscriptionMockingExtension(subscriptionResource).CheckVoiceServicesNameAvailability(location, content, cancellationToken);
+            return GetMockableVoiceServicesSubscriptionResource(subscriptionResource).CheckVoiceServicesNameAvailability(location, content, cancellationToken);
         }
     }
 }

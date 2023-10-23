@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Relay
     /// <summary> A class to add extension methods to Azure.ResourceManager.Relay. </summary>
     public static partial class RelayExtensions
     {
-        private static RelayArmClientMockingExtension GetRelayArmClientMockingExtension(ArmClient client)
+        private static MockableRelayArmClient GetMockableRelayArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new RelayArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableRelayArmClient(client0));
         }
 
-        private static RelayResourceGroupMockingExtension GetRelayResourceGroupMockingExtension(ArmResource resource)
+        private static MockableRelayResourceGroupResource GetMockableRelayResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new RelayResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableRelayResourceGroupResource(client, resource.Id));
         }
 
-        private static RelaySubscriptionMockingExtension GetRelaySubscriptionMockingExtension(ArmResource resource)
+        private static MockableRelaySubscriptionResource GetMockableRelaySubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new RelaySubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableRelaySubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Relay
         /// You can use <see cref="RelayNamespaceAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="RelayNamespaceAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RelayArmClientMockingExtension.GetRelayNamespaceAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRelayArmClient.GetRelayNamespaceAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="RelayNamespaceAuthorizationRuleResource" /> object. </returns>
         public static RelayNamespaceAuthorizationRuleResource GetRelayNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRelayArmClientMockingExtension(client).GetRelayNamespaceAuthorizationRuleResource(id);
+            return GetMockableRelayArmClient(client).GetRelayNamespaceAuthorizationRuleResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Relay
         /// You can use <see cref="RelayHybridConnectionAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="RelayHybridConnectionAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RelayArmClientMockingExtension.GetRelayHybridConnectionAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRelayArmClient.GetRelayHybridConnectionAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="RelayHybridConnectionAuthorizationRuleResource" /> object. </returns>
         public static RelayHybridConnectionAuthorizationRuleResource GetRelayHybridConnectionAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRelayArmClientMockingExtension(client).GetRelayHybridConnectionAuthorizationRuleResource(id);
+            return GetMockableRelayArmClient(client).GetRelayHybridConnectionAuthorizationRuleResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Relay
         /// You can use <see cref="WcfRelayAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="WcfRelayAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RelayArmClientMockingExtension.GetWcfRelayAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRelayArmClient.GetWcfRelayAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="WcfRelayAuthorizationRuleResource" /> object. </returns>
         public static WcfRelayAuthorizationRuleResource GetWcfRelayAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRelayArmClientMockingExtension(client).GetWcfRelayAuthorizationRuleResource(id);
+            return GetMockableRelayArmClient(client).GetWcfRelayAuthorizationRuleResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Relay
         /// You can use <see cref="RelayNamespaceResource.CreateResourceIdentifier" /> to create a <see cref="RelayNamespaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RelayArmClientMockingExtension.GetRelayNamespaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRelayArmClient.GetRelayNamespaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="RelayNamespaceResource" /> object. </returns>
         public static RelayNamespaceResource GetRelayNamespaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRelayArmClientMockingExtension(client).GetRelayNamespaceResource(id);
+            return GetMockableRelayArmClient(client).GetRelayNamespaceResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Relay
         /// You can use <see cref="RelayNetworkRuleSetResource.CreateResourceIdentifier" /> to create a <see cref="RelayNetworkRuleSetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RelayArmClientMockingExtension.GetRelayNetworkRuleSetResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRelayArmClient.GetRelayNetworkRuleSetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="RelayNetworkRuleSetResource" /> object. </returns>
         public static RelayNetworkRuleSetResource GetRelayNetworkRuleSetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRelayArmClientMockingExtension(client).GetRelayNetworkRuleSetResource(id);
+            return GetMockableRelayArmClient(client).GetRelayNetworkRuleSetResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Relay
         /// You can use <see cref="RelayHybridConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RelayHybridConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RelayArmClientMockingExtension.GetRelayHybridConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRelayArmClient.GetRelayHybridConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="RelayHybridConnectionResource" /> object. </returns>
         public static RelayHybridConnectionResource GetRelayHybridConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRelayArmClientMockingExtension(client).GetRelayHybridConnectionResource(id);
+            return GetMockableRelayArmClient(client).GetRelayHybridConnectionResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Relay
         /// You can use <see cref="WcfRelayResource.CreateResourceIdentifier" /> to create a <see cref="WcfRelayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RelayArmClientMockingExtension.GetWcfRelayResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRelayArmClient.GetWcfRelayResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="WcfRelayResource" /> object. </returns>
         public static WcfRelayResource GetWcfRelayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRelayArmClientMockingExtension(client).GetWcfRelayResource(id);
+            return GetMockableRelayArmClient(client).GetWcfRelayResource(id);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Relay
         /// You can use <see cref="RelayPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RelayPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RelayArmClientMockingExtension.GetRelayPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRelayArmClient.GetRelayPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="RelayPrivateEndpointConnectionResource" /> object. </returns>
         public static RelayPrivateEndpointConnectionResource GetRelayPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRelayArmClientMockingExtension(client).GetRelayPrivateEndpointConnectionResource(id);
+            return GetMockableRelayArmClient(client).GetRelayPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Relay
         /// You can use <see cref="RelayPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="RelayPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RelayArmClientMockingExtension.GetRelayPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRelayArmClient.GetRelayPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -176,21 +176,21 @@ namespace Azure.ResourceManager.Relay
         /// <returns> Returns a <see cref="RelayPrivateLinkResource" /> object. </returns>
         public static RelayPrivateLinkResource GetRelayPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetRelayArmClientMockingExtension(client).GetRelayPrivateLinkResource(id);
+            return GetMockableRelayArmClient(client).GetRelayPrivateLinkResource(id);
         }
 
         /// <summary>
         /// Gets a collection of RelayNamespaceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RelayResourceGroupMockingExtension.GetRelayNamespaces()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRelayResourceGroupResource.GetRelayNamespaces()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of RelayNamespaceResources and their operations over a RelayNamespaceResource. </returns>
         public static RelayNamespaceCollection GetRelayNamespaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetRelayResourceGroupMockingExtension(resourceGroupResource).GetRelayNamespaces();
+            return GetMockableRelayResourceGroupResource(resourceGroupResource).GetRelayNamespaces();
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RelayResourceGroupMockingExtension.GetRelayNamespaceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRelayResourceGroupResource.GetRelayNamespaceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Relay
         [ForwardsClientCalls]
         public static async Task<Response<RelayNamespaceResource>> GetRelayNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            return await GetRelayResourceGroupMockingExtension(resourceGroupResource).GetRelayNamespaceAsync(namespaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRelayResourceGroupResource(resourceGroupResource).GetRelayNamespaceAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RelayResourceGroupMockingExtension.GetRelayNamespace(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRelayResourceGroupResource.GetRelayNamespace(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Relay
         [ForwardsClientCalls]
         public static Response<RelayNamespaceResource> GetRelayNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            return GetRelayResourceGroupMockingExtension(resourceGroupResource).GetRelayNamespace(namespaceName, cancellationToken);
+            return GetMockableRelayResourceGroupResource(resourceGroupResource).GetRelayNamespace(namespaceName, cancellationToken);
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RelaySubscriptionMockingExtension.CheckRelayNamespaceNameAvailability(RelayNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRelaySubscriptionResource.CheckRelayNamespaceNameAvailability(RelayNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<RelayNameAvailabilityResult>> CheckRelayNamespaceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, RelayNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetRelaySubscriptionMockingExtension(subscriptionResource).CheckRelayNamespaceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRelaySubscriptionResource(subscriptionResource).CheckRelayNamespaceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RelaySubscriptionMockingExtension.CheckRelayNamespaceNameAvailability(RelayNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRelaySubscriptionResource.CheckRelayNamespaceNameAvailability(RelayNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Relay
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<RelayNameAvailabilityResult> CheckRelayNamespaceNameAvailability(this SubscriptionResource subscriptionResource, RelayNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetRelaySubscriptionMockingExtension(subscriptionResource).CheckRelayNamespaceNameAvailability(content, cancellationToken);
+            return GetMockableRelaySubscriptionResource(subscriptionResource).CheckRelayNamespaceNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RelaySubscriptionMockingExtension.GetRelayNamespaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRelaySubscriptionResource.GetRelayNamespaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> An async collection of <see cref="RelayNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RelayNamespaceResource> GetRelayNamespacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetRelaySubscriptionMockingExtension(subscriptionResource).GetRelayNamespacesAsync(cancellationToken);
+            return GetMockableRelaySubscriptionResource(subscriptionResource).GetRelayNamespacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Relay
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="RelaySubscriptionMockingExtension.GetRelayNamespaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRelaySubscriptionResource.GetRelayNamespaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Relay
         /// <returns> A collection of <see cref="RelayNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RelayNamespaceResource> GetRelayNamespaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetRelaySubscriptionMockingExtension(subscriptionResource).GetRelayNamespaces(cancellationToken);
+            return GetMockableRelaySubscriptionResource(subscriptionResource).GetRelayNamespaces(cancellationToken);
         }
     }
 }

@@ -446,9 +446,9 @@ namespace Azure.ResourceManager.Hci
 }
 namespace Azure.ResourceManager.Hci.Mocking
 {
-    public partial class HciArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHciArmClient : Azure.ResourceManager.ArmResource
     {
-        protected HciArmClientMockingExtension() { }
+        protected MockableHciArmClient() { }
         public virtual Azure.ResourceManager.Hci.ArcExtensionResource GetArcExtensionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Hci.ArcSettingResource GetArcSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Hci.HciClusterResource GetHciClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -459,16 +459,16 @@ namespace Azure.ResourceManager.Hci.Mocking
         public virtual Azure.ResourceManager.Hci.UpdateRunResource GetUpdateRunResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Hci.UpdateSummaryResource GetUpdateSummaryResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class HciResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHciResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected HciResourceGroupMockingExtension() { }
+        protected MockableHciResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Hci.HciClusterResource> GetHciCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Hci.HciClusterResource>> GetHciClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Hci.HciClusterCollection GetHciClusters() { throw null; }
     }
-    public partial class HciSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHciSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected HciSubscriptionMockingExtension() { }
+        protected MockableHciSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Hci.HciClusterResource> GetHciClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Hci.HciClusterResource> GetHciClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

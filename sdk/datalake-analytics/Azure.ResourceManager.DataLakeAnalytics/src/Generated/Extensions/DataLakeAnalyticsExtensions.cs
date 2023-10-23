@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.DataLakeAnalytics
     /// <summary> A class to add extension methods to Azure.ResourceManager.DataLakeAnalytics. </summary>
     public static partial class DataLakeAnalyticsExtensions
     {
-        private static DataLakeAnalyticsArmClientMockingExtension GetDataLakeAnalyticsArmClientMockingExtension(ArmClient client)
+        private static MockableDataLakeAnalyticsArmClient GetMockableDataLakeAnalyticsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new DataLakeAnalyticsArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableDataLakeAnalyticsArmClient(client0));
         }
 
-        private static DataLakeAnalyticsResourceGroupMockingExtension GetDataLakeAnalyticsResourceGroupMockingExtension(ArmResource resource)
+        private static MockableDataLakeAnalyticsResourceGroupResource GetMockableDataLakeAnalyticsResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DataLakeAnalyticsResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDataLakeAnalyticsResourceGroupResource(client, resource.Id));
         }
 
-        private static DataLakeAnalyticsSubscriptionMockingExtension GetDataLakeAnalyticsSubscriptionMockingExtension(ArmResource resource)
+        private static MockableDataLakeAnalyticsSubscriptionResource GetMockableDataLakeAnalyticsSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DataLakeAnalyticsSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDataLakeAnalyticsSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// You can use <see cref="DataLakeAnalyticsAccountResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataLakeAnalyticsArmClientMockingExtension.GetDataLakeAnalyticsAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataLakeAnalyticsArmClient.GetDataLakeAnalyticsAccountResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> Returns a <see cref="DataLakeAnalyticsAccountResource" /> object. </returns>
         public static DataLakeAnalyticsAccountResource GetDataLakeAnalyticsAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataLakeAnalyticsArmClientMockingExtension(client).GetDataLakeAnalyticsAccountResource(id);
+            return GetMockableDataLakeAnalyticsArmClient(client).GetDataLakeAnalyticsAccountResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// You can use <see cref="DataLakeStoreAccountInformationResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeStoreAccountInformationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataLakeAnalyticsArmClientMockingExtension.GetDataLakeStoreAccountInformationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataLakeAnalyticsArmClient.GetDataLakeStoreAccountInformationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> Returns a <see cref="DataLakeStoreAccountInformationResource" /> object. </returns>
         public static DataLakeStoreAccountInformationResource GetDataLakeStoreAccountInformationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataLakeAnalyticsArmClientMockingExtension(client).GetDataLakeStoreAccountInformationResource(id);
+            return GetMockableDataLakeAnalyticsArmClient(client).GetDataLakeStoreAccountInformationResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// You can use <see cref="DataLakeAnalyticsStorageAccountInformationResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsStorageAccountInformationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataLakeAnalyticsArmClientMockingExtension.GetDataLakeAnalyticsStorageAccountInformationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataLakeAnalyticsArmClient.GetDataLakeAnalyticsStorageAccountInformationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> Returns a <see cref="DataLakeAnalyticsStorageAccountInformationResource" /> object. </returns>
         public static DataLakeAnalyticsStorageAccountInformationResource GetDataLakeAnalyticsStorageAccountInformationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataLakeAnalyticsArmClientMockingExtension(client).GetDataLakeAnalyticsStorageAccountInformationResource(id);
+            return GetMockableDataLakeAnalyticsArmClient(client).GetDataLakeAnalyticsStorageAccountInformationResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// You can use <see cref="DataLakeAnalyticsStorageContainerResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsStorageContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataLakeAnalyticsArmClientMockingExtension.GetDataLakeAnalyticsStorageContainerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataLakeAnalyticsArmClient.GetDataLakeAnalyticsStorageContainerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> Returns a <see cref="DataLakeAnalyticsStorageContainerResource" /> object. </returns>
         public static DataLakeAnalyticsStorageContainerResource GetDataLakeAnalyticsStorageContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataLakeAnalyticsArmClientMockingExtension(client).GetDataLakeAnalyticsStorageContainerResource(id);
+            return GetMockableDataLakeAnalyticsArmClient(client).GetDataLakeAnalyticsStorageContainerResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// You can use <see cref="DataLakeAnalyticsComputePolicyResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsComputePolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataLakeAnalyticsArmClientMockingExtension.GetDataLakeAnalyticsComputePolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataLakeAnalyticsArmClient.GetDataLakeAnalyticsComputePolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> Returns a <see cref="DataLakeAnalyticsComputePolicyResource" /> object. </returns>
         public static DataLakeAnalyticsComputePolicyResource GetDataLakeAnalyticsComputePolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataLakeAnalyticsArmClientMockingExtension(client).GetDataLakeAnalyticsComputePolicyResource(id);
+            return GetMockableDataLakeAnalyticsArmClient(client).GetDataLakeAnalyticsComputePolicyResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// You can use <see cref="DataLakeAnalyticsFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="DataLakeAnalyticsFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataLakeAnalyticsArmClientMockingExtension.GetDataLakeAnalyticsFirewallRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataLakeAnalyticsArmClient.GetDataLakeAnalyticsFirewallRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,21 +128,21 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> Returns a <see cref="DataLakeAnalyticsFirewallRuleResource" /> object. </returns>
         public static DataLakeAnalyticsFirewallRuleResource GetDataLakeAnalyticsFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDataLakeAnalyticsArmClientMockingExtension(client).GetDataLakeAnalyticsFirewallRuleResource(id);
+            return GetMockableDataLakeAnalyticsArmClient(client).GetDataLakeAnalyticsFirewallRuleResource(id);
         }
 
         /// <summary>
         /// Gets a collection of DataLakeAnalyticsAccountResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataLakeAnalyticsResourceGroupMockingExtension.GetDataLakeAnalyticsAccounts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataLakeAnalyticsResourceGroupResource.GetDataLakeAnalyticsAccounts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DataLakeAnalyticsAccountResources and their operations over a DataLakeAnalyticsAccountResource. </returns>
         public static DataLakeAnalyticsAccountCollection GetDataLakeAnalyticsAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetDataLakeAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetDataLakeAnalyticsAccounts();
+            return GetMockableDataLakeAnalyticsResourceGroupResource(resourceGroupResource).GetDataLakeAnalyticsAccounts();
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataLakeAnalyticsResourceGroupMockingExtension.GetDataLakeAnalyticsAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataLakeAnalyticsResourceGroupResource.GetDataLakeAnalyticsAccountAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         [ForwardsClientCalls]
         public static async Task<Response<DataLakeAnalyticsAccountResource>> GetDataLakeAnalyticsAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await GetDataLakeAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetDataLakeAnalyticsAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataLakeAnalyticsResourceGroupResource(resourceGroupResource).GetDataLakeAnalyticsAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataLakeAnalyticsResourceGroupMockingExtension.GetDataLakeAnalyticsAccount(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataLakeAnalyticsResourceGroupResource.GetDataLakeAnalyticsAccount(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         [ForwardsClientCalls]
         public static Response<DataLakeAnalyticsAccountResource> GetDataLakeAnalyticsAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return GetDataLakeAnalyticsResourceGroupMockingExtension(resourceGroupResource).GetDataLakeAnalyticsAccount(accountName, cancellationToken);
+            return GetMockableDataLakeAnalyticsResourceGroupResource(resourceGroupResource).GetDataLakeAnalyticsAccount(accountName, cancellationToken);
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataLakeAnalyticsSubscriptionMockingExtension.GetAccounts(SubscriptionResourceGetAccountsOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataLakeAnalyticsSubscriptionResource.GetAccounts(SubscriptionResourceGetAccountsOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> An async collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataLakeAnalyticsAccountBasic> GetAccountsAsync(this SubscriptionResource subscriptionResource, SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
-            return GetDataLakeAnalyticsSubscriptionMockingExtension(subscriptionResource).GetAccountsAsync(options, cancellationToken);
+            return GetMockableDataLakeAnalyticsSubscriptionResource(subscriptionResource).GetAccountsAsync(options, cancellationToken);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataLakeAnalyticsSubscriptionMockingExtension.GetAccounts(SubscriptionResourceGetAccountsOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataLakeAnalyticsSubscriptionResource.GetAccounts(SubscriptionResourceGetAccountsOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <returns> A collection of <see cref="DataLakeAnalyticsAccountBasic" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataLakeAnalyticsAccountBasic> GetAccounts(this SubscriptionResource subscriptionResource, SubscriptionResourceGetAccountsOptions options, CancellationToken cancellationToken = default)
         {
-            return GetDataLakeAnalyticsSubscriptionMockingExtension(subscriptionResource).GetAccounts(options, cancellationToken);
+            return GetMockableDataLakeAnalyticsSubscriptionResource(subscriptionResource).GetAccounts(options, cancellationToken);
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataLakeAnalyticsSubscriptionMockingExtension.CheckDataLakeAnalyticsAccountNameAvailability(AzureLocation,DataLakeAnalyticsAccountNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataLakeAnalyticsSubscriptionResource.CheckDataLakeAnalyticsAccountNameAvailability(AzureLocation,DataLakeAnalyticsAccountNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<DataLakeAnalyticsAccountNameAvailabilityResult>> CheckDataLakeAnalyticsAccountNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, DataLakeAnalyticsAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetDataLakeAnalyticsSubscriptionMockingExtension(subscriptionResource).CheckDataLakeAnalyticsAccountNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataLakeAnalyticsSubscriptionResource(subscriptionResource).CheckDataLakeAnalyticsAccountNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataLakeAnalyticsSubscriptionMockingExtension.CheckDataLakeAnalyticsAccountNameAvailability(AzureLocation,DataLakeAnalyticsAccountNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataLakeAnalyticsSubscriptionResource.CheckDataLakeAnalyticsAccountNameAvailability(AzureLocation,DataLakeAnalyticsAccountNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<DataLakeAnalyticsAccountNameAvailabilityResult> CheckDataLakeAnalyticsAccountNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, DataLakeAnalyticsAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetDataLakeAnalyticsSubscriptionMockingExtension(subscriptionResource).CheckDataLakeAnalyticsAccountNameAvailability(location, content, cancellationToken);
+            return GetMockableDataLakeAnalyticsSubscriptionResource(subscriptionResource).CheckDataLakeAnalyticsAccountNameAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataLakeAnalyticsSubscriptionMockingExtension.GetCapabilityLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataLakeAnalyticsSubscriptionResource.GetCapabilityLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<DataLakeAnalyticsCapabilityInformation>> GetCapabilityLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetDataLakeAnalyticsSubscriptionMockingExtension(subscriptionResource).GetCapabilityLocationAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDataLakeAnalyticsSubscriptionResource(subscriptionResource).GetCapabilityLocationAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DataLakeAnalyticsSubscriptionMockingExtension.GetCapabilityLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDataLakeAnalyticsSubscriptionResource.GetCapabilityLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<DataLakeAnalyticsCapabilityInformation> GetCapabilityLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetDataLakeAnalyticsSubscriptionMockingExtension(subscriptionResource).GetCapabilityLocation(location, cancellationToken);
+            return GetMockableDataLakeAnalyticsSubscriptionResource(subscriptionResource).GetCapabilityLocation(location, cancellationToken);
         }
     }
 }

@@ -145,29 +145,29 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
 }
 namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
 {
-    public partial class ManagedServiceIdentitiesArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableManagedServiceIdentitiesArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ManagedServiceIdentitiesArmClientMockingExtension() { }
+        protected MockableManagedServiceIdentitiesArmClient() { }
         public virtual Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialResource GetFederatedIdentityCredentialResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource GetSystemAssignedIdentity(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource GetSystemAssignedIdentityResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource GetUserAssignedIdentityResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ManagedServiceIdentitiesArmMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableManagedServiceIdentitiesArmResource : Azure.ResourceManager.ArmResource
     {
-        protected ManagedServiceIdentitiesArmMockingExtension() { }
+        protected MockableManagedServiceIdentitiesArmResource() { }
         public virtual Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource GetSystemAssignedIdentity() { throw null; }
     }
-    public partial class ManagedServiceIdentitiesResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableManagedServiceIdentitiesResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ManagedServiceIdentitiesResourceGroupMockingExtension() { }
+        protected MockableManagedServiceIdentitiesResourceGroupResource() { }
         public virtual Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityCollection GetUserAssignedIdentities() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> GetUserAssignedIdentity(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource>> GetUserAssignedIdentityAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ManagedServiceIdentitiesSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableManagedServiceIdentitiesSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ManagedServiceIdentitiesSubscriptionMockingExtension() { }
+        protected MockableManagedServiceIdentitiesSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> GetUserAssignedIdentities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> GetUserAssignedIdentitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

@@ -56,21 +56,21 @@ namespace Azure.ResourceManager.HealthBot
 }
 namespace Azure.ResourceManager.HealthBot.Mocking
 {
-    public partial class HealthBotArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHealthBotArmClient : Azure.ResourceManager.ArmResource
     {
-        protected HealthBotArmClientMockingExtension() { }
+        protected MockableHealthBotArmClient() { }
         public virtual Azure.ResourceManager.HealthBot.HealthBotResource GetHealthBotResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class HealthBotResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHealthBotResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected HealthBotResourceGroupMockingExtension() { }
+        protected MockableHealthBotResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.HealthBot.HealthBotResource> GetHealthBot(string botName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HealthBot.HealthBotResource>> GetHealthBotAsync(string botName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HealthBot.HealthBotCollection GetHealthBots() { throw null; }
     }
-    public partial class HealthBotSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHealthBotSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected HealthBotSubscriptionMockingExtension() { }
+        protected MockableHealthBotSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.HealthBot.HealthBotResource> GetHealthBots(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HealthBot.HealthBotResource> GetHealthBotsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.AppService
     /// <summary> A class to add extension methods to Azure.ResourceManager.AppService. </summary>
     public static partial class AppServiceExtensions
     {
-        private static AppServiceArmClientMockingExtension GetAppServiceArmClientMockingExtension(ArmClient client)
+        private static MockableAppServiceArmClient GetMockableAppServiceArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new AppServiceArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableAppServiceArmClient(client0));
         }
 
-        private static AppServiceResourceGroupMockingExtension GetAppServiceResourceGroupMockingExtension(ArmResource resource)
+        private static MockableAppServiceResourceGroupResource GetMockableAppServiceResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AppServiceResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAppServiceResourceGroupResource(client, resource.Id));
         }
 
-        private static AppServiceSubscriptionMockingExtension GetAppServiceSubscriptionMockingExtension(ArmResource resource)
+        private static MockableAppServiceSubscriptionResource GetMockableAppServiceSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AppServiceSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAppServiceSubscriptionResource(client, resource.Id));
         }
 
-        private static AppServiceTenantMockingExtension GetAppServiceTenantMockingExtension(ArmResource resource)
+        private static MockableAppServiceTenantResource GetMockableAppServiceTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AppServiceTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAppServiceTenantResource(client, resource.Id));
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="AppServiceCertificateOrderResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceCertificateOrderResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetAppServiceCertificateOrderResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServiceCertificateOrderResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AppServiceCertificateOrderResource" /> object. </returns>
         public static AppServiceCertificateOrderResource GetAppServiceCertificateOrderResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetAppServiceCertificateOrderResource(id);
+            return GetMockableAppServiceArmClient(client).GetAppServiceCertificateOrderResource(id);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="AppServiceCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetAppServiceCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServiceCertificateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AppServiceCertificateResource" /> object. </returns>
         public static AppServiceCertificateResource GetAppServiceCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetAppServiceCertificateResource(id);
+            return GetMockableAppServiceArmClient(client).GetAppServiceCertificateResource(id);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="CertificateOrderDetectorResource.CreateResourceIdentifier" /> to create a <see cref="CertificateOrderDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetCertificateOrderDetectorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetCertificateOrderDetectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="CertificateOrderDetectorResource" /> object. </returns>
         public static CertificateOrderDetectorResource GetCertificateOrderDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetCertificateOrderDetectorResource(id);
+            return GetMockableAppServiceArmClient(client).GetCertificateOrderDetectorResource(id);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="HostingEnvironmentDetectorResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetHostingEnvironmentDetectorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetHostingEnvironmentDetectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="HostingEnvironmentDetectorResource" /> object. </returns>
         public static HostingEnvironmentDetectorResource GetHostingEnvironmentDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetHostingEnvironmentDetectorResource(id);
+            return GetMockableAppServiceArmClient(client).GetHostingEnvironmentDetectorResource(id);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteDetectorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDetectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteDetectorResource" /> object. </returns>
         public static SiteDetectorResource GetSiteDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteDetectorResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteDetectorResource(id);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotDetectorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDetectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotDetectorResource" /> object. </returns>
         public static SiteSlotDetectorResource GetSiteSlotDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotDetectorResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDetectorResource(id);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="AppServiceDomainResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetAppServiceDomainResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServiceDomainResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AppServiceDomainResource" /> object. </returns>
         public static AppServiceDomainResource GetAppServiceDomainResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetAppServiceDomainResource(id);
+            return GetMockableAppServiceArmClient(client).GetAppServiceDomainResource(id);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="DomainOwnershipIdentifierResource.CreateResourceIdentifier" /> to create a <see cref="DomainOwnershipIdentifierResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetDomainOwnershipIdentifierResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetDomainOwnershipIdentifierResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="DomainOwnershipIdentifierResource" /> object. </returns>
         public static DomainOwnershipIdentifierResource GetDomainOwnershipIdentifierResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetDomainOwnershipIdentifierResource(id);
+            return GetMockableAppServiceArmClient(client).GetDomainOwnershipIdentifierResource(id);
         }
 
         /// <summary>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="TopLevelDomainResource.CreateResourceIdentifier" /> to create a <see cref="TopLevelDomainResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetTopLevelDomainResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetTopLevelDomainResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="TopLevelDomainResource" /> object. </returns>
         public static TopLevelDomainResource GetTopLevelDomainResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetTopLevelDomainResource(id);
+            return GetMockableAppServiceArmClient(client).GetTopLevelDomainResource(id);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="AppServiceEnvironmentResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetAppServiceEnvironmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServiceEnvironmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AppServiceEnvironmentResource" /> object. </returns>
         public static AppServiceEnvironmentResource GetAppServiceEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetAppServiceEnvironmentResource(id);
+            return GetMockableAppServiceArmClient(client).GetAppServiceEnvironmentResource(id);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="AseV3NetworkingConfigurationResource.CreateResourceIdentifier" /> to create an <see cref="AseV3NetworkingConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetAseV3NetworkingConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAseV3NetworkingConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AseV3NetworkingConfigurationResource" /> object. </returns>
         public static AseV3NetworkingConfigurationResource GetAseV3NetworkingConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetAseV3NetworkingConfigurationResource(id);
+            return GetMockableAppServiceArmClient(client).GetAseV3NetworkingConfigurationResource(id);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="HostingEnvironmentMultiRolePoolResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentMultiRolePoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetHostingEnvironmentMultiRolePoolResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetHostingEnvironmentMultiRolePoolResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="HostingEnvironmentMultiRolePoolResource" /> object. </returns>
         public static HostingEnvironmentMultiRolePoolResource GetHostingEnvironmentMultiRolePoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetHostingEnvironmentMultiRolePoolResource(id);
+            return GetMockableAppServiceArmClient(client).GetHostingEnvironmentMultiRolePoolResource(id);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="HostingEnvironmentWorkerPoolResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentWorkerPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetHostingEnvironmentWorkerPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetHostingEnvironmentWorkerPoolResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="HostingEnvironmentWorkerPoolResource" /> object. </returns>
         public static HostingEnvironmentWorkerPoolResource GetHostingEnvironmentWorkerPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetHostingEnvironmentWorkerPoolResource(id);
+            return GetMockableAppServiceArmClient(client).GetHostingEnvironmentWorkerPoolResource(id);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="HostingEnvironmentPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetHostingEnvironmentPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetHostingEnvironmentPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="HostingEnvironmentPrivateEndpointConnectionResource" /> object. </returns>
         public static HostingEnvironmentPrivateEndpointConnectionResource GetHostingEnvironmentPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetHostingEnvironmentPrivateEndpointConnectionResource(id);
+            return GetMockableAppServiceArmClient(client).GetHostingEnvironmentPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="StaticSitePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="StaticSitePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetStaticSitePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSitePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="StaticSitePrivateEndpointConnectionResource" /> object. </returns>
         public static StaticSitePrivateEndpointConnectionResource GetStaticSitePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetStaticSitePrivateEndpointConnectionResource(id);
+            return GetMockableAppServiceArmClient(client).GetStaticSitePrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SitePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SitePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSitePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSitePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SitePrivateEndpointConnectionResource" /> object. </returns>
         public static SitePrivateEndpointConnectionResource GetSitePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSitePrivateEndpointConnectionResource(id);
+            return GetMockableAppServiceArmClient(client).GetSitePrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotPrivateEndpointConnectionResource" /> object. </returns>
         public static SiteSlotPrivateEndpointConnectionResource GetSiteSlotPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotPrivateEndpointConnectionResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="AppServicePlanResource.CreateResourceIdentifier" /> to create an <see cref="AppServicePlanResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetAppServicePlanResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServicePlanResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AppServicePlanResource" /> object. </returns>
         public static AppServicePlanResource GetAppServicePlanResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetAppServicePlanResource(id);
+            return GetMockableAppServiceArmClient(client).GetAppServicePlanResource(id);
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="AppServicePlanHybridConnectionNamespaceRelayResource.CreateResourceIdentifier" /> to create an <see cref="AppServicePlanHybridConnectionNamespaceRelayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetAppServicePlanHybridConnectionNamespaceRelayResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServicePlanHybridConnectionNamespaceRelayResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AppServicePlanHybridConnectionNamespaceRelayResource" /> object. </returns>
         public static AppServicePlanHybridConnectionNamespaceRelayResource GetAppServicePlanHybridConnectionNamespaceRelayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetAppServicePlanHybridConnectionNamespaceRelayResource(id);
+            return GetMockableAppServiceArmClient(client).GetAppServicePlanHybridConnectionNamespaceRelayResource(id);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteHybridConnectionNamespaceRelayResource.CreateResourceIdentifier" /> to create a <see cref="SiteHybridConnectionNamespaceRelayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteHybridConnectionNamespaceRelayResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteHybridConnectionNamespaceRelayResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteHybridConnectionNamespaceRelayResource" /> object. </returns>
         public static SiteHybridConnectionNamespaceRelayResource GetSiteHybridConnectionNamespaceRelayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteHybridConnectionNamespaceRelayResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteHybridConnectionNamespaceRelayResource(id);
         }
 
         /// <summary>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotHybridConnectionNamespaceRelayResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotHybridConnectionNamespaceRelayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotHybridConnectionNamespaceRelayResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotHybridConnectionNamespaceRelayResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotHybridConnectionNamespaceRelayResource" /> object. </returns>
         public static SiteSlotHybridConnectionNamespaceRelayResource GetSiteSlotHybridConnectionNamespaceRelayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotHybridConnectionNamespaceRelayResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotHybridConnectionNamespaceRelayResource(id);
         }
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="HybridConnectionLimitResource.CreateResourceIdentifier" /> to create a <see cref="HybridConnectionLimitResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetHybridConnectionLimitResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetHybridConnectionLimitResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="HybridConnectionLimitResource" /> object. </returns>
         public static HybridConnectionLimitResource GetHybridConnectionLimitResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetHybridConnectionLimitResource(id);
+            return GetMockableAppServiceArmClient(client).GetHybridConnectionLimitResource(id);
         }
 
         /// <summary>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="AppServicePlanVirtualNetworkConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AppServicePlanVirtualNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetAppServicePlanVirtualNetworkConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServicePlanVirtualNetworkConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AppServicePlanVirtualNetworkConnectionResource" /> object. </returns>
         public static AppServicePlanVirtualNetworkConnectionResource GetAppServicePlanVirtualNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetAppServicePlanVirtualNetworkConnectionResource(id);
+            return GetMockableAppServiceArmClient(client).GetAppServicePlanVirtualNetworkConnectionResource(id);
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotVirtualNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotVirtualNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotVirtualNetworkConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotVirtualNetworkConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotVirtualNetworkConnectionResource" /> object. </returns>
         public static SiteSlotVirtualNetworkConnectionResource GetSiteSlotVirtualNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotVirtualNetworkConnectionResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotVirtualNetworkConnectionResource(id);
         }
 
         /// <summary>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteVirtualNetworkConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SiteVirtualNetworkConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteVirtualNetworkConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteVirtualNetworkConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteVirtualNetworkConnectionResource" /> object. </returns>
         public static SiteVirtualNetworkConnectionResource GetSiteVirtualNetworkConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteVirtualNetworkConnectionResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteVirtualNetworkConnectionResource(id);
         }
 
         /// <summary>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource.CreateResourceIdentifier" /> to create an <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetAppServicePlanVirtualNetworkConnectionGatewayResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServicePlanVirtualNetworkConnectionGatewayResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AppServicePlanVirtualNetworkConnectionGatewayResource" /> object. </returns>
         public static AppServicePlanVirtualNetworkConnectionGatewayResource GetAppServicePlanVirtualNetworkConnectionGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetAppServicePlanVirtualNetworkConnectionGatewayResource(id);
+            return GetMockableAppServiceArmClient(client).GetAppServicePlanVirtualNetworkConnectionGatewayResource(id);
         }
 
         /// <summary>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotVirtualNetworkConnectionGatewayResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotVirtualNetworkConnectionGatewayResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotVirtualNetworkConnectionGatewayResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotVirtualNetworkConnectionGatewayResource" /> object. </returns>
         public static SiteSlotVirtualNetworkConnectionGatewayResource GetSiteSlotVirtualNetworkConnectionGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotVirtualNetworkConnectionGatewayResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotVirtualNetworkConnectionGatewayResource(id);
         }
 
         /// <summary>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteVirtualNetworkConnectionGatewayResource.CreateResourceIdentifier" /> to create a <see cref="SiteVirtualNetworkConnectionGatewayResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteVirtualNetworkConnectionGatewayResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteVirtualNetworkConnectionGatewayResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteVirtualNetworkConnectionGatewayResource" /> object. </returns>
         public static SiteVirtualNetworkConnectionGatewayResource GetSiteVirtualNetworkConnectionGatewayResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteVirtualNetworkConnectionGatewayResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteVirtualNetworkConnectionGatewayResource(id);
         }
 
         /// <summary>
@@ -493,7 +493,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="AppCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AppCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetAppCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppCertificateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AppCertificateResource" /> object. </returns>
         public static AppCertificateResource GetAppCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetAppCertificateResource(id);
+            return GetMockableAppServiceArmClient(client).GetAppCertificateResource(id);
         }
 
         /// <summary>
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteDiagnosticResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDiagnosticResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteDiagnosticResource" /> object. </returns>
         public static SiteDiagnosticResource GetSiteDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteDiagnosticResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteDiagnosticResource(id);
         }
 
         /// <summary>
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotDiagnosticResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDiagnosticResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotDiagnosticResource" /> object. </returns>
         public static SiteSlotDiagnosticResource GetSiteSlotDiagnosticResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotDiagnosticResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDiagnosticResource(id);
         }
 
         /// <summary>
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteDiagnosticAnalysisResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticAnalysisResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteDiagnosticAnalysisResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDiagnosticAnalysisResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteDiagnosticAnalysisResource" /> object. </returns>
         public static SiteDiagnosticAnalysisResource GetSiteDiagnosticAnalysisResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteDiagnosticAnalysisResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteDiagnosticAnalysisResource(id);
         }
 
         /// <summary>
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotDiagnosticAnalysisResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticAnalysisResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotDiagnosticAnalysisResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDiagnosticAnalysisResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotDiagnosticAnalysisResource" /> object. </returns>
         public static SiteSlotDiagnosticAnalysisResource GetSiteSlotDiagnosticAnalysisResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotDiagnosticAnalysisResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDiagnosticAnalysisResource(id);
         }
 
         /// <summary>
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteDiagnosticDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteDiagnosticDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteDiagnosticDetectorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDiagnosticDetectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -581,7 +581,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteDiagnosticDetectorResource" /> object. </returns>
         public static SiteDiagnosticDetectorResource GetSiteDiagnosticDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteDiagnosticDetectorResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteDiagnosticDetectorResource(id);
         }
 
         /// <summary>
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotDiagnosticDetectorResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDiagnosticDetectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotDiagnosticDetectorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDiagnosticDetectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotDiagnosticDetectorResource" /> object. </returns>
         public static SiteSlotDiagnosticDetectorResource GetSiteSlotDiagnosticDetectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotDiagnosticDetectorResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDiagnosticDetectorResource(id);
         }
 
         /// <summary>
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="DeletedSiteResource.CreateResourceIdentifier" /> to create a <see cref="DeletedSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetDeletedSiteResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetDeletedSiteResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="DeletedSiteResource" /> object. </returns>
         public static DeletedSiteResource GetDeletedSiteResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetDeletedSiteResource(id);
+            return GetMockableAppServiceArmClient(client).GetDeletedSiteResource(id);
         }
 
         /// <summary>
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="KubeEnvironmentResource.CreateResourceIdentifier" /> to create a <see cref="KubeEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetKubeEnvironmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetKubeEnvironmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="KubeEnvironmentResource" /> object. </returns>
         public static KubeEnvironmentResource GetKubeEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetKubeEnvironmentResource(id);
+            return GetMockableAppServiceArmClient(client).GetKubeEnvironmentResource(id);
         }
 
         /// <summary>
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="HostingEnvironmentRecommendationResource.CreateResourceIdentifier" /> to create a <see cref="HostingEnvironmentRecommendationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetHostingEnvironmentRecommendationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetHostingEnvironmentRecommendationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="HostingEnvironmentRecommendationResource" /> object. </returns>
         public static HostingEnvironmentRecommendationResource GetHostingEnvironmentRecommendationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetHostingEnvironmentRecommendationResource(id);
+            return GetMockableAppServiceArmClient(client).GetHostingEnvironmentRecommendationResource(id);
         }
 
         /// <summary>
@@ -653,7 +653,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteRecommendationResource.CreateResourceIdentifier" /> to create a <see cref="SiteRecommendationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteRecommendationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteRecommendationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteRecommendationResource" /> object. </returns>
         public static SiteRecommendationResource GetSiteRecommendationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteRecommendationResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteRecommendationResource(id);
         }
 
         /// <summary>
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteResourceHealthMetadataResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteResourceHealthMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteResourceHealthMetadataResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteResourceHealthMetadataResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteResourceHealthMetadataResource" /> object. </returns>
         public static WebSiteResourceHealthMetadataResource GetWebSiteResourceHealthMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteResourceHealthMetadataResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteResourceHealthMetadataResource(id);
         }
 
         /// <summary>
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteSlotResourceHealthMetadataResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotResourceHealthMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteSlotResourceHealthMetadataResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotResourceHealthMetadataResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotResourceHealthMetadataResource" /> object. </returns>
         public static WebSiteSlotResourceHealthMetadataResource GetWebSiteSlotResourceHealthMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteSlotResourceHealthMetadataResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotResourceHealthMetadataResource(id);
         }
 
         /// <summary>
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="PublishingUserResource.CreateResourceIdentifier" /> to create a <see cref="PublishingUserResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetPublishingUserResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetPublishingUserResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="PublishingUserResource" /> object. </returns>
         public static PublishingUserResource GetPublishingUserResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetPublishingUserResource(id);
+            return GetMockableAppServiceArmClient(client).GetPublishingUserResource(id);
         }
 
         /// <summary>
@@ -717,7 +717,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="AppServiceSourceControlResource.CreateResourceIdentifier" /> to create an <see cref="AppServiceSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetAppServiceSourceControlResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetAppServiceSourceControlResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="AppServiceSourceControlResource" /> object. </returns>
         public static AppServiceSourceControlResource GetAppServiceSourceControlResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetAppServiceSourceControlResource(id);
+            return GetMockableAppServiceArmClient(client).GetAppServiceSourceControlResource(id);
         }
 
         /// <summary>
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="StaticSiteResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetStaticSiteResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="StaticSiteResource" /> object. </returns>
         public static StaticSiteResource GetStaticSiteResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetStaticSiteResource(id);
+            return GetMockableAppServiceArmClient(client).GetStaticSiteResource(id);
         }
 
         /// <summary>
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="StaticSiteBuildResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetStaticSiteBuildResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteBuildResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="StaticSiteBuildResource" /> object. </returns>
         public static StaticSiteBuildResource GetStaticSiteBuildResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetStaticSiteBuildResource(id);
+            return GetMockableAppServiceArmClient(client).GetStaticSiteBuildResource(id);
         }
 
         /// <summary>
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="StaticSiteBuildUserProvidedFunctionAppResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteBuildUserProvidedFunctionAppResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetStaticSiteBuildUserProvidedFunctionAppResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteBuildUserProvidedFunctionAppResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="StaticSiteBuildUserProvidedFunctionAppResource" /> object. </returns>
         public static StaticSiteBuildUserProvidedFunctionAppResource GetStaticSiteBuildUserProvidedFunctionAppResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetStaticSiteBuildUserProvidedFunctionAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetStaticSiteBuildUserProvidedFunctionAppResource(id);
         }
 
         /// <summary>
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="StaticSiteUserProvidedFunctionAppResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteUserProvidedFunctionAppResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetStaticSiteUserProvidedFunctionAppResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteUserProvidedFunctionAppResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="StaticSiteUserProvidedFunctionAppResource" /> object. </returns>
         public static StaticSiteUserProvidedFunctionAppResource GetStaticSiteUserProvidedFunctionAppResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetStaticSiteUserProvidedFunctionAppResource(id);
+            return GetMockableAppServiceArmClient(client).GetStaticSiteUserProvidedFunctionAppResource(id);
         }
 
         /// <summary>
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="StaticSiteCustomDomainOverviewResource.CreateResourceIdentifier" /> to create a <see cref="StaticSiteCustomDomainOverviewResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetStaticSiteCustomDomainOverviewResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetStaticSiteCustomDomainOverviewResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -805,7 +805,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="StaticSiteCustomDomainOverviewResource" /> object. </returns>
         public static StaticSiteCustomDomainOverviewResource GetStaticSiteCustomDomainOverviewResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetStaticSiteCustomDomainOverviewResource(id);
+            return GetMockableAppServiceArmClient(client).GetStaticSiteCustomDomainOverviewResource(id);
         }
 
         /// <summary>
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteResource" /> object. </returns>
         public static WebSiteResource GetWebSiteResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteResource(id);
         }
 
         /// <summary>
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteSlotResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteSlotResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotResource" /> object. </returns>
         public static WebSiteSlotResource GetWebSiteSlotResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteSlotResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotResource(id);
         }
 
         /// <summary>
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteBackupResource.CreateResourceIdentifier" /> to create a <see cref="SiteBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteBackupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteBackupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -853,7 +853,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteBackupResource" /> object. </returns>
         public static SiteBackupResource GetSiteBackupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteBackupResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteBackupResource(id);
         }
 
         /// <summary>
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotBackupResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotBackupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotBackupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotBackupResource" /> object. </returns>
         public static SiteSlotBackupResource GetSiteSlotBackupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotBackupResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotBackupResource(id);
         }
 
         /// <summary>
@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteFtpPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteFtpPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteFtpPublishingCredentialsPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteFtpPublishingCredentialsPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -885,7 +885,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteFtpPublishingCredentialsPolicyResource" /> object. </returns>
         public static WebSiteFtpPublishingCredentialsPolicyResource GetWebSiteFtpPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteFtpPublishingCredentialsPolicyResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteFtpPublishingCredentialsPolicyResource(id);
         }
 
         /// <summary>
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="ScmSiteBasicPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetScmSiteBasicPublishingCredentialsPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetScmSiteBasicPublishingCredentialsPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -901,7 +901,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="ScmSiteBasicPublishingCredentialsPolicyResource" /> object. </returns>
         public static ScmSiteBasicPublishingCredentialsPolicyResource GetScmSiteBasicPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetScmSiteBasicPublishingCredentialsPolicyResource(id);
+            return GetMockableAppServiceArmClient(client).GetScmSiteBasicPublishingCredentialsPolicyResource(id);
         }
 
         /// <summary>
@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteSlotFtpPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotFtpPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteSlotFtpPublishingCredentialsPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotFtpPublishingCredentialsPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -917,7 +917,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotFtpPublishingCredentialsPolicyResource" /> object. </returns>
         public static WebSiteSlotFtpPublishingCredentialsPolicyResource GetWebSiteSlotFtpPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteSlotFtpPublishingCredentialsPolicyResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotFtpPublishingCredentialsPolicyResource(id);
         }
 
         /// <summary>
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetScmSiteSlotBasicPublishingCredentialsPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetScmSiteSlotBasicPublishingCredentialsPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -933,7 +933,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="ScmSiteSlotBasicPublishingCredentialsPolicyResource" /> object. </returns>
         public static ScmSiteSlotBasicPublishingCredentialsPolicyResource GetScmSiteSlotBasicPublishingCredentialsPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetScmSiteSlotBasicPublishingCredentialsPolicyResource(id);
+            return GetMockableAppServiceArmClient(client).GetScmSiteSlotBasicPublishingCredentialsPolicyResource(id);
         }
 
         /// <summary>
@@ -941,7 +941,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteConfigAppsettingResource.CreateResourceIdentifier" /> to create a <see cref="SiteConfigAppsettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteConfigAppsettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteConfigAppsettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteConfigAppsettingResource" /> object. </returns>
         public static SiteConfigAppsettingResource GetSiteConfigAppsettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteConfigAppsettingResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteConfigAppsettingResource(id);
         }
 
         /// <summary>
@@ -957,7 +957,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteConfigConnectionStringResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteConfigConnectionStringResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteConfigConnectionStringResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteConfigConnectionStringResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteConfigConnectionStringResource" /> object. </returns>
         public static WebSiteConfigConnectionStringResource GetWebSiteConfigConnectionStringResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteConfigConnectionStringResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteConfigConnectionStringResource(id);
         }
 
         /// <summary>
@@ -973,7 +973,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteSlotConfigAppSettingResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotConfigAppSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteSlotConfigAppSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotConfigAppSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -981,7 +981,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotConfigAppSettingResource" /> object. </returns>
         public static WebSiteSlotConfigAppSettingResource GetWebSiteSlotConfigAppSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteSlotConfigAppSettingResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotConfigAppSettingResource(id);
         }
 
         /// <summary>
@@ -989,7 +989,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteSlotConfigConnectionStringResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotConfigConnectionStringResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteSlotConfigConnectionStringResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotConfigConnectionStringResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotConfigConnectionStringResource" /> object. </returns>
         public static WebSiteSlotConfigConnectionStringResource GetWebSiteSlotConfigConnectionStringResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteSlotConfigConnectionStringResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotConfigConnectionStringResource(id);
         }
 
         /// <summary>
@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="LogsSiteConfigResource.CreateResourceIdentifier" /> to create a <see cref="LogsSiteConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetLogsSiteConfigResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetLogsSiteConfigResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1013,7 +1013,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="LogsSiteConfigResource" /> object. </returns>
         public static LogsSiteConfigResource GetLogsSiteConfigResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetLogsSiteConfigResource(id);
+            return GetMockableAppServiceArmClient(client).GetLogsSiteConfigResource(id);
         }
 
         /// <summary>
@@ -1021,7 +1021,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="LogsSiteSlotConfigResource.CreateResourceIdentifier" /> to create a <see cref="LogsSiteSlotConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetLogsSiteSlotConfigResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetLogsSiteSlotConfigResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1029,7 +1029,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="LogsSiteSlotConfigResource" /> object. </returns>
         public static LogsSiteSlotConfigResource GetLogsSiteSlotConfigResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetLogsSiteSlotConfigResource(id);
+            return GetMockableAppServiceArmClient(client).GetLogsSiteSlotConfigResource(id);
         }
 
         /// <summary>
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SlotConfigNamesResource.CreateResourceIdentifier" /> to create a <see cref="SlotConfigNamesResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSlotConfigNamesResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSlotConfigNamesResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1045,7 +1045,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SlotConfigNamesResource" /> object. </returns>
         public static SlotConfigNamesResource GetSlotConfigNamesResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSlotConfigNamesResource(id);
+            return GetMockableAppServiceArmClient(client).GetSlotConfigNamesResource(id);
         }
 
         /// <summary>
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteConfigResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteConfigResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteConfigResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1061,7 +1061,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteConfigResource" /> object. </returns>
         public static WebSiteConfigResource GetWebSiteConfigResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteConfigResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteConfigResource(id);
         }
 
         /// <summary>
@@ -1069,7 +1069,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteConfigSnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SiteConfigSnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteConfigSnapshotResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteConfigSnapshotResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1077,7 +1077,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteConfigSnapshotResource" /> object. </returns>
         public static SiteConfigSnapshotResource GetSiteConfigSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteConfigSnapshotResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteConfigSnapshotResource(id);
         }
 
         /// <summary>
@@ -1085,7 +1085,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteSlotConfigResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteSlotConfigResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotConfigResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1093,7 +1093,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotConfigResource" /> object. </returns>
         public static WebSiteSlotConfigResource GetWebSiteSlotConfigResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteSlotConfigResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotConfigResource(id);
         }
 
         /// <summary>
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotConfigSnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotConfigSnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotConfigSnapshotResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotConfigSnapshotResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1109,7 +1109,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotConfigSnapshotResource" /> object. </returns>
         public static SiteSlotConfigSnapshotResource GetSiteSlotConfigSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotConfigSnapshotResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotConfigSnapshotResource(id);
         }
 
         /// <summary>
@@ -1117,7 +1117,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteContinuousWebJobResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteContinuousWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteContinuousWebJobResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteContinuousWebJobResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1125,7 +1125,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteContinuousWebJobResource" /> object. </returns>
         public static WebSiteContinuousWebJobResource GetWebSiteContinuousWebJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteContinuousWebJobResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteContinuousWebJobResource(id);
         }
 
         /// <summary>
@@ -1133,7 +1133,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteSlotContinuousWebJobResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotContinuousWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteSlotContinuousWebJobResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotContinuousWebJobResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1141,7 +1141,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotContinuousWebJobResource" /> object. </returns>
         public static WebSiteSlotContinuousWebJobResource GetWebSiteSlotContinuousWebJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteSlotContinuousWebJobResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotContinuousWebJobResource(id);
         }
 
         /// <summary>
@@ -1149,7 +1149,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="SiteDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteDeploymentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDeploymentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1157,7 +1157,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteDeploymentResource" /> object. </returns>
         public static SiteDeploymentResource GetSiteDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteDeploymentResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteDeploymentResource(id);
         }
 
         /// <summary>
@@ -1165,7 +1165,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotDeploymentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDeploymentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1173,7 +1173,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotDeploymentResource" /> object. </returns>
         public static SiteSlotDeploymentResource GetSiteSlotDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotDeploymentResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDeploymentResource(id);
         }
 
         /// <summary>
@@ -1181,7 +1181,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteDomainOwnershipIdentifierResource.CreateResourceIdentifier" /> to create a <see cref="SiteDomainOwnershipIdentifierResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteDomainOwnershipIdentifierResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteDomainOwnershipIdentifierResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1189,7 +1189,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteDomainOwnershipIdentifierResource" /> object. </returns>
         public static SiteDomainOwnershipIdentifierResource GetSiteDomainOwnershipIdentifierResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteDomainOwnershipIdentifierResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteDomainOwnershipIdentifierResource(id);
         }
 
         /// <summary>
@@ -1197,7 +1197,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotDomainOwnershipIdentifierResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotDomainOwnershipIdentifierResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotDomainOwnershipIdentifierResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotDomainOwnershipIdentifierResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1205,7 +1205,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotDomainOwnershipIdentifierResource" /> object. </returns>
         public static SiteSlotDomainOwnershipIdentifierResource GetSiteSlotDomainOwnershipIdentifierResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotDomainOwnershipIdentifierResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotDomainOwnershipIdentifierResource(id);
         }
 
         /// <summary>
@@ -1213,7 +1213,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteExtensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteExtensionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteExtensionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1221,7 +1221,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteExtensionResource" /> object. </returns>
         public static SiteExtensionResource GetSiteExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteExtensionResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteExtensionResource(id);
         }
 
         /// <summary>
@@ -1229,7 +1229,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteInstanceExtensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteInstanceExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteInstanceExtensionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteInstanceExtensionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1237,7 +1237,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteInstanceExtensionResource" /> object. </returns>
         public static SiteInstanceExtensionResource GetSiteInstanceExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteInstanceExtensionResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteInstanceExtensionResource(id);
         }
 
         /// <summary>
@@ -1245,7 +1245,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotExtensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotExtensionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotExtensionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1253,7 +1253,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotExtensionResource" /> object. </returns>
         public static SiteSlotExtensionResource GetSiteSlotExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotExtensionResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotExtensionResource(id);
         }
 
         /// <summary>
@@ -1261,7 +1261,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotInstanceExtensionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotInstanceExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotInstanceExtensionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotInstanceExtensionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1269,7 +1269,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotInstanceExtensionResource" /> object. </returns>
         public static SiteSlotInstanceExtensionResource GetSiteSlotInstanceExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotInstanceExtensionResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotInstanceExtensionResource(id);
         }
 
         /// <summary>
@@ -1277,7 +1277,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteFunctionResource.CreateResourceIdentifier" /> to create a <see cref="SiteFunctionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteFunctionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteFunctionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1285,7 +1285,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteFunctionResource" /> object. </returns>
         public static SiteFunctionResource GetSiteFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteFunctionResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteFunctionResource(id);
         }
 
         /// <summary>
@@ -1293,7 +1293,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotFunctionResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotFunctionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotFunctionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotFunctionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1301,7 +1301,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotFunctionResource" /> object. </returns>
         public static SiteSlotFunctionResource GetSiteSlotFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotFunctionResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotFunctionResource(id);
         }
 
         /// <summary>
@@ -1309,7 +1309,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteHostNameBindingResource.CreateResourceIdentifier" /> to create a <see cref="SiteHostNameBindingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteHostNameBindingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteHostNameBindingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1317,7 +1317,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteHostNameBindingResource" /> object. </returns>
         public static SiteHostNameBindingResource GetSiteHostNameBindingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteHostNameBindingResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteHostNameBindingResource(id);
         }
 
         /// <summary>
@@ -1325,7 +1325,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotHostNameBindingResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotHostNameBindingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotHostNameBindingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotHostNameBindingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1333,7 +1333,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotHostNameBindingResource" /> object. </returns>
         public static SiteSlotHostNameBindingResource GetSiteSlotHostNameBindingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotHostNameBindingResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotHostNameBindingResource(id);
         }
 
         /// <summary>
@@ -1341,7 +1341,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteHybridConnectionResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteHybridConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteHybridConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteHybridConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1349,7 +1349,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteHybridConnectionResource" /> object. </returns>
         public static WebSiteHybridConnectionResource GetWebSiteHybridConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteHybridConnectionResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteHybridConnectionResource(id);
         }
 
         /// <summary>
@@ -1357,7 +1357,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteSlotHybridConnectionResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotHybridConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteSlotHybridConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotHybridConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1365,7 +1365,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotHybridConnectionResource" /> object. </returns>
         public static WebSiteSlotHybridConnectionResource GetWebSiteSlotHybridConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteSlotHybridConnectionResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotHybridConnectionResource(id);
         }
 
         /// <summary>
@@ -1373,7 +1373,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SiteInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteInstanceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1381,7 +1381,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteInstanceResource" /> object. </returns>
         public static SiteInstanceResource GetSiteInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteInstanceResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteInstanceResource(id);
         }
 
         /// <summary>
@@ -1389,7 +1389,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotInstanceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1397,7 +1397,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotInstanceResource" /> object. </returns>
         public static SiteSlotInstanceResource GetSiteSlotInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotInstanceResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotInstanceResource(id);
         }
 
         /// <summary>
@@ -1405,7 +1405,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteInstanceProcessResource.CreateResourceIdentifier" /> to create a <see cref="SiteInstanceProcessResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteInstanceProcessResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteInstanceProcessResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1413,7 +1413,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteInstanceProcessResource" /> object. </returns>
         public static SiteInstanceProcessResource GetSiteInstanceProcessResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteInstanceProcessResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteInstanceProcessResource(id);
         }
 
         /// <summary>
@@ -1421,7 +1421,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteProcessResource.CreateResourceIdentifier" /> to create a <see cref="SiteProcessResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteProcessResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteProcessResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1429,7 +1429,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteProcessResource" /> object. </returns>
         public static SiteProcessResource GetSiteProcessResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteProcessResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteProcessResource(id);
         }
 
         /// <summary>
@@ -1437,7 +1437,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotInstanceProcessResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotInstanceProcessResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotInstanceProcessResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotInstanceProcessResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1445,7 +1445,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotInstanceProcessResource" /> object. </returns>
         public static SiteSlotInstanceProcessResource GetSiteSlotInstanceProcessResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotInstanceProcessResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotInstanceProcessResource(id);
         }
 
         /// <summary>
@@ -1453,7 +1453,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotProcessResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotProcessResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotProcessResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotProcessResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1461,7 +1461,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotProcessResource" /> object. </returns>
         public static SiteSlotProcessResource GetSiteSlotProcessResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotProcessResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotProcessResource(id);
         }
 
         /// <summary>
@@ -1469,7 +1469,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteInstanceProcessModuleResource.CreateResourceIdentifier" /> to create a <see cref="SiteInstanceProcessModuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteInstanceProcessModuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteInstanceProcessModuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1477,7 +1477,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteInstanceProcessModuleResource" /> object. </returns>
         public static SiteInstanceProcessModuleResource GetSiteInstanceProcessModuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteInstanceProcessModuleResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteInstanceProcessModuleResource(id);
         }
 
         /// <summary>
@@ -1485,7 +1485,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteProcessModuleResource.CreateResourceIdentifier" /> to create a <see cref="SiteProcessModuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteProcessModuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteProcessModuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1493,7 +1493,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteProcessModuleResource" /> object. </returns>
         public static SiteProcessModuleResource GetSiteProcessModuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteProcessModuleResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteProcessModuleResource(id);
         }
 
         /// <summary>
@@ -1501,7 +1501,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotInstanceProcessModuleResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotInstanceProcessModuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotInstanceProcessModuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotInstanceProcessModuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1509,7 +1509,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotInstanceProcessModuleResource" /> object. </returns>
         public static SiteSlotInstanceProcessModuleResource GetSiteSlotInstanceProcessModuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotInstanceProcessModuleResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotInstanceProcessModuleResource(id);
         }
 
         /// <summary>
@@ -1517,7 +1517,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotProcessModuleResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotProcessModuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotProcessModuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotProcessModuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1525,7 +1525,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotProcessModuleResource" /> object. </returns>
         public static SiteSlotProcessModuleResource GetSiteSlotProcessModuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotProcessModuleResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotProcessModuleResource(id);
         }
 
         /// <summary>
@@ -1533,7 +1533,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteNetworkConfigResource.CreateResourceIdentifier" /> to create a <see cref="SiteNetworkConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteNetworkConfigResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteNetworkConfigResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1541,7 +1541,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteNetworkConfigResource" /> object. </returns>
         public static SiteNetworkConfigResource GetSiteNetworkConfigResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteNetworkConfigResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteNetworkConfigResource(id);
         }
 
         /// <summary>
@@ -1549,7 +1549,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SiteSlotNetworkConfigResource.CreateResourceIdentifier" /> to create a <see cref="SiteSlotNetworkConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSiteSlotNetworkConfigResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSiteSlotNetworkConfigResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1557,7 +1557,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SiteSlotNetworkConfigResource" /> object. </returns>
         public static SiteSlotNetworkConfigResource GetSiteSlotNetworkConfigResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSiteSlotNetworkConfigResource(id);
+            return GetMockableAppServiceArmClient(client).GetSiteSlotNetworkConfigResource(id);
         }
 
         /// <summary>
@@ -1565,7 +1565,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSitePremierAddonResource.CreateResourceIdentifier" /> to create a <see cref="WebSitePremierAddonResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSitePremierAddonResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSitePremierAddonResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1573,7 +1573,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSitePremierAddonResource" /> object. </returns>
         public static WebSitePremierAddonResource GetWebSitePremierAddonResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSitePremierAddonResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSitePremierAddonResource(id);
         }
 
         /// <summary>
@@ -1581,7 +1581,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteSlotPremierAddOnResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotPremierAddOnResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteSlotPremierAddOnResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotPremierAddOnResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1589,7 +1589,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotPremierAddOnResource" /> object. </returns>
         public static WebSiteSlotPremierAddOnResource GetWebSiteSlotPremierAddOnResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteSlotPremierAddOnResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotPremierAddOnResource(id);
         }
 
         /// <summary>
@@ -1597,7 +1597,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSitePrivateAccessResource.CreateResourceIdentifier" /> to create a <see cref="WebSitePrivateAccessResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSitePrivateAccessResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSitePrivateAccessResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1605,7 +1605,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSitePrivateAccessResource" /> object. </returns>
         public static WebSitePrivateAccessResource GetWebSitePrivateAccessResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSitePrivateAccessResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSitePrivateAccessResource(id);
         }
 
         /// <summary>
@@ -1613,7 +1613,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteSlotPrivateAccessResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotPrivateAccessResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteSlotPrivateAccessResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotPrivateAccessResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1621,7 +1621,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotPrivateAccessResource" /> object. </returns>
         public static WebSiteSlotPrivateAccessResource GetWebSiteSlotPrivateAccessResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteSlotPrivateAccessResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotPrivateAccessResource(id);
         }
 
         /// <summary>
@@ -1629,7 +1629,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="SitePublicCertificateResource.CreateResourceIdentifier" /> to create a <see cref="SitePublicCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetSitePublicCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetSitePublicCertificateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1637,7 +1637,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="SitePublicCertificateResource" /> object. </returns>
         public static SitePublicCertificateResource GetSitePublicCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetSitePublicCertificateResource(id);
+            return GetMockableAppServiceArmClient(client).GetSitePublicCertificateResource(id);
         }
 
         /// <summary>
@@ -1645,7 +1645,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteSlotPublicCertificateResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotPublicCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteSlotPublicCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotPublicCertificateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1653,7 +1653,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotPublicCertificateResource" /> object. </returns>
         public static WebSiteSlotPublicCertificateResource GetWebSiteSlotPublicCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteSlotPublicCertificateResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotPublicCertificateResource(id);
         }
 
         /// <summary>
@@ -1661,7 +1661,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteExtensionResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteExtensionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteExtensionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1669,7 +1669,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteExtensionResource" /> object. </returns>
         public static WebSiteExtensionResource GetWebSiteExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteExtensionResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteExtensionResource(id);
         }
 
         /// <summary>
@@ -1677,7 +1677,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteSlotExtensionResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteSlotExtensionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotExtensionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1685,7 +1685,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotExtensionResource" /> object. </returns>
         public static WebSiteSlotExtensionResource GetWebSiteSlotExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteSlotExtensionResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotExtensionResource(id);
         }
 
         /// <summary>
@@ -1693,7 +1693,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="MigrateMySqlStatusResource.CreateResourceIdentifier" /> to create a <see cref="MigrateMySqlStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetMigrateMySqlStatusResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetMigrateMySqlStatusResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1701,7 +1701,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="MigrateMySqlStatusResource" /> object. </returns>
         public static MigrateMySqlStatusResource GetMigrateMySqlStatusResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetMigrateMySqlStatusResource(id);
+            return GetMockableAppServiceArmClient(client).GetMigrateMySqlStatusResource(id);
         }
 
         /// <summary>
@@ -1709,7 +1709,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="NetworkFeatureResource.CreateResourceIdentifier" /> to create a <see cref="NetworkFeatureResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetNetworkFeatureResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetNetworkFeatureResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1717,7 +1717,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="NetworkFeatureResource" /> object. </returns>
         public static NetworkFeatureResource GetNetworkFeatureResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetNetworkFeatureResource(id);
+            return GetMockableAppServiceArmClient(client).GetNetworkFeatureResource(id);
         }
 
         /// <summary>
@@ -1725,7 +1725,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteSlotSourceControlResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteSlotSourceControlResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotSourceControlResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1733,7 +1733,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotSourceControlResource" /> object. </returns>
         public static WebSiteSlotSourceControlResource GetWebSiteSlotSourceControlResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteSlotSourceControlResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotSourceControlResource(id);
         }
 
         /// <summary>
@@ -1741,7 +1741,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteSourceControlResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteSourceControlResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSourceControlResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1749,7 +1749,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSourceControlResource" /> object. </returns>
         public static WebSiteSourceControlResource GetWebSiteSourceControlResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteSourceControlResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteSourceControlResource(id);
         }
 
         /// <summary>
@@ -1757,7 +1757,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteSlotWebJobResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteSlotWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteSlotWebJobResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteSlotWebJobResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1765,7 +1765,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotWebJobResource" /> object. </returns>
         public static WebSiteSlotWebJobResource GetWebSiteSlotWebJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteSlotWebJobResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotWebJobResource(id);
         }
 
         /// <summary>
@@ -1773,7 +1773,7 @@ namespace Azure.ResourceManager.AppService
         /// You can use <see cref="WebSiteWebJobResource.CreateResourceIdentifier" /> to create a <see cref="WebSiteWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceArmClientMockingExtension.GetWebSiteWebJobResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceArmClient.GetWebSiteWebJobResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -1781,21 +1781,21 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteWebJobResource" /> object. </returns>
         public static WebSiteWebJobResource GetWebSiteWebJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAppServiceArmClientMockingExtension(client).GetWebSiteWebJobResource(id);
+            return GetMockableAppServiceArmClient(client).GetWebSiteWebJobResource(id);
         }
 
         /// <summary>
         /// Gets a collection of AppServiceCertificateOrderResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetAppServiceCertificateOrders()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServiceCertificateOrders()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppServiceCertificateOrderResources and their operations over a AppServiceCertificateOrderResource. </returns>
         public static AppServiceCertificateOrderCollection GetAppServiceCertificateOrders(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetAppServiceCertificateOrders();
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServiceCertificateOrders();
         }
 
         /// <summary>
@@ -1812,7 +1812,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetAppServiceCertificateOrderAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServiceCertificateOrderAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1823,7 +1823,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static async Task<Response<AppServiceCertificateOrderResource>> GetAppServiceCertificateOrderAsync(this ResourceGroupResource resourceGroupResource, string certificateOrderName, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetAppServiceCertificateOrderAsync(certificateOrderName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServiceCertificateOrderAsync(certificateOrderName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1840,7 +1840,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetAppServiceCertificateOrder(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServiceCertificateOrder(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1851,21 +1851,21 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static Response<AppServiceCertificateOrderResource> GetAppServiceCertificateOrder(this ResourceGroupResource resourceGroupResource, string certificateOrderName, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetAppServiceCertificateOrder(certificateOrderName, cancellationToken);
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServiceCertificateOrder(certificateOrderName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of AppServiceDomainResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetAppServiceDomains()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServiceDomains()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppServiceDomainResources and their operations over a AppServiceDomainResource. </returns>
         public static AppServiceDomainCollection GetAppServiceDomains(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetAppServiceDomains();
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServiceDomains();
         }
 
         /// <summary>
@@ -1882,7 +1882,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetAppServiceDomainAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServiceDomainAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1893,7 +1893,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static async Task<Response<AppServiceDomainResource>> GetAppServiceDomainAsync(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetAppServiceDomainAsync(domainName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServiceDomainAsync(domainName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1910,7 +1910,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetAppServiceDomain(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServiceDomain(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1921,21 +1921,21 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static Response<AppServiceDomainResource> GetAppServiceDomain(this ResourceGroupResource resourceGroupResource, string domainName, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetAppServiceDomain(domainName, cancellationToken);
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServiceDomain(domainName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of AppServiceEnvironmentResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetAppServiceEnvironments()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServiceEnvironments()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppServiceEnvironmentResources and their operations over a AppServiceEnvironmentResource. </returns>
         public static AppServiceEnvironmentCollection GetAppServiceEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetAppServiceEnvironments();
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServiceEnvironments();
         }
 
         /// <summary>
@@ -1952,7 +1952,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetAppServiceEnvironmentAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServiceEnvironmentAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1963,7 +1963,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static async Task<Response<AppServiceEnvironmentResource>> GetAppServiceEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetAppServiceEnvironmentAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServiceEnvironmentAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1980,7 +1980,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetAppServiceEnvironment(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServiceEnvironment(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1991,21 +1991,21 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static Response<AppServiceEnvironmentResource> GetAppServiceEnvironment(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetAppServiceEnvironment(name, cancellationToken);
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServiceEnvironment(name, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of AppServicePlanResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetAppServicePlans()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServicePlans()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppServicePlanResources and their operations over a AppServicePlanResource. </returns>
         public static AppServicePlanCollection GetAppServicePlans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetAppServicePlans();
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServicePlans();
         }
 
         /// <summary>
@@ -2022,7 +2022,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetAppServicePlanAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServicePlanAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -2033,7 +2033,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static async Task<Response<AppServicePlanResource>> GetAppServicePlanAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetAppServicePlanAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServicePlanAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2050,7 +2050,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetAppServicePlan(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppServicePlan(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -2061,21 +2061,21 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static Response<AppServicePlanResource> GetAppServicePlan(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetAppServicePlan(name, cancellationToken);
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppServicePlan(name, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of AppCertificateResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetAppCertificates()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppCertificates()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppCertificateResources and their operations over a AppCertificateResource. </returns>
         public static AppCertificateCollection GetAppCertificates(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetAppCertificates();
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppCertificates();
         }
 
         /// <summary>
@@ -2092,7 +2092,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetAppCertificateAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppCertificateAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -2103,7 +2103,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static async Task<Response<AppCertificateResource>> GetAppCertificateAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetAppCertificateAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppCertificateAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2120,7 +2120,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetAppCertificate(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetAppCertificate(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -2131,21 +2131,21 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static Response<AppCertificateResource> GetAppCertificate(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetAppCertificate(name, cancellationToken);
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAppCertificate(name, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of KubeEnvironmentResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetKubeEnvironments()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetKubeEnvironments()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of KubeEnvironmentResources and their operations over a KubeEnvironmentResource. </returns>
         public static KubeEnvironmentCollection GetKubeEnvironments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetKubeEnvironments();
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetKubeEnvironments();
         }
 
         /// <summary>
@@ -2162,7 +2162,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetKubeEnvironmentAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetKubeEnvironmentAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -2173,7 +2173,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static async Task<Response<KubeEnvironmentResource>> GetKubeEnvironmentAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetKubeEnvironmentAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetKubeEnvironmentAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2190,7 +2190,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetKubeEnvironment(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetKubeEnvironment(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -2201,21 +2201,21 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static Response<KubeEnvironmentResource> GetKubeEnvironment(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetKubeEnvironment(name, cancellationToken);
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetKubeEnvironment(name, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of StaticSiteResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetStaticSites()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetStaticSites()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of StaticSiteResources and their operations over a StaticSiteResource. </returns>
         public static StaticSiteCollection GetStaticSites(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetStaticSites();
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetStaticSites();
         }
 
         /// <summary>
@@ -2232,7 +2232,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetStaticSiteAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetStaticSiteAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -2243,7 +2243,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static async Task<Response<StaticSiteResource>> GetStaticSiteAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetStaticSiteAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetStaticSiteAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2260,7 +2260,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetStaticSite(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetStaticSite(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -2271,21 +2271,21 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static Response<StaticSiteResource> GetStaticSite(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetStaticSite(name, cancellationToken);
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetStaticSite(name, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of WebSiteResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetWebSites()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetWebSites()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of WebSiteResources and their operations over a WebSiteResource. </returns>
         public static WebSiteCollection GetWebSites(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetWebSites();
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetWebSites();
         }
 
         /// <summary>
@@ -2302,7 +2302,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetWebSiteAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetWebSiteAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -2313,7 +2313,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static async Task<Response<WebSiteResource>> GetWebSiteAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetWebSiteAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetWebSiteAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2330,7 +2330,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.GetWebSite(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.GetWebSite(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -2341,7 +2341,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static Response<WebSiteResource> GetWebSite(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).GetWebSite(name, cancellationToken);
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetWebSite(name, cancellationToken);
         }
 
         /// <summary>
@@ -2358,7 +2358,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.Validate(AppServiceValidateContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.Validate(AppServiceValidateContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -2367,7 +2367,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<AppServiceValidateResult>> ValidateAsync(this ResourceGroupResource resourceGroupResource, AppServiceValidateContent content, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceResourceGroupMockingExtension(resourceGroupResource).ValidateAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceResourceGroupResource(resourceGroupResource).ValidateAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2384,7 +2384,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceResourceGroupMockingExtension.Validate(AppServiceValidateContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceResourceGroupResource.Validate(AppServiceValidateContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -2393,21 +2393,21 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<AppServiceValidateResult> Validate(this ResourceGroupResource resourceGroupResource, AppServiceValidateContent content, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceResourceGroupMockingExtension(resourceGroupResource).Validate(content, cancellationToken);
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).Validate(content, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of TopLevelDomainResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetTopLevelDomains()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetTopLevelDomains()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of TopLevelDomainResources and their operations over a TopLevelDomainResource. </returns>
         public static TopLevelDomainCollection GetTopLevelDomains(this SubscriptionResource subscriptionResource)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetTopLevelDomains();
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetTopLevelDomains();
         }
 
         /// <summary>
@@ -2424,7 +2424,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetTopLevelDomainAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetTopLevelDomainAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2435,7 +2435,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static async Task<Response<TopLevelDomainResource>> GetTopLevelDomainAsync(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetTopLevelDomainAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).GetTopLevelDomainAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2452,7 +2452,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetTopLevelDomain(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetTopLevelDomain(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2463,21 +2463,21 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static Response<TopLevelDomainResource> GetTopLevelDomain(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetTopLevelDomain(name, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetTopLevelDomain(name, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of DeletedSiteResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetDeletedSites()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetDeletedSites()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeletedSiteResources and their operations over a DeletedSiteResource. </returns>
         public static DeletedSiteCollection GetDeletedSites(this SubscriptionResource subscriptionResource)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetDeletedSites();
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetDeletedSites();
         }
 
         /// <summary>
@@ -2494,7 +2494,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetDeletedSiteAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetDeletedSiteAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2505,7 +2505,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static async Task<Response<DeletedSiteResource>> GetDeletedSiteAsync(this SubscriptionResource subscriptionResource, string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetDeletedSiteAsync(deletedSiteId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).GetDeletedSiteAsync(deletedSiteId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2522,7 +2522,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetDeletedSite(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetDeletedSite(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2533,7 +2533,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static Response<DeletedSiteResource> GetDeletedSite(this SubscriptionResource subscriptionResource, string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetDeletedSite(deletedSiteId, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetDeletedSite(deletedSiteId, cancellationToken);
         }
 
         /// <summary>
@@ -2550,7 +2550,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAppServiceCertificateOrders(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceCertificateOrders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2558,7 +2558,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceCertificateOrderResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppServiceCertificateOrderResource> GetAppServiceCertificateOrdersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAppServiceCertificateOrdersAsync(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceCertificateOrdersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2575,7 +2575,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAppServiceCertificateOrders(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceCertificateOrders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2583,7 +2583,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceCertificateOrderResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppServiceCertificateOrderResource> GetAppServiceCertificateOrders(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAppServiceCertificateOrders(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceCertificateOrders(cancellationToken);
         }
 
         /// <summary>
@@ -2600,7 +2600,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.ValidateAppServiceCertificateOrderPurchaseInformation(AppServiceCertificateOrderData,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.ValidateAppServiceCertificateOrderPurchaseInformation(AppServiceCertificateOrderData,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2609,7 +2609,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public static async Task<Response> ValidateAppServiceCertificateOrderPurchaseInformationAsync(this SubscriptionResource subscriptionResource, AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceSubscriptionMockingExtension(subscriptionResource).ValidateAppServiceCertificateOrderPurchaseInformationAsync(data, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).ValidateAppServiceCertificateOrderPurchaseInformationAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2626,7 +2626,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.ValidateAppServiceCertificateOrderPurchaseInformation(AppServiceCertificateOrderData,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.ValidateAppServiceCertificateOrderPurchaseInformation(AppServiceCertificateOrderData,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2635,7 +2635,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public static Response ValidateAppServiceCertificateOrderPurchaseInformation(this SubscriptionResource subscriptionResource, AppServiceCertificateOrderData data, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).ValidateAppServiceCertificateOrderPurchaseInformation(data, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).ValidateAppServiceCertificateOrderPurchaseInformation(data, cancellationToken);
         }
 
         /// <summary>
@@ -2652,7 +2652,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.CheckAppServiceDomainRegistrationAvailability(AppServiceDomainNameIdentifier,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceDomainRegistrationAvailability(AppServiceDomainNameIdentifier,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2661,7 +2661,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
         public static async Task<Response<DomainAvailabilityCheckResult>> CheckAppServiceDomainRegistrationAvailabilityAsync(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceSubscriptionMockingExtension(subscriptionResource).CheckAppServiceDomainRegistrationAvailabilityAsync(identifier, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckAppServiceDomainRegistrationAvailabilityAsync(identifier, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2678,7 +2678,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.CheckAppServiceDomainRegistrationAvailability(AppServiceDomainNameIdentifier,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceDomainRegistrationAvailability(AppServiceDomainNameIdentifier,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2687,7 +2687,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="identifier"/> is null. </exception>
         public static Response<DomainAvailabilityCheckResult> CheckAppServiceDomainRegistrationAvailability(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier identifier, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).CheckAppServiceDomainRegistrationAvailability(identifier, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckAppServiceDomainRegistrationAvailability(identifier, cancellationToken);
         }
 
         /// <summary>
@@ -2704,7 +2704,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAppServiceDomains(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceDomains(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2712,7 +2712,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceDomainResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppServiceDomainResource> GetAppServiceDomainsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAppServiceDomainsAsync(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceDomainsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2729,7 +2729,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAppServiceDomains(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceDomains(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2737,7 +2737,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceDomainResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppServiceDomainResource> GetAppServiceDomains(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAppServiceDomains(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceDomains(cancellationToken);
         }
 
         /// <summary>
@@ -2754,14 +2754,14 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetControlCenterSsoRequestDomain(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetControlCenterSsoRequestDomain(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<DomainControlCenterSsoRequestInfo>> GetControlCenterSsoRequestDomainAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetControlCenterSsoRequestDomainAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).GetControlCenterSsoRequestDomainAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2778,14 +2778,14 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetControlCenterSsoRequestDomain(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetControlCenterSsoRequestDomain(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<DomainControlCenterSsoRequestInfo> GetControlCenterSsoRequestDomain(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetControlCenterSsoRequestDomain(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetControlCenterSsoRequestDomain(cancellationToken);
         }
 
         /// <summary>
@@ -2802,7 +2802,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAppServiceDomainRecommendations(DomainRecommendationSearchContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceDomainRecommendations(DomainRecommendationSearchContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2812,7 +2812,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceDomainNameIdentifier" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppServiceDomainNameIdentifier> GetAppServiceDomainRecommendationsAsync(this SubscriptionResource subscriptionResource, DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAppServiceDomainRecommendationsAsync(content, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceDomainRecommendationsAsync(content, cancellationToken);
         }
 
         /// <summary>
@@ -2829,7 +2829,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAppServiceDomainRecommendations(DomainRecommendationSearchContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceDomainRecommendations(DomainRecommendationSearchContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2839,7 +2839,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceDomainNameIdentifier" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppServiceDomainNameIdentifier> GetAppServiceDomainRecommendations(this SubscriptionResource subscriptionResource, DomainRecommendationSearchContent content, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAppServiceDomainRecommendations(content, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceDomainRecommendations(content, cancellationToken);
         }
 
         /// <summary>
@@ -2856,7 +2856,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAppServiceEnvironments(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceEnvironments(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2864,7 +2864,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppServiceEnvironmentResource> GetAppServiceEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAppServiceEnvironmentsAsync(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceEnvironmentsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -2881,7 +2881,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAppServiceEnvironments(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceEnvironments(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2889,7 +2889,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppServiceEnvironmentResource> GetAppServiceEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAppServiceEnvironments(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceEnvironments(cancellationToken);
         }
 
         /// <summary>
@@ -2906,7 +2906,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAppServicePlans(bool?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServicePlans(bool?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2918,7 +2918,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServicePlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppServicePlanResource> GetAppServicePlansAsync(this SubscriptionResource subscriptionResource, bool? detailed = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAppServicePlansAsync(detailed, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServicePlansAsync(detailed, cancellationToken);
         }
 
         /// <summary>
@@ -2935,7 +2935,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAppServicePlans(bool?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServicePlans(bool?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2947,7 +2947,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServicePlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppServicePlanResource> GetAppServicePlans(this SubscriptionResource subscriptionResource, bool? detailed = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAppServicePlans(detailed, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServicePlans(detailed, cancellationToken);
         }
 
         /// <summary>
@@ -2964,7 +2964,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAppCertificates(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppCertificates(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2973,7 +2973,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppCertificateResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppCertificateResource> GetAppCertificatesAsync(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAppCertificatesAsync(filter, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppCertificatesAsync(filter, cancellationToken);
         }
 
         /// <summary>
@@ -2990,7 +2990,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAppCertificates(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppCertificates(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -2999,7 +2999,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppCertificateResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppCertificateResource> GetAppCertificates(this SubscriptionResource subscriptionResource, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAppCertificates(filter, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppCertificates(filter, cancellationToken);
         }
 
         /// <summary>
@@ -3016,7 +3016,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetDeletedSitesByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetDeletedSitesByLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3025,7 +3025,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedSiteResource> GetDeletedSitesByLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetDeletedSitesByLocationAsync(location, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetDeletedSitesByLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -3042,7 +3042,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetDeletedSitesByLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetDeletedSitesByLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3051,7 +3051,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="DeletedSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedSiteResource> GetDeletedSitesByLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetDeletedSitesByLocation(location, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetDeletedSitesByLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -3068,7 +3068,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetDeletedWebAppByLocationDeletedWebApp(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetDeletedWebAppByLocationDeletedWebApp(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3079,7 +3079,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         public static async Task<Response<DeletedSiteResource>> GetDeletedWebAppByLocationDeletedWebAppAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetDeletedWebAppByLocationDeletedWebAppAsync(location, deletedSiteId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).GetDeletedWebAppByLocationDeletedWebAppAsync(location, deletedSiteId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3096,7 +3096,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetDeletedWebAppByLocationDeletedWebApp(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetDeletedWebAppByLocationDeletedWebApp(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3107,7 +3107,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="deletedSiteId"/> is null. </exception>
         public static Response<DeletedSiteResource> GetDeletedWebAppByLocationDeletedWebApp(this SubscriptionResource subscriptionResource, AzureLocation location, string deletedSiteId, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetDeletedWebAppByLocationDeletedWebApp(location, deletedSiteId, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetDeletedWebAppByLocationDeletedWebApp(location, deletedSiteId, cancellationToken);
         }
 
         /// <summary>
@@ -3124,7 +3124,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetKubeEnvironments(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetKubeEnvironments(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3132,7 +3132,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="KubeEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KubeEnvironmentResource> GetKubeEnvironmentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetKubeEnvironmentsAsync(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetKubeEnvironmentsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3149,7 +3149,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetKubeEnvironments(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetKubeEnvironments(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3157,7 +3157,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="KubeEnvironmentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KubeEnvironmentResource> GetKubeEnvironments(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetKubeEnvironments(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetKubeEnvironments(cancellationToken);
         }
 
         /// <summary>
@@ -3174,7 +3174,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAvailableStacksOnPremProviders(ProviderOSTypeSelected?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders(ProviderOSTypeSelected?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3183,7 +3183,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationStackResource> GetAvailableStacksOnPremProvidersAsync(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAvailableStacksOnPremProvidersAsync(osTypeSelected, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAvailableStacksOnPremProvidersAsync(osTypeSelected, cancellationToken);
         }
 
         /// <summary>
@@ -3200,7 +3200,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAvailableStacksOnPremProviders(ProviderOSTypeSelected?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders(ProviderOSTypeSelected?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3209,7 +3209,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationStackResource> GetAvailableStacksOnPremProviders(this SubscriptionResource subscriptionResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAvailableStacksOnPremProviders(osTypeSelected, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAvailableStacksOnPremProviders(osTypeSelected, cancellationToken);
         }
 
         /// <summary>
@@ -3226,7 +3226,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetRecommendations(bool?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetRecommendations(bool?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3236,7 +3236,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppServiceRecommendation> GetRecommendationsAsync(this SubscriptionResource subscriptionResource, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetRecommendationsAsync(featured, filter, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetRecommendationsAsync(featured, filter, cancellationToken);
         }
 
         /// <summary>
@@ -3253,7 +3253,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetRecommendations(bool?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetRecommendations(bool?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3263,7 +3263,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceRecommendation" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppServiceRecommendation> GetRecommendations(this SubscriptionResource subscriptionResource, bool? featured = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetRecommendations(featured, filter, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetRecommendations(featured, filter, cancellationToken);
         }
 
         /// <summary>
@@ -3280,14 +3280,14 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.ResetAllRecommendationFilters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.ResetAllRecommendationFilters(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response> ResetAllRecommendationFiltersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceSubscriptionMockingExtension(subscriptionResource).ResetAllRecommendationFiltersAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).ResetAllRecommendationFiltersAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3304,14 +3304,14 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.ResetAllRecommendationFilters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.ResetAllRecommendationFilters(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response ResetAllRecommendationFilters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).ResetAllRecommendationFilters(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).ResetAllRecommendationFilters(cancellationToken);
         }
 
         /// <summary>
@@ -3328,7 +3328,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.DisableAppServiceRecommendation(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.DisableAppServiceRecommendation(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3338,7 +3338,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public static async Task<Response> DisableAppServiceRecommendationAsync(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceSubscriptionMockingExtension(subscriptionResource).DisableAppServiceRecommendationAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).DisableAppServiceRecommendationAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3355,7 +3355,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.DisableAppServiceRecommendation(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.DisableAppServiceRecommendation(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3365,7 +3365,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public static Response DisableAppServiceRecommendation(this SubscriptionResource subscriptionResource, string name, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).DisableAppServiceRecommendation(name, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).DisableAppServiceRecommendation(name, cancellationToken);
         }
 
         /// <summary>
@@ -3382,7 +3382,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAllResourceHealthMetadata(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3390,7 +3390,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAllResourceHealthMetadataAsync(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAllResourceHealthMetadataAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3407,7 +3407,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAllResourceHealthMetadata(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3415,7 +3415,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadata(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAllResourceHealthMetadata(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAllResourceHealthMetadata(cancellationToken);
         }
 
         /// <summary>
@@ -3432,7 +3432,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetBillingMeters(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetBillingMeters(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3442,7 +3442,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceBillingMeter" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppServiceBillingMeter> GetBillingMetersAsync(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetBillingMetersAsync(billingLocation, osType, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetBillingMetersAsync(billingLocation, osType, cancellationToken);
         }
 
         /// <summary>
@@ -3459,7 +3459,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetBillingMeters(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetBillingMeters(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3469,7 +3469,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceBillingMeter" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppServiceBillingMeter> GetBillingMeters(this SubscriptionResource subscriptionResource, string billingLocation = null, string osType = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetBillingMeters(billingLocation, osType, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetBillingMeters(billingLocation, osType, cancellationToken);
         }
 
         /// <summary>
@@ -3486,7 +3486,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.CheckAppServiceNameAvailability(ResourceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability(ResourceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3495,7 +3495,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceSubscriptionMockingExtension(subscriptionResource).CheckAppServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckAppServiceNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3512,7 +3512,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.CheckAppServiceNameAvailability(ResourceNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.CheckAppServiceNameAvailability(ResourceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3521,7 +3521,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<ResourceNameAvailability> CheckAppServiceNameAvailability(this SubscriptionResource subscriptionResource, ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).CheckAppServiceNameAvailability(content, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).CheckAppServiceNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -3538,14 +3538,14 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAppServiceDeploymentLocations(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceDeploymentLocations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<AppServiceDeploymentLocations>> GetAppServiceDeploymentLocationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAppServiceDeploymentLocationsAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceDeploymentLocationsAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3562,14 +3562,14 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetAppServiceDeploymentLocations(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetAppServiceDeploymentLocations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<AppServiceDeploymentLocations> GetAppServiceDeploymentLocations(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetAppServiceDeploymentLocations(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAppServiceDeploymentLocations(cancellationToken);
         }
 
         /// <summary>
@@ -3586,7 +3586,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetGeoRegions(AppServiceSkuName?,bool?,bool?,bool?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetGeoRegions(AppServiceSkuName?,bool?,bool?,bool?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3598,7 +3598,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceGeoRegion" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppServiceGeoRegion> GetGeoRegionsAsync(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetGeoRegionsAsync(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetGeoRegionsAsync(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
         }
 
         /// <summary>
@@ -3615,7 +3615,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetGeoRegions(AppServiceSkuName?,bool?,bool?,bool?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetGeoRegions(AppServiceSkuName?,bool?,bool?,bool?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3627,7 +3627,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceGeoRegion" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppServiceGeoRegion> GetGeoRegions(this SubscriptionResource subscriptionResource, AppServiceSkuName? sku = null, bool? linuxWorkersEnabled = null, bool? xenonWorkersEnabled = null, bool? linuxDynamicWorkersEnabled = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetGeoRegions(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetGeoRegions(sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled, cancellationToken);
         }
 
         /// <summary>
@@ -3644,7 +3644,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetPremierAddOnOffers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetPremierAddOnOffers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3652,7 +3652,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="PremierAddOnOffer" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PremierAddOnOffer> GetPremierAddOnOffersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetPremierAddOnOffersAsync(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetPremierAddOnOffersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3669,7 +3669,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetPremierAddOnOffers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetPremierAddOnOffers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3677,7 +3677,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="PremierAddOnOffer" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PremierAddOnOffer> GetPremierAddOnOffers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetPremierAddOnOffers(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetPremierAddOnOffers(cancellationToken);
         }
 
         /// <summary>
@@ -3694,14 +3694,14 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetSkus(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetSkus(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<AppServiceSkuResult>> GetSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetSkusAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).GetSkusAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3718,14 +3718,14 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetSkus(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetSkus(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<AppServiceSkuResult> GetSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetSkus(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetSkus(cancellationToken);
         }
 
         /// <summary>
@@ -3742,7 +3742,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.VerifyHostingEnvironmentVnet(AppServiceVirtualNetworkValidationContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.VerifyHostingEnvironmentVnet(AppServiceVirtualNetworkValidationContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3751,7 +3751,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<VirtualNetworkValidationFailureDetails>> VerifyHostingEnvironmentVnetAsync(this SubscriptionResource subscriptionResource, AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceSubscriptionMockingExtension(subscriptionResource).VerifyHostingEnvironmentVnetAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).VerifyHostingEnvironmentVnetAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3768,7 +3768,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.VerifyHostingEnvironmentVnet(AppServiceVirtualNetworkValidationContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.VerifyHostingEnvironmentVnet(AppServiceVirtualNetworkValidationContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3777,7 +3777,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<VirtualNetworkValidationFailureDetails> VerifyHostingEnvironmentVnet(this SubscriptionResource subscriptionResource, AppServiceVirtualNetworkValidationContent content, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).VerifyHostingEnvironmentVnet(content, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).VerifyHostingEnvironmentVnet(content, cancellationToken);
         }
 
         /// <summary>
@@ -3794,7 +3794,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.PreviewStaticSiteWorkflow(AzureLocation,StaticSitesWorkflowPreviewContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.PreviewStaticSiteWorkflow(AzureLocation,StaticSitesWorkflowPreviewContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3804,7 +3804,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<StaticSitesWorkflowPreview>> PreviewStaticSiteWorkflowAsync(this SubscriptionResource subscriptionResource, AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceSubscriptionMockingExtension(subscriptionResource).PreviewStaticSiteWorkflowAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceSubscriptionResource(subscriptionResource).PreviewStaticSiteWorkflowAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3821,7 +3821,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.PreviewStaticSiteWorkflow(AzureLocation,StaticSitesWorkflowPreviewContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.PreviewStaticSiteWorkflow(AzureLocation,StaticSitesWorkflowPreviewContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3831,7 +3831,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<StaticSitesWorkflowPreview> PreviewStaticSiteWorkflow(this SubscriptionResource subscriptionResource, AzureLocation location, StaticSitesWorkflowPreviewContent content, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).PreviewStaticSiteWorkflow(location, content, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).PreviewStaticSiteWorkflow(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -3848,7 +3848,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetStaticSites(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetStaticSites(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3856,7 +3856,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="StaticSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StaticSiteResource> GetStaticSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetStaticSitesAsync(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetStaticSitesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3873,7 +3873,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetStaticSites(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetStaticSites(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3881,7 +3881,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="StaticSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StaticSiteResource> GetStaticSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetStaticSites(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetStaticSites(cancellationToken);
         }
 
         /// <summary>
@@ -3898,7 +3898,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetWebSites(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetWebSites(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3906,7 +3906,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebSiteResource> GetWebSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetWebSitesAsync(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetWebSitesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -3923,7 +3923,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceSubscriptionMockingExtension.GetWebSites(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceSubscriptionResource.GetWebSites(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -3931,35 +3931,35 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WebSiteResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebSiteResource> GetWebSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceSubscriptionMockingExtension(subscriptionResource).GetWebSites(cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetWebSites(cancellationToken);
         }
 
         /// <summary>
         /// Gets an object representing a PublishingUserResource along with the instance operations that can be performed on it in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetPublishingUser()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetPublishingUser()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="PublishingUserResource" /> object. </returns>
         public static PublishingUserResource GetPublishingUser(this TenantResource tenantResource)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetPublishingUser();
+            return GetMockableAppServiceTenantResource(tenantResource).GetPublishingUser();
         }
 
         /// <summary>
         /// Gets a collection of AppServiceSourceControlResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetAppServiceSourceControls()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetAppServiceSourceControls()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AppServiceSourceControlResources and their operations over a AppServiceSourceControlResource. </returns>
         public static AppServiceSourceControlCollection GetAppServiceSourceControls(this TenantResource tenantResource)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetAppServiceSourceControls();
+            return GetMockableAppServiceTenantResource(tenantResource).GetAppServiceSourceControls();
         }
 
         /// <summary>
@@ -3976,7 +3976,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetAppServiceSourceControlAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetAppServiceSourceControlAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -3987,7 +3987,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static async Task<Response<AppServiceSourceControlResource>> GetAppServiceSourceControlAsync(this TenantResource tenantResource, string sourceControlType, CancellationToken cancellationToken = default)
         {
-            return await GetAppServiceTenantMockingExtension(tenantResource).GetAppServiceSourceControlAsync(sourceControlType, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAppServiceTenantResource(tenantResource).GetAppServiceSourceControlAsync(sourceControlType, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -4004,7 +4004,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetAppServiceSourceControl(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetAppServiceSourceControl(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4015,7 +4015,7 @@ namespace Azure.ResourceManager.AppService
         [ForwardsClientCalls]
         public static Response<AppServiceSourceControlResource> GetAppServiceSourceControl(this TenantResource tenantResource, string sourceControlType, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetAppServiceSourceControl(sourceControlType, cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetAppServiceSourceControl(sourceControlType, cancellationToken);
         }
 
         /// <summary>
@@ -4032,7 +4032,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetOperationsCertificateRegistrationProviders(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetOperationsCertificateRegistrationProviders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4040,7 +4040,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CsmOperationDescription> GetOperationsCertificateRegistrationProvidersAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetOperationsCertificateRegistrationProvidersAsync(cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetOperationsCertificateRegistrationProvidersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -4057,7 +4057,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetOperationsCertificateRegistrationProviders(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetOperationsCertificateRegistrationProviders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4065,7 +4065,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CsmOperationDescription> GetOperationsCertificateRegistrationProviders(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetOperationsCertificateRegistrationProviders(cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetOperationsCertificateRegistrationProviders(cancellationToken);
         }
 
         /// <summary>
@@ -4082,7 +4082,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetOperationsDomainRegistrationProviders(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetOperationsDomainRegistrationProviders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4090,7 +4090,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CsmOperationDescription> GetOperationsDomainRegistrationProvidersAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetOperationsDomainRegistrationProvidersAsync(cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetOperationsDomainRegistrationProvidersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -4107,7 +4107,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetOperationsDomainRegistrationProviders(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetOperationsDomainRegistrationProviders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4115,7 +4115,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CsmOperationDescription> GetOperationsDomainRegistrationProviders(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetOperationsDomainRegistrationProviders(cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetOperationsDomainRegistrationProviders(cancellationToken);
         }
 
         /// <summary>
@@ -4132,7 +4132,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetAvailableStacksProviders(ProviderOSTypeSelected?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetAvailableStacksProviders(ProviderOSTypeSelected?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4141,7 +4141,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationStackResource> GetAvailableStacksProvidersAsync(this TenantResource tenantResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetAvailableStacksProvidersAsync(osTypeSelected, cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetAvailableStacksProvidersAsync(osTypeSelected, cancellationToken);
         }
 
         /// <summary>
@@ -4158,7 +4158,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetAvailableStacksProviders(ProviderOSTypeSelected?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetAvailableStacksProviders(ProviderOSTypeSelected?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4167,7 +4167,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="ApplicationStackResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationStackResource> GetAvailableStacksProviders(this TenantResource tenantResource, ProviderOSTypeSelected? osTypeSelected = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetAvailableStacksProviders(osTypeSelected, cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetAvailableStacksProviders(osTypeSelected, cancellationToken);
         }
 
         /// <summary>
@@ -4184,7 +4184,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetFunctionAppStacksProviders(ProviderStackOSType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetFunctionAppStacksProviders(ProviderStackOSType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4193,7 +4193,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksProvidersAsync(this TenantResource tenantResource, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetFunctionAppStacksProvidersAsync(stackOSType, cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetFunctionAppStacksProvidersAsync(stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -4210,7 +4210,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetFunctionAppStacksProviders(ProviderStackOSType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetFunctionAppStacksProviders(ProviderStackOSType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4219,7 +4219,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FunctionAppStack> GetFunctionAppStacksProviders(this TenantResource tenantResource, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetFunctionAppStacksProviders(stackOSType, cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetFunctionAppStacksProviders(stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -4236,7 +4236,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetFunctionAppStacksForLocationProviders(AzureLocation,ProviderStackOSType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetFunctionAppStacksForLocationProviders(AzureLocation,ProviderStackOSType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4246,7 +4246,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetFunctionAppStacksForLocationProvidersAsync(location, stackOSType, cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetFunctionAppStacksForLocationProvidersAsync(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -4263,7 +4263,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetFunctionAppStacksForLocationProviders(AzureLocation,ProviderStackOSType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetFunctionAppStacksForLocationProviders(AzureLocation,ProviderStackOSType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4273,7 +4273,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="FunctionAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetFunctionAppStacksForLocationProviders(location, stackOSType, cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetFunctionAppStacksForLocationProviders(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -4290,7 +4290,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetWebAppStacksByLocation(AzureLocation,ProviderStackOSType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetWebAppStacksByLocation(AzureLocation,ProviderStackOSType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4300,7 +4300,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebAppStack> GetWebAppStacksByLocationAsync(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetWebAppStacksByLocationAsync(location, stackOSType, cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetWebAppStacksByLocationAsync(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -4317,7 +4317,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetWebAppStacksByLocation(AzureLocation,ProviderStackOSType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetWebAppStacksByLocation(AzureLocation,ProviderStackOSType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4327,7 +4327,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebAppStack> GetWebAppStacksByLocation(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetWebAppStacksByLocation(location, stackOSType, cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetWebAppStacksByLocation(location, stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -4344,7 +4344,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetOperationsProviders(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetOperationsProviders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4352,7 +4352,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CsmOperationDescription> GetOperationsProvidersAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetOperationsProvidersAsync(cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetOperationsProvidersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -4369,7 +4369,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetOperationsProviders(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetOperationsProviders(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4377,7 +4377,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="CsmOperationDescription" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CsmOperationDescription> GetOperationsProviders(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetOperationsProviders(cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetOperationsProviders(cancellationToken);
         }
 
         /// <summary>
@@ -4394,7 +4394,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetWebAppStacksProviders(ProviderStackOSType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetWebAppStacksProviders(ProviderStackOSType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4403,7 +4403,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebAppStack> GetWebAppStacksProvidersAsync(this TenantResource tenantResource, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetWebAppStacksProvidersAsync(stackOSType, cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetWebAppStacksProvidersAsync(stackOSType, cancellationToken);
         }
 
         /// <summary>
@@ -4420,7 +4420,7 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AppServiceTenantMockingExtension.GetWebAppStacksProviders(ProviderStackOSType?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAppServiceTenantResource.GetWebAppStacksProviders(ProviderStackOSType?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -4429,7 +4429,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="WebAppStack" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebAppStack> GetWebAppStacksProviders(this TenantResource tenantResource, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
-            return GetAppServiceTenantMockingExtension(tenantResource).GetWebAppStacksProviders(stackOSType, cancellationToken);
+            return GetMockableAppServiceTenantResource(tenantResource).GetWebAppStacksProviders(stackOSType, cancellationToken);
         }
     }
 }

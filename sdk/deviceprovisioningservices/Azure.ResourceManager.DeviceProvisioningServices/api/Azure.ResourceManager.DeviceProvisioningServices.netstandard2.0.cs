@@ -189,24 +189,24 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
 }
 namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
 {
-    public partial class DeviceProvisioningServicesArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDeviceProvisioningServicesArmClient : Azure.ResourceManager.ArmResource
     {
-        protected DeviceProvisioningServicesArmClientMockingExtension() { }
+        protected MockableDeviceProvisioningServicesArmClient() { }
         public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource GetDeviceProvisioningServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesCertificateResource GetDeviceProvisioningServicesCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionResource GetDeviceProvisioningServicesPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResource GetDeviceProvisioningServicesPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DeviceProvisioningServicesResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDeviceProvisioningServicesResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected DeviceProvisioningServicesResourceGroupMockingExtension() { }
+        protected MockableDeviceProvisioningServicesResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> GetDeviceProvisioningService(string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource>> GetDeviceProvisioningServiceAsync(string provisioningServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceCollection GetDeviceProvisioningServices() { throw null; }
     }
-    public partial class DeviceProvisioningServicesSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDeviceProvisioningServicesSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected DeviceProvisioningServicesSubscriptionMockingExtension() { }
+        protected MockableDeviceProvisioningServicesSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityResult> CheckDeviceProvisioningServicesNameAvailability(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityResult>> CheckDeviceProvisioningServicesNameAvailabilityAsync(Azure.ResourceManager.DeviceProvisioningServices.Models.DeviceProvisioningServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DeviceProvisioningServices.DeviceProvisioningServiceResource> GetDeviceProvisioningServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

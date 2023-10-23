@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.ResourceGraph
 }
 namespace Azure.ResourceManager.ResourceGraph.Mocking
 {
-    public partial class ResourceGraphTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableResourceGraphTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected ResourceGraphTenantMockingExtension() { }
+        protected MockableResourceGraphTenantResource() { }
         public virtual Azure.Response<System.BinaryData> GetResourceHistory(Azure.ResourceManager.ResourceGraph.Models.ResourcesHistoryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetResourceHistoryAsync(Azure.ResourceManager.ResourceGraph.Models.ResourcesHistoryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ResourceGraph.Models.ResourceQueryResult> GetResources(Azure.ResourceManager.ResourceGraph.Models.ResourceQueryContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -692,9 +692,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 }
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
 {
-    public partial class ConnectedVMwarevSphereArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableConnectedVMwarevSphereArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ConnectedVMwarevSphereArmClientMockingExtension() { }
+        protected MockableConnectedVMwarevSphereArmClient() { }
         public virtual Azure.ResourceManager.ConnectedVMwarevSphere.GuestAgentResource GetGuestAgentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ConnectedVMwarevSphere.HybridIdentityMetadataResource GetHybridIdentityMetadataResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ConnectedVMwarevSphere.InventoryItemResource GetInventoryItemResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -708,9 +708,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreResource GetVMwareDatastoreResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostResource GetVMwareHostResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ConnectedVMwarevSphereResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableConnectedVMwarevSphereResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ConnectedVMwarevSphereResourceGroupMockingExtension() { }
+        protected MockableConnectedVMwarevSphereResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.ResourcePoolResource> GetResourcePool(string resourcePoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.ResourcePoolResource>> GetResourcePoolAsync(string resourcePoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ConnectedVMwarevSphere.ResourcePoolCollection GetResourcePools() { throw null; }
@@ -736,9 +736,9 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostResource>> GetVMwareHostAsync(string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostCollection GetVMwareHosts() { throw null; }
     }
-    public partial class ConnectedVMwarevSphereSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableConnectedVMwarevSphereSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ConnectedVMwarevSphereSubscriptionMockingExtension() { }
+        protected MockableConnectedVMwarevSphereSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.ResourcePoolResource> GetResourcePools(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ConnectedVMwarevSphere.ResourcePoolResource> GetResourcePoolsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterResource> GetVCenters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

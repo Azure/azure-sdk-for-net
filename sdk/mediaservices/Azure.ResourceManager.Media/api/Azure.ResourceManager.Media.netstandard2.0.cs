@@ -752,9 +752,9 @@ namespace Azure.ResourceManager.Media
 }
 namespace Azure.ResourceManager.Media.Mocking
 {
-    public partial class MediaArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMediaArmClient : Azure.ResourceManager.ArmResource
     {
-        protected MediaArmClientMockingExtension() { }
+        protected MockableMediaArmClient() { }
         public virtual Azure.ResourceManager.Media.ContentKeyPolicyResource GetContentKeyPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Media.MediaAssetFilterResource GetMediaAssetFilterResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Media.MediaAssetResource GetMediaAssetResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -771,16 +771,16 @@ namespace Azure.ResourceManager.Media.Mocking
         public virtual Azure.ResourceManager.Media.StreamingLocatorResource GetStreamingLocatorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Media.StreamingPolicyResource GetStreamingPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class MediaResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMediaResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected MediaResourceGroupMockingExtension() { }
+        protected MockableMediaResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Media.MediaServicesAccountResource> GetMediaServicesAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.MediaServicesAccountResource>> GetMediaServicesAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Media.MediaServicesAccountCollection GetMediaServicesAccounts() { throw null; }
     }
-    public partial class MediaSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMediaSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected MediaSubscriptionMockingExtension() { }
+        protected MockableMediaSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityResult> CheckMediaServicesNameAvailability(Azure.Core.AzureLocation locationName, Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityResult>> CheckMediaServicesNameAvailabilityAsync(Azure.Core.AzureLocation locationName, Azure.ResourceManager.Media.Models.MediaServicesNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Media.MediaServicesAccountResource> GetMediaServicesAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

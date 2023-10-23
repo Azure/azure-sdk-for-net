@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Search
     /// <summary> A class to add extension methods to Azure.ResourceManager.Search. </summary>
     public static partial class SearchExtensions
     {
-        private static SearchArmClientMockingExtension GetSearchArmClientMockingExtension(ArmClient client)
+        private static MockableSearchArmClient GetMockableSearchArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new SearchArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableSearchArmClient(client0));
         }
 
-        private static SearchResourceGroupMockingExtension GetSearchResourceGroupMockingExtension(ArmResource resource)
+        private static MockableSearchResourceGroupResource GetMockableSearchResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new SearchResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableSearchResourceGroupResource(client, resource.Id));
         }
 
-        private static SearchSubscriptionMockingExtension GetSearchSubscriptionMockingExtension(ArmResource resource)
+        private static MockableSearchSubscriptionResource GetMockableSearchSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new SearchSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableSearchSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Search
         /// You can use <see cref="SearchServiceResource.CreateResourceIdentifier" /> to create a <see cref="SearchServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SearchArmClientMockingExtension.GetSearchServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSearchArmClient.GetSearchServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Search
         /// <returns> Returns a <see cref="SearchServiceResource" /> object. </returns>
         public static SearchServiceResource GetSearchServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSearchArmClientMockingExtension(client).GetSearchServiceResource(id);
+            return GetMockableSearchArmClient(client).GetSearchServiceResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Search
         /// You can use <see cref="SearchPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SearchPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SearchArmClientMockingExtension.GetSearchPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSearchArmClient.GetSearchPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Search
         /// <returns> Returns a <see cref="SearchPrivateEndpointConnectionResource" /> object. </returns>
         public static SearchPrivateEndpointConnectionResource GetSearchPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSearchArmClientMockingExtension(client).GetSearchPrivateEndpointConnectionResource(id);
+            return GetMockableSearchArmClient(client).GetSearchPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Search
         /// You can use <see cref="SharedSearchServicePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SharedSearchServicePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SearchArmClientMockingExtension.GetSharedSearchServicePrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSearchArmClient.GetSharedSearchServicePrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,21 +80,21 @@ namespace Azure.ResourceManager.Search
         /// <returns> Returns a <see cref="SharedSearchServicePrivateLinkResource" /> object. </returns>
         public static SharedSearchServicePrivateLinkResource GetSharedSearchServicePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSearchArmClientMockingExtension(client).GetSharedSearchServicePrivateLinkResource(id);
+            return GetMockableSearchArmClient(client).GetSharedSearchServicePrivateLinkResource(id);
         }
 
         /// <summary>
         /// Gets a collection of SearchServiceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SearchResourceGroupMockingExtension.GetSearchServices()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSearchResourceGroupResource.GetSearchServices()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SearchServiceResources and their operations over a SearchServiceResource. </returns>
         public static SearchServiceCollection GetSearchServices(this ResourceGroupResource resourceGroupResource)
         {
-            return GetSearchResourceGroupMockingExtension(resourceGroupResource).GetSearchServices();
+            return GetMockableSearchResourceGroupResource(resourceGroupResource).GetSearchServices();
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SearchResourceGroupMockingExtension.GetSearchServiceAsync(string,SearchManagementRequestOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSearchResourceGroupResource.GetSearchServiceAsync(string,SearchManagementRequestOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Search
         [ForwardsClientCalls]
         public static async Task<Response<SearchServiceResource>> GetSearchServiceAsync(this ResourceGroupResource resourceGroupResource, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return await GetSearchResourceGroupMockingExtension(resourceGroupResource).GetSearchServiceAsync(searchServiceName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSearchResourceGroupResource(resourceGroupResource).GetSearchServiceAsync(searchServiceName, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SearchResourceGroupMockingExtension.GetSearchService(string,SearchManagementRequestOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSearchResourceGroupResource.GetSearchService(string,SearchManagementRequestOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Search
         [ForwardsClientCalls]
         public static Response<SearchServiceResource> GetSearchService(this ResourceGroupResource resourceGroupResource, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetSearchResourceGroupMockingExtension(resourceGroupResource).GetSearchService(searchServiceName, searchManagementRequestOptions, cancellationToken);
+            return GetMockableSearchResourceGroupResource(resourceGroupResource).GetSearchService(searchServiceName, searchManagementRequestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SearchSubscriptionMockingExtension.GetSearchServices(SearchManagementRequestOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSearchSubscriptionResource.GetSearchServices(SearchManagementRequestOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Search
         /// <returns> An async collection of <see cref="SearchServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SearchServiceResource> GetSearchServicesAsync(this SubscriptionResource subscriptionResource, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetSearchSubscriptionMockingExtension(subscriptionResource).GetSearchServicesAsync(searchManagementRequestOptions, cancellationToken);
+            return GetMockableSearchSubscriptionResource(subscriptionResource).GetSearchServicesAsync(searchManagementRequestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SearchSubscriptionMockingExtension.GetSearchServices(SearchManagementRequestOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSearchSubscriptionResource.GetSearchServices(SearchManagementRequestOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Search
         /// <returns> A collection of <see cref="SearchServiceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SearchServiceResource> GetSearchServices(this SubscriptionResource subscriptionResource, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetSearchSubscriptionMockingExtension(subscriptionResource).GetSearchServices(searchManagementRequestOptions, cancellationToken);
+            return GetMockableSearchSubscriptionResource(subscriptionResource).GetSearchServices(searchManagementRequestOptions, cancellationToken);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SearchSubscriptionMockingExtension.CheckSearchServiceNameAvailability(SearchServiceNameAvailabilityContent,SearchManagementRequestOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSearchSubscriptionResource.CheckSearchServiceNameAvailability(SearchServiceNameAvailabilityContent,SearchManagementRequestOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<SearchServiceNameAvailabilityResult>> CheckSearchServiceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return await GetSearchSubscriptionMockingExtension(subscriptionResource).CheckSearchServiceNameAvailabilityAsync(content, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSearchSubscriptionResource(subscriptionResource).CheckSearchServiceNameAvailabilityAsync(content, searchManagementRequestOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Search
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SearchSubscriptionMockingExtension.CheckSearchServiceNameAvailability(SearchServiceNameAvailabilityContent,SearchManagementRequestOptions,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSearchSubscriptionResource.CheckSearchServiceNameAvailability(SearchServiceNameAvailabilityContent,SearchManagementRequestOptions,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Search
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<SearchServiceNameAvailabilityResult> CheckSearchServiceNameAvailability(this SubscriptionResource subscriptionResource, SearchServiceNameAvailabilityContent content, SearchManagementRequestOptions searchManagementRequestOptions = null, CancellationToken cancellationToken = default)
         {
-            return GetSearchSubscriptionMockingExtension(subscriptionResource).CheckSearchServiceNameAvailability(content, searchManagementRequestOptions, cancellationToken);
+            return GetMockableSearchSubscriptionResource(subscriptionResource).CheckSearchServiceNameAvailability(content, searchManagementRequestOptions, cancellationToken);
         }
     }
 }

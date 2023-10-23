@@ -152,23 +152,23 @@ namespace Azure.ResourceManager.ServiceNetworking
 }
 namespace Azure.ResourceManager.ServiceNetworking.Mocking
 {
-    public partial class ServiceNetworkingArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableServiceNetworkingArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ServiceNetworkingArmClientMockingExtension() { }
+        protected MockableServiceNetworkingArmClient() { }
         public virtual Azure.ResourceManager.ServiceNetworking.AssociationResource GetAssociationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ServiceNetworking.FrontendResource GetFrontendResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ServiceNetworking.TrafficControllerResource GetTrafficControllerResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ServiceNetworkingResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableServiceNetworkingResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ServiceNetworkingResourceGroupMockingExtension() { }
+        protected MockableServiceNetworkingResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> GetTrafficController(string trafficControllerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource>> GetTrafficControllerAsync(string trafficControllerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ServiceNetworking.TrafficControllerCollection GetTrafficControllers() { throw null; }
     }
-    public partial class ServiceNetworkingSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableServiceNetworkingSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ServiceNetworkingSubscriptionMockingExtension() { }
+        protected MockableServiceNetworkingSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> GetTrafficControllers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> GetTrafficControllersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

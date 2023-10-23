@@ -256,9 +256,9 @@ namespace Azure.ResourceManager.Blueprint
 }
 namespace Azure.ResourceManager.Blueprint.Mocking
 {
-    public partial class BlueprintArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableBlueprintArmClient : Azure.ResourceManager.ArmResource
     {
-        protected BlueprintArmClientMockingExtension() { }
+        protected MockableBlueprintArmClient() { }
         public virtual Azure.Response<Azure.ResourceManager.Blueprint.AssignmentResource> GetAssignment(Azure.Core.ResourceIdentifier scope, string assignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Blueprint.AssignmentResource>> GetAssignmentAsync(Azure.Core.ResourceIdentifier scope, string assignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Blueprint.AssignmentOperationResource GetAssignmentOperationResource(Azure.Core.ResourceIdentifier id) { throw null; }

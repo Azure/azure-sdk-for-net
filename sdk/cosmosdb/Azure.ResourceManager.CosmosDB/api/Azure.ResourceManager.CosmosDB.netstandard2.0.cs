@@ -1825,9 +1825,9 @@ namespace Azure.ResourceManager.CosmosDB
 }
 namespace Azure.ResourceManager.CosmosDB.Mocking
 {
-    public partial class CosmosDBArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableCosmosDBArmClient : Azure.ResourceManager.ArmResource
     {
-        protected CosmosDBArmClientMockingExtension() { }
+        protected MockableCosmosDBArmClient() { }
         public virtual Azure.ResourceManager.CosmosDB.CassandraClusterBackupResource GetCassandraClusterBackupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.CassandraClusterResource GetCassandraClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.CassandraDataCenterResource GetCassandraDataCenterResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1870,9 +1870,9 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         public virtual Azure.ResourceManager.CosmosDB.MongoDBUserDefinitionResource GetMongoDBUserDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource GetRestorableCosmosDBAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class CosmosDBResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableCosmosDBResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected CosmosDBResourceGroupMockingExtension() { }
+        protected MockableCosmosDBResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.CosmosDB.CassandraClusterResource> GetCassandraCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.CassandraClusterResource>> GetCassandraClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.CassandraClusterCollection GetCassandraClusters() { throw null; }
@@ -1883,9 +1883,9 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CosmosDB.MongoClusterResource>> GetMongoClusterAsync(string mongoClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CosmosDB.MongoClusterCollection GetMongoClusters() { throw null; }
     }
-    public partial class CosmosDBSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableCosmosDBSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected CosmosDBSubscriptionMockingExtension() { }
+        protected MockableCosmosDBSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.CassandraClusterResource> GetCassandraClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.CassandraClusterResource> GetCassandraClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.CosmosDBAccountResource> GetCosmosDBAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1898,9 +1898,9 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         public virtual Azure.Pageable<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CosmosDB.RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class CosmosDBTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableCosmosDBTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected CosmosDBTenantMockingExtension() { }
+        protected MockableCosmosDBTenantResource() { }
         public virtual Azure.Response<bool> CheckNameExistsDatabaseAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> CheckNameExistsDatabaseAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

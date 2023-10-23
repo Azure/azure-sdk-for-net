@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
     /// <summary> A class to add extension methods to Azure.ResourceManager.KubernetesConfiguration. </summary>
     public static partial class KubernetesConfigurationExtensions
     {
-        private static KubernetesConfigurationArmClientMockingExtension GetKubernetesConfigurationArmClientMockingExtension(ArmClient client)
+        private static MockableKubernetesConfigurationArmClient GetMockableKubernetesConfigurationArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new KubernetesConfigurationArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableKubernetesConfigurationArmClient(client0));
         }
 
-        private static KubernetesConfigurationResourceGroupMockingExtension GetKubernetesConfigurationResourceGroupMockingExtension(ArmResource resource)
+        private static MockableKubernetesConfigurationResourceGroupResource GetMockableKubernetesConfigurationResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new KubernetesConfigurationResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableKubernetesConfigurationResourceGroupResource(client, resource.Id));
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// You can use <see cref="KubernetesClusterExtensionResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesClusterExtensionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KubernetesConfigurationArmClientMockingExtension.GetKubernetesClusterExtensionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationArmClient.GetKubernetesClusterExtensionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> Returns a <see cref="KubernetesClusterExtensionResource" /> object. </returns>
         public static KubernetesClusterExtensionResource GetKubernetesClusterExtensionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetKubernetesConfigurationArmClientMockingExtension(client).GetKubernetesClusterExtensionResource(id);
+            return GetMockableKubernetesConfigurationArmClient(client).GetKubernetesClusterExtensionResource(id);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// You can use <see cref="KubernetesFluxConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesFluxConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KubernetesConfigurationArmClientMockingExtension.GetKubernetesFluxConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationArmClient.GetKubernetesFluxConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> Returns a <see cref="KubernetesFluxConfigurationResource" /> object. </returns>
         public static KubernetesFluxConfigurationResource GetKubernetesFluxConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetKubernetesConfigurationArmClientMockingExtension(client).GetKubernetesFluxConfigurationResource(id);
+            return GetMockableKubernetesConfigurationArmClient(client).GetKubernetesFluxConfigurationResource(id);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// You can use <see cref="KubernetesSourceControlConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesSourceControlConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KubernetesConfigurationArmClientMockingExtension.GetKubernetesSourceControlConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationArmClient.GetKubernetesSourceControlConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -74,14 +74,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> Returns a <see cref="KubernetesSourceControlConfigurationResource" /> object. </returns>
         public static KubernetesSourceControlConfigurationResource GetKubernetesSourceControlConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetKubernetesConfigurationArmClientMockingExtension(client).GetKubernetesSourceControlConfigurationResource(id);
+            return GetMockableKubernetesConfigurationArmClient(client).GetKubernetesSourceControlConfigurationResource(id);
         }
 
         /// <summary>
         /// Gets a collection of KubernetesClusterExtensionResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KubernetesConfigurationResourceGroupMockingExtension.GetKubernetesClusterExtensions(string,string,string)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesClusterExtensions(string,string,string)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> An object representing collection of KubernetesClusterExtensionResources and their operations over a KubernetesClusterExtensionResource. </returns>
         public static KubernetesClusterExtensionCollection GetKubernetesClusterExtensions(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
         {
-            return GetKubernetesConfigurationResourceGroupMockingExtension(resourceGroupResource).GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName);
+            return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesClusterExtensions(clusterRp, clusterResourceName, clusterName);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KubernetesConfigurationResourceGroupMockingExtension.GetKubernetesClusterExtensionAsync(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesClusterExtensionAsync(string,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [ForwardsClientCalls]
         public static async Task<Response<KubernetesClusterExtensionResource>> GetKubernetesClusterExtensionAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string extensionName, CancellationToken cancellationToken = default)
         {
-            return await GetKubernetesConfigurationResourceGroupMockingExtension(resourceGroupResource).GetKubernetesClusterExtensionAsync(clusterRp, clusterResourceName, clusterName, extensionName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesClusterExtensionAsync(clusterRp, clusterResourceName, clusterName, extensionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KubernetesConfigurationResourceGroupMockingExtension.GetKubernetesClusterExtension(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesClusterExtension(string,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -155,14 +155,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [ForwardsClientCalls]
         public static Response<KubernetesClusterExtensionResource> GetKubernetesClusterExtension(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string extensionName, CancellationToken cancellationToken = default)
         {
-            return GetKubernetesConfigurationResourceGroupMockingExtension(resourceGroupResource).GetKubernetesClusterExtension(clusterRp, clusterResourceName, clusterName, extensionName, cancellationToken);
+            return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesClusterExtension(clusterRp, clusterResourceName, clusterName, extensionName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of KubernetesFluxConfigurationResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KubernetesConfigurationResourceGroupMockingExtension.GetKubernetesFluxConfigurations(string,string,string)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesFluxConfigurations(string,string,string)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> An object representing collection of KubernetesFluxConfigurationResources and their operations over a KubernetesFluxConfigurationResource. </returns>
         public static KubernetesFluxConfigurationCollection GetKubernetesFluxConfigurations(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
         {
-            return GetKubernetesConfigurationResourceGroupMockingExtension(resourceGroupResource).GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName);
+            return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesFluxConfigurations(clusterRp, clusterResourceName, clusterName);
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KubernetesConfigurationResourceGroupMockingExtension.GetKubernetesFluxConfigurationAsync(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesFluxConfigurationAsync(string,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [ForwardsClientCalls]
         public static async Task<Response<KubernetesFluxConfigurationResource>> GetKubernetesFluxConfigurationAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, CancellationToken cancellationToken = default)
         {
-            return await GetKubernetesConfigurationResourceGroupMockingExtension(resourceGroupResource).GetKubernetesFluxConfigurationAsync(clusterRp, clusterResourceName, clusterName, fluxConfigurationName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesFluxConfigurationAsync(clusterRp, clusterResourceName, clusterName, fluxConfigurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KubernetesConfigurationResourceGroupMockingExtension.GetKubernetesFluxConfiguration(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesFluxConfiguration(string,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -236,14 +236,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [ForwardsClientCalls]
         public static Response<KubernetesFluxConfigurationResource> GetKubernetesFluxConfiguration(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string fluxConfigurationName, CancellationToken cancellationToken = default)
         {
-            return GetKubernetesConfigurationResourceGroupMockingExtension(resourceGroupResource).GetKubernetesFluxConfiguration(clusterRp, clusterResourceName, clusterName, fluxConfigurationName, cancellationToken);
+            return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesFluxConfiguration(clusterRp, clusterResourceName, clusterName, fluxConfigurationName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of KubernetesSourceControlConfigurationResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KubernetesConfigurationResourceGroupMockingExtension.GetKubernetesSourceControlConfigurations(string,string,string)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesSourceControlConfigurations(string,string,string)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// <returns> An object representing collection of KubernetesSourceControlConfigurationResources and their operations over a KubernetesSourceControlConfigurationResource. </returns>
         public static KubernetesSourceControlConfigurationCollection GetKubernetesSourceControlConfigurations(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName)
         {
-            return GetKubernetesConfigurationResourceGroupMockingExtension(resourceGroupResource).GetKubernetesSourceControlConfigurations(clusterRp, clusterResourceName, clusterName);
+            return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesSourceControlConfigurations(clusterRp, clusterResourceName, clusterName);
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KubernetesConfigurationResourceGroupMockingExtension.GetKubernetesSourceControlConfigurationAsync(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesSourceControlConfigurationAsync(string,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [ForwardsClientCalls]
         public static async Task<Response<KubernetesSourceControlConfigurationResource>> GetKubernetesSourceControlConfigurationAsync(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
-            return await GetKubernetesConfigurationResourceGroupMockingExtension(resourceGroupResource).GetKubernetesSourceControlConfigurationAsync(clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesSourceControlConfigurationAsync(clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KubernetesConfigurationResourceGroupMockingExtension.GetKubernetesSourceControlConfiguration(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKubernetesConfigurationResourceGroupResource.GetKubernetesSourceControlConfiguration(string,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
         [ForwardsClientCalls]
         public static Response<KubernetesSourceControlConfigurationResource> GetKubernetesSourceControlConfiguration(this ResourceGroupResource resourceGroupResource, string clusterRp, string clusterResourceName, string clusterName, string sourceControlConfigurationName, CancellationToken cancellationToken = default)
         {
-            return GetKubernetesConfigurationResourceGroupMockingExtension(resourceGroupResource).GetKubernetesSourceControlConfiguration(clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, cancellationToken);
+            return GetMockableKubernetesConfigurationResourceGroupResource(resourceGroupResource).GetKubernetesSourceControlConfiguration(clusterRp, clusterResourceName, clusterName, sourceControlConfigurationName, cancellationToken);
         }
     }
 }

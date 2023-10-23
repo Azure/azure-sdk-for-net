@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Marketplace
     /// <summary> A class to add extension methods to Azure.ResourceManager.Marketplace. </summary>
     public static partial class MarketplaceExtensions
     {
-        private static MarketplaceArmClientMockingExtension GetMarketplaceArmClientMockingExtension(ArmClient client)
+        private static MockableMarketplaceArmClient GetMockableMarketplaceArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MarketplaceArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableMarketplaceArmClient(client0));
         }
 
-        private static MarketplaceTenantMockingExtension GetMarketplaceTenantMockingExtension(ArmResource resource)
+        private static MockableMarketplaceTenantResource GetMockableMarketplaceTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MarketplaceTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableMarketplaceTenantResource(client, resource.Id));
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Marketplace
         /// You can use <see cref="PrivateStoreResource.CreateResourceIdentifier" /> to create a <see cref="PrivateStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MarketplaceArmClientMockingExtension.GetPrivateStoreResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMarketplaceArmClient.GetPrivateStoreResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> Returns a <see cref="PrivateStoreResource" /> object. </returns>
         public static PrivateStoreResource GetPrivateStoreResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMarketplaceArmClientMockingExtension(client).GetPrivateStoreResource(id);
+            return GetMockableMarketplaceArmClient(client).GetPrivateStoreResource(id);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Marketplace
         /// You can use <see cref="MarketplaceApprovalRequestResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceApprovalRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MarketplaceArmClientMockingExtension.GetMarketplaceApprovalRequestResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMarketplaceArmClient.GetMarketplaceApprovalRequestResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> Returns a <see cref="MarketplaceApprovalRequestResource" /> object. </returns>
         public static MarketplaceApprovalRequestResource GetMarketplaceApprovalRequestResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMarketplaceArmClientMockingExtension(client).GetMarketplaceApprovalRequestResource(id);
+            return GetMockableMarketplaceArmClient(client).GetMarketplaceApprovalRequestResource(id);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Marketplace
         /// You can use <see cref="MarketplaceAdminApprovalRequestResource.CreateResourceIdentifier" /> to create a <see cref="MarketplaceAdminApprovalRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MarketplaceArmClientMockingExtension.GetMarketplaceAdminApprovalRequestResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMarketplaceArmClient.GetMarketplaceAdminApprovalRequestResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> Returns a <see cref="MarketplaceAdminApprovalRequestResource" /> object. </returns>
         public static MarketplaceAdminApprovalRequestResource GetMarketplaceAdminApprovalRequestResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMarketplaceArmClientMockingExtension(client).GetMarketplaceAdminApprovalRequestResource(id);
+            return GetMockableMarketplaceArmClient(client).GetMarketplaceAdminApprovalRequestResource(id);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Marketplace
         /// You can use <see cref="PrivateStoreCollectionInfoResource.CreateResourceIdentifier" /> to create a <see cref="PrivateStoreCollectionInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MarketplaceArmClientMockingExtension.GetPrivateStoreCollectionInfoResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMarketplaceArmClient.GetPrivateStoreCollectionInfoResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> Returns a <see cref="PrivateStoreCollectionInfoResource" /> object. </returns>
         public static PrivateStoreCollectionInfoResource GetPrivateStoreCollectionInfoResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMarketplaceArmClientMockingExtension(client).GetPrivateStoreCollectionInfoResource(id);
+            return GetMockableMarketplaceArmClient(client).GetPrivateStoreCollectionInfoResource(id);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Marketplace
         /// You can use <see cref="PrivateStoreOfferResource.CreateResourceIdentifier" /> to create a <see cref="PrivateStoreOfferResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MarketplaceArmClientMockingExtension.GetPrivateStoreOfferResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMarketplaceArmClient.GetPrivateStoreOfferResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -106,21 +106,21 @@ namespace Azure.ResourceManager.Marketplace
         /// <returns> Returns a <see cref="PrivateStoreOfferResource" /> object. </returns>
         public static PrivateStoreOfferResource GetPrivateStoreOfferResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetMarketplaceArmClientMockingExtension(client).GetPrivateStoreOfferResource(id);
+            return GetMockableMarketplaceArmClient(client).GetPrivateStoreOfferResource(id);
         }
 
         /// <summary>
         /// Gets a collection of PrivateStoreResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MarketplaceTenantMockingExtension.GetPrivateStores()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMarketplaceTenantResource.GetPrivateStores()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PrivateStoreResources and their operations over a PrivateStoreResource. </returns>
         public static PrivateStoreCollection GetPrivateStores(this TenantResource tenantResource)
         {
-            return GetMarketplaceTenantMockingExtension(tenantResource).GetPrivateStores();
+            return GetMockableMarketplaceTenantResource(tenantResource).GetPrivateStores();
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MarketplaceTenantMockingExtension.GetPrivateStoreAsync(Guid,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMarketplaceTenantResource.GetPrivateStoreAsync(Guid,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Marketplace
         [ForwardsClientCalls]
         public static async Task<Response<PrivateStoreResource>> GetPrivateStoreAsync(this TenantResource tenantResource, Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            return await GetMarketplaceTenantMockingExtension(tenantResource).GetPrivateStoreAsync(privateStoreId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMarketplaceTenantResource(tenantResource).GetPrivateStoreAsync(privateStoreId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Marketplace
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MarketplaceTenantMockingExtension.GetPrivateStore(Guid,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableMarketplaceTenantResource.GetPrivateStore(Guid,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Marketplace
         [ForwardsClientCalls]
         public static Response<PrivateStoreResource> GetPrivateStore(this TenantResource tenantResource, Guid privateStoreId, CancellationToken cancellationToken = default)
         {
-            return GetMarketplaceTenantMockingExtension(tenantResource).GetPrivateStore(privateStoreId, cancellationToken);
+            return GetMockableMarketplaceTenantResource(tenantResource).GetPrivateStore(privateStoreId, cancellationToken);
         }
     }
 }

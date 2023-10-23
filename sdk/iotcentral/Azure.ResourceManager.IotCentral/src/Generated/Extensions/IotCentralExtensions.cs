@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.IotCentral
     /// <summary> A class to add extension methods to Azure.ResourceManager.IotCentral. </summary>
     public static partial class IotCentralExtensions
     {
-        private static IotCentralArmClientMockingExtension GetIotCentralArmClientMockingExtension(ArmClient client)
+        private static MockableIotCentralArmClient GetMockableIotCentralArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new IotCentralArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableIotCentralArmClient(client0));
         }
 
-        private static IotCentralResourceGroupMockingExtension GetIotCentralResourceGroupMockingExtension(ArmResource resource)
+        private static MockableIotCentralResourceGroupResource GetMockableIotCentralResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new IotCentralResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableIotCentralResourceGroupResource(client, resource.Id));
         }
 
-        private static IotCentralSubscriptionMockingExtension GetIotCentralSubscriptionMockingExtension(ArmResource resource)
+        private static MockableIotCentralSubscriptionResource GetMockableIotCentralSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new IotCentralSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableIotCentralSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotCentral
         /// You can use <see cref="IotCentralAppResource.CreateResourceIdentifier" /> to create an <see cref="IotCentralAppResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotCentralArmClientMockingExtension.GetIotCentralAppResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotCentralArmClient.GetIotCentralAppResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> Returns a <see cref="IotCentralAppResource" /> object. </returns>
         public static IotCentralAppResource GetIotCentralAppResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetIotCentralArmClientMockingExtension(client).GetIotCentralAppResource(id);
+            return GetMockableIotCentralArmClient(client).GetIotCentralAppResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.IotCentral
         /// You can use <see cref="IotCentralPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="IotCentralPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotCentralArmClientMockingExtension.GetIotCentralPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotCentralArmClient.GetIotCentralPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> Returns a <see cref="IotCentralPrivateEndpointConnectionResource" /> object. </returns>
         public static IotCentralPrivateEndpointConnectionResource GetIotCentralPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetIotCentralArmClientMockingExtension(client).GetIotCentralPrivateEndpointConnectionResource(id);
+            return GetMockableIotCentralArmClient(client).GetIotCentralPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.IotCentral
         /// You can use <see cref="IotCentralPrivateLinkResource.CreateResourceIdentifier" /> to create an <see cref="IotCentralPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotCentralArmClientMockingExtension.GetIotCentralPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotCentralArmClient.GetIotCentralPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,21 +80,21 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> Returns a <see cref="IotCentralPrivateLinkResource" /> object. </returns>
         public static IotCentralPrivateLinkResource GetIotCentralPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetIotCentralArmClientMockingExtension(client).GetIotCentralPrivateLinkResource(id);
+            return GetMockableIotCentralArmClient(client).GetIotCentralPrivateLinkResource(id);
         }
 
         /// <summary>
         /// Gets a collection of IotCentralAppResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotCentralResourceGroupMockingExtension.GetIotCentralApps()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotCentralResourceGroupResource.GetIotCentralApps()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of IotCentralAppResources and their operations over a IotCentralAppResource. </returns>
         public static IotCentralAppCollection GetIotCentralApps(this ResourceGroupResource resourceGroupResource)
         {
-            return GetIotCentralResourceGroupMockingExtension(resourceGroupResource).GetIotCentralApps();
+            return GetMockableIotCentralResourceGroupResource(resourceGroupResource).GetIotCentralApps();
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.IotCentral
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotCentralResourceGroupMockingExtension.GetIotCentralAppAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotCentralResourceGroupResource.GetIotCentralAppAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.IotCentral
         [ForwardsClientCalls]
         public static async Task<Response<IotCentralAppResource>> GetIotCentralAppAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetIotCentralResourceGroupMockingExtension(resourceGroupResource).GetIotCentralAppAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableIotCentralResourceGroupResource(resourceGroupResource).GetIotCentralAppAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.IotCentral
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotCentralResourceGroupMockingExtension.GetIotCentralApp(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotCentralResourceGroupResource.GetIotCentralApp(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.IotCentral
         [ForwardsClientCalls]
         public static Response<IotCentralAppResource> GetIotCentralApp(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetIotCentralResourceGroupMockingExtension(resourceGroupResource).GetIotCentralApp(resourceName, cancellationToken);
+            return GetMockableIotCentralResourceGroupResource(resourceGroupResource).GetIotCentralApp(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.IotCentral
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotCentralSubscriptionMockingExtension.GetIotCentralApps(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotCentralSubscriptionResource.GetIotCentralApps(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> An async collection of <see cref="IotCentralAppResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IotCentralAppResource> GetIotCentralAppsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetIotCentralSubscriptionMockingExtension(subscriptionResource).GetIotCentralAppsAsync(cancellationToken);
+            return GetMockableIotCentralSubscriptionResource(subscriptionResource).GetIotCentralAppsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.IotCentral
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotCentralSubscriptionMockingExtension.GetIotCentralApps(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotCentralSubscriptionResource.GetIotCentralApps(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> A collection of <see cref="IotCentralAppResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IotCentralAppResource> GetIotCentralApps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetIotCentralSubscriptionMockingExtension(subscriptionResource).GetIotCentralApps(cancellationToken);
+            return GetMockableIotCentralSubscriptionResource(subscriptionResource).GetIotCentralApps(cancellationToken);
         }
 
         /// <summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.IotCentral
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotCentralSubscriptionMockingExtension.CheckIotCentralAppNameAvailability(IotCentralAppNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotCentralSubscriptionResource.CheckIotCentralAppNameAvailability(IotCentralAppNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<IotCentralAppNameAvailabilityResponse>> CheckIotCentralAppNameAvailabilityAsync(this SubscriptionResource subscriptionResource, IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetIotCentralSubscriptionMockingExtension(subscriptionResource).CheckIotCentralAppNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableIotCentralSubscriptionResource(subscriptionResource).CheckIotCentralAppNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.IotCentral
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotCentralSubscriptionMockingExtension.CheckIotCentralAppNameAvailability(IotCentralAppNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotCentralSubscriptionResource.CheckIotCentralAppNameAvailability(IotCentralAppNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<IotCentralAppNameAvailabilityResponse> CheckIotCentralAppNameAvailability(this SubscriptionResource subscriptionResource, IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetIotCentralSubscriptionMockingExtension(subscriptionResource).CheckIotCentralAppNameAvailability(content, cancellationToken);
+            return GetMockableIotCentralSubscriptionResource(subscriptionResource).CheckIotCentralAppNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.IotCentral
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotCentralSubscriptionMockingExtension.CheckIotCentralAppSubdomainAvailability(IotCentralAppNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotCentralSubscriptionResource.CheckIotCentralAppSubdomainAvailability(IotCentralAppNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<IotCentralAppNameAvailabilityResponse>> CheckIotCentralAppSubdomainAvailabilityAsync(this SubscriptionResource subscriptionResource, IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetIotCentralSubscriptionMockingExtension(subscriptionResource).CheckIotCentralAppSubdomainAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableIotCentralSubscriptionResource(subscriptionResource).CheckIotCentralAppSubdomainAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.IotCentral
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotCentralSubscriptionMockingExtension.CheckIotCentralAppSubdomainAvailability(IotCentralAppNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotCentralSubscriptionResource.CheckIotCentralAppSubdomainAvailability(IotCentralAppNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<IotCentralAppNameAvailabilityResponse> CheckIotCentralAppSubdomainAvailability(this SubscriptionResource subscriptionResource, IotCentralAppNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetIotCentralSubscriptionMockingExtension(subscriptionResource).CheckIotCentralAppSubdomainAvailability(content, cancellationToken);
+            return GetMockableIotCentralSubscriptionResource(subscriptionResource).CheckIotCentralAppSubdomainAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.IotCentral
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotCentralSubscriptionMockingExtension.GetTemplatesApps(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotCentralSubscriptionResource.GetTemplatesApps(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> An async collection of <see cref="IotCentralAppTemplate" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<IotCentralAppTemplate> GetTemplatesAppsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetIotCentralSubscriptionMockingExtension(subscriptionResource).GetTemplatesAppsAsync(cancellationToken);
+            return GetMockableIotCentralSubscriptionResource(subscriptionResource).GetTemplatesAppsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.IotCentral
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="IotCentralSubscriptionMockingExtension.GetTemplatesApps(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotCentralSubscriptionResource.GetTemplatesApps(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.IotCentral
         /// <returns> A collection of <see cref="IotCentralAppTemplate" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<IotCentralAppTemplate> GetTemplatesApps(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetIotCentralSubscriptionMockingExtension(subscriptionResource).GetTemplatesApps(cancellationToken);
+            return GetMockableIotCentralSubscriptionResource(subscriptionResource).GetTemplatesApps(cancellationToken);
         }
     }
 }

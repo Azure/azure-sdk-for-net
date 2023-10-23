@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.Orbital
     /// <summary> A class to add extension methods to Azure.ResourceManager.Orbital. </summary>
     public static partial class OrbitalExtensions
     {
-        private static OrbitalArmClientMockingExtension GetOrbitalArmClientMockingExtension(ArmClient client)
+        private static MockableOrbitalArmClient GetMockableOrbitalArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new OrbitalArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableOrbitalArmClient(client0));
         }
 
-        private static OrbitalResourceGroupMockingExtension GetOrbitalResourceGroupMockingExtension(ArmResource resource)
+        private static MockableOrbitalResourceGroupResource GetMockableOrbitalResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new OrbitalResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableOrbitalResourceGroupResource(client, resource.Id));
         }
 
-        private static OrbitalSubscriptionMockingExtension GetOrbitalSubscriptionMockingExtension(ArmResource resource)
+        private static MockableOrbitalSubscriptionResource GetMockableOrbitalSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new OrbitalSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableOrbitalSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Orbital
         /// You can use <see cref="OrbitalSpacecraftResource.CreateResourceIdentifier" /> to create an <see cref="OrbitalSpacecraftResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalArmClientMockingExtension.GetOrbitalSpacecraftResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalArmClient.GetOrbitalSpacecraftResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> Returns a <see cref="OrbitalSpacecraftResource" /> object. </returns>
         public static OrbitalSpacecraftResource GetOrbitalSpacecraftResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetOrbitalArmClientMockingExtension(client).GetOrbitalSpacecraftResource(id);
+            return GetMockableOrbitalArmClient(client).GetOrbitalSpacecraftResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Orbital
         /// You can use <see cref="OrbitalContactResource.CreateResourceIdentifier" /> to create an <see cref="OrbitalContactResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalArmClientMockingExtension.GetOrbitalContactResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalArmClient.GetOrbitalContactResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> Returns a <see cref="OrbitalContactResource" /> object. </returns>
         public static OrbitalContactResource GetOrbitalContactResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetOrbitalArmClientMockingExtension(client).GetOrbitalContactResource(id);
+            return GetMockableOrbitalArmClient(client).GetOrbitalContactResource(id);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Orbital
         /// You can use <see cref="OrbitalContactProfileResource.CreateResourceIdentifier" /> to create an <see cref="OrbitalContactProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalArmClientMockingExtension.GetOrbitalContactProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalArmClient.GetOrbitalContactProfileResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> Returns a <see cref="OrbitalContactProfileResource" /> object. </returns>
         public static OrbitalContactProfileResource GetOrbitalContactProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetOrbitalArmClientMockingExtension(client).GetOrbitalContactProfileResource(id);
+            return GetMockableOrbitalArmClient(client).GetOrbitalContactProfileResource(id);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Orbital
         /// You can use <see cref="AvailableGroundStationResource.CreateResourceIdentifier" /> to create an <see cref="AvailableGroundStationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalArmClientMockingExtension.GetAvailableGroundStationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalArmClient.GetAvailableGroundStationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -95,21 +95,21 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> Returns a <see cref="AvailableGroundStationResource" /> object. </returns>
         public static AvailableGroundStationResource GetAvailableGroundStationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetOrbitalArmClientMockingExtension(client).GetAvailableGroundStationResource(id);
+            return GetMockableOrbitalArmClient(client).GetAvailableGroundStationResource(id);
         }
 
         /// <summary>
         /// Gets a collection of OrbitalSpacecraftResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalResourceGroupMockingExtension.GetOrbitalSpacecrafts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalResourceGroupResource.GetOrbitalSpacecrafts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of OrbitalSpacecraftResources and their operations over a OrbitalSpacecraftResource. </returns>
         public static OrbitalSpacecraftCollection GetOrbitalSpacecrafts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetOrbitalResourceGroupMockingExtension(resourceGroupResource).GetOrbitalSpacecrafts();
+            return GetMockableOrbitalResourceGroupResource(resourceGroupResource).GetOrbitalSpacecrafts();
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Orbital
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalResourceGroupMockingExtension.GetOrbitalSpacecraftAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalResourceGroupResource.GetOrbitalSpacecraftAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Orbital
         [ForwardsClientCalls]
         public static async Task<Response<OrbitalSpacecraftResource>> GetOrbitalSpacecraftAsync(this ResourceGroupResource resourceGroupResource, string spacecraftName, CancellationToken cancellationToken = default)
         {
-            return await GetOrbitalResourceGroupMockingExtension(resourceGroupResource).GetOrbitalSpacecraftAsync(spacecraftName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableOrbitalResourceGroupResource(resourceGroupResource).GetOrbitalSpacecraftAsync(spacecraftName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Orbital
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalResourceGroupMockingExtension.GetOrbitalSpacecraft(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalResourceGroupResource.GetOrbitalSpacecraft(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -165,21 +165,21 @@ namespace Azure.ResourceManager.Orbital
         [ForwardsClientCalls]
         public static Response<OrbitalSpacecraftResource> GetOrbitalSpacecraft(this ResourceGroupResource resourceGroupResource, string spacecraftName, CancellationToken cancellationToken = default)
         {
-            return GetOrbitalResourceGroupMockingExtension(resourceGroupResource).GetOrbitalSpacecraft(spacecraftName, cancellationToken);
+            return GetMockableOrbitalResourceGroupResource(resourceGroupResource).GetOrbitalSpacecraft(spacecraftName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of OrbitalContactProfileResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalResourceGroupMockingExtension.GetOrbitalContactProfiles()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalResourceGroupResource.GetOrbitalContactProfiles()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of OrbitalContactProfileResources and their operations over a OrbitalContactProfileResource. </returns>
         public static OrbitalContactProfileCollection GetOrbitalContactProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetOrbitalResourceGroupMockingExtension(resourceGroupResource).GetOrbitalContactProfiles();
+            return GetMockableOrbitalResourceGroupResource(resourceGroupResource).GetOrbitalContactProfiles();
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Orbital
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalResourceGroupMockingExtension.GetOrbitalContactProfileAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalResourceGroupResource.GetOrbitalContactProfileAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Orbital
         [ForwardsClientCalls]
         public static async Task<Response<OrbitalContactProfileResource>> GetOrbitalContactProfileAsync(this ResourceGroupResource resourceGroupResource, string contactProfileName, CancellationToken cancellationToken = default)
         {
-            return await GetOrbitalResourceGroupMockingExtension(resourceGroupResource).GetOrbitalContactProfileAsync(contactProfileName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableOrbitalResourceGroupResource(resourceGroupResource).GetOrbitalContactProfileAsync(contactProfileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Orbital
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalResourceGroupMockingExtension.GetOrbitalContactProfile(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalResourceGroupResource.GetOrbitalContactProfile(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -235,21 +235,21 @@ namespace Azure.ResourceManager.Orbital
         [ForwardsClientCalls]
         public static Response<OrbitalContactProfileResource> GetOrbitalContactProfile(this ResourceGroupResource resourceGroupResource, string contactProfileName, CancellationToken cancellationToken = default)
         {
-            return GetOrbitalResourceGroupMockingExtension(resourceGroupResource).GetOrbitalContactProfile(contactProfileName, cancellationToken);
+            return GetMockableOrbitalResourceGroupResource(resourceGroupResource).GetOrbitalContactProfile(contactProfileName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of AvailableGroundStationResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalSubscriptionMockingExtension.GetAvailableGroundStations()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalSubscriptionResource.GetAvailableGroundStations()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AvailableGroundStationResources and their operations over a AvailableGroundStationResource. </returns>
         public static AvailableGroundStationCollection GetAvailableGroundStations(this SubscriptionResource subscriptionResource)
         {
-            return GetOrbitalSubscriptionMockingExtension(subscriptionResource).GetAvailableGroundStations();
+            return GetMockableOrbitalSubscriptionResource(subscriptionResource).GetAvailableGroundStations();
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Orbital
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalSubscriptionMockingExtension.GetAvailableGroundStationAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalSubscriptionResource.GetAvailableGroundStationAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Orbital
         [ForwardsClientCalls]
         public static async Task<Response<AvailableGroundStationResource>> GetAvailableGroundStationAsync(this SubscriptionResource subscriptionResource, string groundStationName, CancellationToken cancellationToken = default)
         {
-            return await GetOrbitalSubscriptionMockingExtension(subscriptionResource).GetAvailableGroundStationAsync(groundStationName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableOrbitalSubscriptionResource(subscriptionResource).GetAvailableGroundStationAsync(groundStationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Orbital
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalSubscriptionMockingExtension.GetAvailableGroundStation(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalSubscriptionResource.GetAvailableGroundStation(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.Orbital
         [ForwardsClientCalls]
         public static Response<AvailableGroundStationResource> GetAvailableGroundStation(this SubscriptionResource subscriptionResource, string groundStationName, CancellationToken cancellationToken = default)
         {
-            return GetOrbitalSubscriptionMockingExtension(subscriptionResource).GetAvailableGroundStation(groundStationName, cancellationToken);
+            return GetMockableOrbitalSubscriptionResource(subscriptionResource).GetAvailableGroundStation(groundStationName, cancellationToken);
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Orbital
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalSubscriptionMockingExtension.GetOrbitalSpacecrafts(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalSubscriptionResource.GetOrbitalSpacecrafts(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> An async collection of <see cref="OrbitalSpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OrbitalSpacecraftResource> GetOrbitalSpacecraftsAsync(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetOrbitalSubscriptionMockingExtension(subscriptionResource).GetOrbitalSpacecraftsAsync(skiptoken, cancellationToken);
+            return GetMockableOrbitalSubscriptionResource(subscriptionResource).GetOrbitalSpacecraftsAsync(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Orbital
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalSubscriptionMockingExtension.GetOrbitalSpacecrafts(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalSubscriptionResource.GetOrbitalSpacecrafts(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> A collection of <see cref="OrbitalSpacecraftResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OrbitalSpacecraftResource> GetOrbitalSpacecrafts(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetOrbitalSubscriptionMockingExtension(subscriptionResource).GetOrbitalSpacecrafts(skiptoken, cancellationToken);
+            return GetMockableOrbitalSubscriptionResource(subscriptionResource).GetOrbitalSpacecrafts(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Orbital
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalSubscriptionMockingExtension.GetOrbitalContactProfiles(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalSubscriptionResource.GetOrbitalContactProfiles(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> An async collection of <see cref="OrbitalContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OrbitalContactProfileResource> GetOrbitalContactProfilesAsync(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetOrbitalSubscriptionMockingExtension(subscriptionResource).GetOrbitalContactProfilesAsync(skiptoken, cancellationToken);
+            return GetMockableOrbitalSubscriptionResource(subscriptionResource).GetOrbitalContactProfilesAsync(skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Orbital
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OrbitalSubscriptionMockingExtension.GetOrbitalContactProfiles(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOrbitalSubscriptionResource.GetOrbitalContactProfiles(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Orbital
         /// <returns> A collection of <see cref="OrbitalContactProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OrbitalContactProfileResource> GetOrbitalContactProfiles(this SubscriptionResource subscriptionResource, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetOrbitalSubscriptionMockingExtension(subscriptionResource).GetOrbitalContactProfiles(skiptoken, cancellationToken);
+            return GetMockableOrbitalSubscriptionResource(subscriptionResource).GetOrbitalContactProfiles(skiptoken, cancellationToken);
         }
     }
 }

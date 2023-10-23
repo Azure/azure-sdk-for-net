@@ -437,9 +437,9 @@ namespace Azure.ResourceManager.PrivateDns
 }
 namespace Azure.ResourceManager.PrivateDns.Mocking
 {
-    public partial class PrivateDnsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePrivateDnsArmClient : Azure.ResourceManager.ArmResource
     {
-        protected PrivateDnsArmClientMockingExtension() { }
+        protected MockablePrivateDnsArmClient() { }
         public virtual Azure.ResourceManager.PrivateDns.PrivateDnsAaaaRecordResource GetPrivateDnsAaaaRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PrivateDns.PrivateDnsARecordResource GetPrivateDnsARecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PrivateDns.PrivateDnsCnameRecordResource GetPrivateDnsCnameRecordResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -451,16 +451,16 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         public virtual Azure.ResourceManager.PrivateDns.PrivateDnsZoneResource GetPrivateDnsZoneResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.PrivateDns.VirtualNetworkLinkResource GetVirtualNetworkLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class PrivateDnsResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePrivateDnsResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected PrivateDnsResourceGroupMockingExtension() { }
+        protected MockablePrivateDnsResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.PrivateDns.PrivateDnsZoneResource> GetPrivateDnsZone(string privateZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.PrivateDns.PrivateDnsZoneResource>> GetPrivateDnsZoneAsync(string privateZoneName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.PrivateDns.PrivateDnsZoneCollection GetPrivateDnsZones() { throw null; }
     }
-    public partial class PrivateDnsSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePrivateDnsSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected PrivateDnsSubscriptionMockingExtension() { }
+        protected MockablePrivateDnsSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.PrivateDns.PrivateDnsZoneResource> GetPrivateDnsZones(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.PrivateDns.PrivateDnsZoneResource> GetPrivateDnsZonesAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

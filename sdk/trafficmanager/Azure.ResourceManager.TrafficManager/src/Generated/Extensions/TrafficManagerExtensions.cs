@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.TrafficManager
     /// <summary> A class to add extension methods to Azure.ResourceManager.TrafficManager. </summary>
     public static partial class TrafficManagerExtensions
     {
-        private static TrafficManagerArmClientMockingExtension GetTrafficManagerArmClientMockingExtension(ArmClient client)
+        private static MockableTrafficManagerArmClient GetMockableTrafficManagerArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new TrafficManagerArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableTrafficManagerArmClient(client0));
         }
 
-        private static TrafficManagerResourceGroupMockingExtension GetTrafficManagerResourceGroupMockingExtension(ArmResource resource)
+        private static MockableTrafficManagerResourceGroupResource GetMockableTrafficManagerResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new TrafficManagerResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableTrafficManagerResourceGroupResource(client, resource.Id));
         }
 
-        private static TrafficManagerSubscriptionMockingExtension GetTrafficManagerSubscriptionMockingExtension(ArmResource resource)
+        private static MockableTrafficManagerSubscriptionResource GetMockableTrafficManagerSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new TrafficManagerSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableTrafficManagerSubscriptionResource(client, resource.Id));
         }
 
-        private static TrafficManagerTenantMockingExtension GetTrafficManagerTenantMockingExtension(ArmResource resource)
+        private static MockableTrafficManagerTenantResource GetMockableTrafficManagerTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new TrafficManagerTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableTrafficManagerTenantResource(client, resource.Id));
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// You can use <see cref="TrafficManagerEndpointResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="TrafficManagerArmClientMockingExtension.GetTrafficManagerEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerEndpointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> Returns a <see cref="TrafficManagerEndpointResource" /> object. </returns>
         public static TrafficManagerEndpointResource GetTrafficManagerEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetTrafficManagerArmClientMockingExtension(client).GetTrafficManagerEndpointResource(id);
+            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerEndpointResource(id);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// You can use <see cref="TrafficManagerProfileResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="TrafficManagerArmClientMockingExtension.GetTrafficManagerProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerProfileResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> Returns a <see cref="TrafficManagerProfileResource" /> object. </returns>
         public static TrafficManagerProfileResource GetTrafficManagerProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetTrafficManagerArmClientMockingExtension(client).GetTrafficManagerProfileResource(id);
+            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerProfileResource(id);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// You can use <see cref="TrafficManagerGeographicHierarchyResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerGeographicHierarchyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="TrafficManagerArmClientMockingExtension.GetTrafficManagerGeographicHierarchyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerGeographicHierarchyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource" /> object. </returns>
         public static TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetTrafficManagerArmClientMockingExtension(client).GetTrafficManagerGeographicHierarchyResource(id);
+            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerGeographicHierarchyResource(id);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// You can use <see cref="TrafficManagerHeatMapResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerHeatMapResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="TrafficManagerArmClientMockingExtension.GetTrafficManagerHeatMapResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerHeatMapResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> Returns a <see cref="TrafficManagerHeatMapResource" /> object. </returns>
         public static TrafficManagerHeatMapResource GetTrafficManagerHeatMapResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetTrafficManagerArmClientMockingExtension(client).GetTrafficManagerHeatMapResource(id);
+            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerHeatMapResource(id);
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// You can use <see cref="TrafficManagerUserMetricsResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerUserMetricsResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="TrafficManagerArmClientMockingExtension.GetTrafficManagerUserMetricsResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerUserMetricsResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -117,21 +117,21 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource" /> object. </returns>
         public static TrafficManagerUserMetricsResource GetTrafficManagerUserMetricsResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetTrafficManagerArmClientMockingExtension(client).GetTrafficManagerUserMetricsResource(id);
+            return GetMockableTrafficManagerArmClient(client).GetTrafficManagerUserMetricsResource(id);
         }
 
         /// <summary>
         /// Gets a collection of TrafficManagerProfileResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="TrafficManagerResourceGroupMockingExtension.GetTrafficManagerProfiles()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.GetTrafficManagerProfiles()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of TrafficManagerProfileResources and their operations over a TrafficManagerProfileResource. </returns>
         public static TrafficManagerProfileCollection GetTrafficManagerProfiles(this ResourceGroupResource resourceGroupResource)
         {
-            return GetTrafficManagerResourceGroupMockingExtension(resourceGroupResource).GetTrafficManagerProfiles();
+            return GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).GetTrafficManagerProfiles();
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="TrafficManagerResourceGroupMockingExtension.GetTrafficManagerProfileAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.GetTrafficManagerProfileAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.TrafficManager
         [ForwardsClientCalls]
         public static async Task<Response<TrafficManagerProfileResource>> GetTrafficManagerProfileAsync(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
-            return await GetTrafficManagerResourceGroupMockingExtension(resourceGroupResource).GetTrafficManagerProfileAsync(profileName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).GetTrafficManagerProfileAsync(profileName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="TrafficManagerResourceGroupMockingExtension.GetTrafficManagerProfile(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerResourceGroupResource.GetTrafficManagerProfile(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -187,21 +187,21 @@ namespace Azure.ResourceManager.TrafficManager
         [ForwardsClientCalls]
         public static Response<TrafficManagerProfileResource> GetTrafficManagerProfile(this ResourceGroupResource resourceGroupResource, string profileName, CancellationToken cancellationToken = default)
         {
-            return GetTrafficManagerResourceGroupMockingExtension(resourceGroupResource).GetTrafficManagerProfile(profileName, cancellationToken);
+            return GetMockableTrafficManagerResourceGroupResource(resourceGroupResource).GetTrafficManagerProfile(profileName, cancellationToken);
         }
 
         /// <summary>
         /// Gets an object representing a TrafficManagerUserMetricsResource along with the instance operations that can be performed on it in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="TrafficManagerSubscriptionMockingExtension.GetTrafficManagerUserMetrics()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.GetTrafficManagerUserMetrics()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="TrafficManagerUserMetricsResource" /> object. </returns>
         public static TrafficManagerUserMetricsResource GetTrafficManagerUserMetrics(this SubscriptionResource subscriptionResource)
         {
-            return GetTrafficManagerSubscriptionMockingExtension(subscriptionResource).GetTrafficManagerUserMetrics();
+            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).GetTrafficManagerUserMetrics();
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="TrafficManagerSubscriptionMockingExtension.CheckTrafficManagerNameAvailabilityV2(TrafficManagerRelativeDnsNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.CheckTrafficManagerNameAvailabilityV2(TrafficManagerRelativeDnsNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(this SubscriptionResource subscriptionResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetTrafficManagerSubscriptionMockingExtension(subscriptionResource).CheckTrafficManagerNameAvailabilityV2Async(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableTrafficManagerSubscriptionResource(subscriptionResource).CheckTrafficManagerNameAvailabilityV2Async(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="TrafficManagerSubscriptionMockingExtension.CheckTrafficManagerNameAvailabilityV2(TrafficManagerRelativeDnsNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.CheckTrafficManagerNameAvailabilityV2(TrafficManagerRelativeDnsNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(this SubscriptionResource subscriptionResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetTrafficManagerSubscriptionMockingExtension(subscriptionResource).CheckTrafficManagerNameAvailabilityV2(content, cancellationToken);
+            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).CheckTrafficManagerNameAvailabilityV2(content, cancellationToken);
         }
 
         /// <summary>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="TrafficManagerSubscriptionMockingExtension.GetTrafficManagerProfiles(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> An async collection of <see cref="TrafficManagerProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<TrafficManagerProfileResource> GetTrafficManagerProfilesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetTrafficManagerSubscriptionMockingExtension(subscriptionResource).GetTrafficManagerProfilesAsync(cancellationToken);
+            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).GetTrafficManagerProfilesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="TrafficManagerSubscriptionMockingExtension.GetTrafficManagerProfiles(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerSubscriptionResource.GetTrafficManagerProfiles(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -303,21 +303,21 @@ namespace Azure.ResourceManager.TrafficManager
         /// <returns> A collection of <see cref="TrafficManagerProfileResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<TrafficManagerProfileResource> GetTrafficManagerProfiles(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetTrafficManagerSubscriptionMockingExtension(subscriptionResource).GetTrafficManagerProfiles(cancellationToken);
+            return GetMockableTrafficManagerSubscriptionResource(subscriptionResource).GetTrafficManagerProfiles(cancellationToken);
         }
 
         /// <summary>
         /// Gets an object representing a TrafficManagerGeographicHierarchyResource along with the instance operations that can be performed on it in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="TrafficManagerTenantMockingExtension.GetTrafficManagerGeographicHierarchy()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerTenantResource.GetTrafficManagerGeographicHierarchy()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="TrafficManagerGeographicHierarchyResource" /> object. </returns>
         public static TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchy(this TenantResource tenantResource)
         {
-            return GetTrafficManagerTenantMockingExtension(tenantResource).GetTrafficManagerGeographicHierarchy();
+            return GetMockableTrafficManagerTenantResource(tenantResource).GetTrafficManagerGeographicHierarchy();
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="TrafficManagerTenantMockingExtension.CheckTrafficManagerRelativeDnsNameAvailability(TrafficManagerRelativeDnsNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerTenantResource.CheckTrafficManagerRelativeDnsNameAvailability(TrafficManagerRelativeDnsNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<TrafficManagerNameAvailabilityResult>> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(this TenantResource tenantResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetTrafficManagerTenantMockingExtension(tenantResource).CheckTrafficManagerRelativeDnsNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableTrafficManagerTenantResource(tenantResource).CheckTrafficManagerRelativeDnsNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="TrafficManagerTenantMockingExtension.CheckTrafficManagerRelativeDnsNameAvailability(TrafficManagerRelativeDnsNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableTrafficManagerTenantResource.CheckTrafficManagerRelativeDnsNameAvailability(TrafficManagerRelativeDnsNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<TrafficManagerNameAvailabilityResult> CheckTrafficManagerRelativeDnsNameAvailability(this TenantResource tenantResource, TrafficManagerRelativeDnsNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetTrafficManagerTenantMockingExtension(tenantResource).CheckTrafficManagerRelativeDnsNameAvailability(content, cancellationToken);
+            return GetMockableTrafficManagerTenantResource(tenantResource).CheckTrafficManagerRelativeDnsNameAvailability(content, cancellationToken);
         }
     }
 }

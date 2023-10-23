@@ -49,21 +49,21 @@ namespace Azure.ResourceManager.ApiCenter
 }
 namespace Azure.ResourceManager.ApiCenter.Mocking
 {
-    public partial class ApiCenterArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableApiCenterArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ApiCenterArmClientMockingExtension() { }
+        protected MockableApiCenterArmClient() { }
         public virtual Azure.ResourceManager.ApiCenter.ApiCenterServiceResource GetApiCenterServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ApiCenterResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableApiCenterResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ApiCenterResourceGroupMockingExtension() { }
+        protected MockableApiCenterResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ApiCenter.ApiCenterServiceResource> GetApiCenterService(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApiCenter.ApiCenterServiceResource>> GetApiCenterServiceAsync(string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ApiCenter.ApiCenterServiceCollection GetApiCenterServices() { throw null; }
     }
-    public partial class ApiCenterSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableApiCenterSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ApiCenterSubscriptionMockingExtension() { }
+        protected MockableApiCenterSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ApiCenter.ApiCenterServiceResource> GetApiCenterServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApiCenter.ApiCenterServiceResource> GetApiCenterServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

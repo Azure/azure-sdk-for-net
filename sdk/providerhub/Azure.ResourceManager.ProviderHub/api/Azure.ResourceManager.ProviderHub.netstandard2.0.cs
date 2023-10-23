@@ -355,9 +355,9 @@ namespace Azure.ResourceManager.ProviderHub
 }
 namespace Azure.ResourceManager.ProviderHub.Mocking
 {
-    public partial class ProviderHubArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableProviderHubArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ProviderHubArmClientMockingExtension() { }
+        protected MockableProviderHubArmClient() { }
         public virtual Azure.ResourceManager.ProviderHub.CustomRolloutResource GetCustomRolloutResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ProviderHub.DefaultRolloutResource GetDefaultRolloutResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ProviderHub.NestedResourceTypeFirstSkuResource GetNestedResourceTypeFirstSkuResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -368,9 +368,9 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         public virtual Azure.ResourceManager.ProviderHub.ResourceTypeRegistrationResource GetResourceTypeRegistrationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ProviderHub.ResourceTypeSkuResource GetResourceTypeSkuResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ProviderHubSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableProviderHubSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ProviderHubSubscriptionMockingExtension() { }
+        protected MockableProviderHubSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource> GetProviderRegistration(string providerNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ProviderHub.ProviderRegistrationResource>> GetProviderRegistrationAsync(string providerNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ProviderHub.ProviderRegistrationCollection GetProviderRegistrations() { throw null; }

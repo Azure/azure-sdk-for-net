@@ -1154,9 +1154,9 @@ namespace Azure.ResourceManager.DevTestLabs
 }
 namespace Azure.ResourceManager.DevTestLabs.Mocking
 {
-    public partial class DevTestLabsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDevTestLabsArmClient : Azure.ResourceManager.ArmResource
     {
-        protected DevTestLabsArmClientMockingExtension() { }
+        protected MockableDevTestLabsArmClient() { }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabArmTemplateResource GetDevTestLabArmTemplateResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabArtifactResource GetDevTestLabArtifactResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabArtifactSourceResource GetDevTestLabArtifactSourceResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1179,9 +1179,9 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVmResource GetDevTestLabVmResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabVmScheduleResource GetDevTestLabVmScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DevTestLabsResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDevTestLabsResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected DevTestLabsResourceGroupMockingExtension() { }
+        protected MockableDevTestLabsResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetDevTestLab(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabResource>> GetDevTestLabAsync(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedule(string name, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1189,9 +1189,9 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleCollection GetDevTestLabGlobalSchedules() { throw null; }
         public virtual Azure.ResourceManager.DevTestLabs.DevTestLabCollection GetDevTestLabs() { throw null; }
     }
-    public partial class DevTestLabsSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDevTestLabsSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected DevTestLabsSubscriptionMockingExtension() { }
+        protected MockableDevTestLabsSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedules(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DevTestLabs.DevTestLabGlobalScheduleResource> GetDevTestLabGlobalSchedulesAsync(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DevTestLabs.DevTestLabResource> GetDevTestLabs(string expand = null, string filter = null, int? top = default(int?), string orderby = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

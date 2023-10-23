@@ -334,9 +334,9 @@ namespace Azure.ResourceManager.KeyVault
 }
 namespace Azure.ResourceManager.KeyVault.Mocking
 {
-    public partial class KeyVaultArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableKeyVaultArmClient : Azure.ResourceManager.ArmResource
     {
-        protected KeyVaultArmClientMockingExtension() { }
+        protected MockableKeyVaultArmClient() { }
         public virtual Azure.ResourceManager.KeyVault.DeletedKeyVaultResource GetDeletedKeyVaultResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.DeletedManagedHsmResource GetDeletedManagedHsmResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.KeyVaultPrivateEndpointConnectionResource GetKeyVaultPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -345,9 +345,9 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         public virtual Azure.ResourceManager.KeyVault.ManagedHsmPrivateEndpointConnectionResource GetManagedHsmPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.ManagedHsmResource GetManagedHsmResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class KeyVaultResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableKeyVaultResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected KeyVaultResourceGroupMockingExtension() { }
+        protected MockableKeyVaultResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.KeyVaultResource> GetKeyVault(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.KeyVaultResource>> GetKeyVaultAsync(string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.KeyVaultCollection GetKeyVaults() { throw null; }
@@ -355,9 +355,9 @@ namespace Azure.ResourceManager.KeyVault.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.ManagedHsmResource>> GetManagedHsmAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.KeyVault.ManagedHsmCollection GetManagedHsms() { throw null; }
     }
-    public partial class KeyVaultSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableKeyVaultSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected KeyVaultSubscriptionMockingExtension() { }
+        protected MockableKeyVaultSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityResult> CheckKeyVaultNameAvailability(Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(Azure.ResourceManager.KeyVault.Models.KeyVaultNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailability(Azure.ResourceManager.KeyVault.Models.ManagedHsmNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

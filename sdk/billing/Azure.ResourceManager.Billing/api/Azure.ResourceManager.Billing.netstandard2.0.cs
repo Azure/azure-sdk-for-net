@@ -271,18 +271,18 @@ namespace Azure.ResourceManager.Billing
 }
 namespace Azure.ResourceManager.Billing.Mocking
 {
-    public partial class BillingArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableBillingArmClient : Azure.ResourceManager.ArmResource
     {
-        protected BillingArmClientMockingExtension() { }
+        protected MockableBillingArmClient() { }
         public virtual Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource GetBillingAccountPaymentMethodResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Billing.BillingPaymentMethodLinkResource GetBillingPaymentMethodLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Billing.BillingPaymentMethodResource GetBillingPaymentMethodResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Billing.BillingSubscriptionAliasResource GetBillingSubscriptionAliasResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Billing.BillingSubscriptionResource GetBillingSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class BillingTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableBillingTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected BillingTenantMockingExtension() { }
+        protected MockableBillingTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource> GetBillingAccountPaymentMethod(string billingAccountName, string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Billing.BillingAccountPaymentMethodResource>> GetBillingAccountPaymentMethodAsync(string billingAccountName, string paymentMethodName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Billing.BillingAccountPaymentMethodCollection GetBillingAccountPaymentMethods(string billingAccountName) { throw null; }

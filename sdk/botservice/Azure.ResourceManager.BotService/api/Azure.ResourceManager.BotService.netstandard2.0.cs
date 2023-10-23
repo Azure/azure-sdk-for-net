@@ -219,24 +219,24 @@ namespace Azure.ResourceManager.BotService
 }
 namespace Azure.ResourceManager.BotService.Mocking
 {
-    public partial class BotServiceArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableBotServiceArmClient : Azure.ResourceManager.ArmResource
     {
-        protected BotServiceArmClientMockingExtension() { }
+        protected MockableBotServiceArmClient() { }
         public virtual Azure.ResourceManager.BotService.BotChannelResource GetBotChannelResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.BotService.BotConnectionSettingResource GetBotConnectionSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.BotService.BotResource GetBotResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.BotService.BotServicePrivateEndpointConnectionResource GetBotServicePrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class BotServiceResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableBotServiceResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected BotServiceResourceGroupMockingExtension() { }
+        protected MockableBotServiceResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.BotService.BotResource> GetBot(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.BotResource>> GetBotAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.BotService.BotCollection GetBots() { throw null; }
     }
-    public partial class BotServiceSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableBotServiceSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected BotServiceSubscriptionMockingExtension() { }
+        protected MockableBotServiceSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.BotService.Models.BotServiceProvider> GetBotConnectionServiceProviders(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.BotService.Models.BotServiceProvider> GetBotConnectionServiceProvidersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.BotService.BotResource> GetBots(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -246,9 +246,9 @@ namespace Azure.ResourceManager.BotService.Mocking
         public virtual Azure.Response<Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyResult> GetBotServiceQnAMakerEndpointKey(Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyResult>> GetBotServiceQnAMakerEndpointKeyAsync(Azure.ResourceManager.BotService.Models.GetBotServiceQnAMakerEndpointKeyContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class BotServiceTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableBotServiceTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected BotServiceTenantMockingExtension() { }
+        protected MockableBotServiceTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityResult> CheckBotServiceNameAvailability(Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityResult>> CheckBotServiceNameAvailabilityAsync(Azure.ResourceManager.BotService.Models.BotServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

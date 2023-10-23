@@ -146,9 +146,9 @@ namespace Azure.ResourceManager.Advisor
 }
 namespace Azure.ResourceManager.Advisor.Mocking
 {
-    public partial class AdvisorArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAdvisorArmClient : Azure.ResourceManager.ArmResource
     {
-        protected AdvisorArmClientMockingExtension() { }
+        protected MockableAdvisorArmClient() { }
         public virtual Azure.ResourceManager.Advisor.MetadataEntityResource GetMetadataEntityResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource> GetResourceRecommendationBase(Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.ResourceRecommendationBaseResource>> GetResourceRecommendationBaseAsync(Azure.Core.ResourceIdentifier scope, string recommendationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -156,17 +156,17 @@ namespace Azure.ResourceManager.Advisor.Mocking
         public virtual Azure.ResourceManager.Advisor.ResourceRecommendationBaseCollection GetResourceRecommendationBases(Azure.Core.ResourceIdentifier scope) { throw null; }
         public virtual Azure.ResourceManager.Advisor.SuppressionContractResource GetSuppressionContractResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class AdvisorResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAdvisorResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected AdvisorResourceGroupMockingExtension() { }
+        protected MockableAdvisorResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Advisor.Models.ConfigData> CreateConfiguration(Azure.ResourceManager.Advisor.Models.ConfigurationName configurationName, Azure.ResourceManager.Advisor.Models.ConfigData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.Models.ConfigData>> CreateConfigurationAsync(Azure.ResourceManager.Advisor.Models.ConfigurationName configurationName, Azure.ResourceManager.Advisor.Models.ConfigData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Advisor.Models.ConfigData> GetConfigurations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Advisor.Models.ConfigData> GetConfigurationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AdvisorSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAdvisorSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected AdvisorSubscriptionMockingExtension() { }
+        protected MockableAdvisorSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Advisor.Models.ConfigData> CreateConfiguration(Azure.ResourceManager.Advisor.Models.ConfigurationName configurationName, Azure.ResourceManager.Advisor.Models.ConfigData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.Models.ConfigData>> CreateConfigurationAsync(Azure.ResourceManager.Advisor.Models.ConfigurationName configurationName, Azure.ResourceManager.Advisor.Models.ConfigData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GenerateRecommendation(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -178,9 +178,9 @@ namespace Azure.ResourceManager.Advisor.Mocking
         public virtual Azure.Pageable<Azure.ResourceManager.Advisor.SuppressionContractResource> GetSuppressionContracts(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Advisor.SuppressionContractResource> GetSuppressionContractsAsync(int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AdvisorTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAdvisorTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected AdvisorTenantMockingExtension() { }
+        protected MockableAdvisorTenantResource() { }
         public virtual Azure.ResourceManager.Advisor.MetadataEntityCollection GetMetadataEntities() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Advisor.MetadataEntityResource> GetMetadataEntity(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Advisor.MetadataEntityResource>> GetMetadataEntityAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

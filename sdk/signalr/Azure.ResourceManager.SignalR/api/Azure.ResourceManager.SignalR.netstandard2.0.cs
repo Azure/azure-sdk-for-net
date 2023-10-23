@@ -261,25 +261,25 @@ namespace Azure.ResourceManager.SignalR
 }
 namespace Azure.ResourceManager.SignalR.Mocking
 {
-    public partial class SignalRArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSignalRArmClient : Azure.ResourceManager.ArmResource
     {
-        protected SignalRArmClientMockingExtension() { }
+        protected MockableSignalRArmClient() { }
         public virtual Azure.ResourceManager.SignalR.SignalRCustomCertificateResource GetSignalRCustomCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SignalR.SignalRCustomDomainResource GetSignalRCustomDomainResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionResource GetSignalRPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SignalR.SignalRResource GetSignalRResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResource GetSignalRSharedPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class SignalRResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSignalRResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected SignalRResourceGroupMockingExtension() { }
+        protected MockableSignalRResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.SignalR.SignalRResource> GetSignalR(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SignalR.SignalRResource>> GetSignalRAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.SignalR.SignalRCollection GetSignalRs() { throw null; }
     }
-    public partial class SignalRSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSignalRSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected SignalRSubscriptionMockingExtension() { }
+        protected MockableSignalRSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityResult> CheckSignalRNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityResult>> CheckSignalRNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.SignalR.SignalRResource> GetSignalRs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

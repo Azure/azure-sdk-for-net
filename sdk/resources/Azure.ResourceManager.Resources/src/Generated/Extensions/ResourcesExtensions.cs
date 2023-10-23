@@ -20,29 +20,29 @@ namespace Azure.ResourceManager.Resources
     /// <summary> A class to add extension methods to Azure.ResourceManager.Resources. </summary>
     public static partial class ResourcesExtensions
     {
-        private static ResourcesArmClientMockingExtension GetResourcesArmClientMockingExtension(ArmClient client)
+        private static MockableResourcesArmClient GetMockableResourcesArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ResourcesArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableResourcesArmClient(client0));
         }
 
-        private static ResourcesManagementGroupMockingExtension GetResourcesManagementGroupMockingExtension(ArmResource resource)
+        private static MockableResourcesManagementGroupResource GetMockableResourcesManagementGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ResourcesManagementGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableResourcesManagementGroupResource(client, resource.Id));
         }
 
-        private static ResourcesResourceGroupMockingExtension GetResourcesResourceGroupMockingExtension(ArmResource resource)
+        private static MockableResourcesResourceGroupResource GetMockableResourcesResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ResourcesResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableResourcesResourceGroupResource(client, resource.Id));
         }
 
-        private static ResourcesSubscriptionMockingExtension GetResourcesSubscriptionMockingExtension(ArmResource resource)
+        private static MockableResourcesSubscriptionResource GetMockableResourcesSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ResourcesSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableResourcesSubscriptionResource(client, resource.Id));
         }
 
-        private static ResourcesTenantMockingExtension GetResourcesTenantMockingExtension(ArmResource resource)
+        private static MockableResourcesTenantResource GetMockableResourcesTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ResourcesTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableResourcesTenantResource(client, resource.Id));
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
         /// You can use <see cref="ArmDeploymentResource.CreateResourceIdentifier" /> to create an <see cref="ArmDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesArmClientMockingExtension.GetArmDeploymentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetArmDeploymentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="ArmDeploymentResource" /> object. </returns>
         public static ArmDeploymentResource GetArmDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetResourcesArmClientMockingExtension(client).GetArmDeploymentResource(id);
+            return GetMockableResourcesArmClient(client).GetArmDeploymentResource(id);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Resources
         /// You can use <see cref="ArmApplicationResource.CreateResourceIdentifier" /> to create an <see cref="ArmApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesArmClientMockingExtension.GetArmApplicationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetArmApplicationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="ArmApplicationResource" /> object. </returns>
         public static ArmApplicationResource GetArmApplicationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetResourcesArmClientMockingExtension(client).GetArmApplicationResource(id);
+            return GetMockableResourcesArmClient(client).GetArmApplicationResource(id);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Resources
         /// You can use <see cref="ArmApplicationDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="ArmApplicationDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesArmClientMockingExtension.GetArmApplicationDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetArmApplicationDefinitionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="ArmApplicationDefinitionResource" /> object. </returns>
         public static ArmApplicationDefinitionResource GetArmApplicationDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetResourcesArmClientMockingExtension(client).GetArmApplicationDefinitionResource(id);
+            return GetMockableResourcesArmClient(client).GetArmApplicationDefinitionResource(id);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Resources
         /// You can use <see cref="JitRequestResource.CreateResourceIdentifier" /> to create a <see cref="JitRequestResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesArmClientMockingExtension.GetJitRequestResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetJitRequestResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="JitRequestResource" /> object. </returns>
         public static JitRequestResource GetJitRequestResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetResourcesArmClientMockingExtension(client).GetJitRequestResource(id);
+            return GetMockableResourcesArmClient(client).GetJitRequestResource(id);
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Resources
         /// You can use <see cref="ArmDeploymentScriptResource.CreateResourceIdentifier" /> to create an <see cref="ArmDeploymentScriptResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesArmClientMockingExtension.GetArmDeploymentScriptResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetArmDeploymentScriptResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="ArmDeploymentScriptResource" /> object. </returns>
         public static ArmDeploymentScriptResource GetArmDeploymentScriptResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetResourcesArmClientMockingExtension(client).GetArmDeploymentScriptResource(id);
+            return GetMockableResourcesArmClient(client).GetArmDeploymentScriptResource(id);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Resources
         /// You can use <see cref="ScriptLogResource.CreateResourceIdentifier" /> to create a <see cref="ScriptLogResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesArmClientMockingExtension.GetScriptLogResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetScriptLogResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="ScriptLogResource" /> object. </returns>
         public static ScriptLogResource GetScriptLogResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetResourcesArmClientMockingExtension(client).GetScriptLogResource(id);
+            return GetMockableResourcesArmClient(client).GetScriptLogResource(id);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Resources
         /// You can use <see cref="TemplateSpecResource.CreateResourceIdentifier" /> to create a <see cref="TemplateSpecResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesArmClientMockingExtension.GetTemplateSpecResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetTemplateSpecResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="TemplateSpecResource" /> object. </returns>
         public static TemplateSpecResource GetTemplateSpecResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetResourcesArmClientMockingExtension(client).GetTemplateSpecResource(id);
+            return GetMockableResourcesArmClient(client).GetTemplateSpecResource(id);
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Resources
         /// You can use <see cref="TemplateSpecVersionResource.CreateResourceIdentifier" /> to create a <see cref="TemplateSpecVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesArmClientMockingExtension.GetTemplateSpecVersionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesArmClient.GetTemplateSpecVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -170,21 +170,21 @@ namespace Azure.ResourceManager.Resources
         /// <returns> Returns a <see cref="TemplateSpecVersionResource" /> object. </returns>
         public static TemplateSpecVersionResource GetTemplateSpecVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetResourcesArmClientMockingExtension(client).GetTemplateSpecVersionResource(id);
+            return GetMockableResourcesArmClient(client).GetTemplateSpecVersionResource(id);
         }
 
         /// <summary>
         /// Gets a collection of ArmDeploymentResources in the ManagementGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesManagementGroupMockingExtension.GetArmDeployments()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesManagementGroupResource.GetArmDeployments()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
         public static ArmDeploymentCollection GetArmDeployments(this ManagementGroupResource managementGroupResource)
         {
-            return GetResourcesManagementGroupMockingExtension(managementGroupResource).GetArmDeployments();
+            return GetMockableResourcesManagementGroupResource(managementGroupResource).GetArmDeployments();
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesManagementGroupMockingExtension.GetArmDeploymentAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesManagementGroupResource.GetArmDeploymentAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(this ManagementGroupResource managementGroupResource, string deploymentName, CancellationToken cancellationToken = default)
         {
-            return await GetResourcesManagementGroupMockingExtension(managementGroupResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesManagementGroupResource(managementGroupResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesManagementGroupMockingExtension.GetArmDeployment(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesManagementGroupResource.GetArmDeployment(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
@@ -240,21 +240,21 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static Response<ArmDeploymentResource> GetArmDeployment(this ManagementGroupResource managementGroupResource, string deploymentName, CancellationToken cancellationToken = default)
         {
-            return GetResourcesManagementGroupMockingExtension(managementGroupResource).GetArmDeployment(deploymentName, cancellationToken);
+            return GetMockableResourcesManagementGroupResource(managementGroupResource).GetArmDeployment(deploymentName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ArmDeploymentResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetArmDeployments()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmDeployments()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
         public static ArmDeploymentCollection GetArmDeployments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetArmDeployments();
+            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmDeployments();
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetArmDeploymentAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmDeploymentAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(this ResourceGroupResource resourceGroupResource, string deploymentName, CancellationToken cancellationToken = default)
         {
-            return await GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetArmDeployment(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmDeployment(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -310,21 +310,21 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static Response<ArmDeploymentResource> GetArmDeployment(this ResourceGroupResource resourceGroupResource, string deploymentName, CancellationToken cancellationToken = default)
         {
-            return GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetArmDeployment(deploymentName, cancellationToken);
+            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmDeployment(deploymentName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ArmApplicationResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetArmApplications()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmApplications()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ArmApplicationResources and their operations over a ArmApplicationResource. </returns>
         public static ArmApplicationCollection GetArmApplications(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetArmApplications();
+            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmApplications();
         }
 
         /// <summary>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetArmApplicationAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmApplicationAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static async Task<Response<ArmApplicationResource>> GetArmApplicationAsync(this ResourceGroupResource resourceGroupResource, string applicationName, CancellationToken cancellationToken = default)
         {
-            return await GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetArmApplicationAsync(applicationName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmApplicationAsync(applicationName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetArmApplication(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmApplication(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -380,21 +380,21 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static Response<ArmApplicationResource> GetArmApplication(this ResourceGroupResource resourceGroupResource, string applicationName, CancellationToken cancellationToken = default)
         {
-            return GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetArmApplication(applicationName, cancellationToken);
+            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmApplication(applicationName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ArmApplicationDefinitionResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetArmApplicationDefinitions()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmApplicationDefinitions()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ArmApplicationDefinitionResources and their operations over a ArmApplicationDefinitionResource. </returns>
         public static ArmApplicationDefinitionCollection GetArmApplicationDefinitions(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetArmApplicationDefinitions();
+            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmApplicationDefinitions();
         }
 
         /// <summary>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetArmApplicationDefinitionAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmApplicationDefinitionAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static async Task<Response<ArmApplicationDefinitionResource>> GetArmApplicationDefinitionAsync(this ResourceGroupResource resourceGroupResource, string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            return await GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetArmApplicationDefinitionAsync(applicationDefinitionName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmApplicationDefinitionAsync(applicationDefinitionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetArmApplicationDefinition(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmApplicationDefinition(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -450,21 +450,21 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static Response<ArmApplicationDefinitionResource> GetArmApplicationDefinition(this ResourceGroupResource resourceGroupResource, string applicationDefinitionName, CancellationToken cancellationToken = default)
         {
-            return GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetArmApplicationDefinition(applicationDefinitionName, cancellationToken);
+            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmApplicationDefinition(applicationDefinitionName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of JitRequestResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetJitRequests()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetJitRequests()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of JitRequestResources and their operations over a JitRequestResource. </returns>
         public static JitRequestCollection GetJitRequests(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetJitRequests();
+            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetJitRequests();
         }
 
         /// <summary>
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetJitRequestAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetJitRequestAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static async Task<Response<JitRequestResource>> GetJitRequestAsync(this ResourceGroupResource resourceGroupResource, string jitRequestName, CancellationToken cancellationToken = default)
         {
-            return await GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetJitRequestAsync(jitRequestName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesResourceGroupResource(resourceGroupResource).GetJitRequestAsync(jitRequestName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetJitRequest(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetJitRequest(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -520,21 +520,21 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static Response<JitRequestResource> GetJitRequest(this ResourceGroupResource resourceGroupResource, string jitRequestName, CancellationToken cancellationToken = default)
         {
-            return GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetJitRequest(jitRequestName, cancellationToken);
+            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetJitRequest(jitRequestName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ArmDeploymentScriptResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetArmDeploymentScripts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmDeploymentScripts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ArmDeploymentScriptResources and their operations over a ArmDeploymentScriptResource. </returns>
         public static ArmDeploymentScriptCollection GetArmDeploymentScripts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetArmDeploymentScripts();
+            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmDeploymentScripts();
         }
 
         /// <summary>
@@ -551,7 +551,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetArmDeploymentScriptAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmDeploymentScriptAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static async Task<Response<ArmDeploymentScriptResource>> GetArmDeploymentScriptAsync(this ResourceGroupResource resourceGroupResource, string scriptName, CancellationToken cancellationToken = default)
         {
-            return await GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetArmDeploymentScriptAsync(scriptName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmDeploymentScriptAsync(scriptName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetArmDeploymentScript(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmDeploymentScript(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -590,21 +590,21 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static Response<ArmDeploymentScriptResource> GetArmDeploymentScript(this ResourceGroupResource resourceGroupResource, string scriptName, CancellationToken cancellationToken = default)
         {
-            return GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetArmDeploymentScript(scriptName, cancellationToken);
+            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmDeploymentScript(scriptName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of TemplateSpecResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetTemplateSpecs()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetTemplateSpecs()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of TemplateSpecResources and their operations over a TemplateSpecResource. </returns>
         public static TemplateSpecCollection GetTemplateSpecs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetTemplateSpecs();
+            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetTemplateSpecs();
         }
 
         /// <summary>
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetTemplateSpecAsync(string,TemplateSpecExpandKind?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetTemplateSpecAsync(string,TemplateSpecExpandKind?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static async Task<Response<TemplateSpecResource>> GetTemplateSpecAsync(this ResourceGroupResource resourceGroupResource, string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            return await GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetTemplateSpecAsync(templateSpecName, expand, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesResourceGroupResource(resourceGroupResource).GetTemplateSpecAsync(templateSpecName, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesResourceGroupMockingExtension.GetTemplateSpec(string,TemplateSpecExpandKind?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetTemplateSpec(string,TemplateSpecExpandKind?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -662,21 +662,21 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static Response<TemplateSpecResource> GetTemplateSpec(this ResourceGroupResource resourceGroupResource, string templateSpecName, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetResourcesResourceGroupMockingExtension(resourceGroupResource).GetTemplateSpec(templateSpecName, expand, cancellationToken);
+            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetTemplateSpec(templateSpecName, expand, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ArmDeploymentResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesSubscriptionMockingExtension.GetArmDeployments()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetArmDeployments()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
         public static ArmDeploymentCollection GetArmDeployments(this SubscriptionResource subscriptionResource)
         {
-            return GetResourcesSubscriptionMockingExtension(subscriptionResource).GetArmDeployments();
+            return GetMockableResourcesSubscriptionResource(subscriptionResource).GetArmDeployments();
         }
 
         /// <summary>
@@ -693,7 +693,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesSubscriptionMockingExtension.GetArmDeploymentAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetArmDeploymentAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(this SubscriptionResource subscriptionResource, string deploymentName, CancellationToken cancellationToken = default)
         {
-            return await GetResourcesSubscriptionMockingExtension(subscriptionResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesSubscriptionResource(subscriptionResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesSubscriptionMockingExtension.GetArmDeployment(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetArmDeployment(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static Response<ArmDeploymentResource> GetArmDeployment(this SubscriptionResource subscriptionResource, string deploymentName, CancellationToken cancellationToken = default)
         {
-            return GetResourcesSubscriptionMockingExtension(subscriptionResource).GetArmDeployment(deploymentName, cancellationToken);
+            return GetMockableResourcesSubscriptionResource(subscriptionResource).GetArmDeployment(deploymentName, cancellationToken);
         }
 
         /// <summary>
@@ -749,7 +749,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesSubscriptionMockingExtension.GetArmApplications(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetArmApplications(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="ArmApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ArmApplicationResource> GetArmApplicationsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetResourcesSubscriptionMockingExtension(subscriptionResource).GetArmApplicationsAsync(cancellationToken);
+            return GetMockableResourcesSubscriptionResource(subscriptionResource).GetArmApplicationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesSubscriptionMockingExtension.GetArmApplications(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetArmApplications(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="ArmApplicationResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ArmApplicationResource> GetArmApplications(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetResourcesSubscriptionMockingExtension(subscriptionResource).GetArmApplications(cancellationToken);
+            return GetMockableResourcesSubscriptionResource(subscriptionResource).GetArmApplications(cancellationToken);
         }
 
         /// <summary>
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesSubscriptionMockingExtension.GetJitRequestDefinitions(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetJitRequestDefinitions(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="JitRequestResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<JitRequestResource> GetJitRequestDefinitionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetResourcesSubscriptionMockingExtension(subscriptionResource).GetJitRequestDefinitionsAsync(cancellationToken);
+            return GetMockableResourcesSubscriptionResource(subscriptionResource).GetJitRequestDefinitionsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesSubscriptionMockingExtension.GetJitRequestDefinitions(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetJitRequestDefinitions(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="JitRequestResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<JitRequestResource> GetJitRequestDefinitions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetResourcesSubscriptionMockingExtension(subscriptionResource).GetJitRequestDefinitions(cancellationToken);
+            return GetMockableResourcesSubscriptionResource(subscriptionResource).GetJitRequestDefinitions(cancellationToken);
         }
 
         /// <summary>
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesSubscriptionMockingExtension.GetArmDeploymentScripts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetArmDeploymentScripts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="ArmDeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ArmDeploymentScriptResource> GetArmDeploymentScriptsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetResourcesSubscriptionMockingExtension(subscriptionResource).GetArmDeploymentScriptsAsync(cancellationToken);
+            return GetMockableResourcesSubscriptionResource(subscriptionResource).GetArmDeploymentScriptsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesSubscriptionMockingExtension.GetArmDeploymentScripts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetArmDeploymentScripts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -882,7 +882,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="ArmDeploymentScriptResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ArmDeploymentScriptResource> GetArmDeploymentScripts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetResourcesSubscriptionMockingExtension(subscriptionResource).GetArmDeploymentScripts(cancellationToken);
+            return GetMockableResourcesSubscriptionResource(subscriptionResource).GetArmDeploymentScripts(cancellationToken);
         }
 
         /// <summary>
@@ -899,7 +899,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesSubscriptionMockingExtension.GetTemplateSpecs(TemplateSpecExpandKind?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetTemplateSpecs(TemplateSpecExpandKind?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -908,7 +908,7 @@ namespace Azure.ResourceManager.Resources
         /// <returns> An async collection of <see cref="TemplateSpecResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<TemplateSpecResource> GetTemplateSpecsAsync(this SubscriptionResource subscriptionResource, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetResourcesSubscriptionMockingExtension(subscriptionResource).GetTemplateSpecsAsync(expand, cancellationToken);
+            return GetMockableResourcesSubscriptionResource(subscriptionResource).GetTemplateSpecsAsync(expand, cancellationToken);
         }
 
         /// <summary>
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesSubscriptionMockingExtension.GetTemplateSpecs(TemplateSpecExpandKind?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetTemplateSpecs(TemplateSpecExpandKind?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -934,21 +934,21 @@ namespace Azure.ResourceManager.Resources
         /// <returns> A collection of <see cref="TemplateSpecResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<TemplateSpecResource> GetTemplateSpecs(this SubscriptionResource subscriptionResource, TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            return GetResourcesSubscriptionMockingExtension(subscriptionResource).GetTemplateSpecs(expand, cancellationToken);
+            return GetMockableResourcesSubscriptionResource(subscriptionResource).GetTemplateSpecs(expand, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ArmDeploymentResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesTenantMockingExtension.GetArmDeployments()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesTenantResource.GetArmDeployments()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
         public static ArmDeploymentCollection GetArmDeployments(this TenantResource tenantResource)
         {
-            return GetResourcesTenantMockingExtension(tenantResource).GetArmDeployments();
+            return GetMockableResourcesTenantResource(tenantResource).GetArmDeployments();
         }
 
         /// <summary>
@@ -965,7 +965,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesTenantMockingExtension.GetArmDeploymentAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesTenantResource.GetArmDeploymentAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -976,7 +976,7 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(this TenantResource tenantResource, string deploymentName, CancellationToken cancellationToken = default)
         {
-            return await GetResourcesTenantMockingExtension(tenantResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesTenantResource(tenantResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesTenantMockingExtension.GetArmDeployment(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesTenantResource.GetArmDeployment(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1004,7 +1004,7 @@ namespace Azure.ResourceManager.Resources
         [ForwardsClientCalls]
         public static Response<ArmDeploymentResource> GetArmDeployment(this TenantResource tenantResource, string deploymentName, CancellationToken cancellationToken = default)
         {
-            return GetResourcesTenantMockingExtension(tenantResource).GetArmDeployment(deploymentName, cancellationToken);
+            return GetMockableResourcesTenantResource(tenantResource).GetArmDeployment(deploymentName, cancellationToken);
         }
 
         /// <summary>
@@ -1021,7 +1021,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesTenantMockingExtension.CalculateDeploymentTemplateHash(BinaryData,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesTenantResource.CalculateDeploymentTemplateHash(BinaryData,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1030,7 +1030,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
         public static async Task<Response<TemplateHashResult>> CalculateDeploymentTemplateHashAsync(this TenantResource tenantResource, BinaryData template, CancellationToken cancellationToken = default)
         {
-            return await GetResourcesTenantMockingExtension(tenantResource).CalculateDeploymentTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesTenantResource(tenantResource).CalculateDeploymentTemplateHashAsync(template, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1047,7 +1047,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ResourcesTenantMockingExtension.CalculateDeploymentTemplateHash(BinaryData,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesTenantResource.CalculateDeploymentTemplateHash(BinaryData,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1056,7 +1056,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="template"/> is null. </exception>
         public static Response<TemplateHashResult> CalculateDeploymentTemplateHash(this TenantResource tenantResource, BinaryData template, CancellationToken cancellationToken = default)
         {
-            return GetResourcesTenantMockingExtension(tenantResource).CalculateDeploymentTemplateHash(template, cancellationToken);
+            return GetMockableResourcesTenantResource(tenantResource).CalculateDeploymentTemplateHash(template, cancellationToken);
         }
     }
 }

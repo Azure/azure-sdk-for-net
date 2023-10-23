@@ -305,9 +305,9 @@ namespace Azure.ResourceManager.StorageMover
 }
 namespace Azure.ResourceManager.StorageMover.Mocking
 {
-    public partial class StorageMoverArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableStorageMoverArmClient : Azure.ResourceManager.ArmResource
     {
-        protected StorageMoverArmClientMockingExtension() { }
+        protected MockableStorageMoverArmClient() { }
         public virtual Azure.ResourceManager.StorageMover.JobDefinitionResource GetJobDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.StorageMover.JobRunResource GetJobRunResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.StorageMover.StorageMoverAgentResource GetStorageMoverAgentResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -315,16 +315,16 @@ namespace Azure.ResourceManager.StorageMover.Mocking
         public virtual Azure.ResourceManager.StorageMover.StorageMoverProjectResource GetStorageMoverProjectResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.StorageMover.StorageMoverResource GetStorageMoverResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class StorageMoverResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableStorageMoverResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected StorageMoverResourceGroupMockingExtension() { }
+        protected MockableStorageMoverResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverResource> GetStorageMover(string storageMoverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverResource>> GetStorageMoverAsync(string storageMoverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.StorageMover.StorageMoverCollection GetStorageMovers() { throw null; }
     }
-    public partial class StorageMoverSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableStorageMoverSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected StorageMoverSubscriptionMockingExtension() { }
+        protected MockableStorageMoverSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.StorageMover.StorageMoverResource> GetStorageMovers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageMover.StorageMoverResource> GetStorageMoversAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

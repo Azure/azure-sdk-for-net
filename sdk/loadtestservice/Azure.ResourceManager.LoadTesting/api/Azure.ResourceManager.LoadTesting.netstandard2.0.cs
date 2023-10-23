@@ -98,22 +98,22 @@ namespace Azure.ResourceManager.LoadTesting
 }
 namespace Azure.ResourceManager.LoadTesting.Mocking
 {
-    public partial class LoadTestingArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableLoadTestingArmClient : Azure.ResourceManager.ArmResource
     {
-        protected LoadTestingArmClientMockingExtension() { }
+        protected MockableLoadTestingArmClient() { }
         public virtual Azure.ResourceManager.LoadTesting.LoadTestingQuotaResource GetLoadTestingQuotaResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.LoadTesting.LoadTestingResource GetLoadTestingResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class LoadTestingResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableLoadTestingResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected LoadTestingResourceGroupMockingExtension() { }
+        protected MockableLoadTestingResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource> GetLoadTestingResource(string loadTestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingResource>> GetLoadTestingResourceAsync(string loadTestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.LoadTesting.LoadTestingResourceCollection GetLoadTestingResources() { throw null; }
     }
-    public partial class LoadTestingSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableLoadTestingSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected LoadTestingSubscriptionMockingExtension() { }
+        protected MockableLoadTestingSubscriptionResource() { }
         public virtual Azure.ResourceManager.LoadTesting.LoadTestingQuotaCollection GetAllLoadTestingQuota(Azure.Core.AzureLocation location) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingQuotaResource> GetLoadTestingQuota(Azure.Core.AzureLocation location, string quotaBucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.LoadTesting.LoadTestingQuotaResource>> GetLoadTestingQuotaAsync(Azure.Core.AzureLocation location, string quotaBucketName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

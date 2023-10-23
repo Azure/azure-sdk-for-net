@@ -21,19 +21,19 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// <summary> A class to add extension methods to Azure.ResourceManager.ApplicationInsights. </summary>
     public static partial class ApplicationInsightsExtensions
     {
-        private static ApplicationInsightsArmClientMockingExtension GetApplicationInsightsArmClientMockingExtension(ArmClient client)
+        private static MockableApplicationInsightsArmClient GetMockableApplicationInsightsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ApplicationInsightsArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableApplicationInsightsArmClient(client0));
         }
 
-        private static ApplicationInsightsResourceGroupMockingExtension GetApplicationInsightsResourceGroupMockingExtension(ArmResource resource)
+        private static MockableApplicationInsightsResourceGroupResource GetMockableApplicationInsightsResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ApplicationInsightsResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableApplicationInsightsResourceGroupResource(client, resource.Id));
         }
 
-        private static ApplicationInsightsSubscriptionMockingExtension GetApplicationInsightsSubscriptionMockingExtension(ArmResource resource)
+        private static MockableApplicationInsightsSubscriptionResource GetMockableApplicationInsightsSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ApplicationInsightsSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableApplicationInsightsSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsArmClientMockingExtension.GetLiveToken(ResourceIdentifier,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetLiveToken(ResourceIdentifier,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<LiveTokenResponse>> GetLiveTokenAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return await GetApplicationInsightsArmClientMockingExtension(client).GetLiveTokenAsync(scope, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApplicationInsightsArmClient(client).GetLiveTokenAsync(scope, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsArmClientMockingExtension.GetLiveToken(ResourceIdentifier,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetLiveToken(ResourceIdentifier,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<LiveTokenResponse> GetLiveToken(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return GetApplicationInsightsArmClientMockingExtension(client).GetLiveToken(scope, cancellationToken);
+            return GetMockableApplicationInsightsArmClient(client).GetLiveToken(scope, cancellationToken);
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// You can use <see cref="ApplicationInsightsComponentResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationInsightsComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsArmClientMockingExtension.GetApplicationInsightsComponentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetApplicationInsightsComponentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> Returns a <see cref="ApplicationInsightsComponentResource" /> object. </returns>
         public static ApplicationInsightsComponentResource GetApplicationInsightsComponentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApplicationInsightsArmClientMockingExtension(client).GetApplicationInsightsComponentResource(id);
+            return GetMockableApplicationInsightsArmClient(client).GetApplicationInsightsComponentResource(id);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// You can use <see cref="WebTestResource.CreateResourceIdentifier" /> to create a <see cref="WebTestResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsArmClientMockingExtension.GetWebTestResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetWebTestResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> Returns a <see cref="WebTestResource" /> object. </returns>
         public static WebTestResource GetWebTestResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApplicationInsightsArmClientMockingExtension(client).GetWebTestResource(id);
+            return GetMockableApplicationInsightsArmClient(client).GetWebTestResource(id);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// You can use <see cref="WorkbookTemplateResource.CreateResourceIdentifier" /> to create a <see cref="WorkbookTemplateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsArmClientMockingExtension.GetWorkbookTemplateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetWorkbookTemplateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> Returns a <see cref="WorkbookTemplateResource" /> object. </returns>
         public static WorkbookTemplateResource GetWorkbookTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApplicationInsightsArmClientMockingExtension(client).GetWorkbookTemplateResource(id);
+            return GetMockableApplicationInsightsArmClient(client).GetWorkbookTemplateResource(id);
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// You can use <see cref="MyWorkbookResource.CreateResourceIdentifier" /> to create a <see cref="MyWorkbookResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsArmClientMockingExtension.GetMyWorkbookResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetMyWorkbookResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> Returns a <see cref="MyWorkbookResource" /> object. </returns>
         public static MyWorkbookResource GetMyWorkbookResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApplicationInsightsArmClientMockingExtension(client).GetMyWorkbookResource(id);
+            return GetMockableApplicationInsightsArmClient(client).GetMyWorkbookResource(id);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// You can use <see cref="WorkbookResource.CreateResourceIdentifier" /> to create a <see cref="WorkbookResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsArmClientMockingExtension.GetWorkbookResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetWorkbookResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> Returns a <see cref="WorkbookResource" /> object. </returns>
         public static WorkbookResource GetWorkbookResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApplicationInsightsArmClientMockingExtension(client).GetWorkbookResource(id);
+            return GetMockableApplicationInsightsArmClient(client).GetWorkbookResource(id);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// You can use <see cref="WorkbookRevisionResource.CreateResourceIdentifier" /> to create a <see cref="WorkbookRevisionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsArmClientMockingExtension.GetWorkbookRevisionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetWorkbookRevisionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> Returns a <see cref="WorkbookRevisionResource" /> object. </returns>
         public static WorkbookRevisionResource GetWorkbookRevisionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApplicationInsightsArmClientMockingExtension(client).GetWorkbookRevisionResource(id);
+            return GetMockableApplicationInsightsArmClient(client).GetWorkbookRevisionResource(id);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// You can use <see cref="ComponentLinkedStorageAccountResource.CreateResourceIdentifier" /> to create a <see cref="ComponentLinkedStorageAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsArmClientMockingExtension.GetComponentLinkedStorageAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsArmClient.GetComponentLinkedStorageAccountResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -195,21 +195,21 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> Returns a <see cref="ComponentLinkedStorageAccountResource" /> object. </returns>
         public static ComponentLinkedStorageAccountResource GetComponentLinkedStorageAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetApplicationInsightsArmClientMockingExtension(client).GetComponentLinkedStorageAccountResource(id);
+            return GetMockableApplicationInsightsArmClient(client).GetComponentLinkedStorageAccountResource(id);
         }
 
         /// <summary>
         /// Gets a collection of ApplicationInsightsComponentResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsResourceGroupMockingExtension.GetApplicationInsightsComponents()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetApplicationInsightsComponents()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ApplicationInsightsComponentResources and their operations over a ApplicationInsightsComponentResource. </returns>
         public static ApplicationInsightsComponentCollection GetApplicationInsightsComponents(this ResourceGroupResource resourceGroupResource)
         {
-            return GetApplicationInsightsResourceGroupMockingExtension(resourceGroupResource).GetApplicationInsightsComponents();
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsComponents();
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsResourceGroupMockingExtension.GetApplicationInsightsComponentAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetApplicationInsightsComponentAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static async Task<Response<ApplicationInsightsComponentResource>> GetApplicationInsightsComponentAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetApplicationInsightsResourceGroupMockingExtension(resourceGroupResource).GetApplicationInsightsComponentAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsComponentAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsResourceGroupMockingExtension.GetApplicationInsightsComponent(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetApplicationInsightsComponent(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -265,21 +265,21 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static Response<ApplicationInsightsComponentResource> GetApplicationInsightsComponent(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetApplicationInsightsResourceGroupMockingExtension(resourceGroupResource).GetApplicationInsightsComponent(resourceName, cancellationToken);
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsComponent(resourceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of WebTestResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsResourceGroupMockingExtension.GetWebTests()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetWebTests()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of WebTestResources and their operations over a WebTestResource. </returns>
         public static WebTestCollection GetWebTests(this ResourceGroupResource resourceGroupResource)
         {
-            return GetApplicationInsightsResourceGroupMockingExtension(resourceGroupResource).GetWebTests();
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWebTests();
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsResourceGroupMockingExtension.GetWebTestAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetWebTestAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static async Task<Response<WebTestResource>> GetWebTestAsync(this ResourceGroupResource resourceGroupResource, string webTestName, CancellationToken cancellationToken = default)
         {
-            return await GetApplicationInsightsResourceGroupMockingExtension(resourceGroupResource).GetWebTestAsync(webTestName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWebTestAsync(webTestName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsResourceGroupMockingExtension.GetWebTest(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetWebTest(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -335,21 +335,21 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static Response<WebTestResource> GetWebTest(this ResourceGroupResource resourceGroupResource, string webTestName, CancellationToken cancellationToken = default)
         {
-            return GetApplicationInsightsResourceGroupMockingExtension(resourceGroupResource).GetWebTest(webTestName, cancellationToken);
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWebTest(webTestName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of WorkbookTemplateResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsResourceGroupMockingExtension.GetWorkbookTemplates()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetWorkbookTemplates()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of WorkbookTemplateResources and their operations over a WorkbookTemplateResource. </returns>
         public static WorkbookTemplateCollection GetWorkbookTemplates(this ResourceGroupResource resourceGroupResource)
         {
-            return GetApplicationInsightsResourceGroupMockingExtension(resourceGroupResource).GetWorkbookTemplates();
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWorkbookTemplates();
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsResourceGroupMockingExtension.GetWorkbookTemplateAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetWorkbookTemplateAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static async Task<Response<WorkbookTemplateResource>> GetWorkbookTemplateAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetApplicationInsightsResourceGroupMockingExtension(resourceGroupResource).GetWorkbookTemplateAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWorkbookTemplateAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsResourceGroupMockingExtension.GetWorkbookTemplate(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetWorkbookTemplate(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -405,21 +405,21 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static Response<WorkbookTemplateResource> GetWorkbookTemplate(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetApplicationInsightsResourceGroupMockingExtension(resourceGroupResource).GetWorkbookTemplate(resourceName, cancellationToken);
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWorkbookTemplate(resourceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of MyWorkbookResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsResourceGroupMockingExtension.GetMyWorkbooks()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetMyWorkbooks()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MyWorkbookResources and their operations over a MyWorkbookResource. </returns>
         public static MyWorkbookCollection GetMyWorkbooks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetApplicationInsightsResourceGroupMockingExtension(resourceGroupResource).GetMyWorkbooks();
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetMyWorkbooks();
         }
 
         /// <summary>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsResourceGroupMockingExtension.GetMyWorkbookAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetMyWorkbookAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static async Task<Response<MyWorkbookResource>> GetMyWorkbookAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetApplicationInsightsResourceGroupMockingExtension(resourceGroupResource).GetMyWorkbookAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetMyWorkbookAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsResourceGroupMockingExtension.GetMyWorkbook(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetMyWorkbook(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -475,21 +475,21 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static Response<MyWorkbookResource> GetMyWorkbook(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetApplicationInsightsResourceGroupMockingExtension(resourceGroupResource).GetMyWorkbook(resourceName, cancellationToken);
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetMyWorkbook(resourceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of WorkbookResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsResourceGroupMockingExtension.GetWorkbooks()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetWorkbooks()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of WorkbookResources and their operations over a WorkbookResource. </returns>
         public static WorkbookCollection GetWorkbooks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetApplicationInsightsResourceGroupMockingExtension(resourceGroupResource).GetWorkbooks();
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWorkbooks();
         }
 
         /// <summary>
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsResourceGroupMockingExtension.GetWorkbookAsync(string,bool?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetWorkbookAsync(string,bool?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static async Task<Response<WorkbookResource>> GetWorkbookAsync(this ResourceGroupResource resourceGroupResource, string resourceName, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            return await GetApplicationInsightsResourceGroupMockingExtension(resourceGroupResource).GetWorkbookAsync(resourceName, canFetchContent, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWorkbookAsync(resourceName, canFetchContent, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsResourceGroupMockingExtension.GetWorkbook(string,bool?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsResourceGroupResource.GetWorkbook(string,bool?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static Response<WorkbookResource> GetWorkbook(this ResourceGroupResource resourceGroupResource, string resourceName, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            return GetApplicationInsightsResourceGroupMockingExtension(resourceGroupResource).GetWorkbook(resourceName, canFetchContent, cancellationToken);
+            return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWorkbook(resourceName, canFetchContent, cancellationToken);
         }
 
         /// <summary>
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsSubscriptionMockingExtension.GetApplicationInsightsComponents(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsComponents(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An async collection of <see cref="ApplicationInsightsComponentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationInsightsComponentResource> GetApplicationInsightsComponentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetApplicationInsightsSubscriptionMockingExtension(subscriptionResource).GetApplicationInsightsComponentsAsync(cancellationToken);
+            return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetApplicationInsightsComponentsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsSubscriptionMockingExtension.GetApplicationInsightsComponents(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsSubscriptionResource.GetApplicationInsightsComponents(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="ApplicationInsightsComponentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationInsightsComponentResource> GetApplicationInsightsComponents(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetApplicationInsightsSubscriptionMockingExtension(subscriptionResource).GetApplicationInsightsComponents(cancellationToken);
+            return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetApplicationInsightsComponents(cancellationToken);
         }
 
         /// <summary>
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsSubscriptionMockingExtension.GetWebTests(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsSubscriptionResource.GetWebTests(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An async collection of <see cref="WebTestResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebTestResource> GetWebTestsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetApplicationInsightsSubscriptionMockingExtension(subscriptionResource).GetWebTestsAsync(cancellationToken);
+            return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetWebTestsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsSubscriptionMockingExtension.GetWebTests(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsSubscriptionResource.GetWebTests(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="WebTestResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebTestResource> GetWebTests(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetApplicationInsightsSubscriptionMockingExtension(subscriptionResource).GetWebTests(cancellationToken);
+            return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetWebTests(cancellationToken);
         }
 
         /// <summary>
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsSubscriptionMockingExtension.GetMyWorkbooks(CategoryType,IEnumerable{string},bool?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsSubscriptionResource.GetMyWorkbooks(CategoryType,IEnumerable{string},bool?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -675,7 +675,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An async collection of <see cref="MyWorkbookResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MyWorkbookResource> GetMyWorkbooksAsync(this SubscriptionResource subscriptionResource, CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            return GetApplicationInsightsSubscriptionMockingExtension(subscriptionResource).GetMyWorkbooksAsync(category, tags, canFetchContent, cancellationToken);
+            return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetMyWorkbooksAsync(category, tags, canFetchContent, cancellationToken);
         }
 
         /// <summary>
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsSubscriptionMockingExtension.GetMyWorkbooks(CategoryType,IEnumerable{string},bool?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsSubscriptionResource.GetMyWorkbooks(CategoryType,IEnumerable{string},bool?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -703,7 +703,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="MyWorkbookResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MyWorkbookResource> GetMyWorkbooks(this SubscriptionResource subscriptionResource, CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            return GetApplicationInsightsSubscriptionMockingExtension(subscriptionResource).GetMyWorkbooks(category, tags, canFetchContent, cancellationToken);
+            return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetMyWorkbooks(category, tags, canFetchContent, cancellationToken);
         }
 
         /// <summary>
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsSubscriptionMockingExtension.GetWorkbooks(CategoryType,IEnumerable{string},bool?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsSubscriptionResource.GetWorkbooks(CategoryType,IEnumerable{string},bool?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An async collection of <see cref="WorkbookResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WorkbookResource> GetWorkbooksAsync(this SubscriptionResource subscriptionResource, CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            return GetApplicationInsightsSubscriptionMockingExtension(subscriptionResource).GetWorkbooksAsync(category, tags, canFetchContent, cancellationToken);
+            return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetWorkbooksAsync(category, tags, canFetchContent, cancellationToken);
         }
 
         /// <summary>
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ApplicationInsightsSubscriptionMockingExtension.GetWorkbooks(CategoryType,IEnumerable{string},bool?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApplicationInsightsSubscriptionResource.GetWorkbooks(CategoryType,IEnumerable{string},bool?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="WorkbookResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WorkbookResource> GetWorkbooks(this SubscriptionResource subscriptionResource, CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            return GetApplicationInsightsSubscriptionMockingExtension(subscriptionResource).GetWorkbooks(category, tags, canFetchContent, cancellationToken);
+            return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetWorkbooks(category, tags, canFetchContent, cancellationToken);
         }
     }
 }

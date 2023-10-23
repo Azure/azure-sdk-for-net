@@ -622,9 +622,9 @@ namespace Azure.ResourceManager.Authorization
 }
 namespace Azure.ResourceManager.Authorization.Mocking
 {
-    public partial class AuthorizationArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAuthorizationArmClient : Azure.ResourceManager.ArmResource
     {
-        protected AuthorizationArmClientMockingExtension() { }
+        protected MockableAuthorizationArmClient() { }
         public virtual Azure.ResourceManager.Authorization.AuthorizationProviderOperationsMetadataResource GetAuthorizationProviderOperationsMetadataResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Authorization.AuthorizationRoleDefinitionResource> GetAuthorizationRoleDefinition(Azure.Core.ResourceIdentifier scope, Azure.Core.ResourceIdentifier roleDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AuthorizationRoleDefinitionResource>> GetAuthorizationRoleDefinitionAsync(Azure.Core.ResourceIdentifier scope, Azure.Core.ResourceIdentifier roleDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -673,9 +673,9 @@ namespace Azure.ResourceManager.Authorization.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementPolicyResource>> GetRoleManagementPolicyAsync(Azure.Core.ResourceIdentifier scope, string roleManagementPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Authorization.RoleManagementPolicyResource GetRoleManagementPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class AuthorizationArmMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAuthorizationArmResource : Azure.ResourceManager.ArmResource
     {
-        protected AuthorizationArmMockingExtension() { }
+        protected MockableAuthorizationArmResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Authorization.AuthorizationRoleDefinitionResource> GetAuthorizationRoleDefinition(Azure.Core.ResourceIdentifier roleDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.AuthorizationRoleDefinitionResource>> GetAuthorizationRoleDefinitionAsync(Azure.Core.ResourceIdentifier roleDefinitionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Authorization.AuthorizationRoleDefinitionCollection GetAuthorizationRoleDefinitions() { throw null; }
@@ -710,23 +710,23 @@ namespace Azure.ResourceManager.Authorization.Mocking
         public virtual Azure.ResourceManager.Authorization.RoleManagementPolicyAssignmentCollection GetRoleManagementPolicyAssignments() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Authorization.RoleManagementPolicyResource>> GetRoleManagementPolicyAsync(string roleManagementPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AuthorizationResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAuthorizationResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected AuthorizationResourceGroupMockingExtension() { }
+        protected MockableAuthorizationResourceGroupResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Authorization.Models.RoleDefinitionPermission> GetAzurePermissionsForResourceGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Authorization.Models.RoleDefinitionPermission> GetAzurePermissionsForResourceGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Authorization.Models.RoleDefinitionPermission> GetAzurePermissionsForResources(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Authorization.Models.RoleDefinitionPermission> GetAzurePermissionsForResourcesAsync(string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AuthorizationSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAuthorizationSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected AuthorizationSubscriptionMockingExtension() { }
+        protected MockableAuthorizationSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Authorization.Models.AuthorizationClassicAdministrator> GetClassicAdministrators(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Authorization.Models.AuthorizationClassicAdministrator> GetClassicAdministratorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AuthorizationTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAuthorizationTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected AuthorizationTenantMockingExtension() { }
+        protected MockableAuthorizationTenantResource() { }
         public virtual Azure.Response ElevateAccessGlobalAdministrator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ElevateAccessGlobalAdministratorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Authorization.AuthorizationProviderOperationsMetadataCollection GetAllAuthorizationProviderOperationsMetadata() { throw null; }

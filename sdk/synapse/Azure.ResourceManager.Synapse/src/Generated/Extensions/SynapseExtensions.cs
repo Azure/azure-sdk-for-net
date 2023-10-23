@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Synapse
     /// <summary> A class to add extension methods to Azure.ResourceManager.Synapse. </summary>
     public static partial class SynapseExtensions
     {
-        private static SynapseArmClientMockingExtension GetSynapseArmClientMockingExtension(ArmClient client)
+        private static MockableSynapseArmClient GetMockableSynapseArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new SynapseArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableSynapseArmClient(client0));
         }
 
-        private static SynapseResourceGroupMockingExtension GetSynapseResourceGroupMockingExtension(ArmResource resource)
+        private static MockableSynapseResourceGroupResource GetMockableSynapseResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new SynapseResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableSynapseResourceGroupResource(client, resource.Id));
         }
 
-        private static SynapseSubscriptionMockingExtension GetSynapseSubscriptionMockingExtension(ArmResource resource)
+        private static MockableSynapseSubscriptionResource GetMockableSynapseSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new SynapseSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableSynapseSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseAadOnlyAuthenticationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseAadOnlyAuthenticationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseAadOnlyAuthenticationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseAadOnlyAuthenticationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseAadOnlyAuthenticationResource" /> object. </returns>
         public static SynapseAadOnlyAuthenticationResource GetSynapseAadOnlyAuthenticationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseAadOnlyAuthenticationResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseAadOnlyAuthenticationResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseIPFirewallRuleInfoResource.CreateResourceIdentifier" /> to create a <see cref="SynapseIPFirewallRuleInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseIPFirewallRuleInfoResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseIPFirewallRuleInfoResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseIPFirewallRuleInfoResource" /> object. </returns>
         public static SynapseIPFirewallRuleInfoResource GetSynapseIPFirewallRuleInfoResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseIPFirewallRuleInfoResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseIPFirewallRuleInfoResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseKeyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseKeyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseKeyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseKeyResource" /> object. </returns>
         public static SynapseKeyResource GetSynapseKeyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseKeyResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseKeyResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapsePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapsePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapsePrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapsePrivateEndpointConnectionResource" /> object. </returns>
         public static SynapsePrivateEndpointConnectionResource GetSynapsePrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapsePrivateEndpointConnectionResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapsePrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseWorkspacePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspacePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseWorkspacePrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseWorkspacePrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkspacePrivateLinkResource" /> object. </returns>
         public static SynapseWorkspacePrivateLinkResource GetSynapseWorkspacePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseWorkspacePrivateLinkResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseWorkspacePrivateLinkResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapsePrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapsePrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapsePrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapsePrivateLinkResource" /> object. </returns>
         public static SynapsePrivateLinkResource GetSynapsePrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapsePrivateLinkResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapsePrivateLinkResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapsePrivateLinkHubResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateLinkHubResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapsePrivateLinkHubResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapsePrivateLinkHubResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapsePrivateLinkHubResource" /> object. </returns>
         public static SynapsePrivateLinkHubResource GetSynapsePrivateLinkHubResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapsePrivateLinkHubResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapsePrivateLinkHubResource(id);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource.CreateResourceIdentifier" /> to create a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapsePrivateEndpointConnectionForPrivateLinkHubResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapsePrivateEndpointConnectionForPrivateLinkHubResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapsePrivateEndpointConnectionForPrivateLinkHubResource" /> object. </returns>
         public static SynapsePrivateEndpointConnectionForPrivateLinkHubResource GetSynapsePrivateEndpointConnectionForPrivateLinkHubResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapsePrivateEndpointConnectionForPrivateLinkHubResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapsePrivateEndpointConnectionForPrivateLinkHubResource(id);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseSqlPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseSqlPoolResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolResource" /> object. </returns>
         public static SynapseSqlPoolResource GetSynapseSqlPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseSqlPoolResource(id);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseMetadataSyncConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseMetadataSyncConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseMetadataSyncConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseMetadataSyncConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseMetadataSyncConfigurationResource" /> object. </returns>
         public static SynapseMetadataSyncConfigurationResource GetSynapseMetadataSyncConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseMetadataSyncConfigurationResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseMetadataSyncConfigurationResource(id);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseGeoBackupPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseGeoBackupPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseGeoBackupPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseGeoBackupPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseGeoBackupPolicyResource" /> object. </returns>
         public static SynapseGeoBackupPolicyResource GetSynapseGeoBackupPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseGeoBackupPolicyResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseGeoBackupPolicyResource(id);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseDataWarehouseUserActivityResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataWarehouseUserActivityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseDataWarehouseUserActivityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseDataWarehouseUserActivityResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDataWarehouseUserActivityResource" /> object. </returns>
         public static SynapseDataWarehouseUserActivityResource GetSynapseDataWarehouseUserActivityResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseDataWarehouseUserActivityResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseDataWarehouseUserActivityResource(id);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseRestorePointResource.CreateResourceIdentifier" /> to create a <see cref="SynapseRestorePointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseRestorePointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseRestorePointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseRestorePointResource" /> object. </returns>
         public static SynapseRestorePointResource GetSynapseRestorePointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseRestorePointResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseRestorePointResource(id);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseReplicationLinkResource.CreateResourceIdentifier" /> to create a <see cref="SynapseReplicationLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseReplicationLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseReplicationLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseReplicationLinkResource" /> object. </returns>
         public static SynapseReplicationLinkResource GetSynapseReplicationLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseReplicationLinkResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseReplicationLinkResource(id);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseMaintenanceWindowResource.CreateResourceIdentifier" /> to create a <see cref="SynapseMaintenanceWindowResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseMaintenanceWindowResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseMaintenanceWindowResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseMaintenanceWindowResource" /> object. </returns>
         public static SynapseMaintenanceWindowResource GetSynapseMaintenanceWindowResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseMaintenanceWindowResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseMaintenanceWindowResource(id);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseMaintenanceWindowOptionResource.CreateResourceIdentifier" /> to create a <see cref="SynapseMaintenanceWindowOptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseMaintenanceWindowOptionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseMaintenanceWindowOptionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseMaintenanceWindowOptionResource" /> object. </returns>
         public static SynapseMaintenanceWindowOptionResource GetSynapseMaintenanceWindowOptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseMaintenanceWindowOptionResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseMaintenanceWindowOptionResource(id);
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseTransparentDataEncryptionResource.CreateResourceIdentifier" /> to create a <see cref="SynapseTransparentDataEncryptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseTransparentDataEncryptionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseTransparentDataEncryptionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseTransparentDataEncryptionResource" /> object. </returns>
         public static SynapseTransparentDataEncryptionResource GetSynapseTransparentDataEncryptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseTransparentDataEncryptionResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseTransparentDataEncryptionResource(id);
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseSqlPoolBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseSqlPoolBlobAuditingPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseSqlPoolBlobAuditingPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolBlobAuditingPolicyResource" /> object. </returns>
         public static SynapseSqlPoolBlobAuditingPolicyResource GetSynapseSqlPoolBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolBlobAuditingPolicyResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseSqlPoolBlobAuditingPolicyResource(id);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseSensitivityLabelResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSensitivityLabelResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseSensitivityLabelResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseSensitivityLabelResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSensitivityLabelResource" /> object. </returns>
         public static SynapseSensitivityLabelResource GetSynapseSensitivityLabelResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseSensitivityLabelResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseSensitivityLabelResource(id);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseSqlPoolSchemaResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseSqlPoolSchemaResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseSqlPoolSchemaResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolSchemaResource" /> object. </returns>
         public static SynapseSqlPoolSchemaResource GetSynapseSqlPoolSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolSchemaResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseSqlPoolSchemaResource(id);
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseSqlPoolTableResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolTableResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseSqlPoolTableResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseSqlPoolTableResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolTableResource" /> object. </returns>
         public static SynapseSqlPoolTableResource GetSynapseSqlPoolTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolTableResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseSqlPoolTableResource(id);
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseSqlPoolConnectionPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolConnectionPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseSqlPoolConnectionPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseSqlPoolConnectionPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolConnectionPolicyResource" /> object. </returns>
         public static SynapseSqlPoolConnectionPolicyResource GetSynapseSqlPoolConnectionPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolConnectionPolicyResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseSqlPoolConnectionPolicyResource(id);
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseSqlPoolVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseSqlPoolVulnerabilityAssessmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseSqlPoolVulnerabilityAssessmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolVulnerabilityAssessmentResource" /> object. </returns>
         public static SynapseSqlPoolVulnerabilityAssessmentResource GetSynapseSqlPoolVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolVulnerabilityAssessmentResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseSqlPoolVulnerabilityAssessmentResource(id);
         }
 
         /// <summary>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseVulnerabilityAssessmentScanRecordResource.CreateResourceIdentifier" /> to create a <see cref="SynapseVulnerabilityAssessmentScanRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseVulnerabilityAssessmentScanRecordResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseVulnerabilityAssessmentScanRecordResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseVulnerabilityAssessmentScanRecordResource" /> object. </returns>
         public static SynapseVulnerabilityAssessmentScanRecordResource GetSynapseVulnerabilityAssessmentScanRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseVulnerabilityAssessmentScanRecordResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseVulnerabilityAssessmentScanRecordResource(id);
         }
 
         /// <summary>
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseSqlPoolSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseSqlPoolSecurityAlertPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseSqlPoolSecurityAlertPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolSecurityAlertPolicyResource" /> object. </returns>
         public static SynapseSqlPoolSecurityAlertPolicyResource GetSynapseSqlPoolSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolSecurityAlertPolicyResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseSqlPoolSecurityAlertPolicyResource(id);
         }
 
         /// <summary>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource" /> object. </returns>
         public static SynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource GetSynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseSqlPoolVulnerabilityAssessmentRuleBaselineResource(id);
         }
 
         /// <summary>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseExtendedSqlPoolBlobAuditingPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseExtendedSqlPoolBlobAuditingPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseExtendedSqlPoolBlobAuditingPolicyResource" /> object. </returns>
         public static SynapseExtendedSqlPoolBlobAuditingPolicyResource GetSynapseExtendedSqlPoolBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseExtendedSqlPoolBlobAuditingPolicyResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseExtendedSqlPoolBlobAuditingPolicyResource(id);
         }
 
         /// <summary>
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseDataMaskingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataMaskingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseDataMaskingPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseDataMaskingPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDataMaskingPolicyResource" /> object. </returns>
         public static SynapseDataMaskingPolicyResource GetSynapseDataMaskingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseDataMaskingPolicyResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseDataMaskingPolicyResource(id);
         }
 
         /// <summary>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseDataMaskingRuleResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataMaskingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseDataMaskingRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseDataMaskingRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDataMaskingRuleResource" /> object. </returns>
         public static SynapseDataMaskingRuleResource GetSynapseDataMaskingRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseDataMaskingRuleResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseDataMaskingRuleResource(id);
         }
 
         /// <summary>
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseSqlPoolColumnResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSqlPoolColumnResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseSqlPoolColumnResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseSqlPoolColumnResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSqlPoolColumnResource" /> object. </returns>
         public static SynapseSqlPoolColumnResource GetSynapseSqlPoolColumnResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseSqlPoolColumnResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseSqlPoolColumnResource(id);
         }
 
         /// <summary>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseWorkloadGroupResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkloadGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseWorkloadGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseWorkloadGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkloadGroupResource" /> object. </returns>
         public static SynapseWorkloadGroupResource GetSynapseWorkloadGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseWorkloadGroupResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseWorkloadGroupResource(id);
         }
 
         /// <summary>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseWorkloadClassifierResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkloadClassifierResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseWorkloadClassifierResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseWorkloadClassifierResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkloadClassifierResource" /> object. </returns>
         public static SynapseWorkloadClassifierResource GetSynapseWorkloadClassifierResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseWorkloadClassifierResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseWorkloadClassifierResource(id);
         }
 
         /// <summary>
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseServerBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseServerBlobAuditingPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseServerBlobAuditingPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseServerBlobAuditingPolicyResource" /> object. </returns>
         public static SynapseServerBlobAuditingPolicyResource GetSynapseServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseServerBlobAuditingPolicyResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseServerBlobAuditingPolicyResource(id);
         }
 
         /// <summary>
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseExtendedServerBlobAuditingPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseExtendedServerBlobAuditingPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseExtendedServerBlobAuditingPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseExtendedServerBlobAuditingPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseExtendedServerBlobAuditingPolicyResource" /> object. </returns>
         public static SynapseExtendedServerBlobAuditingPolicyResource GetSynapseExtendedServerBlobAuditingPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseExtendedServerBlobAuditingPolicyResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseExtendedServerBlobAuditingPolicyResource(id);
         }
 
         /// <summary>
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseServerSecurityAlertPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SynapseServerSecurityAlertPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseServerSecurityAlertPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseServerSecurityAlertPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseServerSecurityAlertPolicyResource" /> object. </returns>
         public static SynapseServerSecurityAlertPolicyResource GetSynapseServerSecurityAlertPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseServerSecurityAlertPolicyResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseServerSecurityAlertPolicyResource(id);
         }
 
         /// <summary>
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseServerVulnerabilityAssessmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseServerVulnerabilityAssessmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseServerVulnerabilityAssessmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseServerVulnerabilityAssessmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseServerVulnerabilityAssessmentResource" /> object. </returns>
         public static SynapseServerVulnerabilityAssessmentResource GetSynapseServerVulnerabilityAssessmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseServerVulnerabilityAssessmentResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseServerVulnerabilityAssessmentResource(id);
         }
 
         /// <summary>
@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseEncryptionProtectorResource.CreateResourceIdentifier" /> to create a <see cref="SynapseEncryptionProtectorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseEncryptionProtectorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseEncryptionProtectorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseEncryptionProtectorResource" /> object. </returns>
         public static SynapseEncryptionProtectorResource GetSynapseEncryptionProtectorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseEncryptionProtectorResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseEncryptionProtectorResource(id);
         }
 
         /// <summary>
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseRecoverableSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseRecoverableSqlPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseRecoverableSqlPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseRecoverableSqlPoolResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseRecoverableSqlPoolResource" /> object. </returns>
         public static SynapseRecoverableSqlPoolResource GetSynapseRecoverableSqlPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseRecoverableSqlPoolResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseRecoverableSqlPoolResource(id);
         }
 
         /// <summary>
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseDedicatedSqlMinimalTlsSettingResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseDedicatedSqlMinimalTlsSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseDedicatedSqlMinimalTlsSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -656,7 +656,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource" /> object. </returns>
         public static SynapseDedicatedSqlMinimalTlsSettingResource GetSynapseDedicatedSqlMinimalTlsSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseDedicatedSqlMinimalTlsSettingResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseDedicatedSqlMinimalTlsSettingResource(id);
         }
 
         /// <summary>
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseWorkspaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseWorkspaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkspaceResource" /> object. </returns>
         public static SynapseWorkspaceResource GetSynapseWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseWorkspaceResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseWorkspaceResource(id);
         }
 
         /// <summary>
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseWorkspaceAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspaceAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseWorkspaceAdministratorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseWorkspaceAdministratorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkspaceAdministratorResource" /> object. </returns>
         public static SynapseWorkspaceAdministratorResource GetSynapseWorkspaceAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseWorkspaceAdministratorResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseWorkspaceAdministratorResource(id);
         }
 
         /// <summary>
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseWorkspaceSqlAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="SynapseWorkspaceSqlAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseWorkspaceSqlAdministratorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseWorkspaceSqlAdministratorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -704,7 +704,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseWorkspaceSqlAdministratorResource" /> object. </returns>
         public static SynapseWorkspaceSqlAdministratorResource GetSynapseWorkspaceSqlAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseWorkspaceSqlAdministratorResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseWorkspaceSqlAdministratorResource(id);
         }
 
         /// <summary>
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseManagedIdentitySqlControlSettingResource.CreateResourceIdentifier" /> to create a <see cref="SynapseManagedIdentitySqlControlSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseManagedIdentitySqlControlSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseManagedIdentitySqlControlSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseManagedIdentitySqlControlSettingResource" /> object. </returns>
         public static SynapseManagedIdentitySqlControlSettingResource GetSynapseManagedIdentitySqlControlSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseManagedIdentitySqlControlSettingResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseManagedIdentitySqlControlSettingResource(id);
         }
 
         /// <summary>
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseRestorableDroppedSqlPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseRestorableDroppedSqlPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseRestorableDroppedSqlPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseRestorableDroppedSqlPoolResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseRestorableDroppedSqlPoolResource" /> object. </returns>
         public static SynapseRestorableDroppedSqlPoolResource GetSynapseRestorableDroppedSqlPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseRestorableDroppedSqlPoolResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseRestorableDroppedSqlPoolResource(id);
         }
 
         /// <summary>
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseBigDataPoolInfoResource.CreateResourceIdentifier" /> to create a <see cref="SynapseBigDataPoolInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseBigDataPoolInfoResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseBigDataPoolInfoResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseBigDataPoolInfoResource" /> object. </returns>
         public static SynapseBigDataPoolInfoResource GetSynapseBigDataPoolInfoResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseBigDataPoolInfoResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseBigDataPoolInfoResource(id);
         }
 
         /// <summary>
@@ -760,7 +760,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseLibraryResource.CreateResourceIdentifier" /> to create a <see cref="SynapseLibraryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseLibraryResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseLibraryResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -768,7 +768,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseLibraryResource" /> object. </returns>
         public static SynapseLibraryResource GetSynapseLibraryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseLibraryResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseLibraryResource(id);
         }
 
         /// <summary>
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseIntegrationRuntimeResource.CreateResourceIdentifier" /> to create a <see cref="SynapseIntegrationRuntimeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseIntegrationRuntimeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseIntegrationRuntimeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseIntegrationRuntimeResource" /> object. </returns>
         public static SynapseIntegrationRuntimeResource GetSynapseIntegrationRuntimeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseIntegrationRuntimeResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseIntegrationRuntimeResource(id);
         }
 
         /// <summary>
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseSparkConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseSparkConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseSparkConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseSparkConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseSparkConfigurationResource" /> object. </returns>
         public static SynapseSparkConfigurationResource GetSynapseSparkConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseSparkConfigurationResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseSparkConfigurationResource(id);
         }
 
         /// <summary>
@@ -808,7 +808,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseKustoPoolResource.CreateResourceIdentifier" /> to create a <see cref="SynapseKustoPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseKustoPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseKustoPoolResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseKustoPoolResource" /> object. </returns>
         public static SynapseKustoPoolResource GetSynapseKustoPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseKustoPoolResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseKustoPoolResource(id);
         }
 
         /// <summary>
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseAttachedDatabaseConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SynapseAttachedDatabaseConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseAttachedDatabaseConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseAttachedDatabaseConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -832,7 +832,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseAttachedDatabaseConfigurationResource" /> object. </returns>
         public static SynapseAttachedDatabaseConfigurationResource GetSynapseAttachedDatabaseConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseAttachedDatabaseConfigurationResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseAttachedDatabaseConfigurationResource(id);
         }
 
         /// <summary>
@@ -840,7 +840,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseDatabaseResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseDatabaseResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDatabaseResource" /> object. </returns>
         public static SynapseDatabaseResource GetSynapseDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseDatabaseResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseDatabaseResource(id);
         }
 
         /// <summary>
@@ -856,7 +856,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseDataConnectionResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDataConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseDataConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseDataConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDataConnectionResource" /> object. </returns>
         public static SynapseDataConnectionResource GetSynapseDataConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseDataConnectionResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseDataConnectionResource(id);
         }
 
         /// <summary>
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseClusterPrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseClusterPrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseClusterPrincipalAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseClusterPrincipalAssignmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -880,7 +880,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseClusterPrincipalAssignmentResource" /> object. </returns>
         public static SynapseClusterPrincipalAssignmentResource GetSynapseClusterPrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseClusterPrincipalAssignmentResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseClusterPrincipalAssignmentResource(id);
         }
 
         /// <summary>
@@ -888,7 +888,7 @@ namespace Azure.ResourceManager.Synapse
         /// You can use <see cref="SynapseDatabasePrincipalAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="SynapseDatabasePrincipalAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseArmClientMockingExtension.GetSynapseDatabasePrincipalAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseArmClient.GetSynapseDatabasePrincipalAssignmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -896,21 +896,21 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> Returns a <see cref="SynapseDatabasePrincipalAssignmentResource" /> object. </returns>
         public static SynapseDatabasePrincipalAssignmentResource GetSynapseDatabasePrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSynapseArmClientMockingExtension(client).GetSynapseDatabasePrincipalAssignmentResource(id);
+            return GetMockableSynapseArmClient(client).GetSynapseDatabasePrincipalAssignmentResource(id);
         }
 
         /// <summary>
         /// Gets a collection of SynapsePrivateLinkHubResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseResourceGroupMockingExtension.GetSynapsePrivateLinkHubs()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseResourceGroupResource.GetSynapsePrivateLinkHubs()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SynapsePrivateLinkHubResources and their operations over a SynapsePrivateLinkHubResource. </returns>
         public static SynapsePrivateLinkHubCollection GetSynapsePrivateLinkHubs(this ResourceGroupResource resourceGroupResource)
         {
-            return GetSynapseResourceGroupMockingExtension(resourceGroupResource).GetSynapsePrivateLinkHubs();
+            return GetMockableSynapseResourceGroupResource(resourceGroupResource).GetSynapsePrivateLinkHubs();
         }
 
         /// <summary>
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseResourceGroupMockingExtension.GetSynapsePrivateLinkHubAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseResourceGroupResource.GetSynapsePrivateLinkHubAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.Synapse
         [ForwardsClientCalls]
         public static async Task<Response<SynapsePrivateLinkHubResource>> GetSynapsePrivateLinkHubAsync(this ResourceGroupResource resourceGroupResource, string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            return await GetSynapseResourceGroupMockingExtension(resourceGroupResource).GetSynapsePrivateLinkHubAsync(privateLinkHubName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSynapseResourceGroupResource(resourceGroupResource).GetSynapsePrivateLinkHubAsync(privateLinkHubName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -955,7 +955,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseResourceGroupMockingExtension.GetSynapsePrivateLinkHub(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseResourceGroupResource.GetSynapsePrivateLinkHub(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -966,21 +966,21 @@ namespace Azure.ResourceManager.Synapse
         [ForwardsClientCalls]
         public static Response<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHub(this ResourceGroupResource resourceGroupResource, string privateLinkHubName, CancellationToken cancellationToken = default)
         {
-            return GetSynapseResourceGroupMockingExtension(resourceGroupResource).GetSynapsePrivateLinkHub(privateLinkHubName, cancellationToken);
+            return GetMockableSynapseResourceGroupResource(resourceGroupResource).GetSynapsePrivateLinkHub(privateLinkHubName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of SynapseWorkspaceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseResourceGroupMockingExtension.GetSynapseWorkspaces()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseResourceGroupResource.GetSynapseWorkspaces()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SynapseWorkspaceResources and their operations over a SynapseWorkspaceResource. </returns>
         public static SynapseWorkspaceCollection GetSynapseWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetSynapseResourceGroupMockingExtension(resourceGroupResource).GetSynapseWorkspaces();
+            return GetMockableSynapseResourceGroupResource(resourceGroupResource).GetSynapseWorkspaces();
         }
 
         /// <summary>
@@ -997,7 +997,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseResourceGroupMockingExtension.GetSynapseWorkspaceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseResourceGroupResource.GetSynapseWorkspaceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.Synapse
         [ForwardsClientCalls]
         public static async Task<Response<SynapseWorkspaceResource>> GetSynapseWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await GetSynapseResourceGroupMockingExtension(resourceGroupResource).GetSynapseWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSynapseResourceGroupResource(resourceGroupResource).GetSynapseWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1025,7 +1025,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseResourceGroupMockingExtension.GetSynapseWorkspace(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseResourceGroupResource.GetSynapseWorkspace(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -1036,7 +1036,7 @@ namespace Azure.ResourceManager.Synapse
         [ForwardsClientCalls]
         public static Response<SynapseWorkspaceResource> GetSynapseWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return GetSynapseResourceGroupMockingExtension(resourceGroupResource).GetSynapseWorkspace(workspaceName, cancellationToken);
+            return GetMockableSynapseResourceGroupResource(resourceGroupResource).GetSynapseWorkspace(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseSubscriptionMockingExtension.GetSynapsePrivateLinkHubs(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseSubscriptionResource.GetSynapsePrivateLinkHubs(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1061,7 +1061,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSynapseSubscriptionMockingExtension(subscriptionResource).GetSynapsePrivateLinkHubsAsync(cancellationToken);
+            return GetMockableSynapseSubscriptionResource(subscriptionResource).GetSynapsePrivateLinkHubsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1078,7 +1078,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseSubscriptionMockingExtension.GetSynapsePrivateLinkHubs(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseSubscriptionResource.GetSynapsePrivateLinkHubs(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1086,7 +1086,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapsePrivateLinkHubResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHubs(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSynapseSubscriptionMockingExtension(subscriptionResource).GetSynapsePrivateLinkHubs(cancellationToken);
+            return GetMockableSynapseSubscriptionResource(subscriptionResource).GetSynapsePrivateLinkHubs(cancellationToken);
         }
 
         /// <summary>
@@ -1103,7 +1103,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseSubscriptionMockingExtension.GetSynapseWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseSubscriptionResource.GetSynapseWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1111,7 +1111,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SynapseWorkspaceResource> GetSynapseWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSynapseSubscriptionMockingExtension(subscriptionResource).GetSynapseWorkspacesAsync(cancellationToken);
+            return GetMockableSynapseSubscriptionResource(subscriptionResource).GetSynapseWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseSubscriptionMockingExtension.GetSynapseWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseSubscriptionResource.GetSynapseWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1136,7 +1136,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="SynapseWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SynapseWorkspaceResource> GetSynapseWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSynapseSubscriptionMockingExtension(subscriptionResource).GetSynapseWorkspaces(cancellationToken);
+            return GetMockableSynapseSubscriptionResource(subscriptionResource).GetSynapseWorkspaces(cancellationToken);
         }
 
         /// <summary>
@@ -1153,7 +1153,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseSubscriptionMockingExtension.GetSkusKustoPools(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseSubscriptionResource.GetSkusKustoPools(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1161,7 +1161,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An async collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KustoPoolSkuDescription> GetSkusKustoPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSynapseSubscriptionMockingExtension(subscriptionResource).GetSkusKustoPoolsAsync(cancellationToken);
+            return GetMockableSynapseSubscriptionResource(subscriptionResource).GetSkusKustoPoolsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1178,7 +1178,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseSubscriptionMockingExtension.GetSkusKustoPools(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseSubscriptionResource.GetSkusKustoPools(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1186,7 +1186,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> A collection of <see cref="KustoPoolSkuDescription" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KustoPoolSkuDescription> GetSkusKustoPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSynapseSubscriptionMockingExtension(subscriptionResource).GetSkusKustoPools(cancellationToken);
+            return GetMockableSynapseSubscriptionResource(subscriptionResource).GetSkusKustoPools(cancellationToken);
         }
 
         /// <summary>
@@ -1203,7 +1203,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseSubscriptionMockingExtension.CheckKustoPoolNameAvailability(AzureLocation,KustoPoolNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseSubscriptionResource.CheckKustoPoolNameAvailability(AzureLocation,KustoPoolNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1213,7 +1213,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<KustoPoolNameAvailabilityResult>> CheckKustoPoolNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetSynapseSubscriptionMockingExtension(subscriptionResource).CheckKustoPoolNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSynapseSubscriptionResource(subscriptionResource).CheckKustoPoolNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1230,7 +1230,7 @@ namespace Azure.ResourceManager.Synapse
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SynapseSubscriptionMockingExtension.CheckKustoPoolNameAvailability(AzureLocation,KustoPoolNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSynapseSubscriptionResource.CheckKustoPoolNameAvailability(AzureLocation,KustoPoolNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1240,7 +1240,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<KustoPoolNameAvailabilityResult> CheckKustoPoolNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, KustoPoolNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetSynapseSubscriptionMockingExtension(subscriptionResource).CheckKustoPoolNameAvailability(location, content, cancellationToken);
+            return GetMockableSynapseSubscriptionResource(subscriptionResource).CheckKustoPoolNameAvailability(location, content, cancellationToken);
         }
     }
 }

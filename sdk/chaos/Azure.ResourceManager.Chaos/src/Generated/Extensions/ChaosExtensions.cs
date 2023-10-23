@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.Chaos
     /// <summary> A class to add extension methods to Azure.ResourceManager.Chaos. </summary>
     public static partial class ChaosExtensions
     {
-        private static ChaosArmClientMockingExtension GetChaosArmClientMockingExtension(ArmClient client)
+        private static MockableChaosArmClient GetMockableChaosArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ChaosArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableChaosArmClient(client0));
         }
 
-        private static ChaosResourceGroupMockingExtension GetChaosResourceGroupMockingExtension(ArmResource resource)
+        private static MockableChaosResourceGroupResource GetMockableChaosResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ChaosResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableChaosResourceGroupResource(client, resource.Id));
         }
 
-        private static ChaosSubscriptionMockingExtension GetChaosSubscriptionMockingExtension(ArmResource resource)
+        private static MockableChaosSubscriptionResource GetMockableChaosSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ChaosSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableChaosSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Chaos
         /// You can use <see cref="CapabilityResource.CreateResourceIdentifier" /> to create a <see cref="CapabilityResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosArmClientMockingExtension.GetCapabilityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetCapabilityResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> Returns a <see cref="CapabilityResource" /> object. </returns>
         public static CapabilityResource GetCapabilityResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetChaosArmClientMockingExtension(client).GetCapabilityResource(id);
+            return GetMockableChaosArmClient(client).GetCapabilityResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Chaos
         /// You can use <see cref="CapabilityTypeResource.CreateResourceIdentifier" /> to create a <see cref="CapabilityTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosArmClientMockingExtension.GetCapabilityTypeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetCapabilityTypeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> Returns a <see cref="CapabilityTypeResource" /> object. </returns>
         public static CapabilityTypeResource GetCapabilityTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetChaosArmClientMockingExtension(client).GetCapabilityTypeResource(id);
+            return GetMockableChaosArmClient(client).GetCapabilityTypeResource(id);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Chaos
         /// You can use <see cref="ExperimentResource.CreateResourceIdentifier" /> to create an <see cref="ExperimentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosArmClientMockingExtension.GetExperimentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetExperimentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> Returns a <see cref="ExperimentResource" /> object. </returns>
         public static ExperimentResource GetExperimentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetChaosArmClientMockingExtension(client).GetExperimentResource(id);
+            return GetMockableChaosArmClient(client).GetExperimentResource(id);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Chaos
         /// You can use <see cref="ExperimentStatusResource.CreateResourceIdentifier" /> to create an <see cref="ExperimentStatusResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosArmClientMockingExtension.GetExperimentStatusResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetExperimentStatusResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> Returns a <see cref="ExperimentStatusResource" /> object. </returns>
         public static ExperimentStatusResource GetExperimentStatusResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetChaosArmClientMockingExtension(client).GetExperimentStatusResource(id);
+            return GetMockableChaosArmClient(client).GetExperimentStatusResource(id);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Chaos
         /// You can use <see cref="ExperimentExecutionDetailResource.CreateResourceIdentifier" /> to create an <see cref="ExperimentExecutionDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosArmClientMockingExtension.GetExperimentExecutionDetailResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetExperimentExecutionDetailResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> Returns a <see cref="ExperimentExecutionDetailResource" /> object. </returns>
         public static ExperimentExecutionDetailResource GetExperimentExecutionDetailResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetChaosArmClientMockingExtension(client).GetExperimentExecutionDetailResource(id);
+            return GetMockableChaosArmClient(client).GetExperimentExecutionDetailResource(id);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Chaos
         /// You can use <see cref="TargetTypeResource.CreateResourceIdentifier" /> to create a <see cref="TargetTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosArmClientMockingExtension.GetTargetTypeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetTargetTypeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> Returns a <see cref="TargetTypeResource" /> object. </returns>
         public static TargetTypeResource GetTargetTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetChaosArmClientMockingExtension(client).GetTargetTypeResource(id);
+            return GetMockableChaosArmClient(client).GetTargetTypeResource(id);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Chaos
         /// You can use <see cref="TargetResource.CreateResourceIdentifier" /> to create a <see cref="TargetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosArmClientMockingExtension.GetTargetResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetTargetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -143,21 +143,21 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> Returns a <see cref="TargetResource" /> object. </returns>
         public static TargetResource GetTargetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetChaosArmClientMockingExtension(client).GetTargetResource(id);
+            return GetMockableChaosArmClient(client).GetTargetResource(id);
         }
 
         /// <summary>
         /// Gets a collection of ExperimentResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosResourceGroupMockingExtension.GetExperiments()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetExperiments()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ExperimentResources and their operations over a ExperimentResource. </returns>
         public static ExperimentCollection GetExperiments(this ResourceGroupResource resourceGroupResource)
         {
-            return GetChaosResourceGroupMockingExtension(resourceGroupResource).GetExperiments();
+            return GetMockableChaosResourceGroupResource(resourceGroupResource).GetExperiments();
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosResourceGroupMockingExtension.GetExperimentAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetExperimentAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Chaos
         [ForwardsClientCalls]
         public static async Task<Response<ExperimentResource>> GetExperimentAsync(this ResourceGroupResource resourceGroupResource, string experimentName, CancellationToken cancellationToken = default)
         {
-            return await GetChaosResourceGroupMockingExtension(resourceGroupResource).GetExperimentAsync(experimentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableChaosResourceGroupResource(resourceGroupResource).GetExperimentAsync(experimentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosResourceGroupMockingExtension.GetExperiment(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetExperiment(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -213,14 +213,14 @@ namespace Azure.ResourceManager.Chaos
         [ForwardsClientCalls]
         public static Response<ExperimentResource> GetExperiment(this ResourceGroupResource resourceGroupResource, string experimentName, CancellationToken cancellationToken = default)
         {
-            return GetChaosResourceGroupMockingExtension(resourceGroupResource).GetExperiment(experimentName, cancellationToken);
+            return GetMockableChaosResourceGroupResource(resourceGroupResource).GetExperiment(experimentName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of TargetResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosResourceGroupMockingExtension.GetTargets(string,string,string)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetTargets(string,string,string)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An object representing collection of TargetResources and their operations over a TargetResource. </returns>
         public static TargetCollection GetTargets(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName)
         {
-            return GetChaosResourceGroupMockingExtension(resourceGroupResource).GetTargets(parentProviderNamespace, parentResourceType, parentResourceName);
+            return GetMockableChaosResourceGroupResource(resourceGroupResource).GetTargets(parentProviderNamespace, parentResourceType, parentResourceName);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosResourceGroupMockingExtension.GetTargetAsync(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetTargetAsync(string,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Chaos
         [ForwardsClientCalls]
         public static async Task<Response<TargetResource>> GetTargetAsync(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
         {
-            return await GetChaosResourceGroupMockingExtension(resourceGroupResource).GetTargetAsync(parentProviderNamespace, parentResourceType, parentResourceName, targetName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableChaosResourceGroupResource(resourceGroupResource).GetTargetAsync(parentProviderNamespace, parentResourceType, parentResourceName, targetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosResourceGroupMockingExtension.GetTarget(string,string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosResourceGroupResource.GetTarget(string,string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -294,14 +294,14 @@ namespace Azure.ResourceManager.Chaos
         [ForwardsClientCalls]
         public static Response<TargetResource> GetTarget(this ResourceGroupResource resourceGroupResource, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, CancellationToken cancellationToken = default)
         {
-            return GetChaosResourceGroupMockingExtension(resourceGroupResource).GetTarget(parentProviderNamespace, parentResourceType, parentResourceName, targetName, cancellationToken);
+            return GetMockableChaosResourceGroupResource(resourceGroupResource).GetTarget(parentProviderNamespace, parentResourceType, parentResourceName, targetName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of TargetTypeResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosSubscriptionMockingExtension.GetTargetTypes(string)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetTargetTypes(string)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An object representing collection of TargetTypeResources and their operations over a TargetTypeResource. </returns>
         public static TargetTypeCollection GetTargetTypes(this SubscriptionResource subscriptionResource, string locationName)
         {
-            return GetChaosSubscriptionMockingExtension(subscriptionResource).GetTargetTypes(locationName);
+            return GetMockableChaosSubscriptionResource(subscriptionResource).GetTargetTypes(locationName);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosSubscriptionMockingExtension.GetTargetTypeAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetTargetTypeAsync(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Chaos
         [ForwardsClientCalls]
         public static async Task<Response<TargetTypeResource>> GetTargetTypeAsync(this SubscriptionResource subscriptionResource, string locationName, string targetTypeName, CancellationToken cancellationToken = default)
         {
-            return await GetChaosSubscriptionMockingExtension(subscriptionResource).GetTargetTypeAsync(locationName, targetTypeName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableChaosSubscriptionResource(subscriptionResource).GetTargetTypeAsync(locationName, targetTypeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosSubscriptionMockingExtension.GetTargetType(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetTargetType(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Chaos
         [ForwardsClientCalls]
         public static Response<TargetTypeResource> GetTargetType(this SubscriptionResource subscriptionResource, string locationName, string targetTypeName, CancellationToken cancellationToken = default)
         {
-            return GetChaosSubscriptionMockingExtension(subscriptionResource).GetTargetType(locationName, targetTypeName, cancellationToken);
+            return GetMockableChaosSubscriptionResource(subscriptionResource).GetTargetType(locationName, targetTypeName, cancellationToken);
         }
 
         /// <summary>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosSubscriptionMockingExtension.GetExperiments(bool?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetExperiments(bool?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> An async collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ExperimentResource> GetExperimentsAsync(this SubscriptionResource subscriptionResource, bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            return GetChaosSubscriptionMockingExtension(subscriptionResource).GetExperimentsAsync(running, continuationToken, cancellationToken);
+            return GetMockableChaosSubscriptionResource(subscriptionResource).GetExperimentsAsync(running, continuationToken, cancellationToken);
         }
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.Chaos
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ChaosSubscriptionMockingExtension.GetExperiments(bool?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableChaosSubscriptionResource.GetExperiments(bool?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Chaos
         /// <returns> A collection of <see cref="ExperimentResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ExperimentResource> GetExperiments(this SubscriptionResource subscriptionResource, bool? running = null, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            return GetChaosSubscriptionMockingExtension(subscriptionResource).GetExperiments(running, continuationToken, cancellationToken);
+            return GetMockableChaosSubscriptionResource(subscriptionResource).GetExperiments(running, continuationToken, cancellationToken);
         }
     }
 }

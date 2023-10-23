@@ -152,16 +152,16 @@ namespace Azure.ResourceManager.EdgeOrder
 }
 namespace Azure.ResourceManager.EdgeOrder.Mocking
 {
-    public partial class EdgeOrderArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableEdgeOrderArmClient : Azure.ResourceManager.ArmResource
     {
-        protected EdgeOrderArmClientMockingExtension() { }
+        protected MockableEdgeOrderArmClient() { }
         public virtual Azure.ResourceManager.EdgeOrder.EdgeOrderAddressResource GetEdgeOrderAddressResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.EdgeOrder.EdgeOrderItemResource GetEdgeOrderItemResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.EdgeOrder.EdgeOrderResource GetEdgeOrderResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class EdgeOrderResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableEdgeOrderResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected EdgeOrderResourceGroupMockingExtension() { }
+        protected MockableEdgeOrderResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.EdgeOrder.EdgeOrderResource> GetEdgeOrder(Azure.Core.AzureLocation location, string orderName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.EdgeOrder.EdgeOrderAddressResource> GetEdgeOrderAddress(string addressName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EdgeOrder.EdgeOrderAddressResource>> GetEdgeOrderAddressAsync(string addressName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -174,9 +174,9 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         public virtual Azure.Pageable<Azure.ResourceManager.EdgeOrder.EdgeOrderResource> GetEdgeOrders(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.EdgeOrder.EdgeOrderResource> GetEdgeOrdersAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class EdgeOrderSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableEdgeOrderSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected EdgeOrderSubscriptionMockingExtension() { }
+        protected MockableEdgeOrderSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.EdgeOrder.Models.ProductConfiguration> GetConfigurations(Azure.ResourceManager.EdgeOrder.Models.ConfigurationsContent content, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.EdgeOrder.Models.ProductConfiguration> GetConfigurationsAsync(Azure.ResourceManager.EdgeOrder.Models.ConfigurationsContent content, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.EdgeOrder.EdgeOrderAddressResource> GetEdgeOrderAddresses(string filter = null, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

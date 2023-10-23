@@ -210,17 +210,17 @@ namespace Azure.ResourceManager.BillingBenefits
 }
 namespace Azure.ResourceManager.BillingBenefits.Mocking
 {
-    public partial class BillingBenefitsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableBillingBenefitsArmClient : Azure.ResourceManager.ArmResource
     {
-        protected BillingBenefitsArmClientMockingExtension() { }
+        protected MockableBillingBenefitsArmClient() { }
         public virtual Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasResource GetBillingBenefitsReservationOrderAliasResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderAliasResource GetBillingBenefitsSavingsPlanOrderAliasResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanOrderResource GetBillingBenefitsSavingsPlanOrderResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.BillingBenefits.BillingBenefitsSavingsPlanResource GetBillingBenefitsSavingsPlanResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class BillingBenefitsTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableBillingBenefitsTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected BillingBenefitsTenantMockingExtension() { }
+        protected MockableBillingBenefitsTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasResource> GetBillingBenefitsReservationOrderAlias(string reservationOrderAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasResource>> GetBillingBenefitsReservationOrderAliasAsync(string reservationOrderAliasName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.BillingBenefits.BillingBenefitsReservationOrderAliasCollection GetBillingBenefitsReservationOrderAliases() { throw null; }

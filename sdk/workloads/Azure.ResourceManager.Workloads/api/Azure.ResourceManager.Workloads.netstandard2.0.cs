@@ -386,9 +386,9 @@ namespace Azure.ResourceManager.Workloads
 }
 namespace Azure.ResourceManager.Workloads.Mocking
 {
-    public partial class WorkloadsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableWorkloadsArmClient : Azure.ResourceManager.ArmResource
     {
-        protected WorkloadsArmClientMockingExtension() { }
+        protected MockableWorkloadsArmClient() { }
         public virtual Azure.ResourceManager.Workloads.SapApplicationServerInstanceResource GetSapApplicationServerInstanceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Workloads.SapCentralServerInstanceResource GetSapCentralServerInstanceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Workloads.SapDatabaseInstanceResource GetSapDatabaseInstanceResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -397,9 +397,9 @@ namespace Azure.ResourceManager.Workloads.Mocking
         public virtual Azure.ResourceManager.Workloads.SapProviderInstanceResource GetSapProviderInstanceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Workloads.SapVirtualInstanceResource GetSapVirtualInstanceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class WorkloadsResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableWorkloadsResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected WorkloadsResourceGroupMockingExtension() { }
+        protected MockableWorkloadsResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Workloads.SapMonitorResource> GetSapMonitor(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapMonitorResource>> GetSapMonitorAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Workloads.SapMonitorCollection GetSapMonitors() { throw null; }
@@ -407,9 +407,9 @@ namespace Azure.ResourceManager.Workloads.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Workloads.SapVirtualInstanceResource>> GetSapVirtualInstanceAsync(string sapVirtualInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Workloads.SapVirtualInstanceCollection GetSapVirtualInstances() { throw null; }
     }
-    public partial class WorkloadsSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableWorkloadsSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected WorkloadsSubscriptionMockingExtension() { }
+        protected MockableWorkloadsSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Workloads.SapMonitorResource> GetSapMonitors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Workloads.SapMonitorResource> GetSapMonitorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Workloads.SapVirtualInstanceResource> GetSapVirtualInstances(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -124,22 +124,22 @@ namespace Azure.ResourceManager.StoragePool
 }
 namespace Azure.ResourceManager.StoragePool.Mocking
 {
-    public partial class StoragePoolArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableStoragePoolArmClient : Azure.ResourceManager.ArmResource
     {
-        protected StoragePoolArmClientMockingExtension() { }
+        protected MockableStoragePoolArmClient() { }
         public virtual Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetResource GetDiskPoolIscsiTargetResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.StoragePool.DiskPoolResource GetDiskPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class StoragePoolResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableStoragePoolResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected StoragePoolResourceGroupMockingExtension() { }
+        protected MockableStoragePoolResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.StoragePool.DiskPoolResource> GetDiskPool(string diskPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StoragePool.DiskPoolResource>> GetDiskPoolAsync(string diskPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.StoragePool.DiskPoolCollection GetDiskPools() { throw null; }
     }
-    public partial class StoragePoolSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableStoragePoolSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected StoragePoolSubscriptionMockingExtension() { }
+        protected MockableStoragePoolSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.StoragePool.DiskPoolResource> GetDiskPools(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.StoragePool.DiskPoolResource> GetDiskPoolsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.StoragePool.Models.DiskPoolZoneInfo> GetDiskPoolZones(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

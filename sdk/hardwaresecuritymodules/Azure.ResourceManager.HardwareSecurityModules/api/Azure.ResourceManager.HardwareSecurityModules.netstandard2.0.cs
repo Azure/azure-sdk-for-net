@@ -162,16 +162,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 }
 namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
 {
-    public partial class HardwareSecurityModulesArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHardwareSecurityModulesArmClient : Azure.ResourceManager.ArmResource
     {
-        protected HardwareSecurityModulesArmClientMockingExtension() { }
+        protected MockableHardwareSecurityModulesArmClient() { }
         public virtual Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterResource GetCloudHsmClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmResource GetDedicatedHsmResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HardwareSecurityModules.HardwareSecurityModulesPrivateEndpointConnectionResource GetHardwareSecurityModulesPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class HardwareSecurityModulesResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHardwareSecurityModulesResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected HardwareSecurityModulesResourceGroupMockingExtension() { }
+        protected MockableHardwareSecurityModulesResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterResource> GetCloudHsmCluster(string cloudHsmClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterResource>> GetCloudHsmClusterAsync(string cloudHsmClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterCollection GetCloudHsmClusters() { throw null; }
@@ -179,9 +179,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmResource>> GetDedicatedHsmAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmCollection GetDedicatedHsms() { throw null; }
     }
-    public partial class HardwareSecurityModulesSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHardwareSecurityModulesSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected HardwareSecurityModulesSubscriptionMockingExtension() { }
+        protected MockableHardwareSecurityModulesSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterResource> GetCloudHsmClusters(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HardwareSecurityModules.CloudHsmClusterResource> GetCloudHsmClustersAsync(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HardwareSecurityModules.DedicatedHsmResource> GetDedicatedHsms(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

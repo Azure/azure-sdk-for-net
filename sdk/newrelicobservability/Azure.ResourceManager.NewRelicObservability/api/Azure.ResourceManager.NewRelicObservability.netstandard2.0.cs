@@ -127,22 +127,22 @@ namespace Azure.ResourceManager.NewRelicObservability
 }
 namespace Azure.ResourceManager.NewRelicObservability.Mocking
 {
-    public partial class NewRelicObservabilityArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNewRelicObservabilityArmClient : Azure.ResourceManager.ArmResource
     {
-        protected NewRelicObservabilityArmClientMockingExtension() { }
+        protected MockableNewRelicObservabilityArmClient() { }
         public virtual Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResource GetNewRelicMonitorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.NewRelicObservability.NewRelicObservabilityTagRuleResource GetNewRelicObservabilityTagRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class NewRelicObservabilityResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNewRelicObservabilityResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected NewRelicObservabilityResourceGroupMockingExtension() { }
+        protected MockableNewRelicObservabilityResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResource> GetNewRelicMonitorResource(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResource>> GetNewRelicMonitorResourceAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResourceCollection GetNewRelicMonitorResources() { throw null; }
     }
-    public partial class NewRelicObservabilitySubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNewRelicObservabilitySubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected NewRelicObservabilitySubscriptionMockingExtension() { }
+        protected MockableNewRelicObservabilitySubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData> GetNewRelicAccounts(string userEmail, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NewRelicObservability.Models.NewRelicAccountResourceData> GetNewRelicAccountsAsync(string userEmail, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.NewRelicObservability.NewRelicMonitorResource> GetNewRelicMonitorResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

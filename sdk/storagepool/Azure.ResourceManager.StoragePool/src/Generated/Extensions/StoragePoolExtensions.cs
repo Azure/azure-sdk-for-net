@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.StoragePool
     /// <summary> A class to add extension methods to Azure.ResourceManager.StoragePool. </summary>
     public static partial class StoragePoolExtensions
     {
-        private static StoragePoolArmClientMockingExtension GetStoragePoolArmClientMockingExtension(ArmClient client)
+        private static MockableStoragePoolArmClient GetMockableStoragePoolArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new StoragePoolArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableStoragePoolArmClient(client0));
         }
 
-        private static StoragePoolResourceGroupMockingExtension GetStoragePoolResourceGroupMockingExtension(ArmResource resource)
+        private static MockableStoragePoolResourceGroupResource GetMockableStoragePoolResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new StoragePoolResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableStoragePoolResourceGroupResource(client, resource.Id));
         }
 
-        private static StoragePoolSubscriptionMockingExtension GetStoragePoolSubscriptionMockingExtension(ArmResource resource)
+        private static MockableStoragePoolSubscriptionResource GetMockableStoragePoolSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new StoragePoolSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableStoragePoolSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StoragePool
         /// You can use <see cref="DiskPoolResource.CreateResourceIdentifier" /> to create a <see cref="DiskPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StoragePoolArmClientMockingExtension.GetDiskPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStoragePoolArmClient.GetDiskPoolResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> Returns a <see cref="DiskPoolResource" /> object. </returns>
         public static DiskPoolResource GetDiskPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetStoragePoolArmClientMockingExtension(client).GetDiskPoolResource(id);
+            return GetMockableStoragePoolArmClient(client).GetDiskPoolResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.StoragePool
         /// You can use <see cref="DiskPoolIscsiTargetResource.CreateResourceIdentifier" /> to create a <see cref="DiskPoolIscsiTargetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StoragePoolArmClientMockingExtension.GetDiskPoolIscsiTargetResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStoragePoolArmClient.GetDiskPoolIscsiTargetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,21 +64,21 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> Returns a <see cref="DiskPoolIscsiTargetResource" /> object. </returns>
         public static DiskPoolIscsiTargetResource GetDiskPoolIscsiTargetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetStoragePoolArmClientMockingExtension(client).GetDiskPoolIscsiTargetResource(id);
+            return GetMockableStoragePoolArmClient(client).GetDiskPoolIscsiTargetResource(id);
         }
 
         /// <summary>
         /// Gets a collection of DiskPoolResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StoragePoolResourceGroupMockingExtension.GetDiskPools()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStoragePoolResourceGroupResource.GetDiskPools()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DiskPoolResources and their operations over a DiskPoolResource. </returns>
         public static DiskPoolCollection GetDiskPools(this ResourceGroupResource resourceGroupResource)
         {
-            return GetStoragePoolResourceGroupMockingExtension(resourceGroupResource).GetDiskPools();
+            return GetMockableStoragePoolResourceGroupResource(resourceGroupResource).GetDiskPools();
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.StoragePool
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StoragePoolResourceGroupMockingExtension.GetDiskPoolAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStoragePoolResourceGroupResource.GetDiskPoolAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.StoragePool
         [ForwardsClientCalls]
         public static async Task<Response<DiskPoolResource>> GetDiskPoolAsync(this ResourceGroupResource resourceGroupResource, string diskPoolName, CancellationToken cancellationToken = default)
         {
-            return await GetStoragePoolResourceGroupMockingExtension(resourceGroupResource).GetDiskPoolAsync(diskPoolName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableStoragePoolResourceGroupResource(resourceGroupResource).GetDiskPoolAsync(diskPoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.StoragePool
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StoragePoolResourceGroupMockingExtension.GetDiskPool(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStoragePoolResourceGroupResource.GetDiskPool(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.StoragePool
         [ForwardsClientCalls]
         public static Response<DiskPoolResource> GetDiskPool(this ResourceGroupResource resourceGroupResource, string diskPoolName, CancellationToken cancellationToken = default)
         {
-            return GetStoragePoolResourceGroupMockingExtension(resourceGroupResource).GetDiskPool(diskPoolName, cancellationToken);
+            return GetMockableStoragePoolResourceGroupResource(resourceGroupResource).GetDiskPool(diskPoolName, cancellationToken);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.StoragePool
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StoragePoolSubscriptionMockingExtension.GetDiskPools(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStoragePoolSubscriptionResource.GetDiskPools(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An async collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DiskPoolResource> GetDiskPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetStoragePoolSubscriptionMockingExtension(subscriptionResource).GetDiskPoolsAsync(cancellationToken);
+            return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetDiskPoolsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.StoragePool
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StoragePoolSubscriptionMockingExtension.GetDiskPools(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStoragePoolSubscriptionResource.GetDiskPools(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> A collection of <see cref="DiskPoolResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DiskPoolResource> GetDiskPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetStoragePoolSubscriptionMockingExtension(subscriptionResource).GetDiskPools(cancellationToken);
+            return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetDiskPools(cancellationToken);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.StoragePool
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StoragePoolSubscriptionMockingExtension.GetDiskPoolZones(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStoragePoolSubscriptionResource.GetDiskPoolZones(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An async collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DiskPoolZoneInfo> GetDiskPoolZonesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetStoragePoolSubscriptionMockingExtension(subscriptionResource).GetDiskPoolZonesAsync(location, cancellationToken);
+            return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetDiskPoolZonesAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.StoragePool
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StoragePoolSubscriptionMockingExtension.GetDiskPoolZones(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStoragePoolSubscriptionResource.GetDiskPoolZones(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> A collection of <see cref="DiskPoolZoneInfo" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DiskPoolZoneInfo> GetDiskPoolZones(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetStoragePoolSubscriptionMockingExtension(subscriptionResource).GetDiskPoolZones(location, cancellationToken);
+            return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetDiskPoolZones(location, cancellationToken);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.StoragePool
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StoragePoolSubscriptionMockingExtension.GetResourceSkus(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStoragePoolSubscriptionResource.GetResourceSkus(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> An async collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<StoragePoolSkuInfo> GetResourceSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetStoragePoolSubscriptionMockingExtension(subscriptionResource).GetResourceSkusAsync(location, cancellationToken);
+            return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetResourceSkusAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.StoragePool
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="StoragePoolSubscriptionMockingExtension.GetResourceSkus(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableStoragePoolSubscriptionResource.GetResourceSkus(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.StoragePool
         /// <returns> A collection of <see cref="StoragePoolSkuInfo" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<StoragePoolSkuInfo> GetResourceSkus(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetStoragePoolSubscriptionMockingExtension(subscriptionResource).GetResourceSkus(location, cancellationToken);
+            return GetMockableStoragePoolSubscriptionResource(subscriptionResource).GetResourceSkus(location, cancellationToken);
         }
     }
 }

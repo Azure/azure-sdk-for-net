@@ -543,9 +543,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 }
 namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
 {
-    public partial class RecoveryServicesBackupArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableRecoveryServicesBackupArmClient : Azure.ResourceManager.ArmResource
     {
-        protected RecoveryServicesBackupArmClientMockingExtension() { }
+        protected MockableRecoveryServicesBackupArmClient() { }
         public virtual Azure.ResourceManager.RecoveryServicesBackup.BackupEngineResource GetBackupEngineResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.RecoveryServicesBackup.BackupJobResource GetBackupJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.RecoveryServicesBackup.BackupPrivateEndpointConnectionResource GetBackupPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -559,9 +559,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         public virtual Azure.ResourceManager.RecoveryServicesBackup.BackupResourceVaultConfigResource GetBackupResourceVaultConfigResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.RecoveryServicesBackup.ResourceGuardProxyResource GetResourceGuardProxyResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class RecoveryServicesBackupResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableRecoveryServicesBackupResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected RecoveryServicesBackupResourceGroupMockingExtension() { }
+        protected MockableRecoveryServicesBackupResourceGroupResource() { }
         public virtual Azure.Response ExportJob(string vaultName, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> ExportJobAsync(string vaultName, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesBackup.BackupEngineResource> GetBackupEngine(string vaultName, string backupEngineName, string filter = null, string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -613,9 +613,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         public virtual Azure.Response RefreshProtectionContainer(string vaultName, string fabricName, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> RefreshProtectionContainerAsync(string vaultName, string fabricName, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class RecoveryServicesBackupSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableRecoveryServicesBackupSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected RecoveryServicesBackupSubscriptionMockingExtension() { }
+        protected MockableRecoveryServicesBackupSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStatusResult> GetBackupStatus(Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStatusContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStatusResult>> GetBackupStatusAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServicesBackup.Models.BackupStatusContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.RecoveryServicesBackup.Models.VmResourceFeatureSupportResult> ValidateFeatureSupport(Azure.Core.AzureLocation location, Azure.ResourceManager.RecoveryServicesBackup.Models.FeatureSupportContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

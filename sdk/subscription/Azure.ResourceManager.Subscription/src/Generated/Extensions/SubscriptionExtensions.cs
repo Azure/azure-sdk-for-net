@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Subscription
     /// <summary> A class to add extension methods to Azure.ResourceManager.Subscription. </summary>
     public static partial class SubscriptionExtensions
     {
-        private static SubscriptionArmClientMockingExtension GetSubscriptionArmClientMockingExtension(ArmClient client)
+        private static MockableSubscriptionArmClient GetMockableSubscriptionArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new SubscriptionArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableSubscriptionArmClient(client0));
         }
 
-        private static SubscriptionSubscriptionMockingExtension GetSubscriptionSubscriptionMockingExtension(ArmResource resource)
+        private static MockableSubscriptionSubscriptionResource GetMockableSubscriptionSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new SubscriptionSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableSubscriptionSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionTenantMockingExtension GetSubscriptionTenantMockingExtension(ArmResource resource)
+        private static MockableSubscriptionTenantResource GetMockableSubscriptionTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new SubscriptionTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableSubscriptionTenantResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Subscription
         /// You can use <see cref="SubscriptionAliasResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionArmClientMockingExtension.GetSubscriptionAliasResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionArmClient.GetSubscriptionAliasResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> Returns a <see cref="SubscriptionAliasResource" /> object. </returns>
         public static SubscriptionAliasResource GetSubscriptionAliasResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSubscriptionArmClientMockingExtension(client).GetSubscriptionAliasResource(id);
+            return GetMockableSubscriptionArmClient(client).GetSubscriptionAliasResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Subscription
         /// You can use <see cref="TenantPolicyResource.CreateResourceIdentifier" /> to create a <see cref="TenantPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionArmClientMockingExtension.GetTenantPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionArmClient.GetTenantPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> Returns a <see cref="TenantPolicyResource" /> object. </returns>
         public static TenantPolicyResource GetTenantPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSubscriptionArmClientMockingExtension(client).GetTenantPolicyResource(id);
+            return GetMockableSubscriptionArmClient(client).GetTenantPolicyResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Subscription
         /// You can use <see cref="BillingAccountPolicyResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionArmClientMockingExtension.GetBillingAccountPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionArmClient.GetBillingAccountPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Subscription
         /// <returns> Returns a <see cref="BillingAccountPolicyResource" /> object. </returns>
         public static BillingAccountPolicyResource GetBillingAccountPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetSubscriptionArmClientMockingExtension(client).GetBillingAccountPolicyResource(id);
+            return GetMockableSubscriptionArmClient(client).GetBillingAccountPolicyResource(id);
         }
 
         /// <summary>
@@ -97,14 +97,14 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionSubscriptionMockingExtension.CancelSubscription(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.CancelSubscription(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<CanceledSubscriptionId>> CancelSubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionSubscriptionMockingExtension(subscriptionResource).CancelSubscriptionAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableSubscriptionSubscriptionResource(subscriptionResource).CancelSubscriptionAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionSubscriptionMockingExtension.CancelSubscription(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.CancelSubscription(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<CanceledSubscriptionId> CancelSubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionSubscriptionMockingExtension(subscriptionResource).CancelSubscription(cancellationToken);
+            return GetMockableSubscriptionSubscriptionResource(subscriptionResource).CancelSubscription(cancellationToken);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionSubscriptionMockingExtension.RenameSubscription(SubscriptionName,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.RenameSubscription(SubscriptionName,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public static async Task<Response<RenamedSubscriptionId>> RenameSubscriptionAsync(this SubscriptionResource subscriptionResource, SubscriptionName body, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionSubscriptionMockingExtension(subscriptionResource).RenameSubscriptionAsync(body, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSubscriptionSubscriptionResource(subscriptionResource).RenameSubscriptionAsync(body, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionSubscriptionMockingExtension.RenameSubscription(SubscriptionName,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.RenameSubscription(SubscriptionName,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         public static Response<RenamedSubscriptionId> RenameSubscription(this SubscriptionResource subscriptionResource, SubscriptionName body, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionSubscriptionMockingExtension(subscriptionResource).RenameSubscription(body, cancellationToken);
+            return GetMockableSubscriptionSubscriptionResource(subscriptionResource).RenameSubscription(body, cancellationToken);
         }
 
         /// <summary>
@@ -197,14 +197,14 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionSubscriptionMockingExtension.EnableSubscription(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.EnableSubscription(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<EnabledSubscriptionId>> EnableSubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionSubscriptionMockingExtension(subscriptionResource).EnableSubscriptionAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableSubscriptionSubscriptionResource(subscriptionResource).EnableSubscriptionAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -221,28 +221,28 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionSubscriptionMockingExtension.EnableSubscription(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionSubscriptionResource.EnableSubscription(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<EnabledSubscriptionId> EnableSubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionSubscriptionMockingExtension(subscriptionResource).EnableSubscription(cancellationToken);
+            return GetMockableSubscriptionSubscriptionResource(subscriptionResource).EnableSubscription(cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of SubscriptionAliasResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionTenantMockingExtension.GetSubscriptionAliases()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionTenantResource.GetSubscriptionAliases()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SubscriptionAliasResources and their operations over a SubscriptionAliasResource. </returns>
         public static SubscriptionAliasCollection GetSubscriptionAliases(this TenantResource tenantResource)
         {
-            return GetSubscriptionTenantMockingExtension(tenantResource).GetSubscriptionAliases();
+            return GetMockableSubscriptionTenantResource(tenantResource).GetSubscriptionAliases();
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionTenantMockingExtension.GetSubscriptionAliasAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionTenantResource.GetSubscriptionAliasAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Subscription
         [ForwardsClientCalls]
         public static async Task<Response<SubscriptionAliasResource>> GetSubscriptionAliasAsync(this TenantResource tenantResource, string aliasName, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionTenantMockingExtension(tenantResource).GetSubscriptionAliasAsync(aliasName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSubscriptionTenantResource(tenantResource).GetSubscriptionAliasAsync(aliasName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionTenantMockingExtension.GetSubscriptionAlias(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionTenantResource.GetSubscriptionAlias(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -298,35 +298,35 @@ namespace Azure.ResourceManager.Subscription
         [ForwardsClientCalls]
         public static Response<SubscriptionAliasResource> GetSubscriptionAlias(this TenantResource tenantResource, string aliasName, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionTenantMockingExtension(tenantResource).GetSubscriptionAlias(aliasName, cancellationToken);
+            return GetMockableSubscriptionTenantResource(tenantResource).GetSubscriptionAlias(aliasName, cancellationToken);
         }
 
         /// <summary>
         /// Gets an object representing a TenantPolicyResource along with the instance operations that can be performed on it in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionTenantMockingExtension.GetTenantPolicy()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionTenantResource.GetTenantPolicy()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> Returns a <see cref="TenantPolicyResource" /> object. </returns>
         public static TenantPolicyResource GetTenantPolicy(this TenantResource tenantResource)
         {
-            return GetSubscriptionTenantMockingExtension(tenantResource).GetTenantPolicy();
+            return GetMockableSubscriptionTenantResource(tenantResource).GetTenantPolicy();
         }
 
         /// <summary>
         /// Gets a collection of BillingAccountPolicyResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionTenantMockingExtension.GetBillingAccountPolicies()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionTenantResource.GetBillingAccountPolicies()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of BillingAccountPolicyResources and their operations over a BillingAccountPolicyResource. </returns>
         public static BillingAccountPolicyCollection GetBillingAccountPolicies(this TenantResource tenantResource)
         {
-            return GetSubscriptionTenantMockingExtension(tenantResource).GetBillingAccountPolicies();
+            return GetMockableSubscriptionTenantResource(tenantResource).GetBillingAccountPolicies();
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionTenantMockingExtension.GetBillingAccountPolicyAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionTenantResource.GetBillingAccountPolicyAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Subscription
         [ForwardsClientCalls]
         public static async Task<Response<BillingAccountPolicyResource>> GetBillingAccountPolicyAsync(this TenantResource tenantResource, string billingAccountId, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionTenantMockingExtension(tenantResource).GetBillingAccountPolicyAsync(billingAccountId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSubscriptionTenantResource(tenantResource).GetBillingAccountPolicyAsync(billingAccountId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionTenantMockingExtension.GetBillingAccountPolicy(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionTenantResource.GetBillingAccountPolicy(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Subscription
         [ForwardsClientCalls]
         public static Response<BillingAccountPolicyResource> GetBillingAccountPolicy(this TenantResource tenantResource, string billingAccountId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionTenantMockingExtension(tenantResource).GetBillingAccountPolicy(billingAccountId, cancellationToken);
+            return GetMockableSubscriptionTenantResource(tenantResource).GetBillingAccountPolicy(billingAccountId, cancellationToken);
         }
 
         /// <summary>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionTenantMockingExtension.AcceptSubscriptionOwnership(WaitUntil,string,AcceptOwnershipContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionTenantResource.AcceptSubscriptionOwnership(WaitUntil,string,AcceptOwnershipContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         public static async Task<ArmOperation> AcceptSubscriptionOwnershipAsync(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionTenantMockingExtension(tenantResource).AcceptSubscriptionOwnershipAsync(waitUntil, subscriptionId, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSubscriptionTenantResource(tenantResource).AcceptSubscriptionOwnershipAsync(waitUntil, subscriptionId, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionTenantMockingExtension.AcceptSubscriptionOwnership(WaitUntil,string,AcceptOwnershipContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionTenantResource.AcceptSubscriptionOwnership(WaitUntil,string,AcceptOwnershipContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         public static ArmOperation AcceptSubscriptionOwnership(this TenantResource tenantResource, WaitUntil waitUntil, string subscriptionId, AcceptOwnershipContent content, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionTenantMockingExtension(tenantResource).AcceptSubscriptionOwnership(waitUntil, subscriptionId, content, cancellationToken);
+            return GetMockableSubscriptionTenantResource(tenantResource).AcceptSubscriptionOwnership(waitUntil, subscriptionId, content, cancellationToken);
         }
 
         /// <summary>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionTenantMockingExtension.GetAcceptOwnershipStatus(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionTenantResource.GetAcceptOwnershipStatus(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public static async Task<Response<AcceptOwnershipStatus>> GetAcceptOwnershipStatusAsync(this TenantResource tenantResource, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionTenantMockingExtension(tenantResource).GetAcceptOwnershipStatusAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSubscriptionTenantResource(tenantResource).GetAcceptOwnershipStatusAsync(subscriptionId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.Subscription
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="SubscriptionTenantMockingExtension.GetAcceptOwnershipStatus(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableSubscriptionTenantResource.GetAcceptOwnershipStatus(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Subscription
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         public static Response<AcceptOwnershipStatus> GetAcceptOwnershipStatus(this TenantResource tenantResource, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionTenantMockingExtension(tenantResource).GetAcceptOwnershipStatus(subscriptionId, cancellationToken);
+            return GetMockableSubscriptionTenantResource(tenantResource).GetAcceptOwnershipStatus(subscriptionId, cancellationToken);
         }
     }
 }

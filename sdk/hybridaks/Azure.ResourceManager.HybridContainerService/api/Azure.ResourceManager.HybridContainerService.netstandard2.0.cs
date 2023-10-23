@@ -282,9 +282,9 @@ namespace Azure.ResourceManager.HybridContainerService
 }
 namespace Azure.ResourceManager.HybridContainerService.Mocking
 {
-    public partial class HybridContainerServiceArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHybridContainerServiceArmClient : Azure.ResourceManager.ArmResource
     {
-        protected HybridContainerServiceArmClientMockingExtension() { }
+        protected MockableHybridContainerServiceArmClient() { }
         public virtual Azure.ResourceManager.HybridContainerService.HybridContainerServiceAgentPoolResource GetHybridContainerServiceAgentPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource GetHybridContainerServiceVirtualNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HybridContainerService.HybridIdentityMetadataResource GetHybridIdentityMetadataResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -296,9 +296,9 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.Models.VmSkuListResult> GetVmSkusHybridContainerService(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.Models.VmSkuListResult>> GetVmSkusHybridContainerServiceAsync(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class HybridContainerServiceResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHybridContainerServiceResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected HybridContainerServiceResourceGroupMockingExtension() { }
+        protected MockableHybridContainerServiceResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetwork(string virtualNetworksName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource>> GetHybridContainerServiceVirtualNetworkAsync(string virtualNetworksName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkCollection GetHybridContainerServiceVirtualNetworks() { throw null; }
@@ -309,9 +309,9 @@ namespace Azure.ResourceManager.HybridContainerService.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridContainerService.StorageSpaceResource>> GetStorageSpaceAsync(string storageSpacesName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HybridContainerService.StorageSpaceCollection GetStorageSpaces() { throw null; }
     }
-    public partial class HybridContainerServiceSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHybridContainerServiceSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected HybridContainerServiceSubscriptionMockingExtension() { }
+        protected MockableHybridContainerServiceSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridContainerService.HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HybridContainerService.ProvisionedClusterResource> GetProvisionedClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

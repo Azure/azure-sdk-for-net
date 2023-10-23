@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ContainerInstance
     /// <summary> A class to add extension methods to Azure.ResourceManager.ContainerInstance. </summary>
     public static partial class ContainerInstanceExtensions
     {
-        private static ContainerInstanceArmClientMockingExtension GetContainerInstanceArmClientMockingExtension(ArmClient client)
+        private static MockableContainerInstanceArmClient GetMockableContainerInstanceArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ContainerInstanceArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableContainerInstanceArmClient(client0));
         }
 
-        private static ContainerInstanceResourceGroupMockingExtension GetContainerInstanceResourceGroupMockingExtension(ArmResource resource)
+        private static MockableContainerInstanceResourceGroupResource GetMockableContainerInstanceResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ContainerInstanceResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableContainerInstanceResourceGroupResource(client, resource.Id));
         }
 
-        private static ContainerInstanceSubscriptionMockingExtension GetContainerInstanceSubscriptionMockingExtension(ArmResource resource)
+        private static MockableContainerInstanceSubscriptionResource GetMockableContainerInstanceSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ContainerInstanceSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableContainerInstanceSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// You can use <see cref="ContainerGroupResource.CreateResourceIdentifier" /> to create a <see cref="ContainerGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerInstanceArmClientMockingExtension.GetContainerGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerInstanceArmClient.GetContainerGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,21 +48,21 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> Returns a <see cref="ContainerGroupResource" /> object. </returns>
         public static ContainerGroupResource GetContainerGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerInstanceArmClientMockingExtension(client).GetContainerGroupResource(id);
+            return GetMockableContainerInstanceArmClient(client).GetContainerGroupResource(id);
         }
 
         /// <summary>
         /// Gets a collection of ContainerGroupResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerInstanceResourceGroupMockingExtension.GetContainerGroups()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.GetContainerGroups()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ContainerGroupResources and their operations over a ContainerGroupResource. </returns>
         public static ContainerGroupCollection GetContainerGroups(this ResourceGroupResource resourceGroupResource)
         {
-            return GetContainerInstanceResourceGroupMockingExtension(resourceGroupResource).GetContainerGroups();
+            return GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).GetContainerGroups();
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerInstanceResourceGroupMockingExtension.GetContainerGroupAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.GetContainerGroupAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerInstance
         [ForwardsClientCalls]
         public static async Task<Response<ContainerGroupResource>> GetContainerGroupAsync(this ResourceGroupResource resourceGroupResource, string containerGroupName, CancellationToken cancellationToken = default)
         {
-            return await GetContainerInstanceResourceGroupMockingExtension(resourceGroupResource).GetContainerGroupAsync(containerGroupName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).GetContainerGroupAsync(containerGroupName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerInstanceResourceGroupMockingExtension.GetContainerGroup(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.GetContainerGroup(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ContainerInstance
         [ForwardsClientCalls]
         public static Response<ContainerGroupResource> GetContainerGroup(this ResourceGroupResource resourceGroupResource, string containerGroupName, CancellationToken cancellationToken = default)
         {
-            return GetContainerInstanceResourceGroupMockingExtension(resourceGroupResource).GetContainerGroup(containerGroupName, cancellationToken);
+            return GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).GetContainerGroup(containerGroupName, cancellationToken);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerInstanceResourceGroupMockingExtension.DeleteSubnetServiceAssociationLink(WaitUntil,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.DeleteSubnetServiceAssociationLink(WaitUntil,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is null. </exception>
         public static async Task<ArmOperation> DeleteSubnetServiceAssociationLinkAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
-            return await GetContainerInstanceResourceGroupMockingExtension(resourceGroupResource).DeleteSubnetServiceAssociationLinkAsync(waitUntil, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).DeleteSubnetServiceAssociationLinkAsync(waitUntil, virtualNetworkName, subnetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerInstanceResourceGroupMockingExtension.DeleteSubnetServiceAssociationLink(WaitUntil,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerInstanceResourceGroupResource.DeleteSubnetServiceAssociationLink(WaitUntil,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworkName"/> or <paramref name="subnetName"/> is null. </exception>
         public static ArmOperation DeleteSubnetServiceAssociationLink(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string virtualNetworkName, string subnetName, CancellationToken cancellationToken = default)
         {
-            return GetContainerInstanceResourceGroupMockingExtension(resourceGroupResource).DeleteSubnetServiceAssociationLink(waitUntil, virtualNetworkName, subnetName, cancellationToken);
+            return GetMockableContainerInstanceResourceGroupResource(resourceGroupResource).DeleteSubnetServiceAssociationLink(waitUntil, virtualNetworkName, subnetName, cancellationToken);
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerInstanceSubscriptionMockingExtension.GetContainerGroups(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetContainerGroups(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> An async collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerGroupResource> GetContainerGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetContainerInstanceSubscriptionMockingExtension(subscriptionResource).GetContainerGroupsAsync(cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetContainerGroupsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerInstanceSubscriptionMockingExtension.GetContainerGroups(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetContainerGroups(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> A collection of <see cref="ContainerGroupResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerGroupResource> GetContainerGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetContainerInstanceSubscriptionMockingExtension(subscriptionResource).GetContainerGroups(cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetContainerGroups(cancellationToken);
         }
 
         /// <summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerInstanceSubscriptionMockingExtension.GetUsagesWithLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetUsagesWithLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> An async collection of <see cref="ContainerInstanceUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerInstanceUsage> GetUsagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetContainerInstanceSubscriptionMockingExtension(subscriptionResource).GetUsagesWithLocationAsync(location, cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetUsagesWithLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerInstanceSubscriptionMockingExtension.GetUsagesWithLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetUsagesWithLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> A collection of <see cref="ContainerInstanceUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerInstanceUsage> GetUsagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetContainerInstanceSubscriptionMockingExtension(subscriptionResource).GetUsagesWithLocation(location, cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetUsagesWithLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerInstanceSubscriptionMockingExtension.GetCachedImagesWithLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> An async collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CachedImages> GetCachedImagesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetContainerInstanceSubscriptionMockingExtension(subscriptionResource).GetCachedImagesWithLocationAsync(location, cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetCachedImagesWithLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerInstanceSubscriptionMockingExtension.GetCachedImagesWithLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> A collection of <see cref="CachedImages" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CachedImages> GetCachedImagesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetContainerInstanceSubscriptionMockingExtension(subscriptionResource).GetCachedImagesWithLocation(location, cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetCachedImagesWithLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerInstanceSubscriptionMockingExtension.GetCapabilitiesWithLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> An async collection of <see cref="ContainerCapabilities" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerCapabilities> GetCapabilitiesWithLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetContainerInstanceSubscriptionMockingExtension(subscriptionResource).GetCapabilitiesWithLocationAsync(location, cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetCapabilitiesWithLocationAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerInstanceSubscriptionMockingExtension.GetCapabilitiesWithLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <returns> A collection of <see cref="ContainerCapabilities" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerCapabilities> GetCapabilitiesWithLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetContainerInstanceSubscriptionMockingExtension(subscriptionResource).GetCapabilitiesWithLocation(location, cancellationToken);
+            return GetMockableContainerInstanceSubscriptionResource(subscriptionResource).GetCapabilitiesWithLocation(location, cancellationToken);
         }
     }
 }

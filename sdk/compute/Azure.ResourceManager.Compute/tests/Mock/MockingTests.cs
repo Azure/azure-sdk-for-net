@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
 
             #region mocking setup
             var clientMock = new Mock<ArmClient>();
-            var clientExtensionMock = new Mock<ComputeArmClientMockingExtension>();
+            var clientExtensionMock = new Mock<MockableComputeArmClient>();
             var vmMock = new Mock<VirtualMachineResource>();
             var setMock = new Mock<AvailabilitySetResource>();
             // setup some data in the result
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             clientExtensionMock.Setup(e => e.GetVirtualMachineResource(vmId)).Returns(vmMock.Object);
             clientExtensionMock.Setup(e => e.GetAvailabilitySetResource(availablitySetId)).Returns(setMock.Object);
             // second mock: mock the GetCachedClient method on the "extendee"
-            clientMock.Setup(c => c.GetCachedClient(It.IsAny<Func<ArmClient, ComputeArmClientMockingExtension>>())).Returns(clientExtensionMock.Object);
+            clientMock.Setup(c => c.GetCachedClient(It.IsAny<Func<ArmClient, MockableComputeArmClient>>())).Returns(clientExtensionMock.Object);
             #endregion
 
             // the mocking test
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
 
             #region mocking setup
             var rgMock = new Mock<ResourceGroupResource>();
-            var rgExtensionMock = new Mock<ComputeResourceGroupMockingExtension>();
+            var rgExtensionMock = new Mock<MockableComputeResourceGroupResource>();
             // for availability set
             var setCollectionMock = new Mock<AvailabilitySetCollection>();
             var setMock = new Mock<AvailabilitySetResource>();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             rgExtensionMock.Setup(e => e.GetAvailabilitySets()).Returns(setCollectionMock.Object);
             rgExtensionMock.Setup(e => e.GetVirtualMachines()).Returns(vmCollectionMock.Object);
             // second mock: mock the GetCachedClient method on the "extendee"
-            rgMock.Setup(rg => rg.GetCachedClient(It.IsAny<Func<ArmClient, ComputeResourceGroupMockingExtension>>())).Returns(rgExtensionMock.Object);
+            rgMock.Setup(rg => rg.GetCachedClient(It.IsAny<Func<ArmClient, MockableComputeResourceGroupResource>>())).Returns(rgExtensionMock.Object);
             // setup the mock on the collection for CreateOrUpdate method
             setCollectionMock.Setup(c => c.CreateOrUpdateAsync(WaitUntil.Completed, setName, setData, default)).ReturnsAsync(setLroMock.Object);
             setLroMock.Setup(lro => lro.Value).Returns(setMock.Object);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
 
             #region mocking setup
             var rgMock = new Mock<ResourceGroupResource>();
-            var rgExtensionMock = new Mock<ComputeResourceGroupMockingExtension>();
+            var rgExtensionMock = new Mock<MockableComputeResourceGroupResource>();
             var setMock = new Mock<AvailabilitySetResource>();
             // setup some data in the result
             setMock.Setup(set => set.Id).Returns(setId);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             // first mock: mock the same method in mocking extension class
             rgExtensionMock.Setup(e => e.GetAvailabilitySetAsync(setName, default)).ReturnsAsync(Response.FromValue(setMock.Object, null));
             // second mock: mock the GetCachedClient method on the "extendee"
-            rgMock.Setup(rg => rg.GetCachedClient(It.IsAny<Func<ArmClient, ComputeResourceGroupMockingExtension>>())).Returns(rgExtensionMock.Object);
+            rgMock.Setup(rg => rg.GetCachedClient(It.IsAny<Func<ArmClient, MockableComputeResourceGroupResource>>())).Returns(rgExtensionMock.Object);
             #endregion
 
             var rg = rgMock.Object;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
 
             #region mocking setup
             var rgMock = new Mock<ResourceGroupResource>();
-            var rgExtensionMock = new Mock<ComputeResourceGroupMockingExtension>();
+            var rgExtensionMock = new Mock<MockableComputeResourceGroupResource>();
             var setMock1 = new Mock<AvailabilitySetResource>();
             var setMock2 = new Mock<AvailabilitySetResource>();
             var setCollectionMock = new Mock<AvailabilitySetCollection>();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             // first mock: mock the same method in mocking extension class
             rgExtensionMock.Setup(e => e.GetAvailabilitySets()).Returns(setCollectionMock.Object);
             // second mock: mock the GetCachedClient method on the "extendee"
-            rgMock.Setup(rg => rg.GetCachedClient(It.IsAny<Func<ArmClient, ComputeResourceGroupMockingExtension>>())).Returns(rgExtensionMock.Object);
+            rgMock.Setup(rg => rg.GetCachedClient(It.IsAny<Func<ArmClient, MockableComputeResourceGroupResource>>())).Returns(rgExtensionMock.Object);
             // setup the collection
             var setPageableResult = AsyncPageable<AvailabilitySetResource>.FromPages(new[] { Page<AvailabilitySetResource>.FromValues(new[] { setMock1.Object, setMock2.Object }, null, null) });
             setCollectionMock.Setup(c => c.GetAllAsync(default)).Returns(setPageableResult);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
 
             #region mocking setup
             var subsMock = new Mock<SubscriptionResource>();
-            var subsExtensionMock = new Mock<ComputeSubscriptionMockingExtension>();
+            var subsExtensionMock = new Mock<MockableComputeSubscriptionResource>();
             var setMock1 = new Mock<AvailabilitySetResource>();
             var setMock2 = new Mock<AvailabilitySetResource>();
             // setup some data in the result
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Compute.Tests.Mock
             var setPageableResult = AsyncPageable<AvailabilitySetResource>.FromPages(new[] { Page<AvailabilitySetResource>.FromValues(new[] { setMock1.Object, setMock2.Object }, null, null) });
             subsExtensionMock.Setup(e => e.GetAvailabilitySetsAsync(null, default)).Returns(setPageableResult);
             // second mock: mock the GetCachedClient method on the "extendee"
-            subsMock.Setup(rg => rg.GetCachedClient(It.IsAny<Func<ArmClient, ComputeSubscriptionMockingExtension>>())).Returns(subsExtensionMock.Object);
+            subsMock.Setup(rg => rg.GetCachedClient(It.IsAny<Func<ArmClient, MockableComputeSubscriptionResource>>())).Returns(subsExtensionMock.Object);
             #endregion
 
             var subscription = subsMock.Object;

@@ -109,22 +109,22 @@ namespace Azure.ResourceManager.Maps
 }
 namespace Azure.ResourceManager.Maps.Mocking
 {
-    public partial class MapsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMapsArmClient : Azure.ResourceManager.ArmResource
     {
-        protected MapsArmClientMockingExtension() { }
+        protected MockableMapsArmClient() { }
         public virtual Azure.ResourceManager.Maps.MapsAccountResource GetMapsAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Maps.MapsCreatorResource GetMapsCreatorResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class MapsResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMapsResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected MapsResourceGroupMockingExtension() { }
+        protected MockableMapsResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Maps.MapsAccountResource> GetMapsAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maps.MapsAccountResource>> GetMapsAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Maps.MapsAccountCollection GetMapsAccounts() { throw null; }
     }
-    public partial class MapsSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMapsSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected MapsSubscriptionMockingExtension() { }
+        protected MockableMapsSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Maps.MapsAccountResource> GetMapsAccounts(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Maps.MapsAccountResource> GetMapsAccountsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

@@ -757,9 +757,9 @@ namespace Azure.ResourceManager.CustomerInsights
 }
 namespace Azure.ResourceManager.CustomerInsights.Mocking
 {
-    public partial class CustomerInsightsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableCustomerInsightsArmClient : Azure.ResourceManager.ArmResource
     {
-        protected CustomerInsightsArmClientMockingExtension() { }
+        protected MockableCustomerInsightsArmClient() { }
         public virtual Azure.ResourceManager.CustomerInsights.AuthorizationPolicyResourceFormatResource GetAuthorizationPolicyResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CustomerInsights.ConnectorMappingResourceFormatResource GetConnectorMappingResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CustomerInsights.ConnectorResourceFormatResource GetConnectorResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -775,16 +775,16 @@ namespace Azure.ResourceManager.CustomerInsights.Mocking
         public virtual Azure.ResourceManager.CustomerInsights.ViewResourceFormatResource GetViewResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.CustomerInsights.WidgetTypeResourceFormatResource GetWidgetTypeResourceFormatResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class CustomerInsightsResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableCustomerInsightsResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected CustomerInsightsResourceGroupMockingExtension() { }
+        protected MockableCustomerInsightsResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.CustomerInsights.HubResource> GetHub(string hubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CustomerInsights.HubResource>> GetHubAsync(string hubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.CustomerInsights.HubCollection GetHubs() { throw null; }
     }
-    public partial class CustomerInsightsSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableCustomerInsightsSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected CustomerInsightsSubscriptionMockingExtension() { }
+        protected MockableCustomerInsightsSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.CustomerInsights.HubResource> GetHubs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.CustomerInsights.HubResource> GetHubsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

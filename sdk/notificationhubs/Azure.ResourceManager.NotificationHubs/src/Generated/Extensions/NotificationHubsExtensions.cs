@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.NotificationHubs
     /// <summary> A class to add extension methods to Azure.ResourceManager.NotificationHubs. </summary>
     public static partial class NotificationHubsExtensions
     {
-        private static NotificationHubsArmClientMockingExtension GetNotificationHubsArmClientMockingExtension(ArmClient client)
+        private static MockableNotificationHubsArmClient GetMockableNotificationHubsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new NotificationHubsArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableNotificationHubsArmClient(client0));
         }
 
-        private static NotificationHubsResourceGroupMockingExtension GetNotificationHubsResourceGroupMockingExtension(ArmResource resource)
+        private static MockableNotificationHubsResourceGroupResource GetMockableNotificationHubsResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new NotificationHubsResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableNotificationHubsResourceGroupResource(client, resource.Id));
         }
 
-        private static NotificationHubsSubscriptionMockingExtension GetNotificationHubsSubscriptionMockingExtension(ArmResource resource)
+        private static MockableNotificationHubsSubscriptionResource GetMockableNotificationHubsSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new NotificationHubsSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableNotificationHubsSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// You can use <see cref="NotificationHubNamespaceResource.CreateResourceIdentifier" /> to create a <see cref="NotificationHubNamespaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NotificationHubsArmClientMockingExtension.GetNotificationHubNamespaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNotificationHubsArmClient.GetNotificationHubNamespaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> Returns a <see cref="NotificationHubNamespaceResource" /> object. </returns>
         public static NotificationHubNamespaceResource GetNotificationHubNamespaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNotificationHubsArmClientMockingExtension(client).GetNotificationHubNamespaceResource(id);
+            return GetMockableNotificationHubsArmClient(client).GetNotificationHubNamespaceResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// You can use <see cref="NotificationHubNamespaceAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NotificationHubNamespaceAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NotificationHubsArmClientMockingExtension.GetNotificationHubNamespaceAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNotificationHubsArmClient.GetNotificationHubNamespaceAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> Returns a <see cref="NotificationHubNamespaceAuthorizationRuleResource" /> object. </returns>
         public static NotificationHubNamespaceAuthorizationRuleResource GetNotificationHubNamespaceAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNotificationHubsArmClientMockingExtension(client).GetNotificationHubNamespaceAuthorizationRuleResource(id);
+            return GetMockableNotificationHubsArmClient(client).GetNotificationHubNamespaceAuthorizationRuleResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// You can use <see cref="NotificationHubAuthorizationRuleResource.CreateResourceIdentifier" /> to create a <see cref="NotificationHubAuthorizationRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NotificationHubsArmClientMockingExtension.GetNotificationHubAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNotificationHubsArmClient.GetNotificationHubAuthorizationRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> Returns a <see cref="NotificationHubAuthorizationRuleResource" /> object. </returns>
         public static NotificationHubAuthorizationRuleResource GetNotificationHubAuthorizationRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNotificationHubsArmClientMockingExtension(client).GetNotificationHubAuthorizationRuleResource(id);
+            return GetMockableNotificationHubsArmClient(client).GetNotificationHubAuthorizationRuleResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// You can use <see cref="NotificationHubResource.CreateResourceIdentifier" /> to create a <see cref="NotificationHubResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NotificationHubsArmClientMockingExtension.GetNotificationHubResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNotificationHubsArmClient.GetNotificationHubResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,21 +96,21 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> Returns a <see cref="NotificationHubResource" /> object. </returns>
         public static NotificationHubResource GetNotificationHubResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetNotificationHubsArmClientMockingExtension(client).GetNotificationHubResource(id);
+            return GetMockableNotificationHubsArmClient(client).GetNotificationHubResource(id);
         }
 
         /// <summary>
         /// Gets a collection of NotificationHubNamespaceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NotificationHubsResourceGroupMockingExtension.GetNotificationHubNamespaces()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNotificationHubsResourceGroupResource.GetNotificationHubNamespaces()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of NotificationHubNamespaceResources and their operations over a NotificationHubNamespaceResource. </returns>
         public static NotificationHubNamespaceCollection GetNotificationHubNamespaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetNotificationHubsResourceGroupMockingExtension(resourceGroupResource).GetNotificationHubNamespaces();
+            return GetMockableNotificationHubsResourceGroupResource(resourceGroupResource).GetNotificationHubNamespaces();
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NotificationHubsResourceGroupMockingExtension.GetNotificationHubNamespaceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNotificationHubsResourceGroupResource.GetNotificationHubNamespaceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NotificationHubs
         [ForwardsClientCalls]
         public static async Task<Response<NotificationHubNamespaceResource>> GetNotificationHubNamespaceAsync(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            return await GetNotificationHubsResourceGroupMockingExtension(resourceGroupResource).GetNotificationHubNamespaceAsync(namespaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNotificationHubsResourceGroupResource(resourceGroupResource).GetNotificationHubNamespaceAsync(namespaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NotificationHubsResourceGroupMockingExtension.GetNotificationHubNamespace(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNotificationHubsResourceGroupResource.GetNotificationHubNamespace(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.NotificationHubs
         [ForwardsClientCalls]
         public static Response<NotificationHubNamespaceResource> GetNotificationHubNamespace(this ResourceGroupResource resourceGroupResource, string namespaceName, CancellationToken cancellationToken = default)
         {
-            return GetNotificationHubsResourceGroupMockingExtension(resourceGroupResource).GetNotificationHubNamespace(namespaceName, cancellationToken);
+            return GetMockableNotificationHubsResourceGroupResource(resourceGroupResource).GetNotificationHubNamespace(namespaceName, cancellationToken);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NotificationHubsSubscriptionMockingExtension.CheckNotificationHubNamespaceAvailability(NotificationHubAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNotificationHubsSubscriptionResource.CheckNotificationHubNamespaceAvailability(NotificationHubAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<NotificationHubAvailabilityResult>> CheckNotificationHubNamespaceAvailabilityAsync(this SubscriptionResource subscriptionResource, NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetNotificationHubsSubscriptionMockingExtension(subscriptionResource).CheckNotificationHubNamespaceAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableNotificationHubsSubscriptionResource(subscriptionResource).CheckNotificationHubNamespaceAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NotificationHubsSubscriptionMockingExtension.CheckNotificationHubNamespaceAvailability(NotificationHubAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNotificationHubsSubscriptionResource.CheckNotificationHubNamespaceAvailability(NotificationHubAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<NotificationHubAvailabilityResult> CheckNotificationHubNamespaceAvailability(this SubscriptionResource subscriptionResource, NotificationHubAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetNotificationHubsSubscriptionMockingExtension(subscriptionResource).CheckNotificationHubNamespaceAvailability(content, cancellationToken);
+            return GetMockableNotificationHubsSubscriptionResource(subscriptionResource).CheckNotificationHubNamespaceAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NotificationHubsSubscriptionMockingExtension.GetNotificationHubNamespaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNotificationHubsSubscriptionResource.GetNotificationHubNamespaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> An async collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<NotificationHubNamespaceResource> GetNotificationHubNamespacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetNotificationHubsSubscriptionMockingExtension(subscriptionResource).GetNotificationHubNamespacesAsync(cancellationToken);
+            return GetMockableNotificationHubsSubscriptionResource(subscriptionResource).GetNotificationHubNamespacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="NotificationHubsSubscriptionMockingExtension.GetNotificationHubNamespaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableNotificationHubsSubscriptionResource.GetNotificationHubNamespaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.NotificationHubs
         /// <returns> A collection of <see cref="NotificationHubNamespaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<NotificationHubNamespaceResource> GetNotificationHubNamespaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetNotificationHubsSubscriptionMockingExtension(subscriptionResource).GetNotificationHubNamespaces(cancellationToken);
+            return GetMockableNotificationHubsSubscriptionResource(subscriptionResource).GetNotificationHubNamespaces(cancellationToken);
         }
     }
 }

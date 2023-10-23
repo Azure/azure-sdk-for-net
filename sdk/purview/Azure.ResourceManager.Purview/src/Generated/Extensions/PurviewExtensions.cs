@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.Purview
     /// <summary> A class to add extension methods to Azure.ResourceManager.Purview. </summary>
     public static partial class PurviewExtensions
     {
-        private static PurviewArmClientMockingExtension GetPurviewArmClientMockingExtension(ArmClient client)
+        private static MockablePurviewArmClient GetMockablePurviewArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new PurviewArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockablePurviewArmClient(client0));
         }
 
-        private static PurviewResourceGroupMockingExtension GetPurviewResourceGroupMockingExtension(ArmResource resource)
+        private static MockablePurviewResourceGroupResource GetMockablePurviewResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new PurviewResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockablePurviewResourceGroupResource(client, resource.Id));
         }
 
-        private static PurviewSubscriptionMockingExtension GetPurviewSubscriptionMockingExtension(ArmResource resource)
+        private static MockablePurviewSubscriptionResource GetMockablePurviewSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new PurviewSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockablePurviewSubscriptionResource(client, resource.Id));
         }
 
-        private static PurviewTenantMockingExtension GetPurviewTenantMockingExtension(ArmResource resource)
+        private static MockablePurviewTenantResource GetMockablePurviewTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new PurviewTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockablePurviewTenantResource(client, resource.Id));
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Purview
         /// You can use <see cref="PurviewAccountResource.CreateResourceIdentifier" /> to create a <see cref="PurviewAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PurviewArmClientMockingExtension.GetPurviewAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewArmClient.GetPurviewAccountResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Purview
         /// <returns> Returns a <see cref="PurviewAccountResource" /> object. </returns>
         public static PurviewAccountResource GetPurviewAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetPurviewArmClientMockingExtension(client).GetPurviewAccountResource(id);
+            return GetMockablePurviewArmClient(client).GetPurviewAccountResource(id);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Purview
         /// You can use <see cref="PurviewPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PurviewPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PurviewArmClientMockingExtension.GetPurviewPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewArmClient.GetPurviewPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Purview
         /// <returns> Returns a <see cref="PurviewPrivateEndpointConnectionResource" /> object. </returns>
         public static PurviewPrivateEndpointConnectionResource GetPurviewPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetPurviewArmClientMockingExtension(client).GetPurviewPrivateEndpointConnectionResource(id);
+            return GetMockablePurviewArmClient(client).GetPurviewPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Purview
         /// You can use <see cref="PurviewPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="PurviewPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PurviewArmClientMockingExtension.GetPurviewPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewArmClient.GetPurviewPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -85,21 +85,21 @@ namespace Azure.ResourceManager.Purview
         /// <returns> Returns a <see cref="PurviewPrivateLinkResource" /> object. </returns>
         public static PurviewPrivateLinkResource GetPurviewPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetPurviewArmClientMockingExtension(client).GetPurviewPrivateLinkResource(id);
+            return GetMockablePurviewArmClient(client).GetPurviewPrivateLinkResource(id);
         }
 
         /// <summary>
         /// Gets a collection of PurviewAccountResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PurviewResourceGroupMockingExtension.GetPurviewAccounts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewResourceGroupResource.GetPurviewAccounts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of PurviewAccountResources and their operations over a PurviewAccountResource. </returns>
         public static PurviewAccountCollection GetPurviewAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetPurviewResourceGroupMockingExtension(resourceGroupResource).GetPurviewAccounts();
+            return GetMockablePurviewResourceGroupResource(resourceGroupResource).GetPurviewAccounts();
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Purview
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PurviewResourceGroupMockingExtension.GetPurviewAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewResourceGroupResource.GetPurviewAccountAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Purview
         [ForwardsClientCalls]
         public static async Task<Response<PurviewAccountResource>> GetPurviewAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await GetPurviewResourceGroupMockingExtension(resourceGroupResource).GetPurviewAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePurviewResourceGroupResource(resourceGroupResource).GetPurviewAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Purview
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PurviewResourceGroupMockingExtension.GetPurviewAccount(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewResourceGroupResource.GetPurviewAccount(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Purview
         [ForwardsClientCalls]
         public static Response<PurviewAccountResource> GetPurviewAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return GetPurviewResourceGroupMockingExtension(resourceGroupResource).GetPurviewAccount(accountName, cancellationToken);
+            return GetMockablePurviewResourceGroupResource(resourceGroupResource).GetPurviewAccount(accountName, cancellationToken);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Purview
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PurviewSubscriptionMockingExtension.GetPurviewAccounts(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.GetPurviewAccounts(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Purview
         /// <returns> An async collection of <see cref="PurviewAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PurviewAccountResource> GetPurviewAccountsAsync(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetPurviewSubscriptionMockingExtension(subscriptionResource).GetPurviewAccountsAsync(skipToken, cancellationToken);
+            return GetMockablePurviewSubscriptionResource(subscriptionResource).GetPurviewAccountsAsync(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Purview
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PurviewSubscriptionMockingExtension.GetPurviewAccounts(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.GetPurviewAccounts(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Purview
         /// <returns> A collection of <see cref="PurviewAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PurviewAccountResource> GetPurviewAccounts(this SubscriptionResource subscriptionResource, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            return GetPurviewSubscriptionMockingExtension(subscriptionResource).GetPurviewAccounts(skipToken, cancellationToken);
+            return GetMockablePurviewSubscriptionResource(subscriptionResource).GetPurviewAccounts(skipToken, cancellationToken);
         }
 
         /// <summary>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Purview
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PurviewSubscriptionMockingExtension.CheckPurviewAccountNameAvailability(PurviewAccountNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.CheckPurviewAccountNameAvailability(PurviewAccountNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<PurviewAccountNameAvailabilityResult>> CheckPurviewAccountNameAvailabilityAsync(this SubscriptionResource subscriptionResource, PurviewAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetPurviewSubscriptionMockingExtension(subscriptionResource).CheckPurviewAccountNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePurviewSubscriptionResource(subscriptionResource).CheckPurviewAccountNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Purview
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PurviewSubscriptionMockingExtension.CheckPurviewAccountNameAvailability(PurviewAccountNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.CheckPurviewAccountNameAvailability(PurviewAccountNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<PurviewAccountNameAvailabilityResult> CheckPurviewAccountNameAvailability(this SubscriptionResource subscriptionResource, PurviewAccountNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetPurviewSubscriptionMockingExtension(subscriptionResource).CheckPurviewAccountNameAvailability(content, cancellationToken);
+            return GetMockablePurviewSubscriptionResource(subscriptionResource).CheckPurviewAccountNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Purview
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PurviewTenantMockingExtension.GetDefaultAccount(Guid,PurviewAccountScopeType,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewTenantResource.GetDefaultAccount(Guid,PurviewAccountScopeType,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<DefaultPurviewAccountPayload>> GetDefaultAccountAsync(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
-            return await GetPurviewTenantMockingExtension(tenantResource).GetDefaultAccountAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePurviewTenantResource(tenantResource).GetDefaultAccountAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Purview
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PurviewTenantMockingExtension.GetDefaultAccount(Guid,PurviewAccountScopeType,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewTenantResource.GetDefaultAccount(Guid,PurviewAccountScopeType,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<DefaultPurviewAccountPayload> GetDefaultAccount(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
-            return GetPurviewTenantMockingExtension(tenantResource).GetDefaultAccount(scopeTenantId, scopeType, scope, cancellationToken);
+            return GetMockablePurviewTenantResource(tenantResource).GetDefaultAccount(scopeTenantId, scopeType, scope, cancellationToken);
         }
 
         /// <summary>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Purview
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PurviewTenantMockingExtension.SetDefaultAccount(DefaultPurviewAccountPayload,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewTenantResource.SetDefaultAccount(DefaultPurviewAccountPayload,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
         public static async Task<Response<DefaultPurviewAccountPayload>> SetDefaultAccountAsync(this TenantResource tenantResource, DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
-            return await GetPurviewTenantMockingExtension(tenantResource).SetDefaultAccountAsync(defaultAccountPayload, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePurviewTenantResource(tenantResource).SetDefaultAccountAsync(defaultAccountPayload, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Purview
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PurviewTenantMockingExtension.SetDefaultAccount(DefaultPurviewAccountPayload,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewTenantResource.SetDefaultAccount(DefaultPurviewAccountPayload,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Purview
         /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
         public static Response<DefaultPurviewAccountPayload> SetDefaultAccount(this TenantResource tenantResource, DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
-            return GetPurviewTenantMockingExtension(tenantResource).SetDefaultAccount(defaultAccountPayload, cancellationToken);
+            return GetMockablePurviewTenantResource(tenantResource).SetDefaultAccount(defaultAccountPayload, cancellationToken);
         }
 
         /// <summary>
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Purview
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PurviewTenantMockingExtension.RemoveDefaultAccount(Guid,PurviewAccountScopeType,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewTenantResource.RemoveDefaultAccount(Guid,PurviewAccountScopeType,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response> RemoveDefaultAccountAsync(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
-            return await GetPurviewTenantMockingExtension(tenantResource).RemoveDefaultAccountAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePurviewTenantResource(tenantResource).RemoveDefaultAccountAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Purview
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="PurviewTenantMockingExtension.RemoveDefaultAccount(Guid,PurviewAccountScopeType,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewTenantResource.RemoveDefaultAccount(Guid,PurviewAccountScopeType,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Purview
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response RemoveDefaultAccount(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
-            return GetPurviewTenantMockingExtension(tenantResource).RemoveDefaultAccount(scopeTenantId, scopeType, scope, cancellationToken);
+            return GetMockablePurviewTenantResource(tenantResource).RemoveDefaultAccount(scopeTenantId, scopeType, scope, cancellationToken);
         }
     }
 }

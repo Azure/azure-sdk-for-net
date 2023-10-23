@@ -305,9 +305,9 @@ namespace Azure.ResourceManager.DnsResolver
 }
 namespace Azure.ResourceManager.DnsResolver.Mocking
 {
-    public partial class DnsResolverArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDnsResolverArmClient : Azure.ResourceManager.ArmResource
     {
-        protected DnsResolverArmClientMockingExtension() { }
+        protected MockableDnsResolverArmClient() { }
         public virtual Azure.ResourceManager.DnsResolver.DnsForwardingRuleResource GetDnsForwardingRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource GetDnsForwardingRulesetResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DnsResolver.DnsForwardingRulesetVirtualNetworkLinkResource GetDnsForwardingRulesetVirtualNetworkLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -316,9 +316,9 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         public virtual Azure.ResourceManager.DnsResolver.DnsResolverResource GetDnsResolverResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DnsResolver.VirtualNetworkDnsResolverResource GetVirtualNetworkDnsResolverResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DnsResolverResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDnsResolverResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected DnsResolverResourceGroupMockingExtension() { }
+        protected MockableDnsResolverResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource> GetDnsForwardingRuleset(string rulesetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource>> GetDnsForwardingRulesetAsync(string rulesetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DnsResolver.DnsForwardingRulesetCollection GetDnsForwardingRulesets() { throw null; }
@@ -326,9 +326,9 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DnsResolver.DnsResolverResource>> GetDnsResolverAsync(string dnsResolverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DnsResolver.DnsResolverCollection GetDnsResolvers() { throw null; }
     }
-    public partial class DnsResolverSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDnsResolverSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected DnsResolverSubscriptionMockingExtension() { }
+        protected MockableDnsResolverSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource> GetDnsForwardingRulesets(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DnsResolver.DnsForwardingRulesetResource> GetDnsForwardingRulesetsAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DnsResolver.DnsResolverResource> GetDnsResolvers(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

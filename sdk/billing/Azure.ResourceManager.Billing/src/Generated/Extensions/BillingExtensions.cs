@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Billing
     /// <summary> A class to add extension methods to Azure.ResourceManager.Billing. </summary>
     public static partial class BillingExtensions
     {
-        private static BillingArmClientMockingExtension GetBillingArmClientMockingExtension(ArmClient client)
+        private static MockableBillingArmClient GetMockableBillingArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new BillingArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableBillingArmClient(client0));
         }
 
-        private static BillingTenantMockingExtension GetBillingTenantMockingExtension(ArmResource resource)
+        private static MockableBillingTenantResource GetMockableBillingTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new BillingTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableBillingTenantResource(client, resource.Id));
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Billing
         /// You can use <see cref="BillingSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="BillingSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingArmClientMockingExtension.GetBillingSubscriptionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingSubscriptionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> Returns a <see cref="BillingSubscriptionResource" /> object. </returns>
         public static BillingSubscriptionResource GetBillingSubscriptionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetBillingArmClientMockingExtension(client).GetBillingSubscriptionResource(id);
+            return GetMockableBillingArmClient(client).GetBillingSubscriptionResource(id);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Billing
         /// You can use <see cref="BillingSubscriptionAliasResource.CreateResourceIdentifier" /> to create a <see cref="BillingSubscriptionAliasResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingArmClientMockingExtension.GetBillingSubscriptionAliasResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingSubscriptionAliasResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> Returns a <see cref="BillingSubscriptionAliasResource" /> object. </returns>
         public static BillingSubscriptionAliasResource GetBillingSubscriptionAliasResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetBillingArmClientMockingExtension(client).GetBillingSubscriptionAliasResource(id);
+            return GetMockableBillingArmClient(client).GetBillingSubscriptionAliasResource(id);
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Billing
         /// You can use <see cref="BillingPaymentMethodResource.CreateResourceIdentifier" /> to create a <see cref="BillingPaymentMethodResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingArmClientMockingExtension.GetBillingPaymentMethodResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingPaymentMethodResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> Returns a <see cref="BillingPaymentMethodResource" /> object. </returns>
         public static BillingPaymentMethodResource GetBillingPaymentMethodResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetBillingArmClientMockingExtension(client).GetBillingPaymentMethodResource(id);
+            return GetMockableBillingArmClient(client).GetBillingPaymentMethodResource(id);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Billing
         /// You can use <see cref="BillingAccountPaymentMethodResource.CreateResourceIdentifier" /> to create a <see cref="BillingAccountPaymentMethodResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingArmClientMockingExtension.GetBillingAccountPaymentMethodResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingAccountPaymentMethodResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> Returns a <see cref="BillingAccountPaymentMethodResource" /> object. </returns>
         public static BillingAccountPaymentMethodResource GetBillingAccountPaymentMethodResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetBillingArmClientMockingExtension(client).GetBillingAccountPaymentMethodResource(id);
+            return GetMockableBillingArmClient(client).GetBillingAccountPaymentMethodResource(id);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Billing
         /// You can use <see cref="BillingPaymentMethodLinkResource.CreateResourceIdentifier" /> to create a <see cref="BillingPaymentMethodLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingArmClientMockingExtension.GetBillingPaymentMethodLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingArmClient.GetBillingPaymentMethodLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -106,14 +106,14 @@ namespace Azure.ResourceManager.Billing
         /// <returns> Returns a <see cref="BillingPaymentMethodLinkResource" /> object. </returns>
         public static BillingPaymentMethodLinkResource GetBillingPaymentMethodLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetBillingArmClientMockingExtension(client).GetBillingPaymentMethodLinkResource(id);
+            return GetMockableBillingArmClient(client).GetBillingPaymentMethodLinkResource(id);
         }
 
         /// <summary>
         /// Gets a collection of BillingSubscriptionResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingSubscriptions(string)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingSubscriptions(string)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An object representing collection of BillingSubscriptionResources and their operations over a BillingSubscriptionResource. </returns>
         public static BillingSubscriptionCollection GetBillingSubscriptions(this TenantResource tenantResource, string billingAccountName)
         {
-            return GetBillingTenantMockingExtension(tenantResource).GetBillingSubscriptions(billingAccountName);
+            return GetMockableBillingTenantResource(tenantResource).GetBillingSubscriptions(billingAccountName);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingSubscriptionAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingSubscriptionAsync(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static async Task<Response<BillingSubscriptionResource>> GetBillingSubscriptionAsync(this TenantResource tenantResource, string billingAccountName, string billingSubscriptionName, CancellationToken cancellationToken = default)
         {
-            return await GetBillingTenantMockingExtension(tenantResource).GetBillingSubscriptionAsync(billingAccountName, billingSubscriptionName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableBillingTenantResource(tenantResource).GetBillingSubscriptionAsync(billingAccountName, billingSubscriptionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingSubscription(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingSubscription(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -181,14 +181,14 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static Response<BillingSubscriptionResource> GetBillingSubscription(this TenantResource tenantResource, string billingAccountName, string billingSubscriptionName, CancellationToken cancellationToken = default)
         {
-            return GetBillingTenantMockingExtension(tenantResource).GetBillingSubscription(billingAccountName, billingSubscriptionName, cancellationToken);
+            return GetMockableBillingTenantResource(tenantResource).GetBillingSubscription(billingAccountName, billingSubscriptionName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of BillingSubscriptionAliasResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingSubscriptionAliases(string)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingSubscriptionAliases(string)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An object representing collection of BillingSubscriptionAliasResources and their operations over a BillingSubscriptionAliasResource. </returns>
         public static BillingSubscriptionAliasCollection GetBillingSubscriptionAliases(this TenantResource tenantResource, string billingAccountName)
         {
-            return GetBillingTenantMockingExtension(tenantResource).GetBillingSubscriptionAliases(billingAccountName);
+            return GetMockableBillingTenantResource(tenantResource).GetBillingSubscriptionAliases(billingAccountName);
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingSubscriptionAliasAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingSubscriptionAliasAsync(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static async Task<Response<BillingSubscriptionAliasResource>> GetBillingSubscriptionAliasAsync(this TenantResource tenantResource, string billingAccountName, string aliasName, CancellationToken cancellationToken = default)
         {
-            return await GetBillingTenantMockingExtension(tenantResource).GetBillingSubscriptionAliasAsync(billingAccountName, aliasName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableBillingTenantResource(tenantResource).GetBillingSubscriptionAliasAsync(billingAccountName, aliasName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingSubscriptionAlias(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingSubscriptionAlias(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -256,21 +256,21 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static Response<BillingSubscriptionAliasResource> GetBillingSubscriptionAlias(this TenantResource tenantResource, string billingAccountName, string aliasName, CancellationToken cancellationToken = default)
         {
-            return GetBillingTenantMockingExtension(tenantResource).GetBillingSubscriptionAlias(billingAccountName, aliasName, cancellationToken);
+            return GetMockableBillingTenantResource(tenantResource).GetBillingSubscriptionAlias(billingAccountName, aliasName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of BillingPaymentMethodResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingPaymentMethods()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingPaymentMethods()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of BillingPaymentMethodResources and their operations over a BillingPaymentMethodResource. </returns>
         public static BillingPaymentMethodCollection GetBillingPaymentMethods(this TenantResource tenantResource)
         {
-            return GetBillingTenantMockingExtension(tenantResource).GetBillingPaymentMethods();
+            return GetMockableBillingTenantResource(tenantResource).GetBillingPaymentMethods();
         }
 
         /// <summary>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingPaymentMethodAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingPaymentMethodAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static async Task<Response<BillingPaymentMethodResource>> GetBillingPaymentMethodAsync(this TenantResource tenantResource, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            return await GetBillingTenantMockingExtension(tenantResource).GetBillingPaymentMethodAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableBillingTenantResource(tenantResource).GetBillingPaymentMethodAsync(paymentMethodName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingPaymentMethod(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingPaymentMethod(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -326,14 +326,14 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static Response<BillingPaymentMethodResource> GetBillingPaymentMethod(this TenantResource tenantResource, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            return GetBillingTenantMockingExtension(tenantResource).GetBillingPaymentMethod(paymentMethodName, cancellationToken);
+            return GetMockableBillingTenantResource(tenantResource).GetBillingPaymentMethod(paymentMethodName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of BillingAccountPaymentMethodResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingAccountPaymentMethods(string)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingAccountPaymentMethods(string)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An object representing collection of BillingAccountPaymentMethodResources and their operations over a BillingAccountPaymentMethodResource. </returns>
         public static BillingAccountPaymentMethodCollection GetBillingAccountPaymentMethods(this TenantResource tenantResource, string billingAccountName)
         {
-            return GetBillingTenantMockingExtension(tenantResource).GetBillingAccountPaymentMethods(billingAccountName);
+            return GetMockableBillingTenantResource(tenantResource).GetBillingAccountPaymentMethods(billingAccountName);
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingAccountPaymentMethodAsync(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingAccountPaymentMethodAsync(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static async Task<Response<BillingAccountPaymentMethodResource>> GetBillingAccountPaymentMethodAsync(this TenantResource tenantResource, string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            return await GetBillingTenantMockingExtension(tenantResource).GetBillingAccountPaymentMethodAsync(billingAccountName, paymentMethodName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableBillingTenantResource(tenantResource).GetBillingAccountPaymentMethodAsync(billingAccountName, paymentMethodName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingAccountPaymentMethod(string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingAccountPaymentMethod(string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -401,14 +401,14 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static Response<BillingAccountPaymentMethodResource> GetBillingAccountPaymentMethod(this TenantResource tenantResource, string billingAccountName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            return GetBillingTenantMockingExtension(tenantResource).GetBillingAccountPaymentMethod(billingAccountName, paymentMethodName, cancellationToken);
+            return GetMockableBillingTenantResource(tenantResource).GetBillingAccountPaymentMethod(billingAccountName, paymentMethodName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of BillingPaymentMethodLinkResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingPaymentMethodLinks(string,string)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingPaymentMethodLinks(string,string)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Billing
         /// <returns> An object representing collection of BillingPaymentMethodLinkResources and their operations over a BillingPaymentMethodLinkResource. </returns>
         public static BillingPaymentMethodLinkCollection GetBillingPaymentMethodLinks(this TenantResource tenantResource, string billingAccountName, string billingProfileName)
         {
-            return GetBillingTenantMockingExtension(tenantResource).GetBillingPaymentMethodLinks(billingAccountName, billingProfileName);
+            return GetMockableBillingTenantResource(tenantResource).GetBillingPaymentMethodLinks(billingAccountName, billingProfileName);
         }
 
         /// <summary>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingPaymentMethodLinkAsync(string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingPaymentMethodLinkAsync(string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static async Task<Response<BillingPaymentMethodLinkResource>> GetBillingPaymentMethodLinkAsync(this TenantResource tenantResource, string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            return await GetBillingTenantMockingExtension(tenantResource).GetBillingPaymentMethodLinkAsync(billingAccountName, billingProfileName, paymentMethodName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableBillingTenantResource(tenantResource).GetBillingPaymentMethodLinkAsync(billingAccountName, billingProfileName, paymentMethodName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Billing
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="BillingTenantMockingExtension.GetBillingPaymentMethodLink(string,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableBillingTenantResource.GetBillingPaymentMethodLink(string,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Billing
         [ForwardsClientCalls]
         public static Response<BillingPaymentMethodLinkResource> GetBillingPaymentMethodLink(this TenantResource tenantResource, string billingAccountName, string billingProfileName, string paymentMethodName, CancellationToken cancellationToken = default)
         {
-            return GetBillingTenantMockingExtension(tenantResource).GetBillingPaymentMethodLink(billingAccountName, billingProfileName, paymentMethodName, cancellationToken);
+            return GetMockableBillingTenantResource(tenantResource).GetBillingPaymentMethodLink(billingAccountName, billingProfileName, paymentMethodName, cancellationToken);
         }
     }
 }

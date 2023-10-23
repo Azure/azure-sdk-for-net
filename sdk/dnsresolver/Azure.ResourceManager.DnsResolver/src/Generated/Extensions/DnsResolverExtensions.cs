@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.DnsResolver
     /// <summary> A class to add extension methods to Azure.ResourceManager.DnsResolver. </summary>
     public static partial class DnsResolverExtensions
     {
-        private static DnsResolverArmClientMockingExtension GetDnsResolverArmClientMockingExtension(ArmClient client)
+        private static MockableDnsResolverArmClient GetMockableDnsResolverArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new DnsResolverArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableDnsResolverArmClient(client0));
         }
 
-        private static DnsResolverResourceGroupMockingExtension GetDnsResolverResourceGroupMockingExtension(ArmResource resource)
+        private static MockableDnsResolverResourceGroupResource GetMockableDnsResolverResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DnsResolverResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDnsResolverResourceGroupResource(client, resource.Id));
         }
 
-        private static DnsResolverSubscriptionMockingExtension GetDnsResolverSubscriptionMockingExtension(ArmResource resource)
+        private static MockableDnsResolverSubscriptionResource GetMockableDnsResolverSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new DnsResolverSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableDnsResolverSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// You can use <see cref="DnsResolverResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverArmClientMockingExtension.GetDnsResolverResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverArmClient.GetDnsResolverResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> Returns a <see cref="DnsResolverResource" /> object. </returns>
         public static DnsResolverResource GetDnsResolverResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsResolverArmClientMockingExtension(client).GetDnsResolverResource(id);
+            return GetMockableDnsResolverArmClient(client).GetDnsResolverResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// You can use <see cref="DnsResolverInboundEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverInboundEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverArmClientMockingExtension.GetDnsResolverInboundEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverArmClient.GetDnsResolverInboundEndpointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> Returns a <see cref="DnsResolverInboundEndpointResource" /> object. </returns>
         public static DnsResolverInboundEndpointResource GetDnsResolverInboundEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsResolverArmClientMockingExtension(client).GetDnsResolverInboundEndpointResource(id);
+            return GetMockableDnsResolverArmClient(client).GetDnsResolverInboundEndpointResource(id);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// You can use <see cref="DnsResolverOutboundEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverOutboundEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverArmClientMockingExtension.GetDnsResolverOutboundEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverArmClient.GetDnsResolverOutboundEndpointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> Returns a <see cref="DnsResolverOutboundEndpointResource" /> object. </returns>
         public static DnsResolverOutboundEndpointResource GetDnsResolverOutboundEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsResolverArmClientMockingExtension(client).GetDnsResolverOutboundEndpointResource(id);
+            return GetMockableDnsResolverArmClient(client).GetDnsResolverOutboundEndpointResource(id);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// You can use <see cref="DnsForwardingRulesetResource.CreateResourceIdentifier" /> to create a <see cref="DnsForwardingRulesetResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverArmClientMockingExtension.GetDnsForwardingRulesetResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverArmClient.GetDnsForwardingRulesetResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> Returns a <see cref="DnsForwardingRulesetResource" /> object. </returns>
         public static DnsForwardingRulesetResource GetDnsForwardingRulesetResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsResolverArmClientMockingExtension(client).GetDnsForwardingRulesetResource(id);
+            return GetMockableDnsResolverArmClient(client).GetDnsForwardingRulesetResource(id);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// You can use <see cref="DnsForwardingRuleResource.CreateResourceIdentifier" /> to create a <see cref="DnsForwardingRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverArmClientMockingExtension.GetDnsForwardingRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverArmClient.GetDnsForwardingRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> Returns a <see cref="DnsForwardingRuleResource" /> object. </returns>
         public static DnsForwardingRuleResource GetDnsForwardingRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsResolverArmClientMockingExtension(client).GetDnsForwardingRuleResource(id);
+            return GetMockableDnsResolverArmClient(client).GetDnsForwardingRuleResource(id);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// You can use <see cref="DnsForwardingRulesetVirtualNetworkLinkResource.CreateResourceIdentifier" /> to create a <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverArmClientMockingExtension.GetDnsForwardingRulesetVirtualNetworkLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverArmClient.GetDnsForwardingRulesetVirtualNetworkLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> Returns a <see cref="DnsForwardingRulesetVirtualNetworkLinkResource" /> object. </returns>
         public static DnsForwardingRulesetVirtualNetworkLinkResource GetDnsForwardingRulesetVirtualNetworkLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsResolverArmClientMockingExtension(client).GetDnsForwardingRulesetVirtualNetworkLinkResource(id);
+            return GetMockableDnsResolverArmClient(client).GetDnsForwardingRulesetVirtualNetworkLinkResource(id);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// You can use <see cref="VirtualNetworkDnsResolverResource.CreateResourceIdentifier" /> to create a <see cref="VirtualNetworkDnsResolverResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverArmClientMockingExtension.GetVirtualNetworkDnsResolverResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverArmClient.GetVirtualNetworkDnsResolverResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -143,21 +143,21 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> Returns a <see cref="VirtualNetworkDnsResolverResource" /> object. </returns>
         public static VirtualNetworkDnsResolverResource GetVirtualNetworkDnsResolverResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetDnsResolverArmClientMockingExtension(client).GetVirtualNetworkDnsResolverResource(id);
+            return GetMockableDnsResolverArmClient(client).GetVirtualNetworkDnsResolverResource(id);
         }
 
         /// <summary>
         /// Gets a collection of DnsResolverResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverResourceGroupMockingExtension.GetDnsResolvers()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverResourceGroupResource.GetDnsResolvers()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DnsResolverResources and their operations over a DnsResolverResource. </returns>
         public static DnsResolverCollection GetDnsResolvers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetDnsResolverResourceGroupMockingExtension(resourceGroupResource).GetDnsResolvers();
+            return GetMockableDnsResolverResourceGroupResource(resourceGroupResource).GetDnsResolvers();
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverResourceGroupMockingExtension.GetDnsResolverAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverResourceGroupResource.GetDnsResolverAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DnsResolver
         [ForwardsClientCalls]
         public static async Task<Response<DnsResolverResource>> GetDnsResolverAsync(this ResourceGroupResource resourceGroupResource, string dnsResolverName, CancellationToken cancellationToken = default)
         {
-            return await GetDnsResolverResourceGroupMockingExtension(resourceGroupResource).GetDnsResolverAsync(dnsResolverName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDnsResolverResourceGroupResource(resourceGroupResource).GetDnsResolverAsync(dnsResolverName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverResourceGroupMockingExtension.GetDnsResolver(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverResourceGroupResource.GetDnsResolver(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -213,21 +213,21 @@ namespace Azure.ResourceManager.DnsResolver
         [ForwardsClientCalls]
         public static Response<DnsResolverResource> GetDnsResolver(this ResourceGroupResource resourceGroupResource, string dnsResolverName, CancellationToken cancellationToken = default)
         {
-            return GetDnsResolverResourceGroupMockingExtension(resourceGroupResource).GetDnsResolver(dnsResolverName, cancellationToken);
+            return GetMockableDnsResolverResourceGroupResource(resourceGroupResource).GetDnsResolver(dnsResolverName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of DnsForwardingRulesetResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverResourceGroupMockingExtension.GetDnsForwardingRulesets()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverResourceGroupResource.GetDnsForwardingRulesets()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DnsForwardingRulesetResources and their operations over a DnsForwardingRulesetResource. </returns>
         public static DnsForwardingRulesetCollection GetDnsForwardingRulesets(this ResourceGroupResource resourceGroupResource)
         {
-            return GetDnsResolverResourceGroupMockingExtension(resourceGroupResource).GetDnsForwardingRulesets();
+            return GetMockableDnsResolverResourceGroupResource(resourceGroupResource).GetDnsForwardingRulesets();
         }
 
         /// <summary>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverResourceGroupMockingExtension.GetDnsForwardingRulesetAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverResourceGroupResource.GetDnsForwardingRulesetAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DnsResolver
         [ForwardsClientCalls]
         public static async Task<Response<DnsForwardingRulesetResource>> GetDnsForwardingRulesetAsync(this ResourceGroupResource resourceGroupResource, string rulesetName, CancellationToken cancellationToken = default)
         {
-            return await GetDnsResolverResourceGroupMockingExtension(resourceGroupResource).GetDnsForwardingRulesetAsync(rulesetName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableDnsResolverResourceGroupResource(resourceGroupResource).GetDnsForwardingRulesetAsync(rulesetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverResourceGroupMockingExtension.GetDnsForwardingRuleset(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverResourceGroupResource.GetDnsForwardingRuleset(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.DnsResolver
         [ForwardsClientCalls]
         public static Response<DnsForwardingRulesetResource> GetDnsForwardingRuleset(this ResourceGroupResource resourceGroupResource, string rulesetName, CancellationToken cancellationToken = default)
         {
-            return GetDnsResolverResourceGroupMockingExtension(resourceGroupResource).GetDnsForwardingRuleset(rulesetName, cancellationToken);
+            return GetMockableDnsResolverResourceGroupResource(resourceGroupResource).GetDnsForwardingRuleset(rulesetName, cancellationToken);
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverSubscriptionMockingExtension.GetDnsResolvers(int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverSubscriptionResource.GetDnsResolvers(int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> An async collection of <see cref="DnsResolverResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DnsResolverResource> GetDnsResolversAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetDnsResolverSubscriptionMockingExtension(subscriptionResource).GetDnsResolversAsync(top, cancellationToken);
+            return GetMockableDnsResolverSubscriptionResource(subscriptionResource).GetDnsResolversAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverSubscriptionMockingExtension.GetDnsResolvers(int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverSubscriptionResource.GetDnsResolvers(int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> A collection of <see cref="DnsResolverResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DnsResolverResource> GetDnsResolvers(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetDnsResolverSubscriptionMockingExtension(subscriptionResource).GetDnsResolvers(top, cancellationToken);
+            return GetMockableDnsResolverSubscriptionResource(subscriptionResource).GetDnsResolvers(top, cancellationToken);
         }
 
         /// <summary>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverSubscriptionMockingExtension.GetDnsForwardingRulesets(int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverSubscriptionResource.GetDnsForwardingRulesets(int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> An async collection of <see cref="DnsForwardingRulesetResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DnsForwardingRulesetResource> GetDnsForwardingRulesetsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetDnsResolverSubscriptionMockingExtension(subscriptionResource).GetDnsForwardingRulesetsAsync(top, cancellationToken);
+            return GetMockableDnsResolverSubscriptionResource(subscriptionResource).GetDnsForwardingRulesetsAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="DnsResolverSubscriptionMockingExtension.GetDnsForwardingRulesets(int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableDnsResolverSubscriptionResource.GetDnsForwardingRulesets(int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <returns> A collection of <see cref="DnsForwardingRulesetResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DnsForwardingRulesetResource> GetDnsForwardingRulesets(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetDnsResolverSubscriptionMockingExtension(subscriptionResource).GetDnsForwardingRulesets(top, cancellationToken);
+            return GetMockableDnsResolverSubscriptionResource(subscriptionResource).GetDnsForwardingRulesets(top, cancellationToken);
         }
     }
 }

@@ -106,22 +106,22 @@ namespace Azure.ResourceManager.Elastic
 }
 namespace Azure.ResourceManager.Elastic.Mocking
 {
-    public partial class ElasticArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableElasticArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ElasticArmClientMockingExtension() { }
+        protected MockableElasticArmClient() { }
         public virtual Azure.ResourceManager.Elastic.ElasticMonitorResource GetElasticMonitorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Elastic.MonitoringTagRuleResource GetMonitoringTagRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ElasticResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableElasticResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ElasticResourceGroupMockingExtension() { }
+        protected MockableElasticResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Elastic.ElasticMonitorResource> GetElasticMonitorResource(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Elastic.ElasticMonitorResource>> GetElasticMonitorResourceAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Elastic.ElasticMonitorResourceCollection GetElasticMonitorResources() { throw null; }
     }
-    public partial class ElasticSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableElasticSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ElasticSubscriptionMockingExtension() { }
+        protected MockableElasticSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Elastic.ElasticMonitorResource> GetElasticMonitorResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Elastic.ElasticMonitorResource> GetElasticMonitorResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

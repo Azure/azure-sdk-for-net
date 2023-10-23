@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class to add extension methods to Azure.ResourceManager.CosmosDB. </summary>
     public static partial class CosmosDBExtensions
     {
-        private static CosmosDBArmClientMockingExtension GetCosmosDBArmClientMockingExtension(ArmClient client)
+        private static MockableCosmosDBArmClient GetMockableCosmosDBArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new CosmosDBArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableCosmosDBArmClient(client0));
         }
 
-        private static CosmosDBResourceGroupMockingExtension GetCosmosDBResourceGroupMockingExtension(ArmResource resource)
+        private static MockableCosmosDBResourceGroupResource GetMockableCosmosDBResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new CosmosDBResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableCosmosDBResourceGroupResource(client, resource.Id));
         }
 
-        private static CosmosDBSubscriptionMockingExtension GetCosmosDBSubscriptionMockingExtension(ArmResource resource)
+        private static MockableCosmosDBSubscriptionResource GetMockableCosmosDBSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new CosmosDBSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableCosmosDBSubscriptionResource(client, resource.Id));
         }
 
-        private static CosmosDBTenantMockingExtension GetCosmosDBTenantMockingExtension(ArmResource resource)
+        private static MockableCosmosDBTenantResource GetMockableCosmosDBTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new CosmosDBTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableCosmosDBTenantResource(client, resource.Id));
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBAccountResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBAccountResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBAccountResource" /> object. </returns>
         public static CosmosDBAccountResource GetCosmosDBAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBAccountResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBAccountResource(id);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="GraphResourceGetResultResource.CreateResourceIdentifier" /> to create a <see cref="GraphResourceGetResultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetGraphResourceGetResultResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetGraphResourceGetResultResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="GraphResourceGetResultResource" /> object. </returns>
         public static GraphResourceGetResultResource GetGraphResourceGetResultResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetGraphResourceGetResultResource(id);
+            return GetMockableCosmosDBArmClient(client).GetGraphResourceGetResultResource(id);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBSqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBSqlDatabaseResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlDatabaseResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlDatabaseResource" /> object. </returns>
         public static CosmosDBSqlDatabaseResource GetCosmosDBSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlDatabaseResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlDatabaseResource(id);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBSqlDatabaseThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlDatabaseThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBSqlDatabaseThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlDatabaseThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlDatabaseThroughputSettingResource" /> object. </returns>
         public static CosmosDBSqlDatabaseThroughputSettingResource GetCosmosDBSqlDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlDatabaseThroughputSettingResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlDatabaseThroughputSettingResource(id);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBSqlContainerThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlContainerThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBSqlContainerThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlContainerThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlContainerThroughputSettingResource" /> object. </returns>
         public static CosmosDBSqlContainerThroughputSettingResource GetCosmosDBSqlContainerThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlContainerThroughputSettingResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlContainerThroughputSettingResource(id);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="MongoDBDatabaseThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBDatabaseThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetMongoDBDatabaseThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetMongoDBDatabaseThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBDatabaseThroughputSettingResource" /> object. </returns>
         public static MongoDBDatabaseThroughputSettingResource GetMongoDBDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetMongoDBDatabaseThroughputSettingResource(id);
+            return GetMockableCosmosDBArmClient(client).GetMongoDBDatabaseThroughputSettingResource(id);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="MongoDBCollectionThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBCollectionThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetMongoDBCollectionThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetMongoDBCollectionThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBCollectionThroughputSettingResource" /> object. </returns>
         public static MongoDBCollectionThroughputSettingResource GetMongoDBCollectionThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetMongoDBCollectionThroughputSettingResource(id);
+            return GetMockableCosmosDBArmClient(client).GetMongoDBCollectionThroughputSettingResource(id);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosTableThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CosmosTableThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosTableThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosTableThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosTableThroughputSettingResource" /> object. </returns>
         public static CosmosTableThroughputSettingResource GetCosmosTableThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosTableThroughputSettingResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosTableThroughputSettingResource(id);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CassandraKeyspaceThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CassandraKeyspaceThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCassandraKeyspaceThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraKeyspaceThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraKeyspaceThroughputSettingResource" /> object. </returns>
         public static CassandraKeyspaceThroughputSettingResource GetCassandraKeyspaceThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCassandraKeyspaceThroughputSettingResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCassandraKeyspaceThroughputSettingResource(id);
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CassandraTableThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CassandraTableThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCassandraTableThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraTableThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraTableThroughputSettingResource" /> object. </returns>
         public static CassandraTableThroughputSettingResource GetCassandraTableThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCassandraTableThroughputSettingResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCassandraTableThroughputSettingResource(id);
         }
 
         /// <summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CassandraViewThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CassandraViewThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCassandraViewThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraViewThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraViewThroughputSettingResource" /> object. </returns>
         public static CassandraViewThroughputSettingResource GetCassandraViewThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCassandraViewThroughputSettingResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCassandraViewThroughputSettingResource(id);
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="GremlinDatabaseThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="GremlinDatabaseThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetGremlinDatabaseThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetGremlinDatabaseThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="GremlinDatabaseThroughputSettingResource" /> object. </returns>
         public static GremlinDatabaseThroughputSettingResource GetGremlinDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetGremlinDatabaseThroughputSettingResource(id);
+            return GetMockableCosmosDBArmClient(client).GetGremlinDatabaseThroughputSettingResource(id);
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="GremlinGraphThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="GremlinGraphThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetGremlinGraphThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetGremlinGraphThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="GremlinGraphThroughputSettingResource" /> object. </returns>
         public static GremlinGraphThroughputSettingResource GetGremlinGraphThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetGremlinGraphThroughputSettingResource(id);
+            return GetMockableCosmosDBArmClient(client).GetGremlinGraphThroughputSettingResource(id);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBSqlClientEncryptionKeyResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlClientEncryptionKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBSqlClientEncryptionKeyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlClientEncryptionKeyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlClientEncryptionKeyResource" /> object. </returns>
         public static CosmosDBSqlClientEncryptionKeyResource GetCosmosDBSqlClientEncryptionKeyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlClientEncryptionKeyResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlClientEncryptionKeyResource(id);
         }
 
         /// <summary>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBSqlContainerResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBSqlContainerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlContainerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlContainerResource" /> object. </returns>
         public static CosmosDBSqlContainerResource GetCosmosDBSqlContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlContainerResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlContainerResource(id);
         }
 
         /// <summary>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBSqlStoredProcedureResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlStoredProcedureResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBSqlStoredProcedureResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlStoredProcedureResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlStoredProcedureResource" /> object. </returns>
         public static CosmosDBSqlStoredProcedureResource GetCosmosDBSqlStoredProcedureResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlStoredProcedureResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlStoredProcedureResource(id);
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBSqlUserDefinedFunctionResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlUserDefinedFunctionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBSqlUserDefinedFunctionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlUserDefinedFunctionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlUserDefinedFunctionResource" /> object. </returns>
         public static CosmosDBSqlUserDefinedFunctionResource GetCosmosDBSqlUserDefinedFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlUserDefinedFunctionResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlUserDefinedFunctionResource(id);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBSqlTriggerResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBSqlTriggerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlTriggerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlTriggerResource" /> object. </returns>
         public static CosmosDBSqlTriggerResource GetCosmosDBSqlTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlTriggerResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlTriggerResource(id);
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBSqlRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBSqlRoleDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlRoleDefinitionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlRoleDefinitionResource" /> object. </returns>
         public static CosmosDBSqlRoleDefinitionResource GetCosmosDBSqlRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlRoleDefinitionResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlRoleDefinitionResource(id);
         }
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBSqlRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBSqlRoleAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlRoleAssignmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBSqlRoleAssignmentResource" /> object. </returns>
         public static CosmosDBSqlRoleAssignmentResource GetCosmosDBSqlRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBSqlRoleAssignmentResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlRoleAssignmentResource(id);
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="MongoDBDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetMongoDBDatabaseResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetMongoDBDatabaseResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBDatabaseResource" /> object. </returns>
         public static MongoDBDatabaseResource GetMongoDBDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetMongoDBDatabaseResource(id);
+            return GetMockableCosmosDBArmClient(client).GetMongoDBDatabaseResource(id);
         }
 
         /// <summary>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="MongoDBCollectionResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBCollectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetMongoDBCollectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetMongoDBCollectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBCollectionResource" /> object. </returns>
         public static MongoDBCollectionResource GetMongoDBCollectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetMongoDBCollectionResource(id);
+            return GetMockableCosmosDBArmClient(client).GetMongoDBCollectionResource(id);
         }
 
         /// <summary>
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="MongoDBRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetMongoDBRoleDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetMongoDBRoleDefinitionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBRoleDefinitionResource" /> object. </returns>
         public static MongoDBRoleDefinitionResource GetMongoDBRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetMongoDBRoleDefinitionResource(id);
+            return GetMockableCosmosDBArmClient(client).GetMongoDBRoleDefinitionResource(id);
         }
 
         /// <summary>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="MongoDBUserDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBUserDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetMongoDBUserDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetMongoDBUserDefinitionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoDBUserDefinitionResource" /> object. </returns>
         public static MongoDBUserDefinitionResource GetMongoDBUserDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetMongoDBUserDefinitionResource(id);
+            return GetMockableCosmosDBArmClient(client).GetMongoDBUserDefinitionResource(id);
         }
 
         /// <summary>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBTableResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBTableResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBTableResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBTableResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBTableResource" /> object. </returns>
         public static CosmosDBTableResource GetCosmosDBTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBTableResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBTableResource(id);
         }
 
         /// <summary>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CassandraKeyspaceResource.CreateResourceIdentifier" /> to create a <see cref="CassandraKeyspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCassandraKeyspaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraKeyspaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraKeyspaceResource" /> object. </returns>
         public static CassandraKeyspaceResource GetCassandraKeyspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCassandraKeyspaceResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCassandraKeyspaceResource(id);
         }
 
         /// <summary>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CassandraTableResource.CreateResourceIdentifier" /> to create a <see cref="CassandraTableResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCassandraTableResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraTableResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraTableResource" /> object. </returns>
         public static CassandraTableResource GetCassandraTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCassandraTableResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCassandraTableResource(id);
         }
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CassandraViewGetResultResource.CreateResourceIdentifier" /> to create a <see cref="CassandraViewGetResultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCassandraViewGetResultResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraViewGetResultResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraViewGetResultResource" /> object. </returns>
         public static CassandraViewGetResultResource GetCassandraViewGetResultResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCassandraViewGetResultResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCassandraViewGetResultResource(id);
         }
 
         /// <summary>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="GremlinDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="GremlinDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetGremlinDatabaseResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetGremlinDatabaseResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="GremlinDatabaseResource" /> object. </returns>
         public static GremlinDatabaseResource GetGremlinDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetGremlinDatabaseResource(id);
+            return GetMockableCosmosDBArmClient(client).GetGremlinDatabaseResource(id);
         }
 
         /// <summary>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="GremlinGraphResource.CreateResourceIdentifier" /> to create a <see cref="GremlinGraphResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetGremlinGraphResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetGremlinGraphResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="GremlinGraphResource" /> object. </returns>
         public static GremlinGraphResource GetGremlinGraphResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetGremlinGraphResource(id);
+            return GetMockableCosmosDBArmClient(client).GetGremlinGraphResource(id);
         }
 
         /// <summary>
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBLocationResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBLocationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBLocationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBLocationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBLocationResource" /> object. </returns>
         public static CosmosDBLocationResource GetCosmosDBLocationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBLocationResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBLocationResource(id);
         }
 
         /// <summary>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="DataTransferJobGetResultResource.CreateResourceIdentifier" /> to create a <see cref="DataTransferJobGetResultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetDataTransferJobGetResultResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetDataTransferJobGetResultResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="DataTransferJobGetResultResource" /> object. </returns>
         public static DataTransferJobGetResultResource GetDataTransferJobGetResultResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetDataTransferJobGetResultResource(id);
+            return GetMockableCosmosDBArmClient(client).GetDataTransferJobGetResultResource(id);
         }
 
         /// <summary>
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CassandraClusterResource.CreateResourceIdentifier" /> to create a <see cref="CassandraClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCassandraClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraClusterResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraClusterResource" /> object. </returns>
         public static CassandraClusterResource GetCassandraClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCassandraClusterResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCassandraClusterResource(id);
         }
 
         /// <summary>
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CassandraClusterBackupResource.CreateResourceIdentifier" /> to create a <see cref="CassandraClusterBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCassandraClusterBackupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraClusterBackupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraClusterBackupResource" /> object. </returns>
         public static CassandraClusterBackupResource GetCassandraClusterBackupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCassandraClusterBackupResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCassandraClusterBackupResource(id);
         }
 
         /// <summary>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CassandraDataCenterResource.CreateResourceIdentifier" /> to create a <see cref="CassandraDataCenterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCassandraDataCenterResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraDataCenterResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CassandraDataCenterResource" /> object. </returns>
         public static CassandraDataCenterResource GetCassandraDataCenterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCassandraDataCenterResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCassandraDataCenterResource(id);
         }
 
         /// <summary>
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="MongoClusterResource.CreateResourceIdentifier" /> to create a <see cref="MongoClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetMongoClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetMongoClusterResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -612,7 +612,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="MongoClusterResource" /> object. </returns>
         public static MongoClusterResource GetMongoClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetMongoClusterResource(id);
+            return GetMockableCosmosDBArmClient(client).GetMongoClusterResource(id);
         }
 
         /// <summary>
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBFirewallRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBFirewallRuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBFirewallRuleResource" /> object. </returns>
         public static CosmosDBFirewallRuleResource GetCosmosDBFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBFirewallRuleResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBFirewallRuleResource(id);
         }
 
         /// <summary>
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBPrivateEndpointConnectionResource" /> object. </returns>
         public static CosmosDBPrivateEndpointConnectionResource GetCosmosDBPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBPrivateEndpointConnectionResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBPrivateLinkResource" /> object. </returns>
         public static CosmosDBPrivateLinkResource GetCosmosDBPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBPrivateLinkResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBPrivateLinkResource(id);
         }
 
         /// <summary>
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="RestorableCosmosDBAccountResource.CreateResourceIdentifier" /> to create a <see cref="RestorableCosmosDBAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetRestorableCosmosDBAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetRestorableCosmosDBAccountResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="RestorableCosmosDBAccountResource" /> object. </returns>
         public static RestorableCosmosDBAccountResource GetRestorableCosmosDBAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetRestorableCosmosDBAccountResource(id);
+            return GetMockableCosmosDBArmClient(client).GetRestorableCosmosDBAccountResource(id);
         }
 
         /// <summary>
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// You can use <see cref="CosmosDBServiceResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBArmClientMockingExtension.GetCosmosDBServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -692,21 +692,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> Returns a <see cref="CosmosDBServiceResource" /> object. </returns>
         public static CosmosDBServiceResource GetCosmosDBServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCosmosDBArmClientMockingExtension(client).GetCosmosDBServiceResource(id);
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBServiceResource(id);
         }
 
         /// <summary>
         /// Gets a collection of CosmosDBAccountResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBResourceGroupMockingExtension.GetCosmosDBAccounts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetCosmosDBAccounts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CosmosDBAccountResources and their operations over a CosmosDBAccountResource. </returns>
         public static CosmosDBAccountCollection GetCosmosDBAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetCosmosDBAccounts();
+            return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetCosmosDBAccounts();
         }
 
         /// <summary>
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBResourceGroupMockingExtension.GetCosmosDBAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetCosmosDBAccountAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static async Task<Response<CosmosDBAccountResource>> GetCosmosDBAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetCosmosDBAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetCosmosDBAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -751,7 +751,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBResourceGroupMockingExtension.GetCosmosDBAccount(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetCosmosDBAccount(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -762,21 +762,21 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static Response<CosmosDBAccountResource> GetCosmosDBAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetCosmosDBAccount(accountName, cancellationToken);
+            return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetCosmosDBAccount(accountName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of CassandraClusterResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBResourceGroupMockingExtension.GetCassandraClusters()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetCassandraClusters()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CassandraClusterResources and their operations over a CassandraClusterResource. </returns>
         public static CassandraClusterCollection GetCassandraClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetCassandraClusters();
+            return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetCassandraClusters();
         }
 
         /// <summary>
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBResourceGroupMockingExtension.GetCassandraClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetCassandraClusterAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -804,7 +804,7 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static async Task<Response<CassandraClusterResource>> GetCassandraClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetCassandraClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetCassandraClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -821,7 +821,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBResourceGroupMockingExtension.GetCassandraCluster(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetCassandraCluster(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -832,21 +832,21 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static Response<CassandraClusterResource> GetCassandraCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetCassandraCluster(clusterName, cancellationToken);
+            return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetCassandraCluster(clusterName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of MongoClusterResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBResourceGroupMockingExtension.GetMongoClusters()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetMongoClusters()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of MongoClusterResources and their operations over a MongoClusterResource. </returns>
         public static MongoClusterCollection GetMongoClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetMongoClusters();
+            return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetMongoClusters();
         }
 
         /// <summary>
@@ -863,7 +863,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBResourceGroupMockingExtension.GetMongoClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetMongoClusterAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -874,7 +874,7 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static async Task<Response<MongoClusterResource>> GetMongoClusterAsync(this ResourceGroupResource resourceGroupResource, string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            return await GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetMongoClusterAsync(mongoClusterName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetMongoClusterAsync(mongoClusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBResourceGroupMockingExtension.GetMongoCluster(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetMongoCluster(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -902,21 +902,21 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static Response<MongoClusterResource> GetMongoCluster(this ResourceGroupResource resourceGroupResource, string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBResourceGroupMockingExtension(resourceGroupResource).GetMongoCluster(mongoClusterName, cancellationToken);
+            return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetMongoCluster(mongoClusterName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of CosmosDBLocationResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBSubscriptionMockingExtension.GetCosmosDBLocations()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetCosmosDBLocations()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CosmosDBLocationResources and their operations over a CosmosDBLocationResource. </returns>
         public static CosmosDBLocationCollection GetCosmosDBLocations(this SubscriptionResource subscriptionResource)
         {
-            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetCosmosDBLocations();
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetCosmosDBLocations();
         }
 
         /// <summary>
@@ -933,7 +933,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBSubscriptionMockingExtension.GetCosmosDBLocationAsync(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetCosmosDBLocationAsync(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -942,7 +942,7 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static async Task<Response<CosmosDBLocationResource>> GetCosmosDBLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetCosmosDBLocationAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetCosmosDBLocationAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -959,7 +959,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBSubscriptionMockingExtension.GetCosmosDBLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetCosmosDBLocation(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -968,7 +968,7 @@ namespace Azure.ResourceManager.CosmosDB
         [ForwardsClientCalls]
         public static Response<CosmosDBLocationResource> GetCosmosDBLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetCosmosDBLocation(location, cancellationToken);
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetCosmosDBLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -985,7 +985,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBSubscriptionMockingExtension.GetCosmosDBAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetCosmosDBAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -993,7 +993,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CosmosDBAccountResource> GetCosmosDBAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetCosmosDBAccountsAsync(cancellationToken);
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetCosmosDBAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1010,7 +1010,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBSubscriptionMockingExtension.GetCosmosDBAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetCosmosDBAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1018,7 +1018,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CosmosDBAccountResource> GetCosmosDBAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetCosmosDBAccounts(cancellationToken);
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetCosmosDBAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBSubscriptionMockingExtension.GetCassandraClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetCassandraClusters(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1043,7 +1043,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="CassandraClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CassandraClusterResource> GetCassandraClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetCassandraClustersAsync(cancellationToken);
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetCassandraClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBSubscriptionMockingExtension.GetCassandraClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetCassandraClusters(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="CassandraClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CassandraClusterResource> GetCassandraClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetCassandraClusters(cancellationToken);
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetCassandraClusters(cancellationToken);
         }
 
         /// <summary>
@@ -1085,7 +1085,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBSubscriptionMockingExtension.GetMongoClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetMongoClusters(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1093,7 +1093,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="MongoClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MongoClusterResource> GetMongoClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetMongoClustersAsync(cancellationToken);
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetMongoClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1110,7 +1110,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBSubscriptionMockingExtension.GetMongoClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetMongoClusters(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1118,7 +1118,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="MongoClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MongoClusterResource> GetMongoClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetMongoClusters(cancellationToken);
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetMongoClusters(cancellationToken);
         }
 
         /// <summary>
@@ -1135,7 +1135,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBSubscriptionMockingExtension.GetRestorableCosmosDBAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetRestorableCosmosDBAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1143,7 +1143,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An async collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetRestorableCosmosDBAccountsAsync(cancellationToken);
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetRestorableCosmosDBAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1160,7 +1160,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBSubscriptionMockingExtension.GetRestorableCosmosDBAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetRestorableCosmosDBAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -1168,7 +1168,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> A collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBSubscriptionMockingExtension(subscriptionResource).GetRestorableCosmosDBAccounts(cancellationToken);
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetRestorableCosmosDBAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -1185,7 +1185,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBTenantMockingExtension.CheckNameExistsDatabaseAccount(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBTenantResource.CheckNameExistsDatabaseAccount(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1195,7 +1195,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public static async Task<Response<bool>> CheckNameExistsDatabaseAccountAsync(this TenantResource tenantResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await GetCosmosDBTenantMockingExtension(tenantResource).CheckNameExistsDatabaseAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCosmosDBTenantResource(tenantResource).CheckNameExistsDatabaseAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1212,7 +1212,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CosmosDBTenantMockingExtension.CheckNameExistsDatabaseAccount(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBTenantResource.CheckNameExistsDatabaseAccount(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -1222,7 +1222,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         public static Response<bool> CheckNameExistsDatabaseAccount(this TenantResource tenantResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return GetCosmosDBTenantMockingExtension(tenantResource).CheckNameExistsDatabaseAccount(accountName, cancellationToken);
+            return GetMockableCosmosDBTenantResource(tenantResource).CheckNameExistsDatabaseAccount(accountName, cancellationToken);
         }
     }
 }

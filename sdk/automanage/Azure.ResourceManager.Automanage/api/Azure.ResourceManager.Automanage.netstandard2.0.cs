@@ -345,9 +345,9 @@ namespace Azure.ResourceManager.Automanage
 }
 namespace Azure.ResourceManager.Automanage.Mocking
 {
-    public partial class AutomanageArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAutomanageArmClient : Azure.ResourceManager.ArmResource
     {
-        protected AutomanageArmClientMockingExtension() { }
+        protected MockableAutomanageArmClient() { }
         public virtual Azure.ResourceManager.Automanage.AutomanageBestPracticeResource GetAutomanageBestPracticeResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource GetAutomanageConfigurationProfileResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automanage.AutomanageConfigurationProfileVersionResource GetAutomanageConfigurationProfileVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -367,16 +367,16 @@ namespace Azure.ResourceManager.Automanage.Mocking
         public virtual Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentResource GetAutomanageVmConfigurationProfileAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Automanage.AutomanageVmConfigurationProfileAssignmentCollection GetAutomanageVmConfigurationProfileAssignments(Azure.Core.ResourceIdentifier scope) { throw null; }
     }
-    public partial class AutomanageResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAutomanageResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected AutomanageResourceGroupMockingExtension() { }
+        protected MockableAutomanageResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfile(string configurationProfileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource>> GetAutomanageConfigurationProfileAsync(string configurationProfileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Automanage.AutomanageConfigurationProfileCollection GetAutomanageConfigurationProfiles() { throw null; }
     }
-    public partial class AutomanageSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAutomanageSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected AutomanageSubscriptionMockingExtension() { }
+        protected MockableAutomanageSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfiles(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automanage.AutomanageConfigurationProfileResource> GetAutomanageConfigurationProfilesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData> GetServicePrincipal(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -384,9 +384,9 @@ namespace Azure.ResourceManager.Automanage.Mocking
         public virtual Azure.Pageable<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData> GetServicePrincipals(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Automanage.Models.AutomanageServicePrincipalData> GetServicePrincipalsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class AutomanageTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAutomanageTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected AutomanageTenantMockingExtension() { }
+        protected MockableAutomanageTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Automanage.AutomanageBestPracticeResource> GetAutomanageBestPractice(string bestPracticeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Automanage.AutomanageBestPracticeResource>> GetAutomanageBestPracticeAsync(string bestPracticeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Automanage.AutomanageBestPracticeCollection GetAutomanageBestPractices() { throw null; }

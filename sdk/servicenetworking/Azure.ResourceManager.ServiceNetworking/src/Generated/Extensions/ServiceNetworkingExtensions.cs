@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.ServiceNetworking
     /// <summary> A class to add extension methods to Azure.ResourceManager.ServiceNetworking. </summary>
     public static partial class ServiceNetworkingExtensions
     {
-        private static ServiceNetworkingArmClientMockingExtension GetServiceNetworkingArmClientMockingExtension(ArmClient client)
+        private static MockableServiceNetworkingArmClient GetMockableServiceNetworkingArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ServiceNetworkingArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableServiceNetworkingArmClient(client0));
         }
 
-        private static ServiceNetworkingResourceGroupMockingExtension GetServiceNetworkingResourceGroupMockingExtension(ArmResource resource)
+        private static MockableServiceNetworkingResourceGroupResource GetMockableServiceNetworkingResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ServiceNetworkingResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableServiceNetworkingResourceGroupResource(client, resource.Id));
         }
 
-        private static ServiceNetworkingSubscriptionMockingExtension GetServiceNetworkingSubscriptionMockingExtension(ArmResource resource)
+        private static MockableServiceNetworkingSubscriptionResource GetMockableServiceNetworkingSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ServiceNetworkingSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableServiceNetworkingSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// You can use <see cref="TrafficControllerResource.CreateResourceIdentifier" /> to create a <see cref="TrafficControllerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ServiceNetworkingArmClientMockingExtension.GetTrafficControllerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingArmClient.GetTrafficControllerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> Returns a <see cref="TrafficControllerResource" /> object. </returns>
         public static TrafficControllerResource GetTrafficControllerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetServiceNetworkingArmClientMockingExtension(client).GetTrafficControllerResource(id);
+            return GetMockableServiceNetworkingArmClient(client).GetTrafficControllerResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// You can use <see cref="AssociationResource.CreateResourceIdentifier" /> to create an <see cref="AssociationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ServiceNetworkingArmClientMockingExtension.GetAssociationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingArmClient.GetAssociationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> Returns a <see cref="AssociationResource" /> object. </returns>
         public static AssociationResource GetAssociationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetServiceNetworkingArmClientMockingExtension(client).GetAssociationResource(id);
+            return GetMockableServiceNetworkingArmClient(client).GetAssociationResource(id);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// You can use <see cref="FrontendResource.CreateResourceIdentifier" /> to create a <see cref="FrontendResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ServiceNetworkingArmClientMockingExtension.GetFrontendResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingArmClient.GetFrontendResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -79,21 +79,21 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> Returns a <see cref="FrontendResource" /> object. </returns>
         public static FrontendResource GetFrontendResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetServiceNetworkingArmClientMockingExtension(client).GetFrontendResource(id);
+            return GetMockableServiceNetworkingArmClient(client).GetFrontendResource(id);
         }
 
         /// <summary>
         /// Gets a collection of TrafficControllerResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ServiceNetworkingResourceGroupMockingExtension.GetTrafficControllers()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingResourceGroupResource.GetTrafficControllers()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of TrafficControllerResources and their operations over a TrafficControllerResource. </returns>
         public static TrafficControllerCollection GetTrafficControllers(this ResourceGroupResource resourceGroupResource)
         {
-            return GetServiceNetworkingResourceGroupMockingExtension(resourceGroupResource).GetTrafficControllers();
+            return GetMockableServiceNetworkingResourceGroupResource(resourceGroupResource).GetTrafficControllers();
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ServiceNetworkingResourceGroupMockingExtension.GetTrafficControllerAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingResourceGroupResource.GetTrafficControllerAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         [ForwardsClientCalls]
         public static async Task<Response<TrafficControllerResource>> GetTrafficControllerAsync(this ResourceGroupResource resourceGroupResource, string trafficControllerName, CancellationToken cancellationToken = default)
         {
-            return await GetServiceNetworkingResourceGroupMockingExtension(resourceGroupResource).GetTrafficControllerAsync(trafficControllerName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableServiceNetworkingResourceGroupResource(resourceGroupResource).GetTrafficControllerAsync(trafficControllerName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ServiceNetworkingResourceGroupMockingExtension.GetTrafficController(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingResourceGroupResource.GetTrafficController(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         [ForwardsClientCalls]
         public static Response<TrafficControllerResource> GetTrafficController(this ResourceGroupResource resourceGroupResource, string trafficControllerName, CancellationToken cancellationToken = default)
         {
-            return GetServiceNetworkingResourceGroupMockingExtension(resourceGroupResource).GetTrafficController(trafficControllerName, cancellationToken);
+            return GetMockableServiceNetworkingResourceGroupResource(resourceGroupResource).GetTrafficController(trafficControllerName, cancellationToken);
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ServiceNetworkingSubscriptionMockingExtension.GetTrafficControllers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingSubscriptionResource.GetTrafficControllers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> An async collection of <see cref="TrafficControllerResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<TrafficControllerResource> GetTrafficControllersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetServiceNetworkingSubscriptionMockingExtension(subscriptionResource).GetTrafficControllersAsync(cancellationToken);
+            return GetMockableServiceNetworkingSubscriptionResource(subscriptionResource).GetTrafficControllersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ServiceNetworkingSubscriptionMockingExtension.GetTrafficControllers(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingSubscriptionResource.GetTrafficControllers(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <returns> A collection of <see cref="TrafficControllerResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<TrafficControllerResource> GetTrafficControllers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetServiceNetworkingSubscriptionMockingExtension(subscriptionResource).GetTrafficControllers(cancellationToken);
+            return GetMockableServiceNetworkingSubscriptionResource(subscriptionResource).GetTrafficControllers(cancellationToken);
         }
     }
 }

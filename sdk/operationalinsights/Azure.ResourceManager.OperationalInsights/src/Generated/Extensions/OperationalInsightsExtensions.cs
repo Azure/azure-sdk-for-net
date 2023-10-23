@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.OperationalInsights
     /// <summary> A class to add extension methods to Azure.ResourceManager.OperationalInsights. </summary>
     public static partial class OperationalInsightsExtensions
     {
-        private static OperationalInsightsArmClientMockingExtension GetOperationalInsightsArmClientMockingExtension(ArmClient client)
+        private static MockableOperationalInsightsArmClient GetMockableOperationalInsightsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new OperationalInsightsArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableOperationalInsightsArmClient(client0));
         }
 
-        private static OperationalInsightsResourceGroupMockingExtension GetOperationalInsightsResourceGroupMockingExtension(ArmResource resource)
+        private static MockableOperationalInsightsResourceGroupResource GetMockableOperationalInsightsResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new OperationalInsightsResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableOperationalInsightsResourceGroupResource(client, resource.Id));
         }
 
-        private static OperationalInsightsSubscriptionMockingExtension GetOperationalInsightsSubscriptionMockingExtension(ArmResource resource)
+        private static MockableOperationalInsightsSubscriptionResource GetMockableOperationalInsightsSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new OperationalInsightsSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableOperationalInsightsSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// You can use <see cref="LogAnalyticsQueryPackResource.CreateResourceIdentifier" /> to create a <see cref="LogAnalyticsQueryPackResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsArmClientMockingExtension.GetLogAnalyticsQueryPackResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetLogAnalyticsQueryPackResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="LogAnalyticsQueryPackResource" /> object. </returns>
         public static LogAnalyticsQueryPackResource GetLogAnalyticsQueryPackResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetOperationalInsightsArmClientMockingExtension(client).GetLogAnalyticsQueryPackResource(id);
+            return GetMockableOperationalInsightsArmClient(client).GetLogAnalyticsQueryPackResource(id);
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// You can use <see cref="LogAnalyticsQueryResource.CreateResourceIdentifier" /> to create a <see cref="LogAnalyticsQueryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsArmClientMockingExtension.GetLogAnalyticsQueryResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetLogAnalyticsQueryResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="LogAnalyticsQueryResource" /> object. </returns>
         public static LogAnalyticsQueryResource GetLogAnalyticsQueryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetOperationalInsightsArmClientMockingExtension(client).GetLogAnalyticsQueryResource(id);
+            return GetMockableOperationalInsightsArmClient(client).GetLogAnalyticsQueryResource(id);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// You can use <see cref="OperationalInsightsDataExportResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsDataExportResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsArmClientMockingExtension.GetOperationalInsightsDataExportResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsDataExportResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="OperationalInsightsDataExportResource" /> object. </returns>
         public static OperationalInsightsDataExportResource GetOperationalInsightsDataExportResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetOperationalInsightsArmClientMockingExtension(client).GetOperationalInsightsDataExportResource(id);
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsDataExportResource(id);
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// You can use <see cref="OperationalInsightsDataSourceResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsDataSourceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsArmClientMockingExtension.GetOperationalInsightsDataSourceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsDataSourceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="OperationalInsightsDataSourceResource" /> object. </returns>
         public static OperationalInsightsDataSourceResource GetOperationalInsightsDataSourceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetOperationalInsightsArmClientMockingExtension(client).GetOperationalInsightsDataSourceResource(id);
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsDataSourceResource(id);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// You can use <see cref="OperationalInsightsLinkedServiceResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsLinkedServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsArmClientMockingExtension.GetOperationalInsightsLinkedServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsLinkedServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="OperationalInsightsLinkedServiceResource" /> object. </returns>
         public static OperationalInsightsLinkedServiceResource GetOperationalInsightsLinkedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetOperationalInsightsArmClientMockingExtension(client).GetOperationalInsightsLinkedServiceResource(id);
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsLinkedServiceResource(id);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// You can use <see cref="OperationalInsightsLinkedStorageAccountsResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsLinkedStorageAccountsResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsArmClientMockingExtension.GetOperationalInsightsLinkedStorageAccountsResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsLinkedStorageAccountsResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="OperationalInsightsLinkedStorageAccountsResource" /> object. </returns>
         public static OperationalInsightsLinkedStorageAccountsResource GetOperationalInsightsLinkedStorageAccountsResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetOperationalInsightsArmClientMockingExtension(client).GetOperationalInsightsLinkedStorageAccountsResource(id);
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsLinkedStorageAccountsResource(id);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// You can use <see cref="StorageInsightResource.CreateResourceIdentifier" /> to create a <see cref="StorageInsightResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsArmClientMockingExtension.GetStorageInsightResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetStorageInsightResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="StorageInsightResource" /> object. </returns>
         public static StorageInsightResource GetStorageInsightResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetOperationalInsightsArmClientMockingExtension(client).GetStorageInsightResource(id);
+            return GetMockableOperationalInsightsArmClient(client).GetStorageInsightResource(id);
         }
 
         /// <summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// You can use <see cref="OperationalInsightsSavedSearchResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsSavedSearchResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsArmClientMockingExtension.GetOperationalInsightsSavedSearchResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsSavedSearchResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="OperationalInsightsSavedSearchResource" /> object. </returns>
         public static OperationalInsightsSavedSearchResource GetOperationalInsightsSavedSearchResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetOperationalInsightsArmClientMockingExtension(client).GetOperationalInsightsSavedSearchResource(id);
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsSavedSearchResource(id);
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// You can use <see cref="OperationalInsightsClusterResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsArmClientMockingExtension.GetOperationalInsightsClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsClusterResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="OperationalInsightsClusterResource" /> object. </returns>
         public static OperationalInsightsClusterResource GetOperationalInsightsClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetOperationalInsightsArmClientMockingExtension(client).GetOperationalInsightsClusterResource(id);
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsClusterResource(id);
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// You can use <see cref="OperationalInsightsWorkspaceResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsArmClientMockingExtension.GetOperationalInsightsWorkspaceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsWorkspaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="OperationalInsightsWorkspaceResource" /> object. </returns>
         public static OperationalInsightsWorkspaceResource GetOperationalInsightsWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetOperationalInsightsArmClientMockingExtension(client).GetOperationalInsightsWorkspaceResource(id);
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsWorkspaceResource(id);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// You can use <see cref="OperationalInsightsTableResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsTableResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsArmClientMockingExtension.GetOperationalInsightsTableResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsArmClient.GetOperationalInsightsTableResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -207,21 +207,21 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> Returns a <see cref="OperationalInsightsTableResource" /> object. </returns>
         public static OperationalInsightsTableResource GetOperationalInsightsTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetOperationalInsightsArmClientMockingExtension(client).GetOperationalInsightsTableResource(id);
+            return GetMockableOperationalInsightsArmClient(client).GetOperationalInsightsTableResource(id);
         }
 
         /// <summary>
         /// Gets a collection of LogAnalyticsQueryPackResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsResourceGroupMockingExtension.GetLogAnalyticsQueryPacks()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetLogAnalyticsQueryPacks()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of LogAnalyticsQueryPackResources and their operations over a LogAnalyticsQueryPackResource. </returns>
         public static LogAnalyticsQueryPackCollection GetLogAnalyticsQueryPacks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetOperationalInsightsResourceGroupMockingExtension(resourceGroupResource).GetLogAnalyticsQueryPacks();
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetLogAnalyticsQueryPacks();
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsResourceGroupMockingExtension.GetLogAnalyticsQueryPackAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetLogAnalyticsQueryPackAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.OperationalInsights
         [ForwardsClientCalls]
         public static async Task<Response<LogAnalyticsQueryPackResource>> GetLogAnalyticsQueryPackAsync(this ResourceGroupResource resourceGroupResource, string queryPackName, CancellationToken cancellationToken = default)
         {
-            return await GetOperationalInsightsResourceGroupMockingExtension(resourceGroupResource).GetLogAnalyticsQueryPackAsync(queryPackName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetLogAnalyticsQueryPackAsync(queryPackName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsResourceGroupMockingExtension.GetLogAnalyticsQueryPack(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetLogAnalyticsQueryPack(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -277,21 +277,21 @@ namespace Azure.ResourceManager.OperationalInsights
         [ForwardsClientCalls]
         public static Response<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPack(this ResourceGroupResource resourceGroupResource, string queryPackName, CancellationToken cancellationToken = default)
         {
-            return GetOperationalInsightsResourceGroupMockingExtension(resourceGroupResource).GetLogAnalyticsQueryPack(queryPackName, cancellationToken);
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetLogAnalyticsQueryPack(queryPackName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of OperationalInsightsClusterResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsResourceGroupMockingExtension.GetOperationalInsightsClusters()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetOperationalInsightsClusters()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of OperationalInsightsClusterResources and their operations over a OperationalInsightsClusterResource. </returns>
         public static OperationalInsightsClusterCollection GetOperationalInsightsClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetOperationalInsightsResourceGroupMockingExtension(resourceGroupResource).GetOperationalInsightsClusters();
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsClusters();
         }
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsResourceGroupMockingExtension.GetOperationalInsightsClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetOperationalInsightsClusterAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.OperationalInsights
         [ForwardsClientCalls]
         public static async Task<Response<OperationalInsightsClusterResource>> GetOperationalInsightsClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await GetOperationalInsightsResourceGroupMockingExtension(resourceGroupResource).GetOperationalInsightsClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsResourceGroupMockingExtension.GetOperationalInsightsCluster(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetOperationalInsightsCluster(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -347,21 +347,21 @@ namespace Azure.ResourceManager.OperationalInsights
         [ForwardsClientCalls]
         public static Response<OperationalInsightsClusterResource> GetOperationalInsightsCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return GetOperationalInsightsResourceGroupMockingExtension(resourceGroupResource).GetOperationalInsightsCluster(clusterName, cancellationToken);
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsCluster(clusterName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of OperationalInsightsWorkspaceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsResourceGroupMockingExtension.GetOperationalInsightsWorkspaces()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetOperationalInsightsWorkspaces()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of OperationalInsightsWorkspaceResources and their operations over a OperationalInsightsWorkspaceResource. </returns>
         public static OperationalInsightsWorkspaceCollection GetOperationalInsightsWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            return GetOperationalInsightsResourceGroupMockingExtension(resourceGroupResource).GetOperationalInsightsWorkspaces();
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsWorkspaces();
         }
 
         /// <summary>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsResourceGroupMockingExtension.GetOperationalInsightsWorkspaceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetOperationalInsightsWorkspaceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.OperationalInsights
         [ForwardsClientCalls]
         public static async Task<Response<OperationalInsightsWorkspaceResource>> GetOperationalInsightsWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await GetOperationalInsightsResourceGroupMockingExtension(resourceGroupResource).GetOperationalInsightsWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsResourceGroupMockingExtension.GetOperationalInsightsWorkspace(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetOperationalInsightsWorkspace(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.OperationalInsights
         [ForwardsClientCalls]
         public static Response<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            return GetOperationalInsightsResourceGroupMockingExtension(resourceGroupResource).GetOperationalInsightsWorkspace(workspaceName, cancellationToken);
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetOperationalInsightsWorkspace(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsResourceGroupMockingExtension.CreateOrUpdateWithoutNameQueryPack(LogAnalyticsQueryPackData,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutNameQueryPack(LogAnalyticsQueryPackData,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public static async Task<Response<LogAnalyticsQueryPackResource>> CreateOrUpdateWithoutNameQueryPackAsync(this ResourceGroupResource resourceGroupResource, LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
         {
-            return await GetOperationalInsightsResourceGroupMockingExtension(resourceGroupResource).CreateOrUpdateWithoutNameQueryPackAsync(data, cancellationToken).ConfigureAwait(false);
+            return await GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).CreateOrUpdateWithoutNameQueryPackAsync(data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsResourceGroupMockingExtension.CreateOrUpdateWithoutNameQueryPack(LogAnalyticsQueryPackData,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.CreateOrUpdateWithoutNameQueryPack(LogAnalyticsQueryPackData,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public static Response<LogAnalyticsQueryPackResource> CreateOrUpdateWithoutNameQueryPack(this ResourceGroupResource resourceGroupResource, LogAnalyticsQueryPackData data, CancellationToken cancellationToken = default)
         {
-            return GetOperationalInsightsResourceGroupMockingExtension(resourceGroupResource).CreateOrUpdateWithoutNameQueryPack(data, cancellationToken);
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).CreateOrUpdateWithoutNameQueryPack(data, cancellationToken);
         }
 
         /// <summary>
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsResourceGroupMockingExtension.GetDeletedWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetDeletedWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetOperationalInsightsResourceGroupMockingExtension(resourceGroupResource).GetDeletedWorkspacesAsync(cancellationToken);
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetDeletedWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsResourceGroupMockingExtension.GetDeletedWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsResourceGroupResource.GetDeletedWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetOperationalInsightsResourceGroupMockingExtension(resourceGroupResource).GetDeletedWorkspaces(cancellationToken);
+            return GetMockableOperationalInsightsResourceGroupResource(resourceGroupResource).GetDeletedWorkspaces(cancellationToken);
         }
 
         /// <summary>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsSubscriptionMockingExtension.GetLogAnalyticsQueryPacks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsSubscriptionResource.GetLogAnalyticsQueryPacks(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -544,7 +544,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="LogAnalyticsQueryPackResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPacksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetOperationalInsightsSubscriptionMockingExtension(subscriptionResource).GetLogAnalyticsQueryPacksAsync(cancellationToken);
+            return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetLogAnalyticsQueryPacksAsync(cancellationToken);
         }
 
         /// <summary>
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsSubscriptionMockingExtension.GetLogAnalyticsQueryPacks(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsSubscriptionResource.GetLogAnalyticsQueryPacks(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="LogAnalyticsQueryPackResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<LogAnalyticsQueryPackResource> GetLogAnalyticsQueryPacks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetOperationalInsightsSubscriptionMockingExtension(subscriptionResource).GetLogAnalyticsQueryPacks(cancellationToken);
+            return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetLogAnalyticsQueryPacks(cancellationToken);
         }
 
         /// <summary>
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsSubscriptionMockingExtension.GetOperationalInsightsClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsClusters(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalInsightsClusterResource> GetOperationalInsightsClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetOperationalInsightsSubscriptionMockingExtension(subscriptionResource).GetOperationalInsightsClustersAsync(cancellationToken);
+            return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetOperationalInsightsClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsSubscriptionMockingExtension.GetOperationalInsightsClusters(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsClusters(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsClusterResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalInsightsClusterResource> GetOperationalInsightsClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetOperationalInsightsSubscriptionMockingExtension(subscriptionResource).GetOperationalInsightsClusters(cancellationToken);
+            return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetOperationalInsightsClusters(cancellationToken);
         }
 
         /// <summary>
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsSubscriptionMockingExtension.GetOperationalInsightsWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetOperationalInsightsSubscriptionMockingExtension(subscriptionResource).GetOperationalInsightsWorkspacesAsync(cancellationToken);
+            return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetOperationalInsightsWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsSubscriptionMockingExtension.GetOperationalInsightsWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsSubscriptionResource.GetOperationalInsightsWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalInsightsWorkspaceResource> GetOperationalInsightsWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetOperationalInsightsSubscriptionMockingExtension(subscriptionResource).GetOperationalInsightsWorkspaces(cancellationToken);
+            return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetOperationalInsightsWorkspaces(cancellationToken);
         }
 
         /// <summary>
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsSubscriptionMockingExtension.GetDeletedWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsSubscriptionResource.GetDeletedWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> An async collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetOperationalInsightsSubscriptionMockingExtension(subscriptionResource).GetDeletedWorkspacesAsync(cancellationToken);
+            return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetDeletedWorkspacesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="OperationalInsightsSubscriptionMockingExtension.GetDeletedWorkspaces(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableOperationalInsightsSubscriptionResource.GetDeletedWorkspaces(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <returns> A collection of <see cref="OperationalInsightsWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<OperationalInsightsWorkspaceResource> GetDeletedWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetOperationalInsightsSubscriptionMockingExtension(subscriptionResource).GetDeletedWorkspaces(cancellationToken);
+            return GetMockableOperationalInsightsSubscriptionResource(subscriptionResource).GetDeletedWorkspaces(cancellationToken);
         }
     }
 }

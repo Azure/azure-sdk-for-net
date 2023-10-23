@@ -2239,9 +2239,9 @@ namespace Azure.ResourceManager.Synapse
 }
 namespace Azure.ResourceManager.Synapse.Mocking
 {
-    public partial class SynapseArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSynapseArmClient : Azure.ResourceManager.ArmResource
     {
-        protected SynapseArmClientMockingExtension() { }
+        protected MockableSynapseArmClient() { }
         public virtual Azure.ResourceManager.Synapse.SynapseAadOnlyAuthenticationResource GetSynapseAadOnlyAuthenticationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Synapse.SynapseAttachedDatabaseConfigurationResource GetSynapseAttachedDatabaseConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Synapse.SynapseBigDataPoolInfoResource GetSynapseBigDataPoolInfoResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -2297,9 +2297,9 @@ namespace Azure.ResourceManager.Synapse.Mocking
         public virtual Azure.ResourceManager.Synapse.SynapseWorkspaceResource GetSynapseWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Synapse.SynapseWorkspaceSqlAdministratorResource GetSynapseWorkspaceSqlAdministratorResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class SynapseResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSynapseResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected SynapseResourceGroupMockingExtension() { }
+        protected MockableSynapseResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubResource> GetSynapsePrivateLinkHub(string privateLinkHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapsePrivateLinkHubResource>> GetSynapsePrivateLinkHubAsync(string privateLinkHubName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Synapse.SynapsePrivateLinkHubCollection GetSynapsePrivateLinkHubs() { throw null; }
@@ -2307,9 +2307,9 @@ namespace Azure.ResourceManager.Synapse.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.SynapseWorkspaceResource>> GetSynapseWorkspaceAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Synapse.SynapseWorkspaceCollection GetSynapseWorkspaces() { throw null; }
     }
-    public partial class SynapseSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSynapseSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected SynapseSubscriptionMockingExtension() { }
+        protected MockableSynapseSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityResult> CheckKustoPoolNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityResult>> CheckKustoPoolNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.Synapse.Models.KustoPoolNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Synapse.Models.KustoPoolSkuDescription> GetSkusKustoPools(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

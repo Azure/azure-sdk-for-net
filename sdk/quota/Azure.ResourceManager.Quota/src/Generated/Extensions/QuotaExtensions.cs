@@ -20,21 +20,21 @@ namespace Azure.ResourceManager.Quota
     /// <summary> A class to add extension methods to Azure.ResourceManager.Quota. </summary>
     public static partial class QuotaExtensions
     {
-        private static QuotaArmClientMockingExtension GetQuotaArmClientMockingExtension(ArmClient client)
+        private static MockableQuotaArmClient GetMockableQuotaArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new QuotaArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableQuotaArmClient(client0));
         }
 
-        private static QuotaTenantMockingExtension GetQuotaTenantMockingExtension(ArmResource resource)
+        private static MockableQuotaTenantResource GetMockableQuotaTenantResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new QuotaTenantMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableQuotaTenantResource(client, resource.Id));
         }
 
         /// <summary>
         /// Gets a collection of CurrentUsagesBaseResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuotaArmClientMockingExtension.GetCurrentUsagesBases(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetCurrentUsagesBases(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> An object representing collection of CurrentUsagesBaseResources and their operations over a CurrentUsagesBaseResource. </returns>
         public static CurrentUsagesBaseCollection GetCurrentUsagesBases(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetQuotaArmClientMockingExtension(client).GetCurrentUsagesBases(scope);
+            return GetMockableQuotaArmClient(client).GetCurrentUsagesBases(scope);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuotaArmClientMockingExtension.GetCurrentUsagesBaseAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetCurrentUsagesBaseAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Quota
         [ForwardsClientCalls]
         public static async Task<Response<CurrentUsagesBaseResource>> GetCurrentUsagesBaseAsync(this ArmClient client, ResourceIdentifier scope, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetQuotaArmClientMockingExtension(client).GetCurrentUsagesBaseAsync(scope, resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableQuotaArmClient(client).GetCurrentUsagesBaseAsync(scope, resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuotaArmClientMockingExtension.GetCurrentUsagesBase(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetCurrentUsagesBase(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Quota
         [ForwardsClientCalls]
         public static Response<CurrentUsagesBaseResource> GetCurrentUsagesBase(this ArmClient client, ResourceIdentifier scope, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetQuotaArmClientMockingExtension(client).GetCurrentUsagesBase(scope, resourceName, cancellationToken);
+            return GetMockableQuotaArmClient(client).GetCurrentUsagesBase(scope, resourceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of CurrentQuotaLimitBaseResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuotaArmClientMockingExtension.GetCurrentQuotaLimitBases(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetCurrentQuotaLimitBases(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> An object representing collection of CurrentQuotaLimitBaseResources and their operations over a CurrentQuotaLimitBaseResource. </returns>
         public static CurrentQuotaLimitBaseCollection GetCurrentQuotaLimitBases(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetQuotaArmClientMockingExtension(client).GetCurrentQuotaLimitBases(scope);
+            return GetMockableQuotaArmClient(client).GetCurrentQuotaLimitBases(scope);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuotaArmClientMockingExtension.GetCurrentQuotaLimitBaseAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetCurrentQuotaLimitBaseAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Quota
         [ForwardsClientCalls]
         public static async Task<Response<CurrentQuotaLimitBaseResource>> GetCurrentQuotaLimitBaseAsync(this ArmClient client, ResourceIdentifier scope, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetQuotaArmClientMockingExtension(client).GetCurrentQuotaLimitBaseAsync(scope, resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableQuotaArmClient(client).GetCurrentQuotaLimitBaseAsync(scope, resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuotaArmClientMockingExtension.GetCurrentQuotaLimitBase(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetCurrentQuotaLimitBase(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -193,14 +193,14 @@ namespace Azure.ResourceManager.Quota
         [ForwardsClientCalls]
         public static Response<CurrentQuotaLimitBaseResource> GetCurrentQuotaLimitBase(this ArmClient client, ResourceIdentifier scope, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetQuotaArmClientMockingExtension(client).GetCurrentQuotaLimitBase(scope, resourceName, cancellationToken);
+            return GetMockableQuotaArmClient(client).GetCurrentQuotaLimitBase(scope, resourceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of QuotaRequestDetailResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuotaArmClientMockingExtension.GetQuotaRequestDetails(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaRequestDetails(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> An object representing collection of QuotaRequestDetailResources and their operations over a QuotaRequestDetailResource. </returns>
         public static QuotaRequestDetailCollection GetQuotaRequestDetails(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetQuotaArmClientMockingExtension(client).GetQuotaRequestDetails(scope);
+            return GetMockableQuotaArmClient(client).GetQuotaRequestDetails(scope);
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuotaArmClientMockingExtension.GetQuotaRequestDetailAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaRequestDetailAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Quota
         [ForwardsClientCalls]
         public static async Task<Response<QuotaRequestDetailResource>> GetQuotaRequestDetailAsync(this ArmClient client, ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
         {
-            return await GetQuotaArmClientMockingExtension(client).GetQuotaRequestDetailAsync(scope, id, cancellationToken).ConfigureAwait(false);
+            return await GetMockableQuotaArmClient(client).GetQuotaRequestDetailAsync(scope, id, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuotaArmClientMockingExtension.GetQuotaRequestDetail(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaRequestDetail(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Quota
         [ForwardsClientCalls]
         public static Response<QuotaRequestDetailResource> GetQuotaRequestDetail(this ArmClient client, ResourceIdentifier scope, string id, CancellationToken cancellationToken = default)
         {
-            return GetQuotaArmClientMockingExtension(client).GetQuotaRequestDetail(scope, id, cancellationToken);
+            return GetMockableQuotaArmClient(client).GetQuotaRequestDetail(scope, id, cancellationToken);
         }
 
         /// <summary>
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Quota
         /// You can use <see cref="CurrentUsagesBaseResource.CreateResourceIdentifier" /> to create a <see cref="CurrentUsagesBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuotaArmClientMockingExtension.GetCurrentUsagesBaseResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetCurrentUsagesBaseResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> Returns a <see cref="CurrentUsagesBaseResource" /> object. </returns>
         public static CurrentUsagesBaseResource GetCurrentUsagesBaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetQuotaArmClientMockingExtension(client).GetCurrentUsagesBaseResource(id);
+            return GetMockableQuotaArmClient(client).GetCurrentUsagesBaseResource(id);
         }
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Quota
         /// You can use <see cref="CurrentQuotaLimitBaseResource.CreateResourceIdentifier" /> to create a <see cref="CurrentQuotaLimitBaseResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuotaArmClientMockingExtension.GetCurrentQuotaLimitBaseResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetCurrentQuotaLimitBaseResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> Returns a <see cref="CurrentQuotaLimitBaseResource" /> object. </returns>
         public static CurrentQuotaLimitBaseResource GetCurrentQuotaLimitBaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetQuotaArmClientMockingExtension(client).GetCurrentQuotaLimitBaseResource(id);
+            return GetMockableQuotaArmClient(client).GetCurrentQuotaLimitBaseResource(id);
         }
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Quota
         /// You can use <see cref="QuotaRequestDetailResource.CreateResourceIdentifier" /> to create a <see cref="QuotaRequestDetailResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuotaArmClientMockingExtension.GetQuotaRequestDetailResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaRequestDetailResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> Returns a <see cref="QuotaRequestDetailResource" /> object. </returns>
         public static QuotaRequestDetailResource GetQuotaRequestDetailResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetQuotaArmClientMockingExtension(client).GetQuotaRequestDetailResource(id);
+            return GetMockableQuotaArmClient(client).GetQuotaRequestDetailResource(id);
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuotaTenantMockingExtension.GetQuotaOperations(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaTenantResource.GetQuotaOperations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> An async collection of <see cref="QuotaOperationResult" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<QuotaOperationResult> GetQuotaOperationsAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetQuotaTenantMockingExtension(tenantResource).GetQuotaOperationsAsync(cancellationToken);
+            return GetMockableQuotaTenantResource(tenantResource).GetQuotaOperationsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="QuotaTenantMockingExtension.GetQuotaOperations(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuotaTenantResource.GetQuotaOperations(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Quota
         /// <returns> A collection of <see cref="QuotaOperationResult" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<QuotaOperationResult> GetQuotaOperations(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            return GetQuotaTenantMockingExtension(tenantResource).GetQuotaOperations(cancellationToken);
+            return GetMockableQuotaTenantResource(tenantResource).GetQuotaOperations(cancellationToken);
         }
     }
 }

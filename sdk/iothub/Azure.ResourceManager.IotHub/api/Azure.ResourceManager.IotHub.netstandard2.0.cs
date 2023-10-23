@@ -247,25 +247,25 @@ namespace Azure.ResourceManager.IotHub
 }
 namespace Azure.ResourceManager.IotHub.Mocking
 {
-    public partial class IotHubArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableIotHubArmClient : Azure.ResourceManager.ArmResource
     {
-        protected IotHubArmClientMockingExtension() { }
+        protected MockableIotHubArmClient() { }
         public virtual Azure.ResourceManager.IotHub.EventHubConsumerGroupInfoResource GetEventHubConsumerGroupInfoResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.IotHub.IotHubCertificateDescriptionResource GetIotHubCertificateDescriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.IotHub.IotHubDescriptionResource GetIotHubDescriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.IotHub.IotHubPrivateEndpointConnectionResource GetIotHubPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.IotHub.IotHubPrivateEndpointGroupInformationResource GetIotHubPrivateEndpointGroupInformationResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class IotHubResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableIotHubResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected IotHubResourceGroupMockingExtension() { }
+        protected MockableIotHubResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.IotHub.IotHubDescriptionResource> GetIotHubDescription(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.IotHubDescriptionResource>> GetIotHubDescriptionAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.IotHub.IotHubDescriptionCollection GetIotHubDescriptions() { throw null; }
     }
-    public partial class IotHubSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableIotHubSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected IotHubSubscriptionMockingExtension() { }
+        protected MockableIotHubSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityResponse> CheckIotHubNameAvailability(Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityResponse>> CheckIotHubNameAvailabilityAsync(Azure.ResourceManager.IotHub.Models.IotHubNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.IotHub.IotHubDescriptionResource> GetIotHubDescriptions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

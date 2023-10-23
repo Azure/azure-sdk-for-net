@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Automation
     /// <summary> A class to add extension methods to Azure.ResourceManager.Automation. </summary>
     public static partial class AutomationExtensions
     {
-        private static AutomationArmClientMockingExtension GetAutomationArmClientMockingExtension(ArmClient client)
+        private static MockableAutomationArmClient GetMockableAutomationArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new AutomationArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableAutomationArmClient(client0));
         }
 
-        private static AutomationResourceGroupMockingExtension GetAutomationResourceGroupMockingExtension(ArmResource resource)
+        private static MockableAutomationResourceGroupResource GetMockableAutomationResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AutomationResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAutomationResourceGroupResource(client, resource.Id));
         }
 
-        private static AutomationSubscriptionMockingExtension GetAutomationSubscriptionMockingExtension(ArmResource resource)
+        private static MockableAutomationSubscriptionResource GetMockableAutomationSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new AutomationSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableAutomationSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="AutomationPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AutomationPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetAutomationPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationPrivateEndpointConnectionResource" /> object. </returns>
         public static AutomationPrivateEndpointConnectionResource GetAutomationPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetAutomationPrivateEndpointConnectionResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="AutomationAccountPython2PackageResource.CreateResourceIdentifier" /> to create an <see cref="AutomationAccountPython2PackageResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetAutomationAccountPython2PackageResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationAccountPython2PackageResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationAccountPython2PackageResource" /> object. </returns>
         public static AutomationAccountPython2PackageResource GetAutomationAccountPython2PackageResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetAutomationAccountPython2PackageResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationAccountPython2PackageResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="AutomationAccountModuleResource.CreateResourceIdentifier" /> to create an <see cref="AutomationAccountModuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetAutomationAccountModuleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationAccountModuleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationAccountModuleResource" /> object. </returns>
         public static AutomationAccountModuleResource GetAutomationAccountModuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetAutomationAccountModuleResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationAccountModuleResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="DscNodeResource.CreateResourceIdentifier" /> to create a <see cref="DscNodeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetDscNodeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetDscNodeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="DscNodeResource" /> object. </returns>
         public static DscNodeResource GetDscNodeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetDscNodeResource(id);
+            return GetMockableAutomationArmClient(client).GetDscNodeResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="DscNodeConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DscNodeConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetDscNodeConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetDscNodeConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="DscNodeConfigurationResource" /> object. </returns>
         public static DscNodeConfigurationResource GetDscNodeConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetDscNodeConfigurationResource(id);
+            return GetMockableAutomationArmClient(client).GetDscNodeConfigurationResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="DscCompilationJobResource.CreateResourceIdentifier" /> to create a <see cref="DscCompilationJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetDscCompilationJobResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetDscCompilationJobResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="DscCompilationJobResource" /> object. </returns>
         public static DscCompilationJobResource GetDscCompilationJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetDscCompilationJobResource(id);
+            return GetMockableAutomationArmClient(client).GetDscCompilationJobResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="AutomationSourceControlResource.CreateResourceIdentifier" /> to create an <see cref="AutomationSourceControlResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetAutomationSourceControlResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationSourceControlResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationSourceControlResource" /> object. </returns>
         public static AutomationSourceControlResource GetAutomationSourceControlResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetAutomationSourceControlResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationSourceControlResource(id);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="AutomationAccountResource.CreateResourceIdentifier" /> to create an <see cref="AutomationAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetAutomationAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationAccountResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationAccountResource" /> object. </returns>
         public static AutomationAccountResource GetAutomationAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetAutomationAccountResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationAccountResource(id);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="AutomationCertificateResource.CreateResourceIdentifier" /> to create an <see cref="AutomationCertificateResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetAutomationCertificateResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationCertificateResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationCertificateResource" /> object. </returns>
         public static AutomationCertificateResource GetAutomationCertificateResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetAutomationCertificateResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationCertificateResource(id);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="AutomationConnectionResource.CreateResourceIdentifier" /> to create an <see cref="AutomationConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetAutomationConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationConnectionResource" /> object. </returns>
         public static AutomationConnectionResource GetAutomationConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetAutomationConnectionResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationConnectionResource(id);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="AutomationConnectionTypeResource.CreateResourceIdentifier" /> to create an <see cref="AutomationConnectionTypeResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetAutomationConnectionTypeResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationConnectionTypeResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationConnectionTypeResource" /> object. </returns>
         public static AutomationConnectionTypeResource GetAutomationConnectionTypeResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetAutomationConnectionTypeResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationConnectionTypeResource(id);
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="AutomationCredentialResource.CreateResourceIdentifier" /> to create an <see cref="AutomationCredentialResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetAutomationCredentialResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationCredentialResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationCredentialResource" /> object. </returns>
         public static AutomationCredentialResource GetAutomationCredentialResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetAutomationCredentialResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationCredentialResource(id);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="AutomationJobScheduleResource.CreateResourceIdentifier" /> to create an <see cref="AutomationJobScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetAutomationJobScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationJobScheduleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationJobScheduleResource" /> object. </returns>
         public static AutomationJobScheduleResource GetAutomationJobScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetAutomationJobScheduleResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationJobScheduleResource(id);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="AutomationScheduleResource.CreateResourceIdentifier" /> to create an <see cref="AutomationScheduleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetAutomationScheduleResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationScheduleResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationScheduleResource" /> object. </returns>
         public static AutomationScheduleResource GetAutomationScheduleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetAutomationScheduleResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationScheduleResource(id);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="AutomationVariableResource.CreateResourceIdentifier" /> to create an <see cref="AutomationVariableResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetAutomationVariableResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationVariableResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationVariableResource" /> object. </returns>
         public static AutomationVariableResource GetAutomationVariableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetAutomationVariableResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationVariableResource(id);
         }
 
         /// <summary>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="AutomationWatcherResource.CreateResourceIdentifier" /> to create an <see cref="AutomationWatcherResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetAutomationWatcherResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationWatcherResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationWatcherResource" /> object. </returns>
         public static AutomationWatcherResource GetAutomationWatcherResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetAutomationWatcherResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationWatcherResource(id);
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="DscConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="DscConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetDscConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetDscConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="DscConfigurationResource" /> object. </returns>
         public static DscConfigurationResource GetDscConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetDscConfigurationResource(id);
+            return GetMockableAutomationArmClient(client).GetDscConfigurationResource(id);
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="AutomationJobResource.CreateResourceIdentifier" /> to create an <see cref="AutomationJobResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetAutomationJobResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationJobResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationJobResource" /> object. </returns>
         public static AutomationJobResource GetAutomationJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetAutomationJobResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationJobResource(id);
         }
 
         /// <summary>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="SoftwareUpdateConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="SoftwareUpdateConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetSoftwareUpdateConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetSoftwareUpdateConfigurationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="SoftwareUpdateConfigurationResource" /> object. </returns>
         public static SoftwareUpdateConfigurationResource GetSoftwareUpdateConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetSoftwareUpdateConfigurationResource(id);
+            return GetMockableAutomationArmClient(client).GetSoftwareUpdateConfigurationResource(id);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="AutomationRunbookResource.CreateResourceIdentifier" /> to create an <see cref="AutomationRunbookResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetAutomationRunbookResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationRunbookResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationRunbookResource" /> object. </returns>
         public static AutomationRunbookResource GetAutomationRunbookResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetAutomationRunbookResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationRunbookResource(id);
         }
 
         /// <summary>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="AutomationWebhookResource.CreateResourceIdentifier" /> to create an <see cref="AutomationWebhookResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetAutomationWebhookResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetAutomationWebhookResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="AutomationWebhookResource" /> object. </returns>
         public static AutomationWebhookResource GetAutomationWebhookResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetAutomationWebhookResource(id);
+            return GetMockableAutomationArmClient(client).GetAutomationWebhookResource(id);
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="HybridRunbookWorkerResource.CreateResourceIdentifier" /> to create a <see cref="HybridRunbookWorkerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetHybridRunbookWorkerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetHybridRunbookWorkerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="HybridRunbookWorkerResource" /> object. </returns>
         public static HybridRunbookWorkerResource GetHybridRunbookWorkerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetHybridRunbookWorkerResource(id);
+            return GetMockableAutomationArmClient(client).GetHybridRunbookWorkerResource(id);
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Automation
         /// You can use <see cref="HybridRunbookWorkerGroupResource.CreateResourceIdentifier" /> to create a <see cref="HybridRunbookWorkerGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationArmClientMockingExtension.GetHybridRunbookWorkerGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationArmClient.GetHybridRunbookWorkerGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -400,21 +400,21 @@ namespace Azure.ResourceManager.Automation
         /// <returns> Returns a <see cref="HybridRunbookWorkerGroupResource" /> object. </returns>
         public static HybridRunbookWorkerGroupResource GetHybridRunbookWorkerGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetAutomationArmClientMockingExtension(client).GetHybridRunbookWorkerGroupResource(id);
+            return GetMockableAutomationArmClient(client).GetHybridRunbookWorkerGroupResource(id);
         }
 
         /// <summary>
         /// Gets a collection of AutomationAccountResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationResourceGroupMockingExtension.GetAutomationAccounts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationResourceGroupResource.GetAutomationAccounts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of AutomationAccountResources and their operations over a AutomationAccountResource. </returns>
         public static AutomationAccountCollection GetAutomationAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetAutomationResourceGroupMockingExtension(resourceGroupResource).GetAutomationAccounts();
+            return GetMockableAutomationResourceGroupResource(resourceGroupResource).GetAutomationAccounts();
         }
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationResourceGroupMockingExtension.GetAutomationAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationResourceGroupResource.GetAutomationAccountAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public static async Task<Response<AutomationAccountResource>> GetAutomationAccountAsync(this ResourceGroupResource resourceGroupResource, string automationAccountName, CancellationToken cancellationToken = default)
         {
-            return await GetAutomationResourceGroupMockingExtension(resourceGroupResource).GetAutomationAccountAsync(automationAccountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAutomationResourceGroupResource(resourceGroupResource).GetAutomationAccountAsync(automationAccountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationResourceGroupMockingExtension.GetAutomationAccount(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationResourceGroupResource.GetAutomationAccount(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Automation
         [ForwardsClientCalls]
         public static Response<AutomationAccountResource> GetAutomationAccount(this ResourceGroupResource resourceGroupResource, string automationAccountName, CancellationToken cancellationToken = default)
         {
-            return GetAutomationResourceGroupMockingExtension(resourceGroupResource).GetAutomationAccount(automationAccountName, cancellationToken);
+            return GetMockableAutomationResourceGroupResource(resourceGroupResource).GetAutomationAccount(automationAccountName, cancellationToken);
         }
 
         /// <summary>
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationSubscriptionMockingExtension.GetAutomationAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationSubscriptionResource.GetAutomationAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AutomationAccountResource> GetAutomationAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAutomationSubscriptionMockingExtension(subscriptionResource).GetAutomationAccountsAsync(cancellationToken);
+            return GetMockableAutomationSubscriptionResource(subscriptionResource).GetAutomationAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationSubscriptionMockingExtension.GetAutomationAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationSubscriptionResource.GetAutomationAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AutomationAccountResource> GetAutomationAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAutomationSubscriptionMockingExtension(subscriptionResource).GetAutomationAccounts(cancellationToken);
+            return GetMockableAutomationSubscriptionResource(subscriptionResource).GetAutomationAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationSubscriptionMockingExtension.GetDeletedAutomationAccountsBySubscription(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationSubscriptionResource.GetDeletedAutomationAccountsBySubscription(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An async collection of <see cref="DeletedAutomationAccount" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAutomationSubscriptionMockingExtension(subscriptionResource).GetDeletedAutomationAccountsBySubscriptionAsync(cancellationToken);
+            return GetMockableAutomationSubscriptionResource(subscriptionResource).GetDeletedAutomationAccountsBySubscriptionAsync(cancellationToken);
         }
 
         /// <summary>
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Automation
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="AutomationSubscriptionMockingExtension.GetDeletedAutomationAccountsBySubscription(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableAutomationSubscriptionResource.GetDeletedAutomationAccountsBySubscription(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> A collection of <see cref="DeletedAutomationAccount" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedAutomationAccount> GetDeletedAutomationAccountsBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetAutomationSubscriptionMockingExtension(subscriptionResource).GetDeletedAutomationAccountsBySubscription(cancellationToken);
+            return GetMockableAutomationSubscriptionResource(subscriptionResource).GetDeletedAutomationAccountsBySubscription(cancellationToken);
         }
     }
 }

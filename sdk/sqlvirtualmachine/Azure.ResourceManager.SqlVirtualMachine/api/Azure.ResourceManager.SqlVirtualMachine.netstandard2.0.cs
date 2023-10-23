@@ -175,16 +175,16 @@ namespace Azure.ResourceManager.SqlVirtualMachine
 }
 namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
 {
-    public partial class SqlVirtualMachineArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSqlVirtualMachineArmClient : Azure.ResourceManager.ArmResource
     {
-        protected SqlVirtualMachineArmClientMockingExtension() { }
+        protected MockableSqlVirtualMachineArmClient() { }
         public virtual Azure.ResourceManager.SqlVirtualMachine.AvailabilityGroupListenerResource GetAvailabilityGroupListenerResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SqlVirtualMachine.SqlVmGroupResource GetSqlVmGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.SqlVirtualMachine.SqlVmResource GetSqlVmResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class SqlVirtualMachineResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSqlVirtualMachineResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected SqlVirtualMachineResourceGroupMockingExtension() { }
+        protected MockableSqlVirtualMachineResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.SqlVirtualMachine.SqlVmResource> GetSqlVm(string sqlVmName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SqlVirtualMachine.SqlVmResource>> GetSqlVmAsync(string sqlVmName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.SqlVirtualMachine.SqlVmGroupResource> GetSqlVmGroup(string sqlVmGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -192,9 +192,9 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Mocking
         public virtual Azure.ResourceManager.SqlVirtualMachine.SqlVmGroupCollection GetSqlVmGroups() { throw null; }
         public virtual Azure.ResourceManager.SqlVirtualMachine.SqlVmCollection GetSqlVms() { throw null; }
     }
-    public partial class SqlVirtualMachineSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSqlVirtualMachineSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected SqlVirtualMachineSubscriptionMockingExtension() { }
+        protected MockableSqlVirtualMachineSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.SqlVirtualMachine.SqlVmGroupResource> GetSqlVmGroups(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SqlVirtualMachine.SqlVmGroupResource> GetSqlVmGroupsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.SqlVirtualMachine.SqlVmResource> GetSqlVms(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// <summary> A class to add extension methods to Azure.ResourceManager.ContainerRegistry. </summary>
     public static partial class ContainerRegistryExtensions
     {
-        private static ContainerRegistryArmClientMockingExtension GetContainerRegistryArmClientMockingExtension(ArmClient client)
+        private static MockableContainerRegistryArmClient GetMockableContainerRegistryArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ContainerRegistryArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableContainerRegistryArmClient(client0));
         }
 
-        private static ContainerRegistryResourceGroupMockingExtension GetContainerRegistryResourceGroupMockingExtension(ArmResource resource)
+        private static MockableContainerRegistryResourceGroupResource GetMockableContainerRegistryResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ContainerRegistryResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableContainerRegistryResourceGroupResource(client, resource.Id));
         }
 
-        private static ContainerRegistrySubscriptionMockingExtension GetContainerRegistrySubscriptionMockingExtension(ArmResource resource)
+        private static MockableContainerRegistrySubscriptionResource GetMockableContainerRegistrySubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ContainerRegistrySubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableContainerRegistrySubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// You can use <see cref="ContainerRegistryResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistryArmClientMockingExtension.GetContainerRegistryResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryResource" /> object. </returns>
         public static ContainerRegistryResource GetContainerRegistryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryResource(id);
+            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// You can use <see cref="ContainerRegistryPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistryArmClientMockingExtension.GetContainerRegistryPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryPrivateLinkResource" /> object. </returns>
         public static ContainerRegistryPrivateLinkResource GetContainerRegistryPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryPrivateLinkResource(id);
+            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryPrivateLinkResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// You can use <see cref="ContainerRegistryPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistryArmClientMockingExtension.GetContainerRegistryPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryPrivateEndpointConnectionResource" /> object. </returns>
         public static ContainerRegistryPrivateEndpointConnectionResource GetContainerRegistryPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryPrivateEndpointConnectionResource(id);
+            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// You can use <see cref="ContainerRegistryReplicationResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryReplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistryArmClientMockingExtension.GetContainerRegistryReplicationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryReplicationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryReplicationResource" /> object. </returns>
         public static ContainerRegistryReplicationResource GetContainerRegistryReplicationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryReplicationResource(id);
+            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryReplicationResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// You can use <see cref="ScopeMapResource.CreateResourceIdentifier" /> to create a <see cref="ScopeMapResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistryArmClientMockingExtension.GetScopeMapResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetScopeMapResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ScopeMapResource" /> object. </returns>
         public static ScopeMapResource GetScopeMapResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerRegistryArmClientMockingExtension(client).GetScopeMapResource(id);
+            return GetMockableContainerRegistryArmClient(client).GetScopeMapResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// You can use <see cref="ContainerRegistryTokenResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryTokenResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistryArmClientMockingExtension.GetContainerRegistryTokenResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryTokenResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryTokenResource" /> object. </returns>
         public static ContainerRegistryTokenResource GetContainerRegistryTokenResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryTokenResource(id);
+            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryTokenResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// You can use <see cref="ContainerRegistryWebhookResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryWebhookResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistryArmClientMockingExtension.GetContainerRegistryWebhookResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryWebhookResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryWebhookResource" /> object. </returns>
         public static ContainerRegistryWebhookResource GetContainerRegistryWebhookResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryWebhookResource(id);
+            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryWebhookResource(id);
         }
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// You can use <see cref="ContainerRegistryAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryAgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistryArmClientMockingExtension.GetContainerRegistryAgentPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryAgentPoolResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryAgentPoolResource" /> object. </returns>
         public static ContainerRegistryAgentPoolResource GetContainerRegistryAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryAgentPoolResource(id);
+            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryAgentPoolResource(id);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// You can use <see cref="ContainerRegistryRunResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryRunResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistryArmClientMockingExtension.GetContainerRegistryRunResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryRunResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryRunResource" /> object. </returns>
         public static ContainerRegistryRunResource GetContainerRegistryRunResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryRunResource(id);
+            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryRunResource(id);
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// You can use <see cref="ContainerRegistryTaskRunResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryTaskRunResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistryArmClientMockingExtension.GetContainerRegistryTaskRunResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryTaskRunResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryTaskRunResource" /> object. </returns>
         public static ContainerRegistryTaskRunResource GetContainerRegistryTaskRunResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryTaskRunResource(id);
+            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryTaskRunResource(id);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// You can use <see cref="ContainerRegistryTaskResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryTaskResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistryArmClientMockingExtension.GetContainerRegistryTaskResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryTaskResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -208,21 +208,21 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> Returns a <see cref="ContainerRegistryTaskResource" /> object. </returns>
         public static ContainerRegistryTaskResource GetContainerRegistryTaskResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetContainerRegistryArmClientMockingExtension(client).GetContainerRegistryTaskResource(id);
+            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryTaskResource(id);
         }
 
         /// <summary>
         /// Gets a collection of ContainerRegistryResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistryResourceGroupMockingExtension.GetContainerRegistries()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryResourceGroupResource.GetContainerRegistries()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ContainerRegistryResources and their operations over a ContainerRegistryResource. </returns>
         public static ContainerRegistryCollection GetContainerRegistries(this ResourceGroupResource resourceGroupResource)
         {
-            return GetContainerRegistryResourceGroupMockingExtension(resourceGroupResource).GetContainerRegistries();
+            return GetMockableContainerRegistryResourceGroupResource(resourceGroupResource).GetContainerRegistries();
         }
 
         /// <summary>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistryResourceGroupMockingExtension.GetContainerRegistryAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryResourceGroupResource.GetContainerRegistryAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         [ForwardsClientCalls]
         public static async Task<Response<ContainerRegistryResource>> GetContainerRegistryAsync(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
         {
-            return await GetContainerRegistryResourceGroupMockingExtension(resourceGroupResource).GetContainerRegistryAsync(registryName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerRegistryResourceGroupResource(resourceGroupResource).GetContainerRegistryAsync(registryName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistryResourceGroupMockingExtension.GetContainerRegistry(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryResourceGroupResource.GetContainerRegistry(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         [ForwardsClientCalls]
         public static Response<ContainerRegistryResource> GetContainerRegistry(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
         {
-            return GetContainerRegistryResourceGroupMockingExtension(resourceGroupResource).GetContainerRegistry(registryName, cancellationToken);
+            return GetMockableContainerRegistryResourceGroupResource(resourceGroupResource).GetContainerRegistry(registryName, cancellationToken);
         }
 
         /// <summary>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistrySubscriptionMockingExtension.CheckContainerRegistryNameAvailability(ContainerRegistryNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistrySubscriptionResource.CheckContainerRegistryNameAvailability(ContainerRegistryNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<ContainerRegistryNameAvailableResult>> CheckContainerRegistryNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetContainerRegistrySubscriptionMockingExtension(subscriptionResource).CheckContainerRegistryNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerRegistrySubscriptionResource(subscriptionResource).CheckContainerRegistryNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistrySubscriptionMockingExtension.CheckContainerRegistryNameAvailability(ContainerRegistryNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistrySubscriptionResource.CheckContainerRegistryNameAvailability(ContainerRegistryNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<ContainerRegistryNameAvailableResult> CheckContainerRegistryNameAvailability(this SubscriptionResource subscriptionResource, ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetContainerRegistrySubscriptionMockingExtension(subscriptionResource).CheckContainerRegistryNameAvailability(content, cancellationToken);
+            return GetMockableContainerRegistrySubscriptionResource(subscriptionResource).CheckContainerRegistryNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistrySubscriptionMockingExtension.GetContainerRegistries(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistrySubscriptionResource.GetContainerRegistries(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> An async collection of <see cref="ContainerRegistryResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ContainerRegistryResource> GetContainerRegistriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetContainerRegistrySubscriptionMockingExtension(subscriptionResource).GetContainerRegistriesAsync(cancellationToken);
+            return GetMockableContainerRegistrySubscriptionResource(subscriptionResource).GetContainerRegistriesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ContainerRegistrySubscriptionMockingExtension.GetContainerRegistries(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistrySubscriptionResource.GetContainerRegistries(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> A collection of <see cref="ContainerRegistryResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ContainerRegistryResource> GetContainerRegistries(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetContainerRegistrySubscriptionMockingExtension(subscriptionResource).GetContainerRegistries(cancellationToken);
+            return GetMockableContainerRegistrySubscriptionResource(subscriptionResource).GetContainerRegistries(cancellationToken);
         }
     }
 }

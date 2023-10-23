@@ -457,9 +457,9 @@ namespace Azure.ResourceManager.HealthcareApis
 }
 namespace Azure.ResourceManager.HealthcareApis.Mocking
 {
-    public partial class HealthcareApisArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHealthcareApisArmClient : Azure.ResourceManager.ArmResource
     {
-        protected HealthcareApisArmClientMockingExtension() { }
+        protected MockableHealthcareApisArmClient() { }
         public virtual Azure.ResourceManager.HealthcareApis.DicomServiceResource GetDicomServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HealthcareApis.FhirServiceResource GetFhirServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HealthcareApis.HealthcareApisIotConnectorResource GetHealthcareApisIotConnectorResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -471,9 +471,9 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         public virtual Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspacePrivateLinkResource GetHealthcareApisWorkspacePrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspaceResource GetHealthcareApisWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class HealthcareApisResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHealthcareApisResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected HealthcareApisResourceGroupMockingExtension() { }
+        protected MockableHealthcareApisResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.HealthcareApis.HealthcareApisServiceResource> GetHealthcareApisService(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HealthcareApis.HealthcareApisServiceResource>> GetHealthcareApisServiceAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HealthcareApis.HealthcareApisServiceCollection GetHealthcareApisServices() { throw null; }
@@ -481,9 +481,9 @@ namespace Azure.ResourceManager.HealthcareApis.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspaceResource>> GetHealthcareApisWorkspaceAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspaceCollection GetHealthcareApisWorkspaces() { throw null; }
     }
-    public partial class HealthcareApisSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableHealthcareApisSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected HealthcareApisSubscriptionMockingExtension() { }
+        protected MockableHealthcareApisSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityResult> CheckHealthcareApisNameAvailability(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityResult>> CheckHealthcareApisNameAvailabilityAsync(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HealthcareApis.HealthcareApisServiceResource> GetHealthcareApisServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

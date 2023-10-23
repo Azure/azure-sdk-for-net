@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.ManagedServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.ManagedServices. </summary>
     public static partial class ManagedServicesExtensions
     {
-        private static ManagedServicesArmClientMockingExtension GetManagedServicesArmClientMockingExtension(ArmClient client)
+        private static MockableManagedServicesArmClient GetMockableManagedServicesArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ManagedServicesArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableManagedServicesArmClient(client0));
         }
 
         /// <summary>
         /// Gets a collection of ManagedServicesRegistrationResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedServicesArmClientMockingExtension.GetManagedServicesRegistrations(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServicesArmClient.GetManagedServicesRegistrations(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> An object representing collection of ManagedServicesRegistrationResources and their operations over a ManagedServicesRegistrationResource. </returns>
         public static ManagedServicesRegistrationCollection GetManagedServicesRegistrations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesRegistrations(scope);
+            return GetMockableManagedServicesArmClient(client).GetManagedServicesRegistrations(scope);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedServicesArmClientMockingExtension.GetManagedServicesRegistrationAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServicesArmClient.GetManagedServicesRegistrationAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static async Task<Response<ManagedServicesRegistrationResource>> GetManagedServicesRegistrationAsync(this ArmClient client, ResourceIdentifier scope, string registrationId, CancellationToken cancellationToken = default)
         {
-            return await GetManagedServicesArmClientMockingExtension(client).GetManagedServicesRegistrationAsync(scope, registrationId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagedServicesArmClient(client).GetManagedServicesRegistrationAsync(scope, registrationId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedServicesArmClientMockingExtension.GetManagedServicesRegistration(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServicesArmClient.GetManagedServicesRegistration(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -93,14 +93,14 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static Response<ManagedServicesRegistrationResource> GetManagedServicesRegistration(this ArmClient client, ResourceIdentifier scope, string registrationId, CancellationToken cancellationToken = default)
         {
-            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesRegistration(scope, registrationId, cancellationToken);
+            return GetMockableManagedServicesArmClient(client).GetManagedServicesRegistration(scope, registrationId, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ManagedServicesRegistrationAssignmentResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedServicesArmClientMockingExtension.GetManagedServicesRegistrationAssignments(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServicesArmClient.GetManagedServicesRegistrationAssignments(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> An object representing collection of ManagedServicesRegistrationAssignmentResources and their operations over a ManagedServicesRegistrationAssignmentResource. </returns>
         public static ManagedServicesRegistrationAssignmentCollection GetManagedServicesRegistrationAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesRegistrationAssignments(scope);
+            return GetMockableManagedServicesArmClient(client).GetManagedServicesRegistrationAssignments(scope);
         }
 
         /// <summary>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedServicesArmClientMockingExtension.GetManagedServicesRegistrationAssignmentAsync(ResourceIdentifier,string,bool?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServicesArmClient.GetManagedServicesRegistrationAssignmentAsync(ResourceIdentifier,string,bool?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static async Task<Response<ManagedServicesRegistrationAssignmentResource>> GetManagedServicesRegistrationAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
         {
-            return await GetManagedServicesArmClientMockingExtension(client).GetManagedServicesRegistrationAssignmentAsync(scope, registrationAssignmentId, expandRegistrationDefinition, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagedServicesArmClient(client).GetManagedServicesRegistrationAssignmentAsync(scope, registrationAssignmentId, expandRegistrationDefinition, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedServicesArmClientMockingExtension.GetManagedServicesRegistrationAssignment(ResourceIdentifier,string,bool?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServicesArmClient.GetManagedServicesRegistrationAssignment(ResourceIdentifier,string,bool?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -168,14 +168,14 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static Response<ManagedServicesRegistrationAssignmentResource> GetManagedServicesRegistrationAssignment(this ArmClient client, ResourceIdentifier scope, string registrationAssignmentId, bool? expandRegistrationDefinition = null, CancellationToken cancellationToken = default)
         {
-            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesRegistrationAssignment(scope, registrationAssignmentId, expandRegistrationDefinition, cancellationToken);
+            return GetMockableManagedServicesArmClient(client).GetManagedServicesRegistrationAssignment(scope, registrationAssignmentId, expandRegistrationDefinition, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ManagedServicesMarketplaceRegistrationResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedServicesArmClientMockingExtension.GetManagedServicesMarketplaceRegistrations(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServicesArmClient.GetManagedServicesMarketplaceRegistrations(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> An object representing collection of ManagedServicesMarketplaceRegistrationResources and their operations over a ManagedServicesMarketplaceRegistrationResource. </returns>
         public static ManagedServicesMarketplaceRegistrationCollection GetManagedServicesMarketplaceRegistrations(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesMarketplaceRegistrations(scope);
+            return GetMockableManagedServicesArmClient(client).GetManagedServicesMarketplaceRegistrations(scope);
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedServicesArmClientMockingExtension.GetManagedServicesMarketplaceRegistrationAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServicesArmClient.GetManagedServicesMarketplaceRegistrationAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static async Task<Response<ManagedServicesMarketplaceRegistrationResource>> GetManagedServicesMarketplaceRegistrationAsync(this ArmClient client, ResourceIdentifier scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
-            return await GetManagedServicesArmClientMockingExtension(client).GetManagedServicesMarketplaceRegistrationAsync(scope, marketplaceIdentifier, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagedServicesArmClient(client).GetManagedServicesMarketplaceRegistrationAsync(scope, marketplaceIdentifier, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedServicesArmClientMockingExtension.GetManagedServicesMarketplaceRegistration(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServicesArmClient.GetManagedServicesMarketplaceRegistration(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ManagedServices
         [ForwardsClientCalls]
         public static Response<ManagedServicesMarketplaceRegistrationResource> GetManagedServicesMarketplaceRegistration(this ArmClient client, ResourceIdentifier scope, string marketplaceIdentifier, CancellationToken cancellationToken = default)
         {
-            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesMarketplaceRegistration(scope, marketplaceIdentifier, cancellationToken);
+            return GetMockableManagedServicesArmClient(client).GetManagedServicesMarketplaceRegistration(scope, marketplaceIdentifier, cancellationToken);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// You can use <see cref="ManagedServicesRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedServicesArmClientMockingExtension.GetManagedServicesRegistrationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServicesArmClient.GetManagedServicesRegistrationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> Returns a <see cref="ManagedServicesRegistrationResource" /> object. </returns>
         public static ManagedServicesRegistrationResource GetManagedServicesRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesRegistrationResource(id);
+            return GetMockableManagedServicesArmClient(client).GetManagedServicesRegistrationResource(id);
         }
 
         /// <summary>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// You can use <see cref="ManagedServicesRegistrationAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesRegistrationAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedServicesArmClientMockingExtension.GetManagedServicesRegistrationAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServicesArmClient.GetManagedServicesRegistrationAssignmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> Returns a <see cref="ManagedServicesRegistrationAssignmentResource" /> object. </returns>
         public static ManagedServicesRegistrationAssignmentResource GetManagedServicesRegistrationAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesRegistrationAssignmentResource(id);
+            return GetMockableManagedServicesArmClient(client).GetManagedServicesRegistrationAssignmentResource(id);
         }
 
         /// <summary>
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// You can use <see cref="ManagedServicesMarketplaceRegistrationResource.CreateResourceIdentifier" /> to create a <see cref="ManagedServicesMarketplaceRegistrationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedServicesArmClientMockingExtension.GetManagedServicesMarketplaceRegistrationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServicesArmClient.GetManagedServicesMarketplaceRegistrationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ManagedServices
         /// <returns> Returns a <see cref="ManagedServicesMarketplaceRegistrationResource" /> object. </returns>
         public static ManagedServicesMarketplaceRegistrationResource GetManagedServicesMarketplaceRegistrationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetManagedServicesArmClientMockingExtension(client).GetManagedServicesMarketplaceRegistrationResource(id);
+            return GetMockableManagedServicesArmClient(client).GetManagedServicesMarketplaceRegistrationResource(id);
         }
     }
 }

@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.CognitiveServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.CognitiveServices. </summary>
     public static partial class CognitiveServicesExtensions
     {
-        private static CognitiveServicesArmClientMockingExtension GetCognitiveServicesArmClientMockingExtension(ArmClient client)
+        private static MockableCognitiveServicesArmClient GetMockableCognitiveServicesArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new CognitiveServicesArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableCognitiveServicesArmClient(client0));
         }
 
-        private static CognitiveServicesResourceGroupMockingExtension GetCognitiveServicesResourceGroupMockingExtension(ArmResource resource)
+        private static MockableCognitiveServicesResourceGroupResource GetMockableCognitiveServicesResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new CognitiveServicesResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableCognitiveServicesResourceGroupResource(client, resource.Id));
         }
 
-        private static CognitiveServicesSubscriptionMockingExtension GetCognitiveServicesSubscriptionMockingExtension(ArmResource resource)
+        private static MockableCognitiveServicesSubscriptionResource GetMockableCognitiveServicesSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new CognitiveServicesSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableCognitiveServicesSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// You can use <see cref="CognitiveServicesAccountResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesArmClientMockingExtension.GetCognitiveServicesAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetCognitiveServicesAccountResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CognitiveServicesAccountResource" /> object. </returns>
         public static CognitiveServicesAccountResource GetCognitiveServicesAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCognitiveServicesArmClientMockingExtension(client).GetCognitiveServicesAccountResource(id);
+            return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesAccountResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// You can use <see cref="CognitiveServicesDeletedAccountResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesDeletedAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesArmClientMockingExtension.GetCognitiveServicesDeletedAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetCognitiveServicesDeletedAccountResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CognitiveServicesDeletedAccountResource" /> object. </returns>
         public static CognitiveServicesDeletedAccountResource GetCognitiveServicesDeletedAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCognitiveServicesArmClientMockingExtension(client).GetCognitiveServicesDeletedAccountResource(id);
+            return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesDeletedAccountResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// You can use <see cref="CognitiveServicesPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesArmClientMockingExtension.GetCognitiveServicesPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetCognitiveServicesPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CognitiveServicesPrivateEndpointConnectionResource" /> object. </returns>
         public static CognitiveServicesPrivateEndpointConnectionResource GetCognitiveServicesPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCognitiveServicesArmClientMockingExtension(client).GetCognitiveServicesPrivateEndpointConnectionResource(id);
+            return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// You can use <see cref="CognitiveServicesAccountDeploymentResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesAccountDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesArmClientMockingExtension.GetCognitiveServicesAccountDeploymentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetCognitiveServicesAccountDeploymentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CognitiveServicesAccountDeploymentResource" /> object. </returns>
         public static CognitiveServicesAccountDeploymentResource GetCognitiveServicesAccountDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCognitiveServicesArmClientMockingExtension(client).GetCognitiveServicesAccountDeploymentResource(id);
+            return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesAccountDeploymentResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// You can use <see cref="CommitmentPlanResource.CreateResourceIdentifier" /> to create a <see cref="CommitmentPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesArmClientMockingExtension.GetCommitmentPlanResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetCommitmentPlanResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CommitmentPlanResource" /> object. </returns>
         public static CommitmentPlanResource GetCommitmentPlanResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCognitiveServicesArmClientMockingExtension(client).GetCommitmentPlanResource(id);
+            return GetMockableCognitiveServicesArmClient(client).GetCommitmentPlanResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// You can use <see cref="CognitiveServicesCommitmentPlanResource.CreateResourceIdentifier" /> to create a <see cref="CognitiveServicesCommitmentPlanResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesArmClientMockingExtension.GetCognitiveServicesCommitmentPlanResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetCognitiveServicesCommitmentPlanResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CognitiveServicesCommitmentPlanResource" /> object. </returns>
         public static CognitiveServicesCommitmentPlanResource GetCognitiveServicesCommitmentPlanResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCognitiveServicesArmClientMockingExtension(client).GetCognitiveServicesCommitmentPlanResource(id);
+            return GetMockableCognitiveServicesArmClient(client).GetCognitiveServicesCommitmentPlanResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// You can use <see cref="CommitmentPlanAccountAssociationResource.CreateResourceIdentifier" /> to create a <see cref="CommitmentPlanAccountAssociationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesArmClientMockingExtension.GetCommitmentPlanAccountAssociationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesArmClient.GetCommitmentPlanAccountAssociationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,21 +144,21 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> Returns a <see cref="CommitmentPlanAccountAssociationResource" /> object. </returns>
         public static CommitmentPlanAccountAssociationResource GetCommitmentPlanAccountAssociationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetCognitiveServicesArmClientMockingExtension(client).GetCommitmentPlanAccountAssociationResource(id);
+            return GetMockableCognitiveServicesArmClient(client).GetCommitmentPlanAccountAssociationResource(id);
         }
 
         /// <summary>
         /// Gets a collection of CognitiveServicesAccountResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesResourceGroupMockingExtension.GetCognitiveServicesAccounts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesResourceGroupResource.GetCognitiveServicesAccounts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CognitiveServicesAccountResources and their operations over a CognitiveServicesAccountResource. </returns>
         public static CognitiveServicesAccountCollection GetCognitiveServicesAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetCognitiveServicesResourceGroupMockingExtension(resourceGroupResource).GetCognitiveServicesAccounts();
+            return GetMockableCognitiveServicesResourceGroupResource(resourceGroupResource).GetCognitiveServicesAccounts();
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesResourceGroupMockingExtension.GetCognitiveServicesAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesResourceGroupResource.GetCognitiveServicesAccountAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static async Task<Response<CognitiveServicesAccountResource>> GetCognitiveServicesAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await GetCognitiveServicesResourceGroupMockingExtension(resourceGroupResource).GetCognitiveServicesAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCognitiveServicesResourceGroupResource(resourceGroupResource).GetCognitiveServicesAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesResourceGroupMockingExtension.GetCognitiveServicesAccount(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesResourceGroupResource.GetCognitiveServicesAccount(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -214,21 +214,21 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static Response<CognitiveServicesAccountResource> GetCognitiveServicesAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesResourceGroupMockingExtension(resourceGroupResource).GetCognitiveServicesAccount(accountName, cancellationToken);
+            return GetMockableCognitiveServicesResourceGroupResource(resourceGroupResource).GetCognitiveServicesAccount(accountName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of CognitiveServicesCommitmentPlanResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesResourceGroupMockingExtension.GetCognitiveServicesCommitmentPlans()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesResourceGroupResource.GetCognitiveServicesCommitmentPlans()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CognitiveServicesCommitmentPlanResources and their operations over a CognitiveServicesCommitmentPlanResource. </returns>
         public static CognitiveServicesCommitmentPlanCollection GetCognitiveServicesCommitmentPlans(this ResourceGroupResource resourceGroupResource)
         {
-            return GetCognitiveServicesResourceGroupMockingExtension(resourceGroupResource).GetCognitiveServicesCommitmentPlans();
+            return GetMockableCognitiveServicesResourceGroupResource(resourceGroupResource).GetCognitiveServicesCommitmentPlans();
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesResourceGroupMockingExtension.GetCognitiveServicesCommitmentPlanAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesResourceGroupResource.GetCognitiveServicesCommitmentPlanAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static async Task<Response<CognitiveServicesCommitmentPlanResource>> GetCognitiveServicesCommitmentPlanAsync(this ResourceGroupResource resourceGroupResource, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            return await GetCognitiveServicesResourceGroupMockingExtension(resourceGroupResource).GetCognitiveServicesCommitmentPlanAsync(commitmentPlanName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCognitiveServicesResourceGroupResource(resourceGroupResource).GetCognitiveServicesCommitmentPlanAsync(commitmentPlanName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesResourceGroupMockingExtension.GetCognitiveServicesCommitmentPlan(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesResourceGroupResource.GetCognitiveServicesCommitmentPlan(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -284,21 +284,21 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static Response<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlan(this ResourceGroupResource resourceGroupResource, string commitmentPlanName, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesResourceGroupMockingExtension(resourceGroupResource).GetCognitiveServicesCommitmentPlan(commitmentPlanName, cancellationToken);
+            return GetMockableCognitiveServicesResourceGroupResource(resourceGroupResource).GetCognitiveServicesCommitmentPlan(commitmentPlanName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of CognitiveServicesDeletedAccountResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetCognitiveServicesDeletedAccounts()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesDeletedAccounts()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of CognitiveServicesDeletedAccountResources and their operations over a CognitiveServicesDeletedAccountResource. </returns>
         public static CognitiveServicesDeletedAccountCollection GetCognitiveServicesDeletedAccounts(this SubscriptionResource subscriptionResource)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCognitiveServicesDeletedAccounts();
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesDeletedAccounts();
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetCognitiveServicesDeletedAccountAsync(AzureLocation,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesDeletedAccountAsync(AzureLocation,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static async Task<Response<CognitiveServicesDeletedAccountResource>> GetCognitiveServicesDeletedAccountAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            return await GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCognitiveServicesDeletedAccountAsync(location, resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesDeletedAccountAsync(location, resourceGroupName, accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetCognitiveServicesDeletedAccount(AzureLocation,string,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesDeletedAccount(AzureLocation,string,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.CognitiveServices
         [ForwardsClientCalls]
         public static Response<CognitiveServicesDeletedAccountResource> GetCognitiveServicesDeletedAccount(this SubscriptionResource subscriptionResource, AzureLocation location, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCognitiveServicesDeletedAccount(location, resourceGroupName, accountName, cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesDeletedAccount(location, resourceGroupName, accountName, cancellationToken);
         }
 
         /// <summary>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetCognitiveServicesAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CognitiveServicesAccountResource> GetCognitiveServicesAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCognitiveServicesAccountsAsync(cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetCognitiveServicesAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CognitiveServicesAccountResource> GetCognitiveServicesAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCognitiveServicesAccounts(cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetDeletedAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetDeletedAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesDeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CognitiveServicesDeletedAccountResource> GetDeletedAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetDeletedAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetDeletedAccounts(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetDeletedAccounts(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesDeletedAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CognitiveServicesDeletedAccountResource> GetDeletedAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetDeletedAccounts(cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetDeletedAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetResourceSkus(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetResourceSkus(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="AvailableCognitiveServicesSku" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AvailableCognitiveServicesSku> GetResourceSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetResourceSkusAsync(cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetResourceSkusAsync(cancellationToken);
         }
 
         /// <summary>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetResourceSkus(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetResourceSkus(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="AvailableCognitiveServicesSku" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AvailableCognitiveServicesSku> GetResourceSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetResourceSkus(cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetResourceSkus(cancellationToken);
         }
 
         /// <summary>
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetUsages(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetUsages(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="ServiceAccountUsage" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ServiceAccountUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
         }
 
         /// <summary>
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetUsages(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetUsages(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="ServiceAccountUsage" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ServiceAccountUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetUsages(location, filter, cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetUsages(location, filter, cancellationToken);
         }
 
         /// <summary>
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.CheckSkuAvailability(AzureLocation,CognitiveServicesSkuAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.CheckSkuAvailability(AzureLocation,CognitiveServicesSkuAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesSkuAvailabilityList" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CognitiveServicesSkuAvailabilityList> CheckSkuAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).CheckSkuAvailabilityAsync(location, content, cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).CheckSkuAvailabilityAsync(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.CheckSkuAvailability(AzureLocation,CognitiveServicesSkuAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.CheckSkuAvailability(AzureLocation,CognitiveServicesSkuAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesSkuAvailabilityList" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CognitiveServicesSkuAvailabilityList> CheckSkuAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CognitiveServicesSkuAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).CheckSkuAvailability(location, content, cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).CheckSkuAvailability(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.CheckDomainAvailability(CognitiveServicesDomainAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.CheckDomainAvailability(CognitiveServicesDomainAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<CognitiveServicesDomainAvailabilityList>> CheckDomainAvailabilityAsync(this SubscriptionResource subscriptionResource, CognitiveServicesDomainAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).CheckDomainAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).CheckDomainAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.CheckDomainAvailability(CognitiveServicesDomainAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.CheckDomainAvailability(CognitiveServicesDomainAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<CognitiveServicesDomainAvailabilityList> CheckDomainAvailability(this SubscriptionResource subscriptionResource, CognitiveServicesDomainAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).CheckDomainAvailability(content, cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).CheckDomainAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetCommitmentTiers(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetCommitmentTiers(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CommitmentTier" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CommitmentTier> GetCommitmentTiersAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCommitmentTiersAsync(location, cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCommitmentTiersAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetCommitmentTiers(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetCommitmentTiers(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CommitmentTier" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CommitmentTier> GetCommitmentTiers(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCommitmentTiers(location, cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCommitmentTiers(location, cancellationToken);
         }
 
         /// <summary>
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetModels(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetModels(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesModel" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CognitiveServicesModel> GetModelsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetModelsAsync(location, cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetModelsAsync(location, cancellationToken);
         }
 
         /// <summary>
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetModels(AzureLocation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetModels(AzureLocation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesModel" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CognitiveServicesModel> GetModels(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetModels(location, cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetModels(location, cancellationToken);
         }
 
         /// <summary>
@@ -791,7 +791,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetCognitiveServicesCommitmentPlans(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesCommitmentPlans(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> An async collection of <see cref="CognitiveServicesCommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCognitiveServicesCommitmentPlansAsync(cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesCommitmentPlansAsync(cancellationToken);
         }
 
         /// <summary>
@@ -816,7 +816,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="CognitiveServicesSubscriptionMockingExtension.GetCognitiveServicesCommitmentPlans(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCognitiveServicesSubscriptionResource.GetCognitiveServicesCommitmentPlans(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <returns> A collection of <see cref="CognitiveServicesCommitmentPlanResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CognitiveServicesCommitmentPlanResource> GetCognitiveServicesCommitmentPlans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetCognitiveServicesSubscriptionMockingExtension(subscriptionResource).GetCognitiveServicesCommitmentPlans(cancellationToken);
+            return GetMockableCognitiveServicesSubscriptionResource(subscriptionResource).GetCognitiveServicesCommitmentPlans(cancellationToken);
         }
     }
 }

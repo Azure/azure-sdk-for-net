@@ -19,19 +19,19 @@ namespace Azure.ResourceManager.GraphServices
     /// <summary> A class to add extension methods to Azure.ResourceManager.GraphServices. </summary>
     public static partial class GraphServicesExtensions
     {
-        private static GraphServicesArmClientMockingExtension GetGraphServicesArmClientMockingExtension(ArmClient client)
+        private static MockableGraphServicesArmClient GetMockableGraphServicesArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new GraphServicesArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableGraphServicesArmClient(client0));
         }
 
-        private static GraphServicesResourceGroupMockingExtension GetGraphServicesResourceGroupMockingExtension(ArmResource resource)
+        private static MockableGraphServicesResourceGroupResource GetMockableGraphServicesResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new GraphServicesResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableGraphServicesResourceGroupResource(client, resource.Id));
         }
 
-        private static GraphServicesSubscriptionMockingExtension GetGraphServicesSubscriptionMockingExtension(ArmResource resource)
+        private static MockableGraphServicesSubscriptionResource GetMockableGraphServicesSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new GraphServicesSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableGraphServicesSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.GraphServices
         /// You can use <see cref="GraphServicesAccountResource.CreateResourceIdentifier" /> to create a <see cref="GraphServicesAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GraphServicesArmClientMockingExtension.GetGraphServicesAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGraphServicesArmClient.GetGraphServicesAccountResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -47,21 +47,21 @@ namespace Azure.ResourceManager.GraphServices
         /// <returns> Returns a <see cref="GraphServicesAccountResource" /> object. </returns>
         public static GraphServicesAccountResource GetGraphServicesAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetGraphServicesArmClientMockingExtension(client).GetGraphServicesAccountResource(id);
+            return GetMockableGraphServicesArmClient(client).GetGraphServicesAccountResource(id);
         }
 
         /// <summary>
         /// Gets a collection of GraphServicesAccountResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GraphServicesResourceGroupMockingExtension.GetGraphServicesAccountResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGraphServicesResourceGroupResource.GetGraphServicesAccountResources()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of GraphServicesAccountResources and their operations over a GraphServicesAccountResource. </returns>
         public static GraphServicesAccountResourceCollection GetGraphServicesAccountResources(this ResourceGroupResource resourceGroupResource)
         {
-            return GetGraphServicesResourceGroupMockingExtension(resourceGroupResource).GetGraphServicesAccountResources();
+            return GetMockableGraphServicesResourceGroupResource(resourceGroupResource).GetGraphServicesAccountResources();
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GraphServicesResourceGroupMockingExtension.GetGraphServicesAccountResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGraphServicesResourceGroupResource.GetGraphServicesAccountResourceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.GraphServices
         [ForwardsClientCalls]
         public static async Task<Response<GraphServicesAccountResource>> GetGraphServicesAccountResourceAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await GetGraphServicesResourceGroupMockingExtension(resourceGroupResource).GetGraphServicesAccountResourceAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableGraphServicesResourceGroupResource(resourceGroupResource).GetGraphServicesAccountResourceAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GraphServicesResourceGroupMockingExtension.GetGraphServicesAccountResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGraphServicesResourceGroupResource.GetGraphServicesAccountResource(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.GraphServices
         [ForwardsClientCalls]
         public static Response<GraphServicesAccountResource> GetGraphServicesAccountResource(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return GetGraphServicesResourceGroupMockingExtension(resourceGroupResource).GetGraphServicesAccountResource(resourceName, cancellationToken);
+            return GetMockableGraphServicesResourceGroupResource(resourceGroupResource).GetGraphServicesAccountResource(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GraphServicesSubscriptionMockingExtension.GetGraphServicesAccountResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGraphServicesSubscriptionResource.GetGraphServicesAccountResources(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.GraphServices
         /// <returns> An async collection of <see cref="GraphServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<GraphServicesAccountResource> GetGraphServicesAccountResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetGraphServicesSubscriptionMockingExtension(subscriptionResource).GetGraphServicesAccountResourcesAsync(cancellationToken);
+            return GetMockableGraphServicesSubscriptionResource(subscriptionResource).GetGraphServicesAccountResourcesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.GraphServices
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="GraphServicesSubscriptionMockingExtension.GetGraphServicesAccountResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableGraphServicesSubscriptionResource.GetGraphServicesAccountResources(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.GraphServices
         /// <returns> A collection of <see cref="GraphServicesAccountResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<GraphServicesAccountResource> GetGraphServicesAccountResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetGraphServicesSubscriptionMockingExtension(subscriptionResource).GetGraphServicesAccountResources(cancellationToken);
+            return GetMockableGraphServicesSubscriptionResource(subscriptionResource).GetGraphServicesAccountResources(cancellationToken);
         }
     }
 }

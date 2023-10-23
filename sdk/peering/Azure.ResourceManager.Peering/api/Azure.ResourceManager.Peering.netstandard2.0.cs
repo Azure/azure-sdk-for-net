@@ -359,9 +359,9 @@ namespace Azure.ResourceManager.Peering
 }
 namespace Azure.ResourceManager.Peering.Mocking
 {
-    public partial class PeeringArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePeeringArmClient : Azure.ResourceManager.ArmResource
     {
-        protected PeeringArmClientMockingExtension() { }
+        protected MockablePeeringArmClient() { }
         public virtual Azure.ResourceManager.Peering.ConnectionMonitorTestResource GetConnectionMonitorTestResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Peering.PeerAsnResource GetPeerAsnResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Peering.PeeringRegisteredAsnResource GetPeeringRegisteredAsnResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -370,9 +370,9 @@ namespace Azure.ResourceManager.Peering.Mocking
         public virtual Azure.ResourceManager.Peering.PeeringServicePrefixResource GetPeeringServicePrefixResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Peering.PeeringServiceResource GetPeeringServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class PeeringResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePeeringResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected PeeringResourceGroupMockingExtension() { }
+        protected MockablePeeringResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringResource> GetPeering(string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringResource>> GetPeeringAsync(string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Peering.PeeringCollection GetPeerings() { throw null; }
@@ -380,9 +380,9 @@ namespace Azure.ResourceManager.Peering.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource>> GetPeeringServiceAsync(string peeringServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Peering.PeeringServiceCollection GetPeeringServices() { throw null; }
     }
-    public partial class PeeringSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockablePeeringSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected PeeringSubscriptionMockingExtension() { }
+        protected MockablePeeringSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability> CheckPeeringServiceProviderAvailability(Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability>> CheckPeeringServiceProviderAvailabilityAsync(Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.CdnPeeringPrefix> GetCdnPeeringPrefixes(string peeringLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

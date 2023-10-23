@@ -666,9 +666,9 @@ namespace Azure.ResourceManager.DataBoxEdge
 }
 namespace Azure.ResourceManager.DataBoxEdge.Mocking
 {
-    public partial class DataBoxEdgeArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataBoxEdgeArmClient : Azure.ResourceManager.ArmResource
     {
-        protected DataBoxEdgeArmClientMockingExtension() { }
+        protected MockableDataBoxEdgeArmClient() { }
         public virtual Azure.ResourceManager.DataBoxEdge.BandwidthScheduleResource GetBandwidthScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeAlertResource GetDataBoxEdgeAlertResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource GetDataBoxEdgeDeviceResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -686,16 +686,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         public virtual Azure.ResourceManager.DataBoxEdge.DiagnosticRemoteSupportSettingResource GetDiagnosticRemoteSupportSettingResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.MonitoringMetricConfigurationResource GetMonitoringMetricConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DataBoxEdgeResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataBoxEdgeResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected DataBoxEdgeResourceGroupMockingExtension() { }
+        protected MockableDataBoxEdgeResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> GetDataBoxEdgeDevice(string deviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource>> GetDataBoxEdgeDeviceAsync(string deviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceCollection GetDataBoxEdgeDevices() { throw null; }
     }
-    public partial class DataBoxEdgeSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataBoxEdgeSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected DataBoxEdgeSubscriptionMockingExtension() { }
+        protected MockableDataBoxEdgeSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku> GetAvailableSkus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBoxEdge.Models.AvailableDataBoxEdgeSku> GetAvailableSkusAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataBoxEdge.DataBoxEdgeDeviceResource> GetDataBoxEdgeDevices(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

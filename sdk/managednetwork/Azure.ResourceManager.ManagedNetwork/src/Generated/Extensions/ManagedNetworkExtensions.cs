@@ -19,26 +19,26 @@ namespace Azure.ResourceManager.ManagedNetwork
     /// <summary> A class to add extension methods to Azure.ResourceManager.ManagedNetwork. </summary>
     public static partial class ManagedNetworkExtensions
     {
-        private static ManagedNetworkArmClientMockingExtension GetManagedNetworkArmClientMockingExtension(ArmClient client)
+        private static MockableManagedNetworkArmClient GetMockableManagedNetworkArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new ManagedNetworkArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableManagedNetworkArmClient(client0));
         }
 
-        private static ManagedNetworkResourceGroupMockingExtension GetManagedNetworkResourceGroupMockingExtension(ArmResource resource)
+        private static MockableManagedNetworkResourceGroupResource GetMockableManagedNetworkResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ManagedNetworkResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableManagedNetworkResourceGroupResource(client, resource.Id));
         }
 
-        private static ManagedNetworkSubscriptionMockingExtension GetManagedNetworkSubscriptionMockingExtension(ArmResource resource)
+        private static MockableManagedNetworkSubscriptionResource GetMockableManagedNetworkSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new ManagedNetworkSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableManagedNetworkSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
         /// Gets a collection of ScopeAssignmentResources in the ArmClient.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedNetworkArmClientMockingExtension.GetScopeAssignments(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkArmClient.GetScopeAssignments(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> An object representing collection of ScopeAssignmentResources and their operations over a ScopeAssignmentResource. </returns>
         public static ScopeAssignmentCollection GetScopeAssignments(this ArmClient client, ResourceIdentifier scope)
         {
-            return GetManagedNetworkArmClientMockingExtension(client).GetScopeAssignments(scope);
+            return GetMockableManagedNetworkArmClient(client).GetScopeAssignments(scope);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedNetworkArmClientMockingExtension.GetScopeAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkArmClient.GetScopeAssignmentAsync(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         [ForwardsClientCalls]
         public static async Task<Response<ScopeAssignmentResource>> GetScopeAssignmentAsync(this ArmClient client, ResourceIdentifier scope, string scopeAssignmentName, CancellationToken cancellationToken = default)
         {
-            return await GetManagedNetworkArmClientMockingExtension(client).GetScopeAssignmentAsync(scope, scopeAssignmentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagedNetworkArmClient(client).GetScopeAssignmentAsync(scope, scopeAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedNetworkArmClientMockingExtension.GetScopeAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkArmClient.GetScopeAssignment(ResourceIdentifier,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         [ForwardsClientCalls]
         public static Response<ScopeAssignmentResource> GetScopeAssignment(this ArmClient client, ResourceIdentifier scope, string scopeAssignmentName, CancellationToken cancellationToken = default)
         {
-            return GetManagedNetworkArmClientMockingExtension(client).GetScopeAssignment(scope, scopeAssignmentName, cancellationToken);
+            return GetMockableManagedNetworkArmClient(client).GetScopeAssignment(scope, scopeAssignmentName, cancellationToken);
         }
 
         /// <summary>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// You can use <see cref="ManagedNetworkResource.CreateResourceIdentifier" /> to create a <see cref="ManagedNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedNetworkArmClientMockingExtension.GetManagedNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkArmClient.GetManagedNetworkResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> Returns a <see cref="ManagedNetworkResource" /> object. </returns>
         public static ManagedNetworkResource GetManagedNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetManagedNetworkArmClientMockingExtension(client).GetManagedNetworkResource(id);
+            return GetMockableManagedNetworkArmClient(client).GetManagedNetworkResource(id);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// You can use <see cref="ScopeAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="ScopeAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedNetworkArmClientMockingExtension.GetScopeAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkArmClient.GetScopeAssignmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> Returns a <see cref="ScopeAssignmentResource" /> object. </returns>
         public static ScopeAssignmentResource GetScopeAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetManagedNetworkArmClientMockingExtension(client).GetScopeAssignmentResource(id);
+            return GetMockableManagedNetworkArmClient(client).GetScopeAssignmentResource(id);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// You can use <see cref="ManagedNetworkGroupResource.CreateResourceIdentifier" /> to create a <see cref="ManagedNetworkGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedNetworkArmClientMockingExtension.GetManagedNetworkGroupResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkArmClient.GetManagedNetworkGroupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> Returns a <see cref="ManagedNetworkGroupResource" /> object. </returns>
         public static ManagedNetworkGroupResource GetManagedNetworkGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetManagedNetworkArmClientMockingExtension(client).GetManagedNetworkGroupResource(id);
+            return GetMockableManagedNetworkArmClient(client).GetManagedNetworkGroupResource(id);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// You can use <see cref="ManagedNetworkPeeringPolicyResource.CreateResourceIdentifier" /> to create a <see cref="ManagedNetworkPeeringPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedNetworkArmClientMockingExtension.GetManagedNetworkPeeringPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkArmClient.GetManagedNetworkPeeringPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -168,21 +168,21 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> Returns a <see cref="ManagedNetworkPeeringPolicyResource" /> object. </returns>
         public static ManagedNetworkPeeringPolicyResource GetManagedNetworkPeeringPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetManagedNetworkArmClientMockingExtension(client).GetManagedNetworkPeeringPolicyResource(id);
+            return GetMockableManagedNetworkArmClient(client).GetManagedNetworkPeeringPolicyResource(id);
         }
 
         /// <summary>
         /// Gets a collection of ManagedNetworkResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedNetworkResourceGroupMockingExtension.GetManagedNetworks()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkResourceGroupResource.GetManagedNetworks()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ManagedNetworkResources and their operations over a ManagedNetworkResource. </returns>
         public static ManagedNetworkCollection GetManagedNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetManagedNetworkResourceGroupMockingExtension(resourceGroupResource).GetManagedNetworks();
+            return GetMockableManagedNetworkResourceGroupResource(resourceGroupResource).GetManagedNetworks();
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedNetworkResourceGroupMockingExtension.GetManagedNetworkAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkResourceGroupResource.GetManagedNetworkAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         [ForwardsClientCalls]
         public static async Task<Response<ManagedNetworkResource>> GetManagedNetworkAsync(this ResourceGroupResource resourceGroupResource, string managedNetworkName, CancellationToken cancellationToken = default)
         {
-            return await GetManagedNetworkResourceGroupMockingExtension(resourceGroupResource).GetManagedNetworkAsync(managedNetworkName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableManagedNetworkResourceGroupResource(resourceGroupResource).GetManagedNetworkAsync(managedNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedNetworkResourceGroupMockingExtension.GetManagedNetwork(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkResourceGroupResource.GetManagedNetwork(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         [ForwardsClientCalls]
         public static Response<ManagedNetworkResource> GetManagedNetwork(this ResourceGroupResource resourceGroupResource, string managedNetworkName, CancellationToken cancellationToken = default)
         {
-            return GetManagedNetworkResourceGroupMockingExtension(resourceGroupResource).GetManagedNetwork(managedNetworkName, cancellationToken);
+            return GetMockableManagedNetworkResourceGroupResource(resourceGroupResource).GetManagedNetwork(managedNetworkName, cancellationToken);
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedNetworkSubscriptionMockingExtension.GetManagedNetworks(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkSubscriptionResource.GetManagedNetworks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> An async collection of <see cref="ManagedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedNetworkResource> GetManagedNetworksAsync(this SubscriptionResource subscriptionResource, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetManagedNetworkSubscriptionMockingExtension(subscriptionResource).GetManagedNetworksAsync(top, skiptoken, cancellationToken);
+            return GetMockableManagedNetworkSubscriptionResource(subscriptionResource).GetManagedNetworksAsync(top, skiptoken, cancellationToken);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="ManagedNetworkSubscriptionMockingExtension.GetManagedNetworks(int?,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableManagedNetworkSubscriptionResource.GetManagedNetworks(int?,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <returns> A collection of <see cref="ManagedNetworkResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedNetworkResource> GetManagedNetworks(this SubscriptionResource subscriptionResource, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            return GetManagedNetworkSubscriptionMockingExtension(subscriptionResource).GetManagedNetworks(top, skiptoken, cancellationToken);
+            return GetMockableManagedNetworkSubscriptionResource(subscriptionResource).GetManagedNetworks(top, skiptoken, cancellationToken);
         }
     }
 }

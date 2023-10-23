@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.KeyVault
     /// <summary> A class to add extension methods to Azure.ResourceManager.KeyVault. </summary>
     public static partial class KeyVaultExtensions
     {
-        private static KeyVaultArmClientMockingExtension GetKeyVaultArmClientMockingExtension(ArmClient client)
+        private static MockableKeyVaultArmClient GetMockableKeyVaultArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new KeyVaultArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableKeyVaultArmClient(client0));
         }
 
-        private static KeyVaultResourceGroupMockingExtension GetKeyVaultResourceGroupMockingExtension(ArmResource resource)
+        private static MockableKeyVaultResourceGroupResource GetMockableKeyVaultResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new KeyVaultResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableKeyVaultResourceGroupResource(client, resource.Id));
         }
 
-        private static KeyVaultSubscriptionMockingExtension GetKeyVaultSubscriptionMockingExtension(ArmResource resource)
+        private static MockableKeyVaultSubscriptionResource GetMockableKeyVaultSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new KeyVaultSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableKeyVaultSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KeyVault
         /// You can use <see cref="KeyVaultResource.CreateResourceIdentifier" /> to create a <see cref="KeyVaultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultArmClientMockingExtension.GetKeyVaultResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultArmClient.GetKeyVaultResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="KeyVaultResource" /> object. </returns>
         public static KeyVaultResource GetKeyVaultResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetKeyVaultArmClientMockingExtension(client).GetKeyVaultResource(id);
+            return GetMockableKeyVaultArmClient(client).GetKeyVaultResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.KeyVault
         /// You can use <see cref="DeletedKeyVaultResource.CreateResourceIdentifier" /> to create a <see cref="DeletedKeyVaultResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultArmClientMockingExtension.GetDeletedKeyVaultResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultArmClient.GetDeletedKeyVaultResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="DeletedKeyVaultResource" /> object. </returns>
         public static DeletedKeyVaultResource GetDeletedKeyVaultResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetKeyVaultArmClientMockingExtension(client).GetDeletedKeyVaultResource(id);
+            return GetMockableKeyVaultArmClient(client).GetDeletedKeyVaultResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.KeyVault
         /// You can use <see cref="KeyVaultPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="KeyVaultPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultArmClientMockingExtension.GetKeyVaultPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultArmClient.GetKeyVaultPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="KeyVaultPrivateEndpointConnectionResource" /> object. </returns>
         public static KeyVaultPrivateEndpointConnectionResource GetKeyVaultPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetKeyVaultArmClientMockingExtension(client).GetKeyVaultPrivateEndpointConnectionResource(id);
+            return GetMockableKeyVaultArmClient(client).GetKeyVaultPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.KeyVault
         /// You can use <see cref="ManagedHsmResource.CreateResourceIdentifier" /> to create a <see cref="ManagedHsmResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultArmClientMockingExtension.GetManagedHsmResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultArmClient.GetManagedHsmResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="ManagedHsmResource" /> object. </returns>
         public static ManagedHsmResource GetManagedHsmResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetKeyVaultArmClientMockingExtension(client).GetManagedHsmResource(id);
+            return GetMockableKeyVaultArmClient(client).GetManagedHsmResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.KeyVault
         /// You can use <see cref="DeletedManagedHsmResource.CreateResourceIdentifier" /> to create a <see cref="DeletedManagedHsmResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultArmClientMockingExtension.GetDeletedManagedHsmResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultArmClient.GetDeletedManagedHsmResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="DeletedManagedHsmResource" /> object. </returns>
         public static DeletedManagedHsmResource GetDeletedManagedHsmResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetKeyVaultArmClientMockingExtension(client).GetDeletedManagedHsmResource(id);
+            return GetMockableKeyVaultArmClient(client).GetDeletedManagedHsmResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.KeyVault
         /// You can use <see cref="ManagedHsmPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ManagedHsmPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultArmClientMockingExtension.GetManagedHsmPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultArmClient.GetManagedHsmPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="ManagedHsmPrivateEndpointConnectionResource" /> object. </returns>
         public static ManagedHsmPrivateEndpointConnectionResource GetManagedHsmPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetKeyVaultArmClientMockingExtension(client).GetManagedHsmPrivateEndpointConnectionResource(id);
+            return GetMockableKeyVaultArmClient(client).GetManagedHsmPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.KeyVault
         /// You can use <see cref="KeyVaultSecretResource.CreateResourceIdentifier" /> to create a <see cref="KeyVaultSecretResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultArmClientMockingExtension.GetKeyVaultSecretResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultArmClient.GetKeyVaultSecretResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,21 +144,21 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> Returns a <see cref="KeyVaultSecretResource" /> object. </returns>
         public static KeyVaultSecretResource GetKeyVaultSecretResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetKeyVaultArmClientMockingExtension(client).GetKeyVaultSecretResource(id);
+            return GetMockableKeyVaultArmClient(client).GetKeyVaultSecretResource(id);
         }
 
         /// <summary>
         /// Gets a collection of KeyVaultResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultResourceGroupMockingExtension.GetKeyVaults()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultResourceGroupResource.GetKeyVaults()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of KeyVaultResources and their operations over a KeyVaultResource. </returns>
         public static KeyVaultCollection GetKeyVaults(this ResourceGroupResource resourceGroupResource)
         {
-            return GetKeyVaultResourceGroupMockingExtension(resourceGroupResource).GetKeyVaults();
+            return GetMockableKeyVaultResourceGroupResource(resourceGroupResource).GetKeyVaults();
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultResourceGroupMockingExtension.GetKeyVaultAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultResourceGroupResource.GetKeyVaultAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.KeyVault
         [ForwardsClientCalls]
         public static async Task<Response<KeyVaultResource>> GetKeyVaultAsync(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return await GetKeyVaultResourceGroupMockingExtension(resourceGroupResource).GetKeyVaultAsync(vaultName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableKeyVaultResourceGroupResource(resourceGroupResource).GetKeyVaultAsync(vaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultResourceGroupMockingExtension.GetKeyVault(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultResourceGroupResource.GetKeyVault(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -214,21 +214,21 @@ namespace Azure.ResourceManager.KeyVault
         [ForwardsClientCalls]
         public static Response<KeyVaultResource> GetKeyVault(this ResourceGroupResource resourceGroupResource, string vaultName, CancellationToken cancellationToken = default)
         {
-            return GetKeyVaultResourceGroupMockingExtension(resourceGroupResource).GetKeyVault(vaultName, cancellationToken);
+            return GetMockableKeyVaultResourceGroupResource(resourceGroupResource).GetKeyVault(vaultName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ManagedHsmResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultResourceGroupMockingExtension.GetManagedHsms()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultResourceGroupResource.GetManagedHsms()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ManagedHsmResources and their operations over a ManagedHsmResource. </returns>
         public static ManagedHsmCollection GetManagedHsms(this ResourceGroupResource resourceGroupResource)
         {
-            return GetKeyVaultResourceGroupMockingExtension(resourceGroupResource).GetManagedHsms();
+            return GetMockableKeyVaultResourceGroupResource(resourceGroupResource).GetManagedHsms();
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultResourceGroupMockingExtension.GetManagedHsmAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultResourceGroupResource.GetManagedHsmAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.KeyVault
         [ForwardsClientCalls]
         public static async Task<Response<ManagedHsmResource>> GetManagedHsmAsync(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return await GetKeyVaultResourceGroupMockingExtension(resourceGroupResource).GetManagedHsmAsync(name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableKeyVaultResourceGroupResource(resourceGroupResource).GetManagedHsmAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultResourceGroupMockingExtension.GetManagedHsm(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultResourceGroupResource.GetManagedHsm(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -284,21 +284,21 @@ namespace Azure.ResourceManager.KeyVault
         [ForwardsClientCalls]
         public static Response<ManagedHsmResource> GetManagedHsm(this ResourceGroupResource resourceGroupResource, string name, CancellationToken cancellationToken = default)
         {
-            return GetKeyVaultResourceGroupMockingExtension(resourceGroupResource).GetManagedHsm(name, cancellationToken);
+            return GetMockableKeyVaultResourceGroupResource(resourceGroupResource).GetManagedHsm(name, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of DeletedKeyVaultResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.GetDeletedKeyVaults()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeletedKeyVaultResources and their operations over a DeletedKeyVaultResource. </returns>
         public static DeletedKeyVaultCollection GetDeletedKeyVaults(this SubscriptionResource subscriptionResource)
         {
-            return GetKeyVaultSubscriptionMockingExtension(subscriptionResource).GetDeletedKeyVaults();
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedKeyVaults();
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.GetDeletedKeyVaultAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetDeletedKeyVaultAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.KeyVault
         [ForwardsClientCalls]
         public static async Task<Response<DeletedKeyVaultResource>> GetDeletedKeyVaultAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string vaultName, CancellationToken cancellationToken = default)
         {
-            return await GetKeyVaultSubscriptionMockingExtension(subscriptionResource).GetDeletedKeyVaultAsync(location, vaultName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedKeyVaultAsync(location, vaultName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.GetDeletedKeyVault(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetDeletedKeyVault(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -356,21 +356,21 @@ namespace Azure.ResourceManager.KeyVault
         [ForwardsClientCalls]
         public static Response<DeletedKeyVaultResource> GetDeletedKeyVault(this SubscriptionResource subscriptionResource, AzureLocation location, string vaultName, CancellationToken cancellationToken = default)
         {
-            return GetKeyVaultSubscriptionMockingExtension(subscriptionResource).GetDeletedKeyVault(location, vaultName, cancellationToken);
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedKeyVault(location, vaultName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of DeletedManagedHsmResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.GetDeletedManagedHsms()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetDeletedManagedHsms()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of DeletedManagedHsmResources and their operations over a DeletedManagedHsmResource. </returns>
         public static DeletedManagedHsmCollection GetDeletedManagedHsms(this SubscriptionResource subscriptionResource)
         {
-            return GetKeyVaultSubscriptionMockingExtension(subscriptionResource).GetDeletedManagedHsms();
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedManagedHsms();
         }
 
         /// <summary>
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.GetDeletedManagedHsmAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetDeletedManagedHsmAsync(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.KeyVault
         [ForwardsClientCalls]
         public static async Task<Response<DeletedManagedHsmResource>> GetDeletedManagedHsmAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string name, CancellationToken cancellationToken = default)
         {
-            return await GetKeyVaultSubscriptionMockingExtension(subscriptionResource).GetDeletedManagedHsmAsync(location, name, cancellationToken).ConfigureAwait(false);
+            return await GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedManagedHsmAsync(location, name, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.GetDeletedManagedHsm(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetDeletedManagedHsm(AzureLocation,string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.KeyVault
         [ForwardsClientCalls]
         public static Response<DeletedManagedHsmResource> GetDeletedManagedHsm(this SubscriptionResource subscriptionResource, AzureLocation location, string name, CancellationToken cancellationToken = default)
         {
-            return GetKeyVaultSubscriptionMockingExtension(subscriptionResource).GetDeletedManagedHsm(location, name, cancellationToken);
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedManagedHsm(location, name, cancellationToken);
         }
 
         /// <summary>
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.GetKeyVaults(int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetKeyVaults(int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An async collection of <see cref="KeyVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KeyVaultResource> GetKeyVaultsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetKeyVaultSubscriptionMockingExtension(subscriptionResource).GetKeyVaultsAsync(top, cancellationToken);
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetKeyVaultsAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.GetKeyVaults(int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetKeyVaults(int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of <see cref="KeyVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KeyVaultResource> GetKeyVaults(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetKeyVaultSubscriptionMockingExtension(subscriptionResource).GetKeyVaults(top, cancellationToken);
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetKeyVaults(top, cancellationToken);
         }
 
         /// <summary>
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.GetDeletedKeyVaults(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An async collection of <see cref="DeletedKeyVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedKeyVaultResource> GetDeletedKeyVaultsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetKeyVaultSubscriptionMockingExtension(subscriptionResource).GetDeletedKeyVaultsAsync(cancellationToken);
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedKeyVaultsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.GetDeletedKeyVaults(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetDeletedKeyVaults(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of <see cref="DeletedKeyVaultResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedKeyVaultResource> GetDeletedKeyVaults(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetKeyVaultSubscriptionMockingExtension(subscriptionResource).GetDeletedKeyVaults(cancellationToken);
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedKeyVaults(cancellationToken);
         }
 
         /// <summary>
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.CheckKeyVaultNameAvailability(KeyVaultNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.CheckKeyVaultNameAvailability(KeyVaultNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<KeyVaultNameAvailabilityResult>> CheckKeyVaultNameAvailabilityAsync(this SubscriptionResource subscriptionResource, KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetKeyVaultSubscriptionMockingExtension(subscriptionResource).CheckKeyVaultNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableKeyVaultSubscriptionResource(subscriptionResource).CheckKeyVaultNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.CheckKeyVaultNameAvailability(KeyVaultNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.CheckKeyVaultNameAvailability(KeyVaultNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<KeyVaultNameAvailabilityResult> CheckKeyVaultNameAvailability(this SubscriptionResource subscriptionResource, KeyVaultNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetKeyVaultSubscriptionMockingExtension(subscriptionResource).CheckKeyVaultNameAvailability(content, cancellationToken);
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).CheckKeyVaultNameAvailability(content, cancellationToken);
         }
 
         /// <summary>
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.GetManagedHsms(int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetManagedHsms(int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An async collection of <see cref="ManagedHsmResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ManagedHsmResource> GetManagedHsmsAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetKeyVaultSubscriptionMockingExtension(subscriptionResource).GetManagedHsmsAsync(top, cancellationToken);
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetManagedHsmsAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.GetManagedHsms(int?,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetManagedHsms(int?,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of <see cref="ManagedHsmResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ManagedHsmResource> GetManagedHsms(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetKeyVaultSubscriptionMockingExtension(subscriptionResource).GetManagedHsms(top, cancellationToken);
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetManagedHsms(top, cancellationToken);
         }
 
         /// <summary>
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.GetDeletedManagedHsms(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetDeletedManagedHsms(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> An async collection of <see cref="DeletedManagedHsmResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DeletedManagedHsmResource> GetDeletedManagedHsmsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetKeyVaultSubscriptionMockingExtension(subscriptionResource).GetDeletedManagedHsmsAsync(cancellationToken);
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedManagedHsmsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -676,7 +676,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.GetDeletedManagedHsms(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.GetDeletedManagedHsms(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <returns> A collection of <see cref="DeletedManagedHsmResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DeletedManagedHsmResource> GetDeletedManagedHsms(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetKeyVaultSubscriptionMockingExtension(subscriptionResource).GetDeletedManagedHsms(cancellationToken);
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).GetDeletedManagedHsms(cancellationToken);
         }
 
         /// <summary>
@@ -701,7 +701,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.CheckManagedHsmNameAvailability(ManagedHsmNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.CheckManagedHsmNameAvailability(ManagedHsmNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<ManagedHsmNameAvailabilityResult>> CheckManagedHsmNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return await GetKeyVaultSubscriptionMockingExtension(subscriptionResource).CheckManagedHsmNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableKeyVaultSubscriptionResource(subscriptionResource).CheckManagedHsmNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.KeyVault
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="KeyVaultSubscriptionMockingExtension.CheckManagedHsmNameAvailability(ManagedHsmNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableKeyVaultSubscriptionResource.CheckManagedHsmNameAvailability(ManagedHsmNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.KeyVault
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<ManagedHsmNameAvailabilityResult> CheckManagedHsmNameAvailability(this SubscriptionResource subscriptionResource, ManagedHsmNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            return GetKeyVaultSubscriptionMockingExtension(subscriptionResource).CheckManagedHsmNameAvailability(content, cancellationToken);
+            return GetMockableKeyVaultSubscriptionResource(subscriptionResource).CheckManagedHsmNameAvailability(content, cancellationToken);
         }
     }
 }

@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.Workloads
     /// <summary> A class to add extension methods to Azure.ResourceManager.Workloads. </summary>
     public static partial class WorkloadsExtensions
     {
-        private static WorkloadsArmClientMockingExtension GetWorkloadsArmClientMockingExtension(ArmClient client)
+        private static MockableWorkloadsArmClient GetMockableWorkloadsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new WorkloadsArmClientMockingExtension(client0));
+            return client.GetCachedClient(client0 => new MockableWorkloadsArmClient(client0));
         }
 
-        private static WorkloadsResourceGroupMockingExtension GetWorkloadsResourceGroupMockingExtension(ArmResource resource)
+        private static MockableWorkloadsResourceGroupResource GetMockableWorkloadsResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new WorkloadsResourceGroupMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableWorkloadsResourceGroupResource(client, resource.Id));
         }
 
-        private static WorkloadsSubscriptionMockingExtension GetWorkloadsSubscriptionMockingExtension(ArmResource resource)
+        private static MockableWorkloadsSubscriptionResource GetMockableWorkloadsSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new WorkloadsSubscriptionMockingExtension(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableWorkloadsSubscriptionResource(client, resource.Id));
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Workloads
         /// You can use <see cref="SapVirtualInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapVirtualInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsArmClientMockingExtension.GetSapVirtualInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsArmClient.GetSapVirtualInstanceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapVirtualInstanceResource" /> object. </returns>
         public static SapVirtualInstanceResource GetSapVirtualInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetWorkloadsArmClientMockingExtension(client).GetSapVirtualInstanceResource(id);
+            return GetMockableWorkloadsArmClient(client).GetSapVirtualInstanceResource(id);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Workloads
         /// You can use <see cref="SapCentralServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapCentralServerInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsArmClientMockingExtension.GetSapCentralServerInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsArmClient.GetSapCentralServerInstanceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapCentralServerInstanceResource" /> object. </returns>
         public static SapCentralServerInstanceResource GetSapCentralServerInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetWorkloadsArmClientMockingExtension(client).GetSapCentralServerInstanceResource(id);
+            return GetMockableWorkloadsArmClient(client).GetSapCentralServerInstanceResource(id);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Workloads
         /// You can use <see cref="SapDatabaseInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapDatabaseInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsArmClientMockingExtension.GetSapDatabaseInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsArmClient.GetSapDatabaseInstanceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapDatabaseInstanceResource" /> object. </returns>
         public static SapDatabaseInstanceResource GetSapDatabaseInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetWorkloadsArmClientMockingExtension(client).GetSapDatabaseInstanceResource(id);
+            return GetMockableWorkloadsArmClient(client).GetSapDatabaseInstanceResource(id);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Workloads
         /// You can use <see cref="SapApplicationServerInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapApplicationServerInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsArmClientMockingExtension.GetSapApplicationServerInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsArmClient.GetSapApplicationServerInstanceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapApplicationServerInstanceResource" /> object. </returns>
         public static SapApplicationServerInstanceResource GetSapApplicationServerInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetWorkloadsArmClientMockingExtension(client).GetSapApplicationServerInstanceResource(id);
+            return GetMockableWorkloadsArmClient(client).GetSapApplicationServerInstanceResource(id);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Workloads
         /// You can use <see cref="SapMonitorResource.CreateResourceIdentifier" /> to create a <see cref="SapMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsArmClientMockingExtension.GetSapMonitorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsArmClient.GetSapMonitorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapMonitorResource" /> object. </returns>
         public static SapMonitorResource GetSapMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetWorkloadsArmClientMockingExtension(client).GetSapMonitorResource(id);
+            return GetMockableWorkloadsArmClient(client).GetSapMonitorResource(id);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Workloads
         /// You can use <see cref="SapProviderInstanceResource.CreateResourceIdentifier" /> to create a <see cref="SapProviderInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsArmClientMockingExtension.GetSapProviderInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsArmClient.GetSapProviderInstanceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapProviderInstanceResource" /> object. </returns>
         public static SapProviderInstanceResource GetSapProviderInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetWorkloadsArmClientMockingExtension(client).GetSapProviderInstanceResource(id);
+            return GetMockableWorkloadsArmClient(client).GetSapProviderInstanceResource(id);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Workloads
         /// You can use <see cref="SapLandscapeMonitorResource.CreateResourceIdentifier" /> to create a <see cref="SapLandscapeMonitorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsArmClientMockingExtension.GetSapLandscapeMonitorResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsArmClient.GetSapLandscapeMonitorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
@@ -144,21 +144,21 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> Returns a <see cref="SapLandscapeMonitorResource" /> object. </returns>
         public static SapLandscapeMonitorResource GetSapLandscapeMonitorResource(this ArmClient client, ResourceIdentifier id)
         {
-            return GetWorkloadsArmClientMockingExtension(client).GetSapLandscapeMonitorResource(id);
+            return GetMockableWorkloadsArmClient(client).GetSapLandscapeMonitorResource(id);
         }
 
         /// <summary>
         /// Gets a collection of SapVirtualInstanceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsResourceGroupMockingExtension.GetSapVirtualInstances()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsResourceGroupResource.GetSapVirtualInstances()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SapVirtualInstanceResources and their operations over a SapVirtualInstanceResource. </returns>
         public static SapVirtualInstanceCollection GetSapVirtualInstances(this ResourceGroupResource resourceGroupResource)
         {
-            return GetWorkloadsResourceGroupMockingExtension(resourceGroupResource).GetSapVirtualInstances();
+            return GetMockableWorkloadsResourceGroupResource(resourceGroupResource).GetSapVirtualInstances();
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsResourceGroupMockingExtension.GetSapVirtualInstanceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsResourceGroupResource.GetSapVirtualInstanceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Workloads
         [ForwardsClientCalls]
         public static async Task<Response<SapVirtualInstanceResource>> GetSapVirtualInstanceAsync(this ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            return await GetWorkloadsResourceGroupMockingExtension(resourceGroupResource).GetSapVirtualInstanceAsync(sapVirtualInstanceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWorkloadsResourceGroupResource(resourceGroupResource).GetSapVirtualInstanceAsync(sapVirtualInstanceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsResourceGroupMockingExtension.GetSapVirtualInstance(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsResourceGroupResource.GetSapVirtualInstance(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -214,21 +214,21 @@ namespace Azure.ResourceManager.Workloads
         [ForwardsClientCalls]
         public static Response<SapVirtualInstanceResource> GetSapVirtualInstance(this ResourceGroupResource resourceGroupResource, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            return GetWorkloadsResourceGroupMockingExtension(resourceGroupResource).GetSapVirtualInstance(sapVirtualInstanceName, cancellationToken);
+            return GetMockableWorkloadsResourceGroupResource(resourceGroupResource).GetSapVirtualInstance(sapVirtualInstanceName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of SapMonitorResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsResourceGroupMockingExtension.GetSapMonitors()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsResourceGroupResource.GetSapMonitors()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of SapMonitorResources and their operations over a SapMonitorResource. </returns>
         public static SapMonitorCollection GetSapMonitors(this ResourceGroupResource resourceGroupResource)
         {
-            return GetWorkloadsResourceGroupMockingExtension(resourceGroupResource).GetSapMonitors();
+            return GetMockableWorkloadsResourceGroupResource(resourceGroupResource).GetSapMonitors();
         }
 
         /// <summary>
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsResourceGroupMockingExtension.GetSapMonitorAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsResourceGroupResource.GetSapMonitorAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Workloads
         [ForwardsClientCalls]
         public static async Task<Response<SapMonitorResource>> GetSapMonitorAsync(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            return await GetWorkloadsResourceGroupMockingExtension(resourceGroupResource).GetSapMonitorAsync(monitorName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWorkloadsResourceGroupResource(resourceGroupResource).GetSapMonitorAsync(monitorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsResourceGroupMockingExtension.GetSapMonitor(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsResourceGroupResource.GetSapMonitor(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Workloads
         [ForwardsClientCalls]
         public static Response<SapMonitorResource> GetSapMonitor(this ResourceGroupResource resourceGroupResource, string monitorName, CancellationToken cancellationToken = default)
         {
-            return GetWorkloadsResourceGroupMockingExtension(resourceGroupResource).GetSapMonitor(monitorName, cancellationToken);
+            return GetMockableWorkloadsResourceGroupResource(resourceGroupResource).GetSapMonitor(monitorName, cancellationToken);
         }
 
         /// <summary>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsSubscriptionMockingExtension.SapSizingRecommendations(AzureLocation,SapSizingRecommendationContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSubscriptionResource.SapSizingRecommendations(AzureLocation,SapSizingRecommendationContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SapSizingRecommendationResult>> SapSizingRecommendationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetWorkloadsSubscriptionMockingExtension(subscriptionResource).SapSizingRecommendationsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWorkloadsSubscriptionResource(subscriptionResource).SapSizingRecommendationsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsSubscriptionMockingExtension.SapSizingRecommendations(AzureLocation,SapSizingRecommendationContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSubscriptionResource.SapSizingRecommendations(AzureLocation,SapSizingRecommendationContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SapSizingRecommendationResult> SapSizingRecommendations(this SubscriptionResource subscriptionResource, AzureLocation location, SapSizingRecommendationContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetWorkloadsSubscriptionMockingExtension(subscriptionResource).SapSizingRecommendations(location, content, cancellationToken);
+            return GetMockableWorkloadsSubscriptionResource(subscriptionResource).SapSizingRecommendations(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsSubscriptionMockingExtension.SapSupportedSku(AzureLocation,SapSupportedSkusContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSubscriptionResource.SapSupportedSku(AzureLocation,SapSupportedSkusContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SapSupportedResourceSkusResult>> SapSupportedSkuAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetWorkloadsSubscriptionMockingExtension(subscriptionResource).SapSupportedSkuAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWorkloadsSubscriptionResource(subscriptionResource).SapSupportedSkuAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsSubscriptionMockingExtension.SapSupportedSku(AzureLocation,SapSupportedSkusContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSubscriptionResource.SapSupportedSku(AzureLocation,SapSupportedSkusContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SapSupportedResourceSkusResult> SapSupportedSku(this SubscriptionResource subscriptionResource, AzureLocation location, SapSupportedSkusContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetWorkloadsSubscriptionMockingExtension(subscriptionResource).SapSupportedSku(location, content, cancellationToken);
+            return GetMockableWorkloadsSubscriptionResource(subscriptionResource).SapSupportedSku(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsSubscriptionMockingExtension.SapDiskConfigurations(AzureLocation,SapDiskConfigurationsContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSubscriptionResource.SapDiskConfigurations(AzureLocation,SapDiskConfigurationsContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SapDiskConfigurationsResult>> SapDiskConfigurationsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetWorkloadsSubscriptionMockingExtension(subscriptionResource).SapDiskConfigurationsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWorkloadsSubscriptionResource(subscriptionResource).SapDiskConfigurationsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsSubscriptionMockingExtension.SapDiskConfigurations(AzureLocation,SapDiskConfigurationsContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSubscriptionResource.SapDiskConfigurations(AzureLocation,SapDiskConfigurationsContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SapDiskConfigurationsResult> SapDiskConfigurations(this SubscriptionResource subscriptionResource, AzureLocation location, SapDiskConfigurationsContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetWorkloadsSubscriptionMockingExtension(subscriptionResource).SapDiskConfigurations(location, content, cancellationToken);
+            return GetMockableWorkloadsSubscriptionResource(subscriptionResource).SapDiskConfigurations(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsSubscriptionMockingExtension.SapAvailabilityZoneDetails(AzureLocation,SapAvailabilityZoneDetailsContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSubscriptionResource.SapAvailabilityZoneDetails(AzureLocation,SapAvailabilityZoneDetailsContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<SapAvailabilityZoneDetailsResult>> SapAvailabilityZoneDetailsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
         {
-            return await GetWorkloadsSubscriptionMockingExtension(subscriptionResource).SapAvailabilityZoneDetailsAsync(location, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableWorkloadsSubscriptionResource(subscriptionResource).SapAvailabilityZoneDetailsAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsSubscriptionMockingExtension.SapAvailabilityZoneDetails(AzureLocation,SapAvailabilityZoneDetailsContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSubscriptionResource.SapAvailabilityZoneDetails(AzureLocation,SapAvailabilityZoneDetailsContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.Workloads
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<SapAvailabilityZoneDetailsResult> SapAvailabilityZoneDetails(this SubscriptionResource subscriptionResource, AzureLocation location, SapAvailabilityZoneDetailsContent content = null, CancellationToken cancellationToken = default)
         {
-            return GetWorkloadsSubscriptionMockingExtension(subscriptionResource).SapAvailabilityZoneDetails(location, content, cancellationToken);
+            return GetMockableWorkloadsSubscriptionResource(subscriptionResource).SapAvailabilityZoneDetails(location, content, cancellationToken);
         }
 
         /// <summary>
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsSubscriptionMockingExtension.GetSapVirtualInstances(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSubscriptionResource.GetSapVirtualInstances(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An async collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SapVirtualInstanceResource> GetSapVirtualInstancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetWorkloadsSubscriptionMockingExtension(subscriptionResource).GetSapVirtualInstancesAsync(cancellationToken);
+            return GetMockableWorkloadsSubscriptionResource(subscriptionResource).GetSapVirtualInstancesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsSubscriptionMockingExtension.GetSapVirtualInstances(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSubscriptionResource.GetSapVirtualInstances(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> A collection of <see cref="SapVirtualInstanceResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SapVirtualInstanceResource> GetSapVirtualInstances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetWorkloadsSubscriptionMockingExtension(subscriptionResource).GetSapVirtualInstances(cancellationToken);
+            return GetMockableWorkloadsSubscriptionResource(subscriptionResource).GetSapVirtualInstances(cancellationToken);
         }
 
         /// <summary>
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsSubscriptionMockingExtension.GetSapMonitors(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSubscriptionResource.GetSapMonitors(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> An async collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SapMonitorResource> GetSapMonitorsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetWorkloadsSubscriptionMockingExtension(subscriptionResource).GetSapMonitorsAsync(cancellationToken);
+            return GetMockableWorkloadsSubscriptionResource(subscriptionResource).GetSapMonitorsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.Workloads
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="WorkloadsSubscriptionMockingExtension.GetSapMonitors(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableWorkloadsSubscriptionResource.GetSapMonitors(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Workloads
         /// <returns> A collection of <see cref="SapMonitorResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SapMonitorResource> GetSapMonitors(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetWorkloadsSubscriptionMockingExtension(subscriptionResource).GetSapMonitors(cancellationToken);
+            return GetMockableWorkloadsSubscriptionResource(subscriptionResource).GetSapMonitors(cancellationToken);
         }
     }
 }

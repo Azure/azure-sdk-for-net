@@ -65,23 +65,23 @@ namespace Azure.ResourceManager.Confluent
 }
 namespace Azure.ResourceManager.Confluent.Mocking
 {
-    public partial class ConfluentArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableConfluentArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ConfluentArmClientMockingExtension() { }
+        protected MockableConfluentArmClient() { }
         public virtual Azure.ResourceManager.Confluent.ConfluentOrganizationResource GetConfluentOrganizationResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ConfluentResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableConfluentResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ConfluentResourceGroupMockingExtension() { }
+        protected MockableConfluentResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Confluent.ConfluentOrganizationResource> GetConfluentOrganization(string organizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.ConfluentOrganizationResource>> GetConfluentOrganizationAsync(string organizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Confluent.ConfluentOrganizationCollection GetConfluentOrganizations() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Confluent.ConfluentOrganizationResource> ValidateOrganization(string organizationName, Azure.ResourceManager.Confluent.ConfluentOrganizationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.ConfluentOrganizationResource>> ValidateOrganizationAsync(string organizationName, Azure.ResourceManager.Confluent.ConfluentOrganizationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ConfluentSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableConfluentSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ConfluentSubscriptionMockingExtension() { }
+        protected MockableConfluentSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Confluent.Models.ConfluentAgreement> CreateMarketplaceAgreement(Azure.ResourceManager.Confluent.Models.ConfluentAgreement body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Confluent.Models.ConfluentAgreement>> CreateMarketplaceAgreementAsync(Azure.ResourceManager.Confluent.Models.ConfluentAgreement body = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Confluent.ConfluentOrganizationResource> GetConfluentOrganizations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

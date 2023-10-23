@@ -305,25 +305,25 @@ namespace Azure.ResourceManager.ServiceFabric
 }
 namespace Azure.ResourceManager.ServiceFabric.Mocking
 {
-    public partial class ServiceFabricArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableServiceFabricArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ServiceFabricArmClientMockingExtension() { }
+        protected MockableServiceFabricArmClient() { }
         public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationResource GetServiceFabricApplicationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeResource GetServiceFabricApplicationTypeResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricApplicationTypeVersionResource GetServiceFabricApplicationTypeVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricClusterResource GetServiceFabricClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricServiceResource GetServiceFabricServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ServiceFabricResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableServiceFabricResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected ServiceFabricResourceGroupMockingExtension() { }
+        protected MockableServiceFabricResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricClusterResource> GetServiceFabricCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceFabric.ServiceFabricClusterResource>> GetServiceFabricClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ServiceFabric.ServiceFabricClusterCollection GetServiceFabricClusters() { throw null; }
     }
-    public partial class ServiceFabricSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableServiceFabricSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ServiceFabricSubscriptionMockingExtension() { }
+        protected MockableServiceFabricSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.ServiceFabric.Models.ClusterCodeVersionsResult> GetClusterVersions(Azure.Core.AzureLocation location, string clusterVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ServiceFabric.Models.ClusterCodeVersionsResult> GetClusterVersions(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceFabric.Models.ClusterCodeVersionsResult> GetClusterVersionsAsync(Azure.Core.AzureLocation location, string clusterVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

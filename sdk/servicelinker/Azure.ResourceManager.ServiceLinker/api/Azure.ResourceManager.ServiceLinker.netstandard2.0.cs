@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.ServiceLinker
 }
 namespace Azure.ResourceManager.ServiceLinker.Mocking
 {
-    public partial class ServiceLinkerArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableServiceLinkerArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ServiceLinkerArmClientMockingExtension() { }
+        protected MockableServiceLinkerArmClient() { }
         public virtual Azure.ResourceManager.ServiceLinker.LinkerResource GetLinkerResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceLinker.LinkerResource> GetLinkerResource(Azure.Core.ResourceIdentifier scope, string linkerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.LinkerResource>> GetLinkerResourceAsync(Azure.Core.ResourceIdentifier scope, string linkerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ServiceLinker.LinkerResourceCollection GetLinkerResources(Azure.Core.ResourceIdentifier scope) { throw null; }
     }
-    public partial class ServiceLinkerArmMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableServiceLinkerArmResource : Azure.ResourceManager.ArmResource
     {
-        protected ServiceLinkerArmMockingExtension() { }
+        protected MockableServiceLinkerArmResource() { }
         public virtual Azure.Response<Azure.ResourceManager.ServiceLinker.LinkerResource> GetLinkerResource(string linkerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceLinker.LinkerResource>> GetLinkerResourceAsync(string linkerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ServiceLinker.LinkerResourceCollection GetLinkerResources() { throw null; }

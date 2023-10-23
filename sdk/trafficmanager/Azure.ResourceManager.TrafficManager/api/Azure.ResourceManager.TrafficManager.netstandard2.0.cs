@@ -188,34 +188,34 @@ namespace Azure.ResourceManager.TrafficManager
 }
 namespace Azure.ResourceManager.TrafficManager.Mocking
 {
-    public partial class TrafficManagerArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableTrafficManagerArmClient : Azure.ResourceManager.ArmResource
     {
-        protected TrafficManagerArmClientMockingExtension() { }
+        protected MockableTrafficManagerArmClient() { }
         public virtual Azure.ResourceManager.TrafficManager.TrafficManagerEndpointResource GetTrafficManagerEndpointResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.TrafficManager.TrafficManagerHeatMapResource GetTrafficManagerHeatMapResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource GetTrafficManagerProfileResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricsResource GetTrafficManagerUserMetricsResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class TrafficManagerResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableTrafficManagerResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected TrafficManagerResourceGroupMockingExtension() { }
+        protected MockableTrafficManagerResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource> GetTrafficManagerProfile(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource>> GetTrafficManagerProfileAsync(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.TrafficManager.TrafficManagerProfileCollection GetTrafficManagerProfiles() { throw null; }
     }
-    public partial class TrafficManagerSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableTrafficManagerSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected TrafficManagerSubscriptionMockingExtension() { }
+        protected MockableTrafficManagerSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult> CheckTrafficManagerNameAvailabilityV2(Azure.ResourceManager.TrafficManager.Models.TrafficManagerRelativeDnsNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult>> CheckTrafficManagerNameAvailabilityV2Async(Azure.ResourceManager.TrafficManager.Models.TrafficManagerRelativeDnsNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource> GetTrafficManagerProfiles(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.TrafficManager.TrafficManagerProfileResource> GetTrafficManagerProfilesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.TrafficManager.TrafficManagerUserMetricsResource GetTrafficManagerUserMetrics() { throw null; }
     }
-    public partial class TrafficManagerTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableTrafficManagerTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected TrafficManagerTenantMockingExtension() { }
+        protected MockableTrafficManagerTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult> CheckTrafficManagerRelativeDnsNameAvailability(Azure.ResourceManager.TrafficManager.Models.TrafficManagerRelativeDnsNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.TrafficManager.Models.TrafficManagerNameAvailabilityResult>> CheckTrafficManagerRelativeDnsNameAvailabilityAsync(Azure.ResourceManager.TrafficManager.Models.TrafficManagerRelativeDnsNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.TrafficManager.TrafficManagerGeographicHierarchyResource GetTrafficManagerGeographicHierarchy() { throw null; }
