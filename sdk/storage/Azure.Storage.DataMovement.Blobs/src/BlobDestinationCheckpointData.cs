@@ -73,7 +73,7 @@ namespace Azure.Storage.DataMovement.Blobs
             _cpkScopeBytes = CpkScope != default ? Encoding.UTF8.GetBytes(CpkScope) : Array.Empty<byte>();
         }
 
-        protected override void Serialize(Stream stream)
+        public override void Serialize(Stream stream)
         {
             Argument.AssertNotNull(stream, nameof(stream));
 

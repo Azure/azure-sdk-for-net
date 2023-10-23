@@ -8,11 +8,13 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using Moq;
+using Moq.Protected;
 using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
@@ -543,6 +545,38 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             mock.Verify(b => b.GetPropertiesAsync(It.IsAny<ShareFileRequestConditions>(), It.IsAny<CancellationToken>()),
                 Times.Once());
             mock.VerifyNoOtherCalls();
+        }
+
+        [Test]
+        public async Task GetCopyAuthorizationHeaderAsync()
+        {
+            CancellationToken cancellationToken = new();
+            string expectedToken = "foo";
+            AccessToken accessToken = new(expectedToken, DateTimeOffset.UtcNow);
+
+            Mock<TokenCredential> tokenCred = new();
+            tokenCred.Setup(t => t.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+                .Returns(new ValueTask<AccessToken>(Task.FromResult(accessToken)));
+
+            ShareFileClient client = new(new Uri("https://example.file.core.windows.net/share/file"), tokenCred.Object);
+            ShareFileStorageResource resource = new(client);
+
+            // Act - Get access token
+            HttpAuthorization authorization = await resource.GetCopyAuthorizationHeaderInternalAsync(cancellationToken);
+
+            // Assert
+            Assert.That(authorization.Parameter, Is.EqualTo(expectedToken));
+            tokenCred.Verify(t => t.GetTokenAsync(It.IsAny<TokenRequestContext>(), cancellationToken), Times.Once());
+            tokenCred.VerifyNoOtherCalls();
+        }
+
+        [Test]
+        public async Task GetCopyAuthorizationHeaderAsync_NoOAuth()
+        {
+            ShareFileClient nonOAuthClient = new(new Uri("https://example.file.core.windows.net/share/file"));
+            ShareFileStorageResource resource = new(nonOAuthClient);
+
+            Assert.That(await resource.GetCopyAuthorizationHeaderInternalAsync(), Is.Null);
         }
     }
 }
