@@ -22,7 +22,7 @@ namespace Azure.Template
 }
 namespace Azure.Template.Models
 {
-    public partial class SecretBundle
+    public partial class SecretBundle : System.Net.ClientModel.Core.IJsonModel<Azure.Template.Models.SecretBundle>, System.Net.ClientModel.Core.IModel<Azure.Template.Models.SecretBundle>
     {
         internal SecretBundle() { }
         public string ContentType { get { throw null; } }
@@ -31,6 +31,10 @@ namespace Azure.Template.Models
         public bool? Managed { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public string Value { get { throw null; } }
+        Azure.Template.Models.SecretBundle System.Net.ClientModel.Core.IJsonModel<Azure.Template.Models.SecretBundle>.Read(ref System.Text.Json.Utf8JsonReader reader, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        Azure.Template.Models.SecretBundle System.Net.ClientModel.Core.IModel<Azure.Template.Models.SecretBundle>.Read(System.BinaryData data, System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        public System.BinaryData Write(System.Net.ClientModel.ModelReaderWriterOptions options) { throw null; }
+        public void Write(System.Text.Json.Utf8JsonWriter writer, System.Net.ClientModel.ModelReaderWriterOptions options) { }
     }
 }
 namespace Microsoft.Extensions.Azure

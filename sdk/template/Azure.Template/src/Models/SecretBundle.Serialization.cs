@@ -5,13 +5,16 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
+using System.Net.ClientModel;
+using System.Net.ClientModel.Core;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Template.Models
 {
-    public partial class SecretBundle
+    public partial class SecretBundle : IJsonModel<SecretBundle>
     {
         internal static SecretBundle DeserializeSecretBundle(JsonElement element)
         {
@@ -76,6 +79,42 @@ namespace Azure.Template.Models
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeSecretBundle(document.RootElement);
+        }
+
+        // TODO: Are we happy with taking a dependency on STJ types in client libraries per our prior analyzer AZC0014?
+
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        SecretBundle IJsonModel<SecretBundle>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning restore AZC0014 // Avoid using banned types in public API
+        {
+            using var doc = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecretBundle(doc.RootElement);
+        }
+
+        SecretBundle IModel<SecretBundle>.Read(BinaryData data, ModelReaderWriterOptions options)
+        {
+            using var doc = JsonDocument.Parse(data);
+            return DeserializeSecretBundle(doc.RootElement);
+        }
+
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        public void Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning restore AZC0014 // Avoid using banned types in public API
+        {
+            throw new NotImplementedException();
+        }
+
+#pragma warning disable AZC0014 // Avoid using banned types in public API
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        public BinaryData Write(ModelReaderWriterOptions options)
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+#pragma warning restore AZC0014 // Avoid using banned types in public API
+        {
+            throw new NotImplementedException();
         }
     }
 }
