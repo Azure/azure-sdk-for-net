@@ -69,24 +69,12 @@ namespace Azure.Storage.DataMovement
                 header = JobPlanHeader.Deserialize(stream);
             }
 
-            string sourceTypeId = default;
-            string destinationTypeId = default;
-            // Only need to get type ids for single transfers
-            if (!header.IsContainer)
-            {
-                (sourceTypeId, destinationTypeId) = await checkpointer.GetResourceIdsAsync(
-                    transferId,
-                    cancellationToken).ConfigureAwait(false);
-            }
-
             return new DataTransferProperties
             {
                 TransferId = transferId,
-                SourceTypeId = sourceTypeId,
                 SourceUri = new Uri(header.ParentSourcePath),
                 SourceProviderId = header.SourceProviderId,
                 SourceCheckpointData = header.SourceCheckpointData,
-                DestinationTypeId = destinationTypeId,
                 DestinationUri = new Uri(header.ParentDestinationPath),
                 DestinationProviderId = header.DestinationProviderId,
                 DestinationCheckpointData = header.DestinationCheckpointData,

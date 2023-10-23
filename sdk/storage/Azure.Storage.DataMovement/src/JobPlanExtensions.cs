@@ -29,48 +29,6 @@ namespace Azure.Storage.DataMovement
             return result;
         }
 
-        internal static async Task<(string Source, string Destination)> GetResourceIdsAsync(
-            this TransferCheckpointer checkpointer,
-            string transferId,
-            CancellationToken cancellationToken)
-        {
-            int startIndex = DataMovementConstants.JobPartPlanFile.SourceResourceIdLengthIndex;
-            int readLength = DataMovementConstants.JobPartPlanFile.DestinationPathLengthIndex - startIndex;
-
-            string sourceResourceId;
-            string destinationResourceId;
-            using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: startIndex,
-                length: readLength,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                BinaryReader reader = new BinaryReader(stream);
-
-                // Read Source Length
-                byte[] sourceLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
-                ushort sourceLength = sourceLengthBuffer.ToUShort();
-
-                // Read Source
-                byte[] sourceBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.ResourceIdNumBytes);
-                sourceResourceId = sourceBuffer.ToString(sourceLength);
-
-                // Set the stream position to the start of the destination resource id
-                reader.BaseStream.Position = DataMovementConstants.JobPartPlanFile.DestinationResourceIdLengthIndex - startIndex;
-
-                // Read Destination Length
-                byte[] destLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
-                ushort destLength = destLengthBuffer.ToUShort();
-
-                // Read Destination
-                byte[] destBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.ResourceIdNumBytes);
-                destinationResourceId = destBuffer.ToString(destLength);
-            }
-
-            return (sourceResourceId, destinationResourceId);
-        }
-
         internal static async Task<string> GetHeaderUShortValue(
             this TransferCheckpointer checkpointer,
             string transferId,

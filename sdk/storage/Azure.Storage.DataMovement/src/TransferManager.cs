@@ -304,7 +304,6 @@ namespace Azure.Storage.DataMovement
 
                 DataTransferProperties properties = await _checkpointer.GetDataTransferPropertiesAsync(
                     transferId, _cancellationToken).ConfigureAwait(false);
-                properties.Checkpointer = _checkpointerOptions;
                 yield return properties;
             }
         }
@@ -357,7 +356,6 @@ namespace Azure.Storage.DataMovement
 
             DataTransferProperties properties = await _checkpointer.GetDataTransferPropertiesAsync(
                     transferId, cancellationToken).ConfigureAwait(false);
-            properties.Checkpointer = _checkpointerOptions;
 
             return await ResumeTransferAsync(properties, transferOptions, cancellationToken).ConfigureAwait(false);
         }
