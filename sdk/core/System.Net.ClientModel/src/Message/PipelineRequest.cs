@@ -11,7 +11,7 @@ public abstract class PipelineRequest : IDisposable
 
     public abstract PipelineContent? Content { get; set; }
 
-    public abstract MessageHeaders Headers { get; }
+    public abstract PipelineMessageHeaders Headers { get; }
 
     // TODO: this is required by Azure.Core RequestAdapter constraint.  Revisit?
     public abstract void Dispose();

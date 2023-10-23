@@ -68,18 +68,6 @@ namespace System.Net.ClientModel
 }
 namespace System.Net.ClientModel.Core
 {
-    public abstract partial class MessageHeaders
-    {
-        protected MessageHeaders() { }
-        public abstract int Count { get; }
-        public abstract void Add(string name, string value);
-        public abstract bool Remove(string name);
-        public abstract void Set(string name, string value);
-        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>>> headers);
-        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers);
-        public abstract bool TryGetValue(string name, out string? value);
-        public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
-    }
     public abstract partial class PipelineContent : System.IDisposable
     {
         protected PipelineContent() { }
@@ -112,11 +100,23 @@ namespace System.Net.ClientModel.Core
         public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
+    public abstract partial class PipelineMessageHeaders
+    {
+        protected PipelineMessageHeaders() { }
+        public abstract int Count { get; }
+        public abstract void Add(string name, string value);
+        public abstract bool Remove(string name);
+        public abstract void Set(string name, string value);
+        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.Collections.Generic.IEnumerable<string>>> headers);
+        public abstract bool TryGetHeaders(out System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, string>> headers);
+        public abstract bool TryGetValue(string name, out string? value);
+        public abstract bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
+    }
     public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
         public abstract System.Net.ClientModel.Core.PipelineContent? Content { get; set; }
-        public abstract System.Net.ClientModel.Core.MessageHeaders Headers { get; }
+        public abstract System.Net.ClientModel.Core.PipelineMessageHeaders Headers { get; }
         public abstract string Method { get; set; }
         public abstract System.Uri Uri { get; set; }
         public abstract void Dispose();
@@ -125,7 +125,7 @@ namespace System.Net.ClientModel.Core
     {
         protected PipelineResponse() { }
         public abstract System.Net.ClientModel.Core.PipelineContent? Content { get; protected internal set; }
-        public abstract System.Net.ClientModel.Core.MessageHeaders Headers { get; }
+        public abstract System.Net.ClientModel.Core.PipelineMessageHeaders Headers { get; }
         public bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
         public abstract int Status { get; }
@@ -133,12 +133,12 @@ namespace System.Net.ClientModel.Core
     }
     public partial class ResponseErrorClassifier
     {
-        public ResponseErrorClassifier() { }
+        protected internal ResponseErrorClassifier() { }
         public virtual bool IsErrorResponse(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
     }
-    public partial class StatusResponseClassifier : System.Net.ClientModel.Core.ResponseErrorClassifier
+    public partial class StatusErrorClassifier : System.Net.ClientModel.Core.ResponseErrorClassifier
     {
-        public StatusResponseClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
+        public StatusErrorClassifier(System.ReadOnlySpan<ushort> successStatusCodes) { }
         public override bool IsErrorResponse(System.Net.ClientModel.Core.PipelineMessage message) { throw null; }
     }
     public partial class TelemetrySource
@@ -241,7 +241,7 @@ namespace System.Net.ClientModel.Core.Pipeline
     {
         protected internal HttpPipelineRequest() { }
         public override System.Net.ClientModel.Core.PipelineContent? Content { get { throw null; } set { } }
-        public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
+        public override System.Net.ClientModel.Core.PipelineMessageHeaders Headers { get { throw null; } }
         public override string Method { get { throw null; } set { } }
         public override System.Uri Uri { get { throw null; } set { } }
         public override void Dispose() { }
@@ -251,7 +251,7 @@ namespace System.Net.ClientModel.Core.Pipeline
     {
         protected internal HttpPipelineResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
         public override System.Net.ClientModel.Core.PipelineContent? Content { get { throw null; } protected internal set { } }
-        public override System.Net.ClientModel.Core.MessageHeaders Headers { get { throw null; } }
+        public override System.Net.ClientModel.Core.PipelineMessageHeaders Headers { get { throw null; } }
         public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }
         public override void Dispose() { }

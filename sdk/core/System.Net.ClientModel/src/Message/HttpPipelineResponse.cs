@@ -31,7 +31,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     public override string ReasonPhrase
         => _httpResponse.ReasonPhrase ?? string.Empty;
 
-    public override MessageHeaders Headers
+    public override PipelineMessageHeaders Headers
         => new MessageResponseHeaders(_httpResponse, _httpResponseContent);
 
     public override PipelineContent? Content

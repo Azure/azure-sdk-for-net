@@ -57,7 +57,7 @@ public class HttpPipelineRequest : PipelineRequest, IDisposable
         set;
     }
 
-    public override MessageHeaders Headers => _headers;
+    public override PipelineMessageHeaders Headers => _headers;
 
     // PATCH value needed for compat with pre-net5.0 TFMs
     private static readonly HttpMethod _patchMethod = new HttpMethod("PATCH");

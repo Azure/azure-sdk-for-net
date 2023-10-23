@@ -27,7 +27,7 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
 
             public override string ReasonPhrase => throw new NotImplementedException();
 
-            public override MessageHeaders Headers => throw new NotImplementedException();
+            public override PipelineMessageHeaders Headers => throw new NotImplementedException();
 
             public override PipelineContent Content { get; protected internal set; }
 
