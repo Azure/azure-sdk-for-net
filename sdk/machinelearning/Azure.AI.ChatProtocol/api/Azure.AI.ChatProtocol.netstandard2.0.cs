@@ -55,6 +55,8 @@ namespace Azure.AI.ChatProtocol
         protected ChatProtocolClient() { }
         public ChatProtocolClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public ChatProtocolClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.ChatProtocol.ChatProtocolClientOptions options) { }
+        public ChatProtocolClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public ChatProtocolClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.ChatProtocol.ChatProtocolClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.ChatProtocol.ChatCompletion> Create(Azure.AI.ChatProtocol.ChatCompletionOptions chatCompletionOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Create(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
@@ -105,8 +107,6 @@ namespace Azure.AI.ChatProtocol
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public FinishReason(string value) { throw null; }
-        public static Azure.AI.ChatProtocol.FinishReason ContentFiltered { get { throw null; } }
-        public static Azure.AI.ChatProtocol.FinishReason FunctionCall { get { throw null; } }
         public static Azure.AI.ChatProtocol.FinishReason Stopped { get { throw null; } }
         public static Azure.AI.ChatProtocol.FinishReason TokenLimitReached { get { throw null; } }
         public bool Equals(Azure.AI.ChatProtocol.FinishReason other) { throw null; }
@@ -133,6 +133,7 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class AIChatProtocolClientBuilderExtensions
     {
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ChatProtocol.ChatProtocolClient, Azure.AI.ChatProtocol.ChatProtocolClientOptions> AddChatProtocolClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ChatProtocol.ChatProtocolClient, Azure.AI.ChatProtocol.ChatProtocolClientOptions> AddChatProtocolClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.ChatProtocol.ChatProtocolClient, Azure.AI.ChatProtocol.ChatProtocolClientOptions> AddChatProtocolClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
