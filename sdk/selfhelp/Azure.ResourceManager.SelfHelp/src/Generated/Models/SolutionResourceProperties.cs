@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         {
             TriggerCriteria = new ChangeTrackingList<TriggerCriterion>();
             Parameters = new ChangeTrackingDictionary<string, string>();
-            Sections = new ChangeTrackingList<Section>();
+            Sections = new ChangeTrackingList<SelfHelpSection>();
         }
 
         /// <summary> Initializes a new instance of SolutionResourceProperties. </summary>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="content"> The HTML content that needs to be rendered and shown to customer. </param>
         /// <param name="replacementMaps"> Solution replacement maps. </param>
         /// <param name="sections"> List of section object. </param>
-        internal SolutionResourceProperties(IList<TriggerCriterion> triggerCriteria, IDictionary<string, string> parameters, string solutionId, SolutionProvisioningState? provisioningState, string title, string content, ReplacementMaps replacementMaps, IList<Section> sections)
+        internal SolutionResourceProperties(IList<TriggerCriterion> triggerCriteria, IDictionary<string, string> parameters, string solutionId, SolutionProvisioningState? provisioningState, string title, string content, ReplacementMaps replacementMaps, IList<SelfHelpSection> sections)
         {
             TriggerCriteria = triggerCriteria;
             Parameters = parameters;
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Solution replacement maps. </summary>
         public ReplacementMaps ReplacementMaps { get; set; }
         /// <summary> List of section object. </summary>
-        public IList<Section> Sections { get; }
+        public IList<SelfHelpSection> Sections { get; }
     }
 }

@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    internal partial class FilterGroup : IUtf8JsonSerializable
+    internal partial class SelfHelpFilterGroup : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,13 +29,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
             writer.WriteEndObject();
         }
 
-        internal static FilterGroup DeserializeFilterGroup(JsonElement element)
+        internal static SelfHelpFilterGroup DeserializeSelfHelpFilterGroup(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<Filter>> filter = default;
+            Optional<IList<SelfHelpFilter>> filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filter"u8))
@@ -44,16 +44,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    List<Filter> array = new List<Filter>();
+                    List<SelfHelpFilter> array = new List<SelfHelpFilter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.Filter.DeserializeFilter(item));
+                        array.Add(SelfHelpFilter.DeserializeSelfHelpFilter(item));
                     }
                     filter = array;
                     continue;
                 }
             }
-            return new FilterGroup(Optional.ToList(filter));
+            return new SelfHelpFilterGroup(Optional.ToList(filter));
         }
     }
 }

@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Part of the solution and are dividers in the solution rendering. </summary>
-    public partial class Section
+    public partial class SelfHelpSection
     {
-        /// <summary> Initializes a new instance of Section. </summary>
-        public Section()
+        /// <summary> Initializes a new instance of SelfHelpSection. </summary>
+        public SelfHelpSection()
         {
         }
 
-        /// <summary> Initializes a new instance of Section. </summary>
+        /// <summary> Initializes a new instance of SelfHelpSection. </summary>
         /// <param name="title"> Solution sections title. </param>
         /// <param name="content"> Solution sections content. </param>
         /// <param name="replacementMaps"> Solution replacement maps. </param>
-        internal Section(string title, string content, ReplacementMaps replacementMaps)
+        internal SelfHelpSection(string title, string content, ReplacementMaps replacementMaps)
         {
             Title = title;
             Content = content;

@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="insights"></param>
         /// <param name="error"> The error detail. </param>
         /// <returns> A new <see cref="Models.Step"/> instance for mocking. </returns>
-        public static Step Step(string id = null, string title = null, string description = null, string guidance = null, ExecutionStatus? executionStatus = null, string executionStatusDescription = null, Type? stepType = null, bool? isLastStep = null, IEnumerable<StepInput> inputs = null, AutomatedCheckResult automatedCheckResults = null, IEnumerable<SelfHelpDiagnosticInsight> insights = null, ResponseError error = null)
+        public static Step Step(string id = null, string title = null, string description = null, string guidance = null, ExecutionStatus? executionStatus = null, string executionStatusDescription = null, SelfHelpType? stepType = null, bool? isLastStep = null, IEnumerable<StepInput> inputs = null, AutomatedCheckResult automatedCheckResults = null, IEnumerable<SelfHelpDiagnosticInsight> insights = null, ResponseError error = null)
         {
             inputs ??= new List<StepInput>();
             insights ??= new List<SelfHelpDiagnosticInsight>();
