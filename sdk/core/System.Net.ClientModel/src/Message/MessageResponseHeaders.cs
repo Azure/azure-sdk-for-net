@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 
-namespace System.Net.ClientModel.Core.Pipeline;
+namespace System.Net.ClientModel.Core;
 
 internal class MessageResponseHeaders : PipelineMessageHeaders
 {

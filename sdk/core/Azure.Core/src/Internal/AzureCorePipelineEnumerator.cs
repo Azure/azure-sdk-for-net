@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net.ClientModel.Core.Pipeline;
+using System.Net.ClientModel.Core;
 using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline

@@ -11,7 +11,7 @@ using System.Net.ClientModel.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core.Pipeline;
+namespace System.Net.ClientModel.Core;
 
 // This adds the Http dependency, and some implementation
 

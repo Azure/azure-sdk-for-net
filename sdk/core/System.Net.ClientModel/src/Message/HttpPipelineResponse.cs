@@ -3,7 +3,7 @@
 
 using System.Net.Http;
 
-namespace System.Net.ClientModel.Core.Pipeline;
+namespace System.Net.ClientModel.Core;
 
 public class HttpPipelineResponse : PipelineResponse, IDisposable
 {

@@ -6,7 +6,7 @@ using System.Net.ClientModel.Internal;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core.Pipeline;
+namespace System.Net.ClientModel.Core;
 
 /// <summary>
 /// Pipeline policy to buffer response content or add a timeout to response content managed by the client
