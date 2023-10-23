@@ -72,7 +72,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                     await fileClient.UploadAsync(contents);
                 }
             }
-            Uri sourceUri = fileClient.GenerateSasUri(Sas.ShareFileSasPermissions.All, DateTimeOffset.UtcNow.AddDays(2));
+            Uri sourceUri = fileClient.GenerateSasUri(Sas.ShareFileSasPermissions.All, Recording.UtcNow.AddDays(1));
             return InstrumentClient(new ShareFileClient(sourceUri, GetOptions()));
         }
 
