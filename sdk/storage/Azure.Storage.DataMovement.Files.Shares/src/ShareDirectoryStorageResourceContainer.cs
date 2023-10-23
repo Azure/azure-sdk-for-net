@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
     internal class ShareDirectoryStorageResourceContainer : StorageResourceContainerInternal
     {
         internal ShareFileStorageResourceOptions ResourceOptions { get; set; }
-        internal PathScanner PathScanner { get; set; }
+        internal PathScanner PathScanner { get; set; } = PathScanner.Singleton.Value;
 
         internal ShareDirectoryClient ShareDirectoryClient { get; }
 
