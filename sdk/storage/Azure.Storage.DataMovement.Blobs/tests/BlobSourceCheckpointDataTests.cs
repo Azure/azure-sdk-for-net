@@ -46,9 +46,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [Test]
-        public void Deserialize()
+        [TestCase(BlobType.Block)]
+        [TestCase(BlobType.Page)]
+        [TestCase(BlobType.Append)]
+        public void Deserialize(BlobType blobType)
         {
-            BlobSourceCheckpointData data = new(BlobType.Block);
+            BlobSourceCheckpointData data = new(blobType);
 
             using (Stream stream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
             {
@@ -57,7 +60,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 BlobSourceCheckpointData deserialized = BlobSourceCheckpointData.Deserialize(stream);
 
                 Assert.AreEqual(DataMovementBlobConstants.SourceCheckpointData.SchemaVersion, deserialized.Version);
-                Assert.AreEqual(BlobType.Block, deserialized.BlobType);
+                Assert.AreEqual(blobType, deserialized.BlobType);
             }
         }
     }
