@@ -21,7 +21,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
         protected override string WirePayload => "{\"kind\":\"X\",\"name\":\"xmodel\",\"xProperty\":100,\"extra\":\"stuff\"}";
 
-        protected override Func<BaseModel?, PipelineContent> ToPipelineContent => model => model;
+        protected override Func<BaseModel?, PipelineMessageContent> ToPipelineContent => model => model;
 
         protected override Func<Result?, BaseModel> FromResult => response => (BaseModel)response;
 

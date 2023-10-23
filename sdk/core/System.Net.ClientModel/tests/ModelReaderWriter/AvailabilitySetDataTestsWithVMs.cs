@@ -17,7 +17,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
 
         protected override string JsonPayload => WirePayload;
 
-        protected override Func<AvailabilitySetData?, PipelineContent> ToPipelineContent => model => model;
+        protected override Func<AvailabilitySetData?, PipelineMessageContent> ToPipelineContent => model => model;
 
         protected override Func<Result?, AvailabilitySetData> FromResult => response => (AvailabilitySetData)response;
 

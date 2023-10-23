@@ -31,7 +31,7 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
         protected abstract void CompareModels(T model, T model2, ModelReaderWriterFormat format);
         protected abstract string JsonPayload { get; }
         protected abstract string WirePayload { get; }
-        protected abstract Func<T?, PipelineContent> ToPipelineContent { get; }
+        protected abstract Func<T?, PipelineMessageContent> ToPipelineContent { get; }
         protected abstract Func<Result?, T> FromResult { get; }
 
         [TestCase("J")]
@@ -212,13 +212,13 @@ namespace System.Net.ClientModel.Tests.ModelReaderWriterTests
             if (typeof(T).IsClass)
             {
                 T? model = default;
-                PipelineContent content = ToPipelineContent(model);
+                PipelineMessageContent content = ToPipelineContent(model);
                 Assert.IsNull(content);
             }
             else
             {
                 T? model = default;
-                PipelineContent content = ToPipelineContent(model);
+                PipelineMessageContent content = ToPipelineContent(model);
                 Assert.IsNotNull(content);
             }
 

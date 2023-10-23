@@ -68,25 +68,6 @@ namespace System.Net.ClientModel
 }
 namespace System.Net.ClientModel.Core
 {
-    public abstract partial class PipelineContent : System.IDisposable
-    {
-        protected PipelineContent() { }
-        public static System.Net.ClientModel.Core.PipelineContent CreateContent(System.BinaryData content) { throw null; }
-        public static System.Net.ClientModel.Core.PipelineContent CreateContent(System.IO.Stream stream) { throw null; }
-        public static System.Net.ClientModel.Core.PipelineContent CreateContent(System.Net.ClientModel.Core.Content.IJsonModel<object> model, System.Net.ClientModel.Core.Content.ModelReaderWriterOptions? options = null) { throw null; }
-        public static System.Net.ClientModel.Core.PipelineContent CreateContent(System.Net.ClientModel.Core.Content.IModel<object> model, System.Net.ClientModel.Core.Content.ModelReaderWriterOptions? options = null) { throw null; }
-        public abstract void Dispose();
-        public static explicit operator System.IO.Stream (System.Net.ClientModel.Core.PipelineContent content) { throw null; }
-        public static implicit operator System.BinaryData (System.Net.ClientModel.Core.PipelineContent content) { throw null; }
-        public static implicit operator System.ReadOnlyMemory<byte> (System.Net.ClientModel.Core.PipelineContent content) { throw null; }
-        protected virtual System.BinaryData ToBinaryData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected virtual System.Threading.Tasks.Task<System.BinaryData> ToBinaryDataAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected virtual System.IO.Stream ToStream(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        protected virtual System.Threading.Tasks.Task<System.IO.Stream> ToStreamAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public abstract bool TryComputeLength(out long length);
-        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
-        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
-    }
     public partial class PipelineMessage : System.IDisposable
     {
         protected internal PipelineMessage(System.Net.ClientModel.Core.PipelineRequest request) { }
@@ -99,6 +80,25 @@ namespace System.Net.ClientModel.Core
         protected virtual void Dispose(bool disposing) { }
         public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
+    }
+    public abstract partial class PipelineMessageContent : System.IDisposable
+    {
+        protected PipelineMessageContent() { }
+        public static System.Net.ClientModel.Core.PipelineMessageContent CreateContent(System.BinaryData content) { throw null; }
+        public static System.Net.ClientModel.Core.PipelineMessageContent CreateContent(System.IO.Stream stream) { throw null; }
+        public static System.Net.ClientModel.Core.PipelineMessageContent CreateContent(System.Net.ClientModel.Core.Content.IJsonModel<object> model, System.Net.ClientModel.Core.Content.ModelReaderWriterOptions? options = null) { throw null; }
+        public static System.Net.ClientModel.Core.PipelineMessageContent CreateContent(System.Net.ClientModel.Core.Content.IModel<object> model, System.Net.ClientModel.Core.Content.ModelReaderWriterOptions? options = null) { throw null; }
+        public abstract void Dispose();
+        public static explicit operator System.IO.Stream (System.Net.ClientModel.Core.PipelineMessageContent content) { throw null; }
+        public static implicit operator System.BinaryData (System.Net.ClientModel.Core.PipelineMessageContent content) { throw null; }
+        public static implicit operator System.ReadOnlyMemory<byte> (System.Net.ClientModel.Core.PipelineMessageContent content) { throw null; }
+        protected virtual System.BinaryData ToBinaryData(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected virtual System.Threading.Tasks.Task<System.BinaryData> ToBinaryDataAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected virtual System.IO.Stream ToStream(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        protected virtual System.Threading.Tasks.Task<System.IO.Stream> ToStreamAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public abstract bool TryComputeLength(out long length);
+        public abstract void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
+        public abstract System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken);
     }
     public abstract partial class PipelineMessageHeaders
     {
@@ -115,7 +115,7 @@ namespace System.Net.ClientModel.Core
     public abstract partial class PipelineRequest : System.IDisposable
     {
         protected PipelineRequest() { }
-        public abstract System.Net.ClientModel.Core.PipelineContent? Content { get; set; }
+        public abstract System.Net.ClientModel.Core.PipelineMessageContent? Content { get; set; }
         public abstract System.Net.ClientModel.Core.PipelineMessageHeaders Headers { get; }
         public abstract string Method { get; set; }
         public abstract System.Uri Uri { get; set; }
@@ -124,7 +124,7 @@ namespace System.Net.ClientModel.Core
     public abstract partial class PipelineResponse : System.IDisposable
     {
         protected PipelineResponse() { }
-        public abstract System.Net.ClientModel.Core.PipelineContent? Content { get; protected internal set; }
+        public abstract System.Net.ClientModel.Core.PipelineMessageContent? Content { get; protected internal set; }
         public abstract System.Net.ClientModel.Core.PipelineMessageHeaders Headers { get; }
         public bool IsError { get { throw null; } }
         public abstract string ReasonPhrase { get; }
@@ -240,7 +240,7 @@ namespace System.Net.ClientModel.Core.Pipeline
     public partial class HttpPipelineRequest : System.Net.ClientModel.Core.PipelineRequest, System.IDisposable
     {
         protected internal HttpPipelineRequest() { }
-        public override System.Net.ClientModel.Core.PipelineContent? Content { get { throw null; } set { } }
+        public override System.Net.ClientModel.Core.PipelineMessageContent? Content { get { throw null; } set { } }
         public override System.Net.ClientModel.Core.PipelineMessageHeaders Headers { get { throw null; } }
         public override string Method { get { throw null; } set { } }
         public override System.Uri Uri { get { throw null; } set { } }
@@ -250,7 +250,7 @@ namespace System.Net.ClientModel.Core.Pipeline
     public partial class HttpPipelineResponse : System.Net.ClientModel.Core.PipelineResponse, System.IDisposable
     {
         protected internal HttpPipelineResponse(System.Net.Http.HttpResponseMessage httpResponse) { }
-        public override System.Net.ClientModel.Core.PipelineContent? Content { get { throw null; } protected internal set { } }
+        public override System.Net.ClientModel.Core.PipelineMessageContent? Content { get { throw null; } protected internal set { } }
         public override System.Net.ClientModel.Core.PipelineMessageHeaders Headers { get { throw null; } }
         public override string ReasonPhrase { get { throw null; } }
         public override int Status { get { throw null; } }

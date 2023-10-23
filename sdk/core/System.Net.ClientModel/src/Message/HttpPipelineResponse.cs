@@ -16,7 +16,7 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     // references to network resources.
     private readonly HttpContent _httpResponseContent;
 
-    private PipelineContent? _content;
+    private PipelineMessageContent? _content;
 
     private bool _disposed;
 
@@ -34,11 +34,11 @@ public class HttpPipelineResponse : PipelineResponse, IDisposable
     public override PipelineMessageHeaders Headers
         => new MessageResponseHeaders(_httpResponse, _httpResponseContent);
 
-    public override PipelineContent? Content
+    public override PipelineMessageContent? Content
     {
         get
         {
-            _content ??= PipelineContent.Empty;
+            _content ??= PipelineMessageContent.Empty;
             return _content;
         }
 
