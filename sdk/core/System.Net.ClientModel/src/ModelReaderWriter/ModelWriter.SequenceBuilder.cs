@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.Net.ClientModel.Core.Content
+namespace System.Net.ClientModel.Core
 {
     internal sealed partial class ModelWriter : IDisposable
     {

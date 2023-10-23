@@ -3,7 +3,7 @@
 
 using System.Text.Json;
 
-namespace System.Net.ClientModel.Core.Content
+namespace System.Net.ClientModel.Core
 {
     /// <summary>
     /// Allows an object to control its own JSON writing and reading.

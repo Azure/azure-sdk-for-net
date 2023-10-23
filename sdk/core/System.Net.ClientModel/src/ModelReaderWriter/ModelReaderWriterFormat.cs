@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace System.Net.ClientModel.Core.Content
+namespace System.Net.ClientModel.Core
 {
     /// <summary>
     /// A format used to specify how a model should be read and written.

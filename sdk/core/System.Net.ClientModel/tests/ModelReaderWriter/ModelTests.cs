@@ -5,7 +5,6 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Core.Content;
 using System.Reflection;
 using System.Text.Json;
 

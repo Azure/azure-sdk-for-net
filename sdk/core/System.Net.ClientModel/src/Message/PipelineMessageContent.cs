@@ -6,7 +6,7 @@ using System.IO;
 using System.Net.ClientModel.Internal;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Net.ClientModel.Core.Content;
+using System.Net.ClientModel.Core;
 
 namespace System.Net.ClientModel.Core
 {

@@ -4,7 +4,6 @@
 using BenchmarkDotNet.Attributes;
 using System.IO;
 using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Core.Content;
 using System.Reflection;
 
 namespace System.Net.ClientModel.Tests.Internal.Perf

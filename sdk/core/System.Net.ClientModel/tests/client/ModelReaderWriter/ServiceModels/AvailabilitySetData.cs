@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Net.ClientModel.Core;
-using System.Net.ClientModel.Core.Content;
 using System.Net.ClientModel.Internal;
 using System.Net.ClientModel.Tests.Client.ResourceManager.Compute.Models;
 using System.Net.ClientModel.Tests.Client.ResourceManager.Models;
