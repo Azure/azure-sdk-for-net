@@ -32,7 +32,7 @@
   'OriginalFormatScope_*'. With this update, such non-key-value pair scopes are
   no longer added to the properties, as they cannot be queried, resulting in
   cleaner and more efficient log output.
-  ([#]())
+  ([#39453](https://github.com/Azure/azure-sdk-for-net/pull/39453))
 
 ### Other Changes
 
