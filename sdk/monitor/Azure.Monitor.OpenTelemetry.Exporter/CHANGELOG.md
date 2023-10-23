@@ -15,13 +15,24 @@
 ### Bugs Fixed
 
 * Fixed an issue during network failures which prevented the exporter to store
-the telemetry offline for retrying at a later time.
-([#38832](https://github.com/Azure/azure-sdk-for-net/pull/38832))
+  the telemetry offline for retrying at a later time.
+  ([#38832](https://github.com/Azure/azure-sdk-for-net/pull/38832))
 
 * Fixed an issue where `OriginalFormat` persisted in TraceTelemetry properties
-  with IncludeFormattedMessage enabled in OpenTelemetry LoggerProvider. This fix
-  prevents data duplication in message fields and properties.
+  with IncludeFormattedMessage set to true on [
+  OpenTelemetryLoggerOptions](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry/Logs/ILogger/OpenTelemetryLoggerOptions.cs)
+  of the OpenTelemetry LoggerProvider. This fix prevents data duplication in
+  message fields and properties.
   ([#39308](https://github.com/Azure/azure-sdk-for-net/pull/39308))
+  
+* Fixed an issue related to the processing of scopes that do not adhere to a
+  key-value pair structure. Previously, when logging a scope using a statement
+  like `logger.BeginScope("SomeScopeValue")`, the value 'SomeScopeValue' would
+  be added to the properties with a key following the pattern
+  'OriginalFormatScope_*'. With this update, such non-key-value pair scopes are
+  no longer added to the properties, as they cannot be queried, resulting in
+  cleaner and more efficient log output.
+  ([#]())
 
 ### Other Changes
 

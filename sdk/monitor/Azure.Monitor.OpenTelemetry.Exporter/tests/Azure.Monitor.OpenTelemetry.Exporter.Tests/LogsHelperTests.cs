@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
@@ -231,6 +231,101 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("Ikey", telemetryItem[0].InstrumentationKey);
             Assert.Equal(logResource.RoleName, telemetryItem[0].Tags[ContextTagKeys.AiCloudRole.ToString()]);
             Assert.Equal(logResource.RoleInstance, telemetryItem[0].Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ValidateScopeHandlingInLogProcessing(bool includeScope)
+        {
+            // Arrange.
+            var logRecords = new List<LogRecord>(1);
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.IncludeScopes = includeScope;
+                    options.AddInMemoryExporter(logRecords);
+                });
+            });
+
+            var logger = loggerFactory.CreateLogger("Some category");
+
+            const string expectedScopeKey = "Some scope key";
+            const string expectedScopeValue = "Some scope value";
+
+            // Act.
+            using (logger.BeginScope(new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>(expectedScopeKey, expectedScopeValue),
+            }))
+            {
+                logger.LogInformation("Some log information message.");
+            }
+
+            // Assert.
+            var logRecord = logRecords.Single();
+            var properties = new ChangeTrackingDictionary<string, string>();
+            LogsHelper.GetMessageAndSetProperties(logRecords[0], properties);
+
+            if (includeScope)
+            {
+                Assert.True(properties.TryGetValue(expectedScopeKey, out string actualScopeValue));
+                Assert.Equal(expectedScopeValue, actualScopeValue);
+            }
+            else
+            {
+                Assert.False(properties.TryGetValue(expectedScopeKey, out string actualScopeValue));
+            }
+        }
+
+        [Theory]
+        [InlineData("Some scope value")]
+        [InlineData('a')]
+        [InlineData(123)]
+        [InlineData(12.34)]
+        [InlineData(null)]
+        public void VerifyHandlingOfVariousScopeDataTypes(object scopeValue)
+        {
+            // Arrange.
+            var logRecords = new List<LogRecord>(1);
+            using var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options =>
+                {
+                    options.IncludeScopes = true;
+                    options.AddInMemoryExporter(logRecords);
+                });
+            });
+
+            var logger = loggerFactory.CreateLogger("Some category");
+
+            const string expectedScopeKey = "Some scope key";
+
+            // Act.
+            using (logger.BeginScope(new List<KeyValuePair<string, object>>
+            {
+                new KeyValuePair<string, object>(expectedScopeKey, scopeValue),
+            }))
+            {
+                logger.LogInformation("Some log information message.");
+            }
+
+            // Assert.
+            var logRecord = logRecords.Single();
+            var properties = new ChangeTrackingDictionary<string, string>();
+            LogsHelper.GetMessageAndSetProperties(logRecords[0], properties);
+
+            if (scopeValue != null)
+            {
+                Assert.Single(properties); // Assert that there is exactly one property
+                Assert.True(properties.TryGetValue(expectedScopeKey, out string actualScopeValue));
+                Assert.Equal(scopeValue.ToString(), actualScopeValue);
+            }
+            else
+            {
+                Assert.Empty(properties); // Assert that properties are empty
+            }
         }
     }
 }
