@@ -58,7 +58,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         void IJsonModel<BaseModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             Serialize(writer, options);
         }
@@ -129,14 +129,14 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         BaseModel IModel<BaseModel>.Read(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return DeserializeBaseModel(JsonDocument.Parse(data.ToString()).RootElement, options);
         }
 
         BaseModel IJsonModel<BaseModel>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeBaseModel(doc.RootElement, options);
@@ -144,7 +144,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         BinaryData IModel<BaseModel>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.WriteCore(this, options);
         }

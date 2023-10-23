@@ -21,7 +21,7 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute
 
         void IJsonModel<AvailabilitySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             Serialize(writer, options);
         }
@@ -240,7 +240,7 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute
 
         AvailabilitySetData IModel<AvailabilitySetData>.Read(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeAvailabilitySetData(doc.RootElement, options);
@@ -267,7 +267,7 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute
 
         AvailabilitySetData IJsonModel<AvailabilitySetData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeAvailabilitySetData(doc.RootElement, options);
@@ -275,7 +275,7 @@ namespace System.Net.ClientModel.Tests.Client.ResourceManager.Compute
 
         BinaryData IModel<AvailabilitySetData>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.WriteCore(this, options);
         }

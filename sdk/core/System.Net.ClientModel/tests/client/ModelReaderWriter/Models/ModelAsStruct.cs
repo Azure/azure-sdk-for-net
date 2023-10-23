@@ -37,7 +37,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         private void Serialize(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
@@ -59,7 +59,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         BinaryData IModel<ModelAsStruct>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
             return ModelReaderWriter.WriteCore(this, options);
         }
@@ -71,7 +71,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         ModelAsStruct IModel<ModelAsStruct>.Read(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
@@ -101,7 +101,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         ModelAsStruct IJsonModel<ModelAsStruct>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
@@ -119,7 +119,7 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         object IJsonModel<object>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);
@@ -127,14 +127,14 @@ namespace System.Net.ClientModel.Tests.Client.ModelReaderWriterTests.Models
 
         BinaryData IModel<object>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
             return ModelReaderWriter.WriteCore(this, options);
         }
 
         object IModel<object>.Read(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat<ModelAsStruct>(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeInputAdditionalPropertiesModelStruct(doc.RootElement, options);

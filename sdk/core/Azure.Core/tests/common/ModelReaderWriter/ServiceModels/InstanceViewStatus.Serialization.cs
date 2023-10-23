@@ -165,7 +165,7 @@ namespace Azure.Core.Tests.ResourceManager.Compute.Models
 
         BinaryData IModel<InstanceViewStatus>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.WriteCore(this, options);
         }

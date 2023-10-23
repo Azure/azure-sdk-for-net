@@ -143,7 +143,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         BinaryData IModel<ModelXmlCrossLibrary>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format == ModelReaderWriterFormat.Json)
             {
@@ -205,7 +205,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         ModelXmlCrossLibrary IModel<ModelXmlCrossLibrary>.Read(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format == ModelReaderWriterFormat.Json)
             {
@@ -220,7 +220,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         void IJsonModel<ModelXmlCrossLibrary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format != ModelReaderWriterFormat.Json)
                 throw new InvalidOperationException($"Must use '{ModelReaderWriterFormat.Json}' format when calling the {nameof(IJsonModel<ModelXmlCrossLibrary>)} interface");
@@ -229,7 +229,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         ModelXmlCrossLibrary IJsonModel<ModelXmlCrossLibrary>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format != ModelReaderWriterFormat.Json)
                 throw new InvalidOperationException($"Must use '{ModelReaderWriterFormat.Json}' format when calling the {nameof(IJsonModel<ModelXmlCrossLibrary>)} interface");

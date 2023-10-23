@@ -346,7 +346,7 @@ namespace System.Net.ClientModel.Internal
         public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, System.DateTimeOffset value, string format) { }
         public static void WriteStringValue(this System.Text.Json.Utf8JsonWriter writer, System.TimeSpan value, string format) { }
     }
-    public static partial class ModelSerializerHelper
+    public static partial class ModelReaderWriterHelper
     {
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public static void ValidateFormat(System.Net.ClientModel.Core.Content.IModel<object> model, System.Net.ClientModel.Core.Content.ModelReaderWriterFormat format) { }
         [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]public static void ValidateFormat<T>(System.Net.ClientModel.Core.Content.IModel<T> model, System.Net.ClientModel.Core.Content.ModelReaderWriterFormat format) { }

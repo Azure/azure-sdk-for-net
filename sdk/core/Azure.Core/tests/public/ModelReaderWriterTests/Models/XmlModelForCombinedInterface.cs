@@ -120,7 +120,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         BinaryData IModel<XmlModelForCombinedInterface>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format == ModelReaderWriterFormat.Json)
             {
@@ -176,7 +176,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         XmlModelForCombinedInterface IModel<XmlModelForCombinedInterface>.Read(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format == ModelReaderWriterFormat.Json)
             {
@@ -191,7 +191,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         void IJsonModel<XmlModelForCombinedInterface>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format != ModelReaderWriterFormat.Json)
                 throw new InvalidOperationException($"Must use '{ModelReaderWriterFormat.Json}' format when calling the {nameof(IJsonModel<XmlModelForCombinedInterface>)} interface");
@@ -201,7 +201,7 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
 
         XmlModelForCombinedInterface IJsonModel<XmlModelForCombinedInterface>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             if (options.Format != ModelReaderWriterFormat.Json)
                 throw new InvalidOperationException($"Must use '{ModelReaderWriterFormat.Json}' format when calling the {nameof(IJsonModel<XmlModelForCombinedInterface>)} interface");

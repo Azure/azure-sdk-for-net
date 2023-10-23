@@ -85,7 +85,7 @@ namespace Azure.Core.Tests.ResourceManager.Resources
 
         ResourceProviderData IModel<ResourceProviderData>.Read(BinaryData data, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.Parse(data);
             return DeserializeResourceProviderData(doc.RootElement, options);
@@ -98,7 +98,7 @@ namespace Azure.Core.Tests.ResourceManager.Resources
 
         void IJsonModel<ResourceProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             Serialize(writer, options);
         }
@@ -156,7 +156,7 @@ namespace Azure.Core.Tests.ResourceManager.Resources
 
         ResourceProviderData IJsonModel<ResourceProviderData>.Read(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             using var doc = JsonDocument.ParseValue(ref reader);
             return DeserializeResourceProviderData(doc.RootElement, options);
@@ -164,7 +164,7 @@ namespace Azure.Core.Tests.ResourceManager.Resources
 
         BinaryData IModel<ResourceProviderData>.Write(ModelReaderWriterOptions options)
         {
-            ModelSerializerHelper.ValidateFormat(this, options.Format);
+            ModelReaderWriterHelper.ValidateFormat(this, options.Format);
 
             return ModelReaderWriter.WriteCore(this, options);
         }
