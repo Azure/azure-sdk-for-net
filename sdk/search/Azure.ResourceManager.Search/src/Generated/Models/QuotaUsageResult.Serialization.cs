@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            Optional<ResourceIdentifier> id = default;
             Optional<string> unit = default;
             Optional<int> currentValue = default;
             Optional<int> limit = default;
@@ -27,7 +27,11 @@ namespace Azure.ResourceManager.Search.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("unit"u8))
