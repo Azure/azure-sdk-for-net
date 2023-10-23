@@ -42,5 +42,44 @@ namespace Azure.AI.OpenAI.Tests.Samples
             }
             #endregion
         }
+
+        [Test]
+        [Ignore("Only verifying that the sample builds")]
+        public async Task StreamingChatWithMultipleChoices()
+        {
+            string nonAzureOpenAIApiKey = "your-api-key-from-platform.openai.com";
+            var client = new OpenAIClient(nonAzureOpenAIApiKey, new OpenAIClientOptions());
+            (object, string Text)[] textBoxes = new (object, string)[4];
+
+            #region Snippet:StreamChatMessagesWithMultipleChoices
+            // A ChoiceCount > 1 will feature multiple, parallel, independent text generations arriving on the
+            // same response. This may be useful when choosing between multiple candidates for a single request.
+            var chatCompletionsOptions = new ChatCompletionsOptions()
+            {
+                Messages = { new ChatMessage(ChatRole.User, "Write a limerick about bananas.") },
+                ChoiceCount = 4
+            };
+
+            await foreach (StreamingChatCompletionsUpdate chatUpdate in client.GetChatCompletionsStreaming(
+                deploymentOrModelName: "gpt-3.5-turbo",
+                chatCompletionsOptions))
+            {
+                // Choice-specific information like Role and ContentUpdate will also provide a ChoiceIndex that allows
+                // StreamingChatCompletionsUpdate data for independent choices to be appropriately separated.
+                if (chatUpdate.ChoiceIndex.HasValue)
+                {
+                    int choiceIndex = chatUpdate.ChoiceIndex.Value;
+                    if (chatUpdate.Role.HasValue)
+                    {
+                        textBoxes[choiceIndex].Text += $"{chatUpdate.Role.Value.ToString().ToUpperInvariant()}: ";
+                    }
+                    if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
+                    {
+                        textBoxes[choiceIndex].Text += chatUpdate.ContentUpdate;
+                    }
+                }
+            }
+            #endregion
+        }
     }
 }

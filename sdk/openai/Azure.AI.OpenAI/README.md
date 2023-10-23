@@ -221,6 +221,39 @@ await foreach (StreamingChatCompletionsUpdate chatUpdate in client.GetChatComple
 }
 ```
 
+When explicitly requesting more than one `Choice` while streaming, use the `ChoiceIndex` property on
+`StreamingChatCompletionsUpdate` to determine which `Choice` each update corresponds to.
+
+```C# Snippet:StreamChatMessagesWithMultipleChoices
+// A ChoiceCount > 1 will feature multiple, parallel, independent text generations arriving on the
+// same response. This may be useful when choosing between multiple candidates for a single request.
+var chatCompletionsOptions = new ChatCompletionsOptions()
+{
+    Messages = { new ChatMessage(ChatRole.User, "Write a limerick about bananas.") },
+    ChoiceCount = 4
+};
+
+await foreach (StreamingChatCompletionsUpdate chatUpdate in client.GetChatCompletionsStreaming(
+    deploymentOrModelName: "gpt-3.5-turbo",
+    chatCompletionsOptions))
+{
+    // Choice-specific information like Role and ContentUpdate will also provide a ChoiceIndex that allows
+    // StreamingChatCompletionsUpdate data for independent choices to be appropriately separated.
+    if (chatUpdate.ChoiceIndex.HasValue)
+    {
+        int choiceIndex = chatUpdate.ChoiceIndex.Value;
+        if (chatUpdate.Role.HasValue)
+        {
+            textBoxes[choiceIndex].Text += $"{chatUpdate.Role.Value.ToString().ToUpperInvariant()}: ";
+        }
+        if (!string.IsNullOrEmpty(chatUpdate.ContentUpdate))
+        {
+            textBoxes[choiceIndex].Text += chatUpdate.ContentUpdate;
+        }
+    }
+}
+```
+
 ### Use Chat Functions
 
 Chat Functions allow a caller of Chat Completions to define capabilities that the model can use to extend its
@@ -372,6 +405,12 @@ if (finishReason == CompletionsFinishReason.FunctionCall)
     // Handle from here just like the non-streaming case
 }
 ```
+
+Please note: while streamed function information (name, arguments) may be evaluated as it arrives, it should not be
+considered complete or confirmed until the `FinishReason` of `FunctionCall` is received. It may be appropriate to make
+best-effort attempts at "warm-up" or other speculative preparation based on a function name or particular key/value
+appearing in the accumulated, partial JSON arguments, but no strong assumptions about validity, ordering, or other
+details should be evaluated until the arguments are fully available and confirmed via `FinishReason`.
 
 ### Use your own data with Azure OpenAI
 
