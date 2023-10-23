@@ -11,7 +11,6 @@ namespace Azure.Communication
     public abstract class CommunicationIdentifier : IEquatable<CommunicationIdentifier>
     {
         internal const string Phone = "4:";
-        internal const string TeamsApp = "28:";
         internal const string TeamsAppPublicCloud = "28:orgid:";
         internal const string TeamsAppDodCloud = "28:dod:";
         internal const string TeamsAppDodCloudGlobal = "28:dod-global:";
