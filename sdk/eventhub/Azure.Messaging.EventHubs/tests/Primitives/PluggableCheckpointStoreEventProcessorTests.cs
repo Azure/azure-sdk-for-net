@@ -91,8 +91,10 @@ namespace Azure.Messaging.EventHubs.Tests
                     mockProcessor.EventHubName,
                     mockProcessor.ConsumerGroup,
                     partitionId,
-                    offset,
-                    sequence,
+                    mockProcessor.Identifier,
+                    It.Is<CheckpointPosition>(csp =>
+                        csp.Offset == offset
+                        && csp.SequenceNumber == sequence),
                     cancellationSource.Token))
                 .ThrowsAsync(expectedException);
 

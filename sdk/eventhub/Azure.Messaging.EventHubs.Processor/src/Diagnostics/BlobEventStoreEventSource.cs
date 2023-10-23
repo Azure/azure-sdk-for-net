@@ -250,16 +250,23 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
+        /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
+        /// <param name="offset">The offset associated with this checkpoint.</param>
         ///
-        [Event(32, Level = EventLevel.Verbose, Message = "Starting to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'.")]
+        [Event(32, Level = EventLevel.Verbose, Message = "Starting to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ClientIdentifier: `{4}`; at CheckpointPosition: `{5}`.")]
         public virtual void UpdateCheckpointStart(string partitionId,
                                                   string fullyQualifiedNamespace,
                                                   string eventHubName,
-                                                  string consumerGroup)
+                                                  string consumerGroup,
+                                                  string clientIdentifier,
+                                                  string sequenceNumber,
+                                                  string offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(32, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+                var checkpointPosition = $" SequenceNumber: {sequenceNumber} | Offset (informational): {offset}";
+                WriteEvent(32, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, checkpointPosition);
             }
         }
 
@@ -271,16 +278,23 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="clientIdentifier">The unique identifier of the client that authored this checkpoint.</param>
+        /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
+        /// <param name="offset">The offset associated with this checkpoint.</param>
         ///
-        [Event(33, Level = EventLevel.Verbose, Message = "Completed the attempt to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'.")]
+        [Event(33, Level = EventLevel.Verbose, Message = "Completed the attempt to create/update a checkpoint for partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ClientIdentifier: `{4}`; at CheckpointPosition: `{5}`.")]
         public virtual void UpdateCheckpointComplete(string partitionId,
                                                      string fullyQualifiedNamespace,
                                                      string eventHubName,
-                                                     string consumerGroup)
+                                                     string consumerGroup,
+                                                     string clientIdentifier,
+                                                     string sequenceNumber,
+                                                     string offset)
         {
             if (IsEnabled())
             {
-                WriteEvent(33, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty);
+                var checkpointPosition = $" SequenceNumber: {sequenceNumber} | Offset (informational): {offset}";
+                WriteEvent(33, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, clientIdentifier ?? string.Empty, checkpointPosition);
             }
         }
 
@@ -292,18 +306,25 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="fullyQualifiedNamespace">The fully qualified Event Hubs namespace the checkpoint is associated with.  This is likely to be similar to <c>{yournamespace}.servicebus.windows.net</c>.</param>
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
+        /// <param name="clientIdentifier">The unique identifier of the processor that authored this checkpoint.</param>
+        /// <param name="sequenceNumber">The sequence number associated with this checkpoint.</param>
+        /// <param name="offset">The offset associated with this checkpoint.</param>
         /// <param name="errorMessage">The message for the exception that occurred.</param>
         ///
-        [Event(34, Level = EventLevel.Error, Message = "An exception occurred when creating/updating a checkpoint for  partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'.  ErrorMessage: '{4}'.")]
+        [Event(34, Level = EventLevel.Error, Message = "An exception occurred when creating/updating a checkpoint for  partition: `{0}` of FullyQualifiedNamespace: '{1}'; EventHubName: '{2}'; ConsumerGroup: '{3}'; ClientIdentifier: `{5}`; at CheckpointPosition: `{6}`.  ErrorMessage: '{4}'.")]
         public virtual void UpdateCheckpointError(string partitionId,
                                                   string fullyQualifiedNamespace,
                                                   string eventHubName,
                                                   string consumerGroup,
+                                                  string clientIdentifier,
+                                                  string sequenceNumber,
+                                                  string offset,
                                                   string errorMessage)
         {
             if (IsEnabled())
             {
-                WriteEvent(34, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty);
+                var checkpointPosition = $" SequenceNumber: {sequenceNumber} | Offset (informational): {offset}";
+                WriteEvent(34, partitionId ?? string.Empty, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, errorMessage ?? string.Empty, clientIdentifier ?? string.Empty, checkpointPosition);
             }
         }
 
@@ -357,16 +378,20 @@ namespace Azure.Messaging.EventHubs.Processor.Diagnostics
         /// <param name="eventHubName">The name of the specific Event Hub the checkpoint is associated with, relative to the Event Hubs namespace that contains it.</param>
         /// <param name="consumerGroup">The name of the consumer group the checkpoint is associated with.</param>
         /// <param name="partitionId">The partition id the specific checkpoint is associated with.</param>
+        /// <param name="clientIdentifier">The unique identifier of the Event Hubs client that wrote this checkpoint.</param>
+        /// <param name="lastModified">The date and time the associated checkpoint was last modified.</param>
         ///
-        [Event(37, Level = EventLevel.Verbose, Message = "Completed retrieving checkpoint for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'. PartitionId: '{3}'.")]
+        [Event(37, Level = EventLevel.Verbose, Message = "Completed retrieving checkpoint for FullyQualifiedNamespace: '{0}'; EventHubName: '{1}'; ConsumerGroup: '{2}'; PartitionId: '{3}'; CheckpointAuthor: '{4}'; LastModified: '{5}'")]
         public virtual void GetCheckpointComplete(string fullyQualifiedNamespace,
                                                   string eventHubName,
                                                   string consumerGroup,
-                                                  string partitionId)
+                                                  string partitionId,
+                                                  string clientIdentifier,
+                                                  string lastModified)
         {
             if (IsEnabled())
             {
-                WriteEvent(37, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId);
+                WriteEvent(37, fullyQualifiedNamespace ?? string.Empty, eventHubName ?? string.Empty, consumerGroup ?? string.Empty, partitionId, clientIdentifier ?? string.Empty, lastModified ?? string.Empty);
             }
         }
 

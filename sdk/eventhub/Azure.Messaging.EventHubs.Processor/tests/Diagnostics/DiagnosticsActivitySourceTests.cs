@@ -112,8 +112,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                         CancellationToken cancellationToken) =>
             (Task)
                 typeof(EventProcessorClient)
-                    .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic)
-                    .Invoke(target, new object[] { partitionId, offset, sequenceNumber, cancellationToken });
+                    .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic, new Type[] { typeof(string), typeof(CheckpointPosition), typeof(CancellationToken) })
+                    .Invoke(target, new object[] { partitionId, new CheckpointPosition(sequenceNumber ?? long.MinValue, offset), cancellationToken });
 
         /// <summary>
         /// Sets and returns the app config switch to enable Activity Source. The switch must be disposed at the end of the test.
