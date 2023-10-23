@@ -7,7 +7,16 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     internal class DataMovementBlobConstants
     {
-        internal class DestinationJobPartHeader
+        internal class SourceCheckpointData
+        {
+            internal const int SchemaVersion = 1;
+
+            internal const int VersionIndex = 0;
+            internal const int BlobTypeIndex = VersionIndex + IntSizeInBytes;
+            internal const int DataSize = BlobTypeIndex + OneByte;
+        }
+
+        internal class DestinationCheckpointData
         {
             internal const int SchemaVersion = 1;
 

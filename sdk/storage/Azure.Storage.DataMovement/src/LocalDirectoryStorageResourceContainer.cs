@@ -79,5 +79,15 @@ namespace Azure.Storage.DataMovement
                 }
             }
         }
+
+        public override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            return new LocalSourceCheckpointData();
+        }
+
+        public override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            return new LocalDestinationCheckpointData();
+        }
     }
 }

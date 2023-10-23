@@ -178,39 +178,6 @@ namespace Azure.Storage.DataMovement.Tests
                 atomicPartStatus: atomicPartStatus);
         }
 
-        internal static JobPlanHeader CreateDefaultJobHeader(
-            string version = DataMovementConstants.JobPlanFile.SchemaVersion,
-            string transferId = DefaultTransferId,
-            DateTimeOffset createTime = default,
-            JobPlanOperation operationType = DefaultJobPlanOperation,
-            string sourceProviderId = DefaultSourceProviderId,
-            string destinationProviderId = DefaultDestinationProviderId,
-            bool isContainer = false,
-            bool enumerationComplete = false,
-            DataTransferStatus jobStatus = default,
-            string parentSourcePath = DefaultSourcePath,
-            string parentDestinationPath = DefaultDestinationPath)
-        {
-            if (createTime == default)
-            {
-                createTime = DefaultCreateTime;
-            }
-            jobStatus ??= DefaultJobStatus;
-
-            return new JobPlanHeader(
-                version,
-                transferId,
-                createTime,
-                operationType,
-                sourceProviderId,
-                destinationProviderId,
-                isContainer,
-                enumerationComplete,
-                jobStatus,
-                parentSourcePath,
-                parentDestinationPath);
-        }
-
         internal static async Task AssertJobPlanHeaderAsync(JobPartPlanHeader header, Stream stream)
         {
             int headerSize = DataMovementConstants.JobPartPlanFile.JobPartHeaderSizeInBytes;

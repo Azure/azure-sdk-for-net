@@ -3,9 +3,9 @@
 
 using System.IO;
 
-namespace Azure.Storage.DataMovement
+namespace Azure.Storage.DataMovement.Files.Shares
 {
-    internal class LocalSourceCheckpointData : StorageResourceCheckpointData
+    internal class ShareFileDestinationCheckpointData : StorageResourceCheckpointData
     {
         public override int Length => 0;
 
