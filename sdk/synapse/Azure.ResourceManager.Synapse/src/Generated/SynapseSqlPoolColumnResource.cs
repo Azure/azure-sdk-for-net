@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseSensitivityLabelResources and their operations over a SynapseSensitivityLabelResource. </returns>
         public virtual SynapseSensitivityLabelCollection GetSynapseSensitivityLabels()
         {
-            return GetCachedClient(Client => new SynapseSensitivityLabelCollection(Client, Id));
+            return GetCachedClient(client => new SynapseSensitivityLabelCollection(client, Id));
         }
 
         /// <summary>
