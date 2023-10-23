@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of FrontDoorRouteResources and their operations over a FrontDoorRouteResource. </returns>
         public virtual FrontDoorRouteCollection GetFrontDoorRoutes()
         {
-            return GetCachedClient(Client => new FrontDoorRouteCollection(Client, Id));
+            return GetCachedClient(client => new FrontDoorRouteCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FrontDoorRouteResource>> GetFrontDoorRouteAsync(string routeName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.Cdn
         /// </summary>
         /// <param name="routeName"> Name of the routing rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="routeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="routeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FrontDoorRouteResource> GetFrontDoorRoute(string routeName, CancellationToken cancellationToken = default)
         {
