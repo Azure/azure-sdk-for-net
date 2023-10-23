@@ -6,6 +6,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
@@ -66,9 +67,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         {
             string? message = logRecord.Exception?.Message ?? logRecord.FormattedMessage;
 
-            if (logRecord.Attributes != null)
+            foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
             {
-                ExtractProperties(ref message, properties, logRecord.Attributes);
+                if (item.Key.Length <= SchemaConstants.KVP_MaxKeyLength && item.Value != null)
+                {
+                    // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
+                    if (item.Key == "{OriginalFormat}")
+                    {
+                        if (logRecord.Exception?.Message != null)
+                        {
+                            properties.Add("OriginalFormat", item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+                        }
+                        else if (message == null)
+                        {
+                            message = item.Value.ToString();
+                        }
+                    }
+                    else
+                    {
+                        properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
+                    }
+                }
             }
 
             WriteScopeInformation(logRecord, properties);
@@ -189,33 +208,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 case LogLevel.Trace:
                 default:
                     return SeverityLevel.Verbose;
-            }
-        }
-
-        private static void ExtractProperties(ref string? message, IDictionary<string, string> properties, IReadOnlyCollection<KeyValuePair<string, object?>> stateDictionary)
-        {
-            foreach (KeyValuePair<string, object?> item in stateDictionary)
-            {
-                if (item.Key.Length <= SchemaConstants.KVP_MaxKeyLength && item.Value != null)
-                {
-                    // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
-
-                    if (item.Key == "{OriginalFormat}")
-                    {
-                        if (message == null)
-                        {
-                            message = item.Value.ToString();
-                        }
-                        else
-                        {
-                            properties.Add("OriginalFormat", item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
-                        }
-                    }
-                    else
-                    {
-                        properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.KVP_MaxValueLength) ?? "null");
-                    }
-                }
             }
         }
 

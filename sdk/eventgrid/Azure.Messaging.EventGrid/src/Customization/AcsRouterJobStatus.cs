@@ -9,6 +9,7 @@ using System.ComponentModel;
 namespace Azure.Messaging.EventGrid.Models
 {
     /// <summary> Router Job Received Job Status. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public readonly partial struct AcsRouterJobStatus : IEquatable<AcsRouterJobStatus>
     {
         private readonly string _value;
