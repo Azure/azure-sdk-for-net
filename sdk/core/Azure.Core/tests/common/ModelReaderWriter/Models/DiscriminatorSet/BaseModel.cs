@@ -22,7 +22,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(baseModel, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContentExtensions.Create(baseModel, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator BaseModel(Response response)

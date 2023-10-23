@@ -43,15 +43,16 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         [XmlElement("ReadOnlyProperty")]
         public string ReadOnlyProperty { get; }
 
-        public static implicit operator RequestContent(XmlModelForCombinedInterface xmlModelForCombinedInterface)
-        {
-            if (xmlModelForCombinedInterface == null)
-            {
-                return null;
-            }
+        // TODO: Move test to Experimental until we GA the API
+        //public static implicit operator RequestContent(XmlModelForCombinedInterface xmlModelForCombinedInterface)
+        //{
+        //    if (xmlModelForCombinedInterface == null)
+        //    {
+        //        return null;
+        //    }
 
-            return RequestContent.Create((IModel<XmlModelForCombinedInterface>)xmlModelForCombinedInterface, ModelReaderWriterOptions.DefaultWireOptions);
-        }
+        //    return RequestContent.Create((IModel<XmlModelForCombinedInterface>)xmlModelForCombinedInterface, ModelReaderWriterOptions.DefaultWireOptions);
+        //}
 
         public static explicit operator XmlModelForCombinedInterface(Response response)
         {

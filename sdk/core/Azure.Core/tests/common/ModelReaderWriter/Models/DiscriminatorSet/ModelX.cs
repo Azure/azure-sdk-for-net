@@ -44,7 +44,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create(modelX, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContentExtensions.Create(modelX, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelX(Response response)

@@ -41,10 +41,11 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
             return DeserializeDogListProperty(jsonDocument.RootElement, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
-        public static implicit operator RequestContent(DogListProperty dog)
-        {
-            return RequestContent.Create(dog, ModelReaderWriterOptions.DefaultWireOptions);
-        }
+        // TODO: Move this to Experimental until we GA the API
+        //public static implicit operator RequestContent(DogListProperty dog)
+        //{
+        //    return RequestContent.Create(dog, ModelReaderWriterOptions.DefaultWireOptions);
+        //}
 
         #region Serialization
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DogListProperty>)this).Write(writer, ModelReaderWriterOptions.DefaultWireOptions);

@@ -30,7 +30,7 @@ namespace Azure.Core.Tests.ResourceManager.Compute
                 return null;
             }
 
-            return RequestContent.Create(availabilitySetData, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContentExtensions.Create(availabilitySetData, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator AvailabilitySetData(Response response)

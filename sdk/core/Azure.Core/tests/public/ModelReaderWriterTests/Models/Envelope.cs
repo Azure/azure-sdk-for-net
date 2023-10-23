@@ -38,15 +38,16 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         public CatReadOnlyProperty ModelA { get; set; }
         public T ModelT { get; set; }
 
-        public static implicit operator RequestContent(Envelope<T> envelope)
-        {
-            if (envelope == null)
-            {
-                return null;
-            }
+        // TODO: Move this to Experimental until we GA the API
+        //public static implicit operator RequestContent(Envelope<T> envelope)
+        //{
+        //    if (envelope == null)
+        //    {
+        //        return null;
+        //    }
 
-            return RequestContent.Create(envelope, ModelReaderWriterOptions.DefaultWireOptions);
-        }
+        //    return RequestContent.Create(envelope, ModelReaderWriterOptions.DefaultWireOptions);
+        //}
 
         public static explicit operator Envelope<T>(Response response)
         {

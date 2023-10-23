@@ -44,15 +44,16 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         [XmlElement("RenamedChildModelXml")]
         public ChildModelXmlOnly RenamedChildModelXml { get; set; }
 
-        public static implicit operator RequestContent(ModelXmlOnly modelXml)
-        {
-            if (modelXml == null)
-            {
-                return null;
-            }
+        // TODO: Move to experimental until we GA the API
+        //public static implicit operator RequestContent(ModelXmlOnly modelXml)
+        //{
+        //    if (modelXml == null)
+        //    {
+        //        return null;
+        //    }
 
-            return RequestContent.Create(modelXml, ModelReaderWriterOptions.DefaultWireOptions);
-        }
+        //    return RequestContent.Create(modelXml, ModelReaderWriterOptions.DefaultWireOptions);
+        //}
 
         public static explicit operator ModelXmlOnly(Response response)
         {

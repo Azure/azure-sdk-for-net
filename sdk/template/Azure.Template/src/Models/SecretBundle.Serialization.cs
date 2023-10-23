@@ -81,6 +81,20 @@ namespace Azure.Template.Models
             return DeserializeSecretBundle(document.RootElement);
         }
 
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="secretBundle"></param>
+        public static implicit operator RequestContent(SecretBundle secretBundle)
+        {
+            if (secretBundle == null)
+            {
+                return null;
+            }
+
+            return RequestContentExtensions.Create(secretBundle, ModelReaderWriterOptions.DefaultWireOptions);
+        }
+
         // TODO: Are we happy with taking a dependency on STJ types in client libraries per our prior analyzer AZC0014?
 
 #pragma warning disable AZC0014 // Avoid using banned types in public API

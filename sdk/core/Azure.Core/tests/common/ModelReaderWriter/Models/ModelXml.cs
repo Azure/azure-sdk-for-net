@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using Azure.Core;
 
 namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 {
@@ -53,7 +54,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                 return null;
             }
 
-            return RequestContent.Create((IModel<ModelXml>)modelXml, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContentExtensions.Create((IModel<ModelXml>)modelXml, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         public static explicit operator ModelXml(Response response)

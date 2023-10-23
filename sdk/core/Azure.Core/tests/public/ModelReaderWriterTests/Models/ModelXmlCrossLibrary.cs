@@ -48,15 +48,16 @@ namespace Azure.Core.Tests.Public.ModelReaderWriterTests.Models
         [XmlElement("ChildTag")]
         public ChildModelXml ChildModelXml { get; set; }
 
-        public static implicit operator RequestContent(ModelXmlCrossLibrary modelXmlCrossLibrary)
-        {
-            if (modelXmlCrossLibrary == null)
-            {
-                return null;
-            }
+        // TODO: Move to Experimental until we GA the API
+        //public static implicit operator RequestContent(ModelXmlCrossLibrary modelXmlCrossLibrary)
+        //{
+        //    if (modelXmlCrossLibrary == null)
+        //    {
+        //        return null;
+        //    }
 
-            return RequestContent.Create((IModel<ModelXmlCrossLibrary>)modelXmlCrossLibrary, ModelReaderWriterOptions.DefaultWireOptions);
-        }
+        //    return RequestContent.Create((IModel<ModelXmlCrossLibrary>)modelXmlCrossLibrary, ModelReaderWriterOptions.DefaultWireOptions);
+        //}
 
         public static explicit operator ModelXmlCrossLibrary(Response response)
         {

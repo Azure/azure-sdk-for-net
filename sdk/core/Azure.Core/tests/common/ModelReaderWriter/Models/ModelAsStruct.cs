@@ -66,7 +66,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
 
         public static implicit operator RequestContent(ModelAsStruct model)
         {
-            return RequestContent.Create(model, ModelReaderWriterOptions.DefaultWireOptions);
+            return RequestContentExtensions.Create(model, ModelReaderWriterOptions.DefaultWireOptions);
         }
 
         ModelAsStruct IModel<ModelAsStruct>.Read(BinaryData data, ModelReaderWriterOptions options)
