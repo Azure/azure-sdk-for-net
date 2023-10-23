@@ -81,13 +81,18 @@ namespace Azure.Storage.DataMovement
             internal const int OperationTypeIndex = CrateTimeIndex + LongSizeInBytes;
             internal const int SourceProviderIdIndex = OperationTypeIndex + OneByte;
             internal const int DestinationProviderIdIndex = SourceProviderIdIndex + ProviderIdNumBytes;
-            internal const int EnumerationCompleteIndex = DestinationProviderIdIndex + ProviderIdNumBytes;
+            internal const int IsContainerIndex = DestinationProviderIdIndex + ProviderIdNumBytes;
+            internal const int EnumerationCompleteIndex = IsContainerIndex + OneByte;
             internal const int JobStatusIndex = EnumerationCompleteIndex + OneByte;
             internal const int ParentSourcePathOffsetIndex = JobStatusIndex + IntSizeInBytes;
             internal const int ParentSourcePathLengthIndex = ParentSourcePathOffsetIndex + IntSizeInBytes;
             internal const int ParentDestPathOffsetIndex = ParentSourcePathLengthIndex + IntSizeInBytes;
             internal const int ParentDestPathLengthIndex = ParentDestPathOffsetIndex + IntSizeInBytes;
-            internal const int VariableLengthStartIndex = ParentDestPathLengthIndex + IntSizeInBytes;
+            internal const int SourceCheckpointDataOffsetIndex = ParentDestPathLengthIndex + IntSizeInBytes;
+            internal const int SourceCheckpointDataLengthIndex = SourceCheckpointDataOffsetIndex + IntSizeInBytes;
+            internal const int DestinationCheckpointDataOffsetIndex = SourceCheckpointDataLengthIndex + IntSizeInBytes;
+            internal const int DestinationCheckpointDataLengthIndex = DestinationCheckpointDataOffsetIndex + IntSizeInBytes;
+            internal const int VariableLengthStartIndex = DestinationCheckpointDataLengthIndex + IntSizeInBytes;
         }
 
         /// <summary>

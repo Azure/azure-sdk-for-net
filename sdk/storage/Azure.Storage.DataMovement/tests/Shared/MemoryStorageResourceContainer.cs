@@ -54,6 +54,16 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
+        public override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            throw new NotImplementedException();
+        }
+
         private IEnumerable<StorageResource> GetStorageResources(bool includeContainers)
         {
             Queue<MemoryStorageResourceContainer> queue = new();

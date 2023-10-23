@@ -23,9 +23,21 @@ namespace Azure.ResourceManager.ElasticSan.Models
         }
 
         private const string NoneValue = "None";
+        private const string VolumeSnapshotValue = "VolumeSnapshot";
+        private const string DiskSnapshotValue = "DiskSnapshot";
+        private const string DiskValue = "Disk";
+        private const string DiskRestorePointValue = "DiskRestorePoint";
 
         /// <summary> None. </summary>
         public static ElasticSanVolumeCreateOption None { get; } = new ElasticSanVolumeCreateOption(NoneValue);
+        /// <summary> VolumeSnapshot. </summary>
+        public static ElasticSanVolumeCreateOption VolumeSnapshot { get; } = new ElasticSanVolumeCreateOption(VolumeSnapshotValue);
+        /// <summary> DiskSnapshot. </summary>
+        public static ElasticSanVolumeCreateOption DiskSnapshot { get; } = new ElasticSanVolumeCreateOption(DiskSnapshotValue);
+        /// <summary> Disk. </summary>
+        public static ElasticSanVolumeCreateOption Disk { get; } = new ElasticSanVolumeCreateOption(DiskValue);
+        /// <summary> DiskRestorePoint. </summary>
+        public static ElasticSanVolumeCreateOption DiskRestorePoint { get; } = new ElasticSanVolumeCreateOption(DiskRestorePointValue);
         /// <summary> Determines if two <see cref="ElasticSanVolumeCreateOption"/> values are the same. </summary>
         public static bool operator ==(ElasticSanVolumeCreateOption left, ElasticSanVolumeCreateOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticSanVolumeCreateOption"/> values are not the same. </summary>

@@ -1,0 +1,562 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Azure Monitor Metric Batch",
+    "version": "2023-05-01-preview"
+  },
+  "securityDefinitions": {
+    "AADToken": {
+      "type": "oauth2",
+      "tokenUrl": "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+      "flow": "application",
+      "description": "Azure Active Directory OAuth2 Authentication",
+      "scopes": {
+        "https://metrics.monitor.azure.com/.default": "https://metrics.monitor.azure.com/.default"
+      }
+    }
+  },
+  "security": [
+    {
+      "AADToken": [
+        "https://metrics.monitor.azure.com/.default"
+      ]
+    }
+  ],
+  "x-ms-parameterized-host": {
+    "hostTemplate": "{endpoint}",
+    "useSchemePrefix": false,
+    "positionInOperation": "first",
+    "parameters": [
+        {
+            "name": "endpoint",
+            "description": "The regional endpoint to use, for example https://eastus.metrics.monitor.azure.com. The region should match the region of the requested resources. For global resources, the region should be 'global'.",
+            "required": true,
+            "type": "string",
+            "in": "path",
+            "x-ms-skip-url-encoding": true,
+            "x-ms-parameter-location": "client",
+            "format": "url"
+        }
+    ]
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/subscriptions/{subscriptionId}/metrics:getBatch": {
+      "post": {
+        "tags": [
+          "Metrics"
+        ],
+        "operationId": "MetricsBatch_Batch",
+        "description": "Lists the metric values for multiple resources.",
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionIdParameter"
+          },
+          {
+            "$ref": "#/parameters/StartTimeParameter"
+          },
+          {
+            "$ref": "#/parameters/EndTimeParameter"
+          },
+          {
+            "$ref": "#/parameters/IntervalParameter"
+          },
+          {
+            "$ref": "#/parameters/MetricNamespaceParameter"
+          },
+          {
+            "$ref": "#/parameters/MetricNamesParameter"
+          },
+          {
+            "$ref": "#/parameters/AggregationsParameter"
+          },
+          {
+            "$ref": "#/parameters/TopParameter"
+          },
+          {
+            "$ref": "#/parameters/OrderByParameter"
+          },
+          {
+            "$ref": "#/parameters/FilterParameter"
+          },
+          {
+            "$ref": "#/parameters/ApiVersionParameter"
+          },
+          {
+            "$ref": "#/parameters/ResourceIdList"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The response to a metrics query.",
+            "schema": {
+              "$ref": "#/definitions/MetricResultsResponse"
+            }
+          },
+          "default": {
+            "description": "Describes the format of Error response.",
+            "headers": {
+              "x-ms-error-code": {
+                "type": "string",
+                "description": "Error code for specific error that occurred."
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/AdditionalInfoErrorResponse"
+            }
+          }
+        },
+        "x-ms-examples": {
+          "Query Storage Metrics": {
+            "$ref": "./examples/MetricBatchExample.json"
+          }
+        }
+      }
+    }
+  },
+  "parameters": {
+    "ResourceIdList": {
+      "name": "resourceIds",
+      "in": "body",
+      "required": true,
+      "schema": {
+        "$ref": "#/definitions/ResourceIdList"
+      },
+      "description": "The comma separated list of resource IDs to query metrics for."
+    },
+    "SubscriptionIdParameter": {
+      "name": "subscriptionId",
+      "in": "path",
+      "required": true,
+      "type": "string",
+      "description": "The subscription identifier for the resources in this batch.",
+      "x-ms-parameter-location": "method"
+    },
+    "StartTimeParameter": {
+      "name": "startTime",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "The start time of the query. It is a string in the format 'yyyy-MM-ddTHH:mm:ss.fffZ'. If you have specified the endtime parameter, then this parameter is required.\nIf only starttime is specified, then endtime defaults to the current time.\nIf no time interval is specified, the default is 1 hour.",
+      "x-ms-parameter-location": "method"
+    },
+    "EndTimeParameter": {
+      "name": "endTime",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "The end time of the query. It is a string in the format 'yyyy-MM-ddTHH:mm:ss.fffZ'.",
+      "x-ms-parameter-location": "method"
+    },
+    "IntervalParameter": {
+      "name": "interval",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "format": "duration",
+      "default": "PT1M",
+      "description": "The interval (i.e. timegrain) of the query.\n*Examples: PT15M, PT1H, P1D*",
+      "x-ms-parameter-location": "method"
+    },
+    "MetricNamespaceParameter": {
+      "name": "metricnamespace",
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "description": "Metric namespace that contains the requested metric names.",
+      "x-ms-parameter-location": "method"
+    },
+    "MetricNamesParameter": {
+      "name": "metricnames",
+      "in": "query",
+      "required": true,
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "collectionFormat": "csv",
+      "description": "The names of the metrics (comma separated) to retrieve.",
+      "x-ms-parameter-location": "method"
+    },
+    "AggregationsParameter": {
+      "name": "aggregation",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "The list of aggregation types (comma separated) to retrieve.\n*Examples: average, minimum, maximum*",
+      "x-ms-parameter-location": "method"
+    },
+    "TopParameter": {
+      "name": "top",
+      "in": "query",
+      "required": false,
+      "type": "integer",
+      "format": "int32",
+      "description": "The maximum number of records to retrieve per resource ID in the request.\nValid only if filter is specified.\nDefaults to 10.",
+      "x-ms-parameter-location": "method"
+    },
+    "OrderByParameter": {
+      "name": "orderby",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "The aggregation to use for sorting results and the direction of the sort.\nOnly one order can be specified.\n*Examples: sum asc*",
+      "x-ms-parameter-location": "method"
+    },
+    "FilterParameter": {
+      "name": "filter",
+      "in": "query",
+      "required": false,
+      "type": "string",
+      "description": "The filter is used to reduce the set of metric data returned.<br>Example:<br>Metric contains metadata A, B and C.<br>- Return all time series of C where A = a1 and B = b1 or b2<br>**filter=A eq ‘a1’ and B eq ‘b1’ or B eq ‘b2’ and C eq ‘*’**<br>- Invalid variant:<br>**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘*’ or B = ‘b2’**<br>This is invalid because the logical or operator cannot separate two different metadata names.<br>- Return all time series where A = a1, B = b1 and C = c1:<br>**filter=A eq ‘a1’ and B eq ‘b1’ and C eq ‘c1’**<br>- Return all time series where A = a1<br>**filter=A eq ‘a1’ and B eq ‘*’ and C eq ‘*’**.",
+      "x-ms-parameter-location": "method"
+    },
+    "ApiVersionParameter": {
+      "name": "api-version",
+      "in": "query",
+      "required": true,
+      "type": "string",
+      "description": "Client Api Version.",
+      "x-ms-parameter-location": "client"
+    }
+  },
+  "definitions": {
+    "ResourceIdList": {
+      "description": "The comma separated list of resource IDs to query metrics for.",
+      "type": "object",
+      "properties": {
+        "resourceids": {
+          "description": "The list of resource IDs to query metrics for.",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "arm-id"
+          }
+        }
+      },
+      "example": {
+        "resourceids": [
+          "/subscriptions/123456728-abcd-1234-abcd-123456789abc/resourceGroups/TestGroup/providers/Microsoft.Storage/storageAccounts/TestStorage1",
+          "/subscriptions/123456728-abcd-1234-abcd-123456789abc/resourceGroups/TestGroup/providers/Microsoft.Storage/storageAccounts/TestStorage2"
+        ]
+      }
+    },
+    "AdditionalInfoErrorResponse": {
+      "description": "The response to a metrics query that results in a bad request, with optional additional information.",
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "Top level error object that contains all relevant information.",
+          "type": "object",
+          "properties": {
+            "additionalInfo": {
+              "description": "Additional information about the error",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "description": "The type of the info property (e.g. string).",
+                    "type": "string"
+                  },
+                  "info": {
+                    "description": "Additional information related to the error.",
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "code": {
+              "description": "Error code",
+              "type": "string"
+            },
+            "message": {
+              "description": "Error message indicating why the operation failed.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "code",
+            "message"
+          ]
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    "MetricResultsResponse": {
+      "description": "The metrics result for a resource.",
+      "type": "object",
+      "properties": {
+        "values": {
+          "description": "The collection of metric data responses per resource, per metric.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "starttime": {
+                "type": "string",
+                "description": "The start time, in datetime format, for which the data was retrieved."
+              },
+              "endtime": {
+                "type": "string",
+                "description": "The end time, in datetime format, for which the data was retrieved."
+              },
+              "interval": {
+                "type": "string",
+                "format": "duration",
+                "description": "The interval (window size) for which the metric data was returned in. Follows the IS8601/RFC3339 duration format (e.g. 'P1D' for 1 day). This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made."
+              },
+              "namespace": {
+                "type": "string",
+                "description": "The namespace of the metrics been queried"
+              },
+              "resourceregion": {
+                "type": "string",
+                "description": "The region of the resource been queried for metrics."
+              },
+              "resourceid": {
+                "type": "string",
+                "description": "The resource that has been queried for metrics."
+              },
+              "value": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/QueryBatchMetric"
+                },
+                "description": "The value of the collection."
+              }
+            },
+            "required": [
+              "starttime",
+              "endtime",
+              "value"
+            ]
+          }
+        }
+      }
+    },
+    "QueryBatchLocalizableString": {
+      "type": "object",
+      "required": [
+        "value"
+      ],
+      "properties": {
+        "value": {
+          "type": "string",
+          "description": "The invariant value."
+        },
+        "localizedValue": {
+          "type": "string",
+          "description": "The display name."
+        }
+      },
+      "description": "The localizable string class."
+    },
+    "QueryBatchMetricUnit": {
+      "type": "string",
+      "description": "The unit of the metric.",
+      "enum": [
+        "Count",
+        "Bytes",
+        "Seconds",
+        "CountPerSecond",
+        "BytesPerSecond",
+        "Percent",
+        "MilliSeconds",
+        "ByteSeconds",
+        "Unspecified",
+        "Cores",
+        "MilliCores",
+        "NanoCores",
+        "BitsPerSecond"
+      ],
+      "x-ms-enum": {
+        "name": "QueryBatchMetricUnit",
+        "modelAsString": false,
+        "values": [
+          {
+            "value": "Count",
+            "description": "Unit of raw quantity."
+          },
+          {
+            "value": "Bytes",
+            "description": "Unit of memory in bytes."
+          },
+          {
+            "value": "Seconds",
+            "description": "Unit of time in seconds."
+          },
+          {
+            "value": "CountPerSecond",
+            "description": "Rate unit of raw quantity per second."
+          },
+          {
+            "value": "BytesPerSecond",
+            "description": "Rate unit of memory in bytes per second."
+          },
+          {
+            "value": "Percent",
+            "description": "Percentage unit."
+          },
+          {
+            "value": "MilliSeconds",
+            "description": "Unit of time in 1/1000th of a second."
+          },
+          {
+            "value": "ByteSeconds",
+            "description": "Unit of data transfer or storage. It is the size of the data in bytes multiplied by the time it takes to transfer or store the data in seconds."
+          },
+          {
+            "value": "Unspecified",
+            "description": "No specified unit."
+          },
+          {
+            "value": "Cores",
+            "description": "Unit of processing power."
+          },
+          {
+            "value": "MilliCores",
+            "description": "Unit of processing power in 1/1000th of a CPU core."
+          },
+          {
+            "value": "NanoCores",
+            "description": "Unit of processing power in one billionth of a CPU core."
+          },
+          {
+            "value": "BitsPerSecond",
+            "description": "Rate unit of binary digits per second."
+          }
+        ]
+      }
+    },
+    "QueryBatchMetricValue": {
+      "type": "object",
+      "required": [
+        "timeStamp"
+      ],
+      "properties": {
+        "timeStamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The timestamp for the metric value in ISO 8601 format."
+        },
+        "average": {
+          "type": "number",
+          "format": "double",
+          "description": "The average value in the time range."
+        },
+        "minimum": {
+          "type": "number",
+          "format": "double",
+          "description": "The least value in the time range."
+        },
+        "maximum": {
+          "type": "number",
+          "format": "double",
+          "description": "The greatest value in the time range."
+        },
+        "total": {
+          "type": "number",
+          "format": "double",
+          "description": "The sum of all of the values in the time range."
+        },
+        "count": {
+          "type": "number",
+          "format": "double",
+          "description": "The number of samples in the time range. Can be used to determine the number of values that contributed to the average value."
+        }
+      },
+      "description": "Represents a metric value."
+    },
+    "QueryBatchMetadataValue": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/definitions/QueryBatchLocalizableString",
+          "description": "The name of the metadata."
+        },
+        "value": {
+          "type": "string",
+          "description": "The value of the metadata."
+        }
+      },
+      "description": "Represents a metric metadata value."
+    },
+    "QueryBatchMetric": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The metric Id."
+        },
+        "name": {
+          "$ref": "#/definitions/QueryBatchLocalizableString",
+          "description": "The name and the display name of the metric, i.e. it is localizable string."
+        },
+        "displayDescription": {
+          "type": "string",
+          "description": "Description of this metric"
+        },
+        "type": {
+          "type": "string",
+          "description": "The resource type of the metric resource."
+        },
+        "unit": {
+          "$ref": "#/definitions/QueryBatchMetricUnit",
+          "description": "The unit of the metric."
+        },
+        "timeseries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QueryBatchTimeSeriesElement"
+          },
+          "description": "The time series returned when a data query is performed."
+        },
+        "errorCode": {
+          "type": "string",
+          "description": "'Success' or the error details on query failures for this metric."
+        },
+        "errorMessage": {
+          "type": "string",
+          "description": "Error message encountered querying this specific metric."
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "displayDescription",
+        "type",
+        "unit",
+        "timeseries"
+      ],
+      "description": "The result data of a query."
+    },
+    "QueryBatchTimeSeriesElement": {
+      "type": "object",
+      "properties": {
+        "metadatavalues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QueryBatchMetadataValue"
+          },
+          "description": "The metadata values returned if filter was specified in the call."
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QueryBatchMetricValue"
+          },
+          "description": "An array of data points representing the metric values.  This is only returned if a result type of data is specified."
+        }
+      },
+      "description": "A time series result type. The discriminator value is always TimeSeries in this case."
+    }
+  }
+}
