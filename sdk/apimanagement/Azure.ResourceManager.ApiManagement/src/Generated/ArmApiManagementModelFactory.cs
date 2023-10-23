@@ -1522,7 +1522,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="method"> The HTTP method associated with this request.. </param>
         /// <param name="uri"> The full URL associated with this request. </param>
         /// <param name="ipAddress"> The client IP address associated with this request. </param>
-        /// <param name="backendResponseCode"> The HTTP status code received by the gateway as a result of forwarding this request to the backend. </param>
+        /// <param name="backendResponseCodeInteger"> The HTTP status code received by the gateway as a result of forwarding this request to the backend. </param>
         /// <param name="responseCode"> The HTTP status code returned by the gateway. </param>
         /// <param name="responseSize"> The size of the response returned by the gateway. </param>
         /// <param name="timestamp"> The date and time when this request was received by the gateway in ISO 8601 format. </param>
@@ -1534,9 +1534,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="requestId"> Request Identifier. </param>
         /// <param name="requestSize"> The size of this request.. </param>
         /// <returns> A new <see cref="Models.RequestReportRecordContract"/> instance for mocking. </returns>
-        public static RequestReportRecordContract RequestReportRecordContract(string apiId = null, string operationId = null, string productId = null, string userId = null, RequestMethod? method = null, Uri uri = null, IPAddress ipAddress = null, string backendResponseCode = null, int? responseCode = null, int? responseSize = null, DateTimeOffset? timestamp = null, string cache = null, double? apiTime = null, double? serviceTime = null, string apiRegion = null, ResourceIdentifier subscriptionResourceId = null, string requestId = null, int? requestSize = null)
+        public static RequestReportRecordContract RequestReportRecordContract(string apiId = null, string operationId = null, string productId = null, string userId = null, RequestMethod? method = null, Uri uri = null, IPAddress ipAddress = null, int? backendResponseCodeInteger = null, int? responseCode = null, int? responseSize = null, DateTimeOffset? timestamp = null, string cache = null, double? apiTime = null, double? serviceTime = null, string apiRegion = null, ResourceIdentifier subscriptionResourceId = null, string requestId = null, int? requestSize = null)
         {
-            return new RequestReportRecordContract(apiId, operationId, productId, userId, method, uri, ipAddress, backendResponseCode, responseCode, responseSize, timestamp, cache, apiTime, serviceTime, apiRegion, subscriptionResourceId, requestId, requestSize);
+            return new RequestReportRecordContract(apiId, operationId, productId, userId, method, uri, ipAddress, backendResponseCodeInteger, responseCode, responseSize, timestamp, cache, apiTime, serviceTime, apiRegion, subscriptionResourceId, requestId, requestSize);
         }
 
         /// <summary> Initializes a new instance of ApiManagementGlobalSchemaData. </summary>

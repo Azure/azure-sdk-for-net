@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="method"> The HTTP method associated with this request.. </param>
         /// <param name="uri"> The full URL associated with this request. </param>
         /// <param name="ipAddress"> The client IP address associated with this request. </param>
-        /// <param name="backendResponseCode"> The HTTP status code received by the gateway as a result of forwarding this request to the backend. </param>
+        /// <param name="backendResponseCodeInteger"> The HTTP status code received by the gateway as a result of forwarding this request to the backend. </param>
         /// <param name="responseCode"> The HTTP status code returned by the gateway. </param>
         /// <param name="responseSize"> The size of the response returned by the gateway. </param>
         /// <param name="timestamp"> The date and time when this request was received by the gateway in ISO 8601 format. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="subscriptionResourceId"> Subscription identifier path. /subscriptions/{subscriptionId}. </param>
         /// <param name="requestId"> Request Identifier. </param>
         /// <param name="requestSize"> The size of this request.. </param>
-        internal RequestReportRecordContract(string apiId, string operationId, string productId, string userId, RequestMethod? method, Uri uri, IPAddress ipAddress, string backendResponseCode, int? responseCode, int? responseSize, DateTimeOffset? timestamp, string cache, double? apiTime, double? serviceTime, string apiRegion, ResourceIdentifier subscriptionResourceId, string requestId, int? requestSize)
+        internal RequestReportRecordContract(string apiId, string operationId, string productId, string userId, RequestMethod? method, Uri uri, IPAddress ipAddress, int? backendResponseCodeInteger, int? responseCode, int? responseSize, DateTimeOffset? timestamp, string cache, double? apiTime, double? serviceTime, string apiRegion, ResourceIdentifier subscriptionResourceId, string requestId, int? requestSize)
         {
             ApiId = apiId;
             OperationId = operationId;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Method = method;
             Uri = uri;
             IPAddress = ipAddress;
-            BackendResponseCode = backendResponseCode;
+            BackendResponseCodeInteger = backendResponseCodeInteger;
             ResponseCode = responseCode;
             ResponseSize = responseSize;
             Timestamp = timestamp;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> The client IP address associated with this request. </summary>
         public IPAddress IPAddress { get; }
         /// <summary> The HTTP status code received by the gateway as a result of forwarding this request to the backend. </summary>
-        public string BackendResponseCode { get; }
+        public int? BackendResponseCodeInteger { get; }
         /// <summary> The HTTP status code returned by the gateway. </summary>
         public int? ResponseCode { get; }
         /// <summary> The size of the response returned by the gateway. </summary>

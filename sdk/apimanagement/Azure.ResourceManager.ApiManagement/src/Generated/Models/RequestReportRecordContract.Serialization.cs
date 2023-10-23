@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Optional<RequestMethod> method = default;
             Optional<Uri> uri = default;
             Optional<IPAddress> ipAddress = default;
-            Optional<string> backendResponseCode = default;
+            Optional<int> backendResponseCode = default;
             Optional<int> responseCode = default;
             Optional<int> responseSize = default;
             Optional<DateTimeOffset> timestamp = default;
@@ -89,7 +89,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (property.NameEquals("backendResponseCode"u8))
                 {
-                    backendResponseCode = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backendResponseCode = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("responseCode"u8))
@@ -171,7 +175,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     continue;
                 }
             }
-            return new RequestReportRecordContract(apiId.Value, operationId.Value, productId.Value, userId.Value, Optional.ToNullable(method), uri.Value, ipAddress.Value, backendResponseCode.Value, Optional.ToNullable(responseCode), Optional.ToNullable(responseSize), Optional.ToNullable(timestamp), cache.Value, Optional.ToNullable(apiTime), Optional.ToNullable(serviceTime), apiRegion.Value, subscriptionId.Value, requestId.Value, Optional.ToNullable(requestSize));
+            return new RequestReportRecordContract(apiId.Value, operationId.Value, productId.Value, userId.Value, Optional.ToNullable(method), uri.Value, ipAddress.Value, Optional.ToNullable(backendResponseCode), Optional.ToNullable(responseCode), Optional.ToNullable(responseSize), Optional.ToNullable(timestamp), cache.Value, Optional.ToNullable(apiTime), Optional.ToNullable(serviceTime), apiRegion.Value, subscriptionId.Value, requestId.Value, Optional.ToNullable(requestSize));
         }
     }
 }

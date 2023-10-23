@@ -18,6 +18,8 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 skip-serialization-format-xml: true
+# mgmt-debug:
+#   show-serialized-names: true
 
 list-exception:
 - /subscriptions/{subscriptionId}/providers/Microsoft.ApiManagement/locations/{location}/deletedservices/{serviceName}
@@ -136,6 +138,7 @@ rename-mapping:
   RequestReportRecordContract.subscriptionId: SubscriptionResourceId|arm-id
   RequestReportRecordContract.method: -|request-method
   RequestReportRecordContract.ipAddress: -|ip-address
+  RequestReportRecordContract.backendResponseCode: backendResponseCodeInteger
   ReportRecordContract.subscriptionId: SubscriptionResourceId|arm-id
   SubscriptionsDelegationSettingsProperties: SubscriptionDelegationSettingProperties
   RegistrationDelegationSettingsProperties: RegistrationDelegationSettingProperties
@@ -549,5 +552,7 @@ directive:
   - from: swagger-document
     where: $..[?(@.name=='$orderby')]
     transform: $['x-ms-client-name'] = 'orderBy'
-
+  - from: definitions.json
+    where: $.definitions.RequestReportRecordContract.properties.backendResponseCode
+    transform: $.type = "integer"
 ```
