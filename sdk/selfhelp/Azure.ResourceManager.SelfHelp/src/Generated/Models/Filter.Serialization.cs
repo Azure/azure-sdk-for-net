@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SelfHelpFilter : IUtf8JsonSerializable
+    public partial class Filter : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             writer.WriteEndObject();
         }
 
-        internal static SelfHelpFilter DeserializeSelfHelpFilter(JsonElement element)
+        internal static Filter DeserializeFilter(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new SelfHelpFilter(name.Value, values.Value, @operator.Value);
+            return new Filter(name.Value, values.Value, @operator.Value);
         }
     }
 }

@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Video detail. </summary>
-    public partial class SelfHelpVideo : VideoGroupVideo
+    public partial class Video : VideoGroupVideo
     {
-        /// <summary> Initializes a new instance of SelfHelpVideo. </summary>
-        public SelfHelpVideo()
+        /// <summary> Initializes a new instance of Video. </summary>
+        public Video()
         {
         }
 
-        /// <summary> Initializes a new instance of SelfHelpVideo. </summary>
+        /// <summary> Initializes a new instance of Video. </summary>
         /// <param name="src"> Link to the video. </param>
         /// <param name="title"> Title of the video. </param>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the insight content. </param>
-        internal SelfHelpVideo(string src, string title, string replacementKey) : base(src, title)
+        internal Video(string src, string title, string replacementKey) : base(src, title)
         {
             ReplacementKey = replacementKey;
         }

@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<string> title = default;
             Optional<string> content = default;
             Optional<ReplacementMaps> replacementMaps = default;
-            Optional<IList<SelfHelpSection>> sections = default;
+            Optional<IList<Section>> sections = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("triggerCriteria"u8))
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    List<SelfHelpSection> array = new List<SelfHelpSection>();
+                    List<Section> array = new List<Section>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelfHelpSection.DeserializeSelfHelpSection(item));
+                        array.Add(Section.DeserializeSection(item));
                     }
                     sections = array;
                     continue;
