@@ -8,7 +8,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     }
     public partial class AuthenticationEventResponseHandler : Microsoft.Azure.WebJobs.Host.Bindings.IValueBinder, Microsoft.Azure.WebJobs.Host.Bindings.IValueProvider
     {
-        public AuthenticationEventResponseHandler() { }
+        internal AuthenticationEventResponseHandler() { }
         public Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventRequestBase Request { get { throw null; } }
         public Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse Response { get { throw null; } }
         public System.Type Type { get { throw null; } }
@@ -34,10 +34,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         [Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthenticationEventMetadataAttribute(typeof(Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.TokenIssuanceStartRequest), "microsoft.graph.authenticationEvent.TokenIssuanceStart", "TokenIssuanceStart", "CloudEventActionableTemplate.json")]
         TokenIssuanceStart = 0,
     }
-    public static partial class EventTriggerMetrics
+    public partial class EventTriggerMetrics
     {
         public static string MetricsHeader;
         public static string ProductName;
+        public EventTriggerMetrics() { }
     }
     public enum EventType
     {
