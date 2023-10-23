@@ -6,6 +6,21 @@
 
 ### Breaking Changes
 
+- Streaming Completions and Streaming Chat Completions have been significantly updated to use simpler, shallower usage
+  patterns and data representations. The goal of these changes is to make streaming much easier to consume in common
+  cases while still retaining full functionality in more complex ones (e.g. with multiple choices requested).
+    - A new `StreamingResponse<T>` type is introduced that implicitly exposes an `IAsyncEnumerable<T>` derived from
+      the underlying response.
+    - `OpenAI.GetCompletionsStreaming()` now returns a `StreamingResponse<Completions>` that may be directly
+      enumerated over. `StreamingCompletions`, `StreamingChoice`, and the corresponding methods are removed.
+    - Because Chat Completions use a distinct structure for their streaming response messages, a new
+      `StreamingChatCompletionsUpdate` type is introduced that encapsulates this update data.
+    - Correspondingly, `OpenAI.GetChatCompletionsStreaming()` now returns a
+      `StreamingResponse<StreamingChatCompletionsUpdate>` that may be enumerated over directly.
+      `StreamingChatCompletions`, `StreamingChatChoice`, and related methods are removed.
+    - For more information, please see [the related pull request description]() as well as the updated snippets in the
+      project README.
+
 ### Bugs Fixed
 
 ### Other Changes
