@@ -335,6 +335,44 @@ if (responseChoice.FinishReason == CompletionsFinishReason.FunctionCall)
 }
 ```
 
+When using streaming, capture streaming response components as they arrive and accumulate streaming function arguments
+in the same manner used for streaming content. Then, in the place of using the `ChatMessage` from the non-streaming
+response, instead add a new `ChatMessage` instance for history, created from the streamed information.
+
+```C# Snippet::ChatFunctions::StreamingFunctions
+string functionName = null;
+StringBuilder contentBuilder = new();
+StringBuilder functionArgumentsBuilder = new();
+ChatRole streamedRole = default;
+CompletionsFinishReason finishReason = default;
+
+using StreamingResponse<StreamingChatCompletionsUpdate> streamingResponse
+    = client.GetChatCompletionsStreaming(
+        "gpt-35-turbo-0613",
+        chatCompletionsOptions);
+await foreach (StreamingChatCompletionsUpdate update in streamingResponse)
+{
+    contentBuilder.Append(update.ContentUpdate);
+    functionName ??= update.FunctionName;
+    functionArgumentsBuilder.Append(update.FunctionArgumentsUpdate);
+    streamedRole = update.Role ?? default;
+    finishReason = update.FinishReason ?? default;
+}
+
+if (finishReason == CompletionsFinishReason.FunctionCall)
+{
+    string lastContent = contentBuilder.ToString();
+    string unvalidatedArguments = functionArgumentsBuilder.ToString();
+    ChatMessage chatMessageForHistory = new(streamedRole, lastContent)
+    {
+        FunctionCall = new(functionName, unvalidatedArguments),
+    };
+    conversationMessages.Add(chatMessageForHistory);
+
+    // Handle from here just like the non-streaming case
+}
+```
+
 ### Use your own data with Azure OpenAI
 
 The use your own data feature is unique to Azure OpenAI and won't work with a client configured to use the non-Azure service.
