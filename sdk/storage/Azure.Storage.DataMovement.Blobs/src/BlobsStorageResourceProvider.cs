@@ -729,13 +729,20 @@ namespace Azure.Storage.DataMovement.Blobs
         #endregion
 
         private static ResourceType GetType(string typeId, bool isContainer)
-            => typeId switch
+        {
+            if (isContainer)
             {
-                "BlockBlob" => isContainer ? ResourceType.BlobContainer : ResourceType.BlockBlob,
-                "PageBlob" => isContainer ? ResourceType.BlobContainer : ResourceType.PageBlob,
-                "AppendBlob" => isContainer ? ResourceType.BlobContainer : ResourceType.AppendBlob,
+                return ResourceType.BlobContainer;
+            }
+
+            return typeId switch
+            {
+                "BlockBlob" => ResourceType.BlockBlob,
+                "PageBlob" => ResourceType.PageBlob,
+                "AppendBlob" => ResourceType.AppendBlob,
                 _ => ResourceType.Unknown
             };
+        }
 
         private static ArgumentException BadResourceTypeException(ResourceType resourceType)
             => new ArgumentException(

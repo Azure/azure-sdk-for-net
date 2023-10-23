@@ -21,7 +21,8 @@ namespace Azure.Storage.DataMovement
         public virtual string TransferId { get; internal set; }
 
         /// <summary>
-        /// Contains the Source Scheme of the Storage Resource to rehydrate the StorageResource from.
+        /// Contains the type id for the source resource to use during rehydration.
+        /// Will be null if <see cref="IsContainer"/> is true.
         /// </summary>
         public virtual string SourceTypeId { get; internal set; }
 
@@ -36,7 +37,8 @@ namespace Azure.Storage.DataMovement
         public virtual string SourceProviderId { get; internal set; }
 
         /// <summary>
-        /// Contains the Source Scheme of the Storage Resource to rehydrate the StorageResource from.
+        /// Contains the type id for the destination resource to use during rehydration.
+        /// Will be null if <see cref="IsContainer"/> is true.
         /// </summary>
         public virtual string DestinationTypeId { get; internal set; }
 
