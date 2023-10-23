@@ -18,7 +18,7 @@ namespace Azure.Communication.Chat
         internal ChatMessageContentInternal()
         {
             Participants = new ChangeTrackingList<ChatParticipantInternal>();
-            Attachments = new ChangeTrackingList<ChatAttachment>();
+            Attachments = new ChangeTrackingList<ChatAttachmentInternal>();
         }
 
         /// <summary> Initializes a new instance of ChatMessageContentInternal. </summary>
@@ -27,7 +27,7 @@ namespace Azure.Communication.Chat
         /// <param name="participants"> Chat message content for messages of types participantAdded or participantRemoved. </param>
         /// <param name="attachments"> List of attachments for this message. </param>
         /// <param name="initiatorCommunicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
-        internal ChatMessageContentInternal(string message, string topic, IReadOnlyList<ChatParticipantInternal> participants, IReadOnlyList<ChatAttachment> attachments, CommunicationIdentifierModel initiatorCommunicationIdentifier)
+        internal ChatMessageContentInternal(string message, string topic, IReadOnlyList<ChatParticipantInternal> participants, IReadOnlyList<ChatAttachmentInternal> attachments, CommunicationIdentifierModel initiatorCommunicationIdentifier)
         {
             Message = message;
             Topic = topic;
@@ -43,7 +43,7 @@ namespace Azure.Communication.Chat
         /// <summary> Chat message content for messages of types participantAdded or participantRemoved. </summary>
         public IReadOnlyList<ChatParticipantInternal> Participants { get; }
         /// <summary> List of attachments for this message. </summary>
-        public IReadOnlyList<ChatAttachment> Attachments { get; }
+        public IReadOnlyList<ChatAttachmentInternal> Attachments { get; }
         /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel InitiatorCommunicationIdentifier { get; }
     }

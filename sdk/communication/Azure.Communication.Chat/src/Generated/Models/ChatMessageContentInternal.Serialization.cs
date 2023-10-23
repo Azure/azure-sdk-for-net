@@ -23,7 +23,7 @@ namespace Azure.Communication.Chat
             Optional<string> message = default;
             Optional<string> topic = default;
             Optional<IReadOnlyList<ChatParticipantInternal>> participants = default;
-            Optional<IReadOnlyList<ChatAttachment>> attachments = default;
+            Optional<IReadOnlyList<ChatAttachmentInternal>> attachments = default;
             Optional<CommunicationIdentifierModel> initiatorCommunicationIdentifier = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -57,10 +57,10 @@ namespace Azure.Communication.Chat
                     {
                         continue;
                     }
-                    List<ChatAttachment> array = new List<ChatAttachment>();
+                    List<ChatAttachmentInternal> array = new List<ChatAttachmentInternal>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatAttachment.DeserializeChatAttachment(item));
+                        array.Add(ChatAttachmentInternal.DeserializeChatAttachmentInternal(item));
                     }
                     attachments = array;
                     continue;

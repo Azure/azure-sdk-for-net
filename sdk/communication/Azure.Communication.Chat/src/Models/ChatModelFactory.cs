@@ -83,7 +83,7 @@ namespace Azure.Communication.Chat
         /// <param name="participants"> List of chat participants. </param>
         /// <param name="attachments"> List of chat attachments. </param>
         /// <returns>A new <see cref="ChatMessageContent"/> instance for mocking.</returns>
-        public static ChatMessageContent ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IEnumerable<ChatParticipant> participants, IReadOnlyList<ChatAttachment> attachments) => new ChatMessageContent(message, topic, communicationUserIdentifier, participants, attachments);
+        public static ChatMessageContent ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IEnumerable<ChatParticipant> participants, IEnumerable<ChatAttachment> attachments = null) => new ChatMessageContent(message, topic, communicationUserIdentifier, participants, attachments);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatThreadProperties"/> class.
@@ -103,6 +103,18 @@ namespace Azure.Communication.Chat
         /// <param name="invalidParticipants"> List of invalid participants</param>
         /// <returns>A new <see cref="CreateChatThreadResult"/> instance for mocking.</returns>
         public static CreateChatThreadResult CreateChatThreadResult(ChatThreadProperties chatThread, IEnumerable<ChatError> invalidParticipants) => new CreateChatThreadResult(chatThread, invalidParticipants);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ChatAttachment"/> class.
+        /// </summary>
+        /// <param name="id"> Id of the attachment. </param>
+        /// <param name="attachmentType"> The type of attachment. </param>
+        /// <param name="extension"> The file extension of the attachment, if available. </param>
+        /// <param name="name"> The name of the attachment content. </param>
+        /// <param name="url"> The URL where the attachment can be downloaded. </param>
+        /// <param name="previewUrl"> The URL where the preview of attachment can be downloaded. </param>
+        /// <returns>A new <see cref="ChatAttachment"/> instance for mocking.</returns>
+        public static ChatAttachment ChatAttachment(string id, AttachmentType attachmentType, string extension, string name, Uri url, Uri previewUrl) => new ChatAttachment(id, attachmentType, extension, name, url, previewUrl);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ChatParticipant"/> class.

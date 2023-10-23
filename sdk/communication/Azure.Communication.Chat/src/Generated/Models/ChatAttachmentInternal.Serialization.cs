@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Azure.Communication.Chat
 {
-    public partial class ChatAttachment
+    internal partial class ChatAttachmentInternal
     {
-        internal static ChatAttachment DeserializeChatAttachment(JsonElement element)
+        internal static ChatAttachmentInternal DeserializeChatAttachmentInternal(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -66,7 +66,7 @@ namespace Azure.Communication.Chat
                     continue;
                 }
             }
-            return new ChatAttachment(id, attachmentType, extension.Value, name.Value, url.Value, previewUrl.Value);
+            return new ChatAttachmentInternal(id, attachmentType, extension.Value, name.Value, url.Value, previewUrl.Value);
         }
     }
 }

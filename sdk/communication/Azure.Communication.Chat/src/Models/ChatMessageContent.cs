@@ -18,19 +18,19 @@ namespace Azure.Communication.Chat
 
             Message = chatMessageContentInternal.Message;
             Topic = chatMessageContentInternal.Topic;
-            Attachments = chatMessageContentInternal.Attachments;
+            Attachments = chatMessageContentInternal.Attachments.Select(x => new ChatAttachment(x)).ToList().AsReadOnly();
             Participants = chatMessageContentInternal.Participants.Select(x => new ChatParticipant(x)).ToList().AsReadOnly();
         }
 
         // Add attachments argument from internal constructor when we add support for attachments
         // Update PR, APIView should generate
         // If it doesn't, look into live recordings
-        internal ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IEnumerable<ChatParticipant> participants, IReadOnlyList<ChatAttachment> attachments)
+        internal ChatMessageContent(string message, string topic, CommunicationUserIdentifier communicationUserIdentifier, IEnumerable<ChatParticipant> participants, IEnumerable<ChatAttachment> attachments = null)
         {
             Initiator = communicationUserIdentifier;
             Message = message;
             Topic = topic;
-            Attachments = attachments;
+            Attachments = attachments?.ToList();
             Participants = participants?.ToList();
         }
 
