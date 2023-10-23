@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SubscriptionSecurityTaskResources and their operations over a SubscriptionSecurityTaskResource. </returns>
         public virtual SubscriptionSecurityTaskCollection GetSubscriptionSecurityTasks()
         {
-            return GetCachedClient(Client => new SubscriptionSecurityTaskCollection(Client, Id));
+            return GetCachedClient(client => new SubscriptionSecurityTaskCollection(client, Id));
         }
 
         /// <summary>
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionSecurityTaskResource>> GetSubscriptionSecurityTaskAsync(string taskName, CancellationToken cancellationToken = default)
         {
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SubscriptionSecurityTaskResource> GetSubscriptionSecurityTask(string taskName, CancellationToken cancellationToken = default)
         {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of AdaptiveApplicationControlGroupResources and their operations over a AdaptiveApplicationControlGroupResource. </returns>
         public virtual AdaptiveApplicationControlGroupCollection GetAdaptiveApplicationControlGroups()
         {
-            return GetCachedClient(Client => new AdaptiveApplicationControlGroupCollection(Client, Id));
+            return GetCachedClient(client => new AdaptiveApplicationControlGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="groupName"> Name of an application control machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AdaptiveApplicationControlGroupResource>> GetAdaptiveApplicationControlGroupAsync(string groupName, CancellationToken cancellationToken = default)
         {
@@ -212,8 +212,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="groupName"> Name of an application control machine group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AdaptiveApplicationControlGroupResource> GetAdaptiveApplicationControlGroup(string groupName, CancellationToken cancellationToken = default)
         {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of SubscriptionSecurityAlertResources and their operations over a SubscriptionSecurityAlertResource. </returns>
         public virtual SubscriptionSecurityAlertCollection GetSubscriptionSecurityAlerts()
         {
-            return GetCachedClient(Client => new SubscriptionSecurityAlertCollection(Client, Id));
+            return GetCachedClient(client => new SubscriptionSecurityAlertCollection(client, Id));
         }
 
         /// <summary>
@@ -242,8 +242,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SubscriptionSecurityAlertResource>> GetSubscriptionSecurityAlertAsync(string alertName, CancellationToken cancellationToken = default)
         {
@@ -265,8 +265,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="alertName"> Name of the alert object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="alertName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="alertName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SubscriptionSecurityAlertResource> GetSubscriptionSecurityAlert(string alertName, CancellationToken cancellationToken = default)
         {

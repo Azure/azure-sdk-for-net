@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> An object representing collection of SecurityInsightsIncidentCommentResources and their operations over a SecurityInsightsIncidentCommentResource. </returns>
         public virtual SecurityInsightsIncidentCommentCollection GetSecurityInsightsIncidentComments()
         {
-            return GetCachedClient(Client => new SecurityInsightsIncidentCommentCollection(Client, Id));
+            return GetCachedClient(client => new SecurityInsightsIncidentCommentCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="incidentCommentId"> Incident comment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="incidentCommentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecurityInsightsIncidentCommentResource>> GetSecurityInsightsIncidentCommentAsync(string incidentCommentId, CancellationToken cancellationToken = default)
         {
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="incidentCommentId"> Incident comment ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="incidentCommentId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="incidentCommentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecurityInsightsIncidentCommentResource> GetSecurityInsightsIncidentComment(string incidentCommentId, CancellationToken cancellationToken = default)
         {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <returns> An object representing collection of SecurityInsightsIncidentRelationResources and their operations over a SecurityInsightsIncidentRelationResource. </returns>
         public virtual SecurityInsightsIncidentRelationCollection GetSecurityInsightsIncidentRelations()
         {
-            return GetCachedClient(Client => new SecurityInsightsIncidentRelationCollection(Client, Id));
+            return GetCachedClient(client => new SecurityInsightsIncidentRelationCollection(client, Id));
         }
 
         /// <summary>
@@ -163,8 +163,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="relationName"> Relation Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecurityInsightsIncidentRelationResource>> GetSecurityInsightsIncidentRelationAsync(string relationName, CancellationToken cancellationToken = default)
         {
@@ -186,8 +186,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </summary>
         /// <param name="relationName"> Relation Name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="relationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="relationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecurityInsightsIncidentRelationResource> GetSecurityInsightsIncidentRelation(string relationName, CancellationToken cancellationToken = default)
         {
