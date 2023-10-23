@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         public void TestSetMetricHeadersNull()
         {
             HttpResponseMessage message = null;
-            Assert.DoesNotThrow(() => EventTriggerMetrics.SetMetricHeaders(message));
+            Assert.DoesNotThrow(() => new EventTriggerMetrics().SetMetricHeaders(message));
             Assert.IsNull(
                 anObject: message,
                 message: "Verify AuthenticationEventRequestBase is not set to anything when null.");
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         public  void TestSetMetricHeaders()
         {
             HttpResponseMessage message = new() { };
-            EventTriggerMetrics.SetMetricHeaders(message);
+            new EventTriggerMetrics().SetMetricHeaders(message);
 
             var headers = message.Headers;
             Assert.IsTrue(headers.Contains(EventTriggerMetrics.MetricsHeader));
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             HttpResponseMessage message = new() { };
             message.Headers.Add(EventTriggerMetrics.MetricsHeader, "test");
 
-            EventTriggerMetrics.SetMetricHeaders(message);
+            new EventTriggerMetrics().SetMetricHeaders(message);
 
             var headers = message.Headers;
             Assert.IsTrue(headers.Contains(EventTriggerMetrics.MetricsHeader));

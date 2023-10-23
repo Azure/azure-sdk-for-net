@@ -13,33 +13,41 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     /// <summary>
     /// Static class to set the metric headers for each event trigger.
     /// </summary>
-    public static class EventTriggerMetrics
+    public class EventTriggerMetrics
     {
+        /// <summary>
+        /// Default constructor for eventmetrics
+        /// </summary>
+        public EventTriggerMetrics()
+        {
+            var assembly = GetType().Assembly;
+
+            ProductVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
+            Framework = assembly.GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName;
+
+            Platform = RuntimeInformation.OSDescription ?? "unknown";
+        }
+
         /// <summary>
         /// The client library's product name
         /// </summary>
         public static string ProductName = "AuthenticationEvents";
 
         /// <summary>
-        /// Current executing assembly
-        /// </summary>
-        private static readonly Assembly assembly = typeof(EventTriggerMetrics).Assembly;
-
-        /// <summary>
         /// Get the platform of the event trigger based on the OS.
         /// </summary>
         /// <returns>OS Name</returns>
-        private static string Platform => RuntimeInformation.OSDescription ?? "unknown";
+        private static string Platform;
 
         /// <summary>
         /// Product version of the event trigger. Example: 1.0.0-beta, 1.0.0, 2.0.0
         /// </summary>
-        private static string ProductVersion => assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
+        private static string ProductVersion;
 
         /// <summary>
-        /// Runtime of the event trigger. Example: .NET, JS, TS, PY
+        /// Framework of the event trigger. Example: .NET, JS, TS, PY
         /// </summary>
-        private static string Framework => assembly.GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName;
+        private static string Framework;
 
         /// <summary>
         /// Header key to add the metrics to.
@@ -51,12 +59,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// Set the metrics on the response message.
         /// </summary>
         /// <param name="message">The reponse message</param>
-        internal static void SetMetricHeaders(HttpResponseMessage message)
+        internal void SetMetricHeaders(HttpResponseMessage message)
         {
             if (message != null)
             {
                 var headers = message.Headers;
-                headers.AddOrReplaceToHeader(GetHeaderValue(Platform, ProductVersion, Framework));
+                AddOrReplaceToHeader(headers, GetHeaderValue(Platform, ProductVersion, Framework));
             }
         }
 
@@ -65,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// </summary>
         /// <param name="headers"><see cref="HttpHeaders"/> to add the key and value to</param>
         /// <param name="value">Header value to add</param>
-        private static void AddOrReplaceToHeader(this HttpHeaders headers, string value)
+        private static void AddOrReplaceToHeader(HttpHeaders headers, string value)
         {
             if (headers.Contains(MetricsHeader))
             {
@@ -78,7 +86,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
         private static string GetHeaderValue(string platform, string version, string runtime)
         {
-            return $"azsdk-net-{ProductName}/{version} ({runtime}; {platform})";
+            return $"azsdk-net-{ProductName}/{version} ({runtime}; {platform.Trim()})";
         }
     }
 }
