@@ -1,9 +1,7 @@
 [CmdletBinding(SupportsShouldProcess)]
 param(
   # Please use the RepoOwner/RepoName format: e.g. Azure/azure-sdk-for-java
-  $RepoId = "$RepoOwner/$RepoName",
-  # Upstream repo to check and see if there are existing open PRs from before deleting branch
-  $UpstreamRepoId,
+  $RepoId,
   # CentralRepoId the original PR to generate sync PR. E.g Azure/azure-sdk-tools for eng/common
   $CentralRepoId,
   # We start from the sync PRs, use the branch name to get the PR number of central repo. E.g. sync-eng/common-(<branchName>)-(<PrNumber>). Have group name on PR number.
@@ -14,126 +12,121 @@ param(
   [AllowNull()]
   [DateTime]$LastCommitOlderThan,
   [Switch]$DeleteBranchesEvenIfThereIsOpenPR = $false,
-  [Parameter(Mandatory = $true)]
   $AuthToken
 )
 Set-StrictMode -version 3
 
 . (Join-Path $PSScriptRoot common.ps1)
 
-LogDebug "Operating on Repo [ $RepoId ]"
-
-try{
-  # pull all branches.
-  $responses = Get-GitHubSourceReferences -RepoId $RepoId -Ref "heads" -AuthToken $AuthToken
-}
-catch {
-  LogError "Get-GitHubSourceReferences failed with exception:`n$_"
-  exit 1
-}
-
-foreach ($res in $responses)
-{
-  if (!$res -or !$res.ref) {
-    LogDebug "No branch returned from the branch prefix $BranchRegex on $Repo. Skipping..."
-    continue
-  }
-  $branch = $res.ref
-  $branchName = $branch.Replace("refs/heads/","")
-  if (!($branchName -match $BranchRegex)) {
-    continue
-  }
-
-  # If we have a central PR that created this branch still open still don't delete the branch
-  if ($CentralRepoId)
-  {
-    $pullRequestNumber = $Matches["PrNumber"]
-    # If central PR number found, then skip
-    if (!$pullRequestNumber) {
-      LogError "No PR number found in the branch name. Please check the branch name [ $branchName ]. Skipping..."
-      continue
-    }
-
-    try {
-      $centralPR = Get-GitHubPullRequest -RepoId $CentralRepoId -PullRequestNumber $pullRequestNumber -AuthToken $AuthToken
-      LogDebug "Found central PR pull request: $($centralPR.html_url)"
-      if ($centralPR.state -ne "closed") {
-        # Skipping if there open central PR number for the branch.
-        continue
+function Get-AllBranchesAndPullRequestInfo($owner, $repo) {
+  $query = @'
+    query($owner: String!, $repo: String!, $refPrefix: String!$endCursor: String) {
+      repository(owner: $owner, name: $repo) {
+        refs(first: 100, refPrefix: $refPrefix, after: $endCursor) {
+          nodes {
+            name
+            target {
+              commitUrl
+              ... on Commit {
+                committedDate
+              }
+            }
+            associatedPullRequests(first: 100) {
+              nodes {
+                url
+                closed
+              }
+            }
+          }
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
+        }
       }
     }
-    catch
-    {
-      # If there is no central PR for the PR number, log error and skip.
-      LogError "Get-GitHubPullRequests failed with exception:`n$_"
-      LogError "Not found PR number [ $pullRequestNumber ] from [ $CentralRepoId ]. Skipping..."
-      continue
-    }
-  }
+'@
 
-  # If this branch has an open PR in the repo or the upstream repo then don't delete
-  try
-  {
-    $head = "${RepoId}:${branchName}"
-    LogDebug "Operating on branch [ $branchName ]"
-    $pullRequests = Get-GitHubPullRequests -RepoId $RepoId -State "all" -Head $head -AuthToken $AuthToken
+  $all_branches = gh api graphql --paginate -F owner=$owner -F repo=$repo -F refPrefix='refs/heads/' -f query=$query `
+    --jq '.data.repository.refs.nodes[] | { name, commitUrl: .target.commitUrl, committedDate: .target.committedDate, pullRequests: .associatedPullRequests.nodes }' | ConvertFrom-Json
 
-    # check to see if there are any PR's open in the main central repo as well.
-    if ($UpstreamRepoId) {
-      $pullRequests += Get-GitHubPullRequests -RepoId $UpstreamRepoId -State "all" -Head $head -AuthToken $AuthToken
-    }
-  }
-  catch
-  {
-    LogError "Get-GitHubPullRequests failed with exception:`n$_"
+  if ($LASTEXITCODE) {
+    LogError "Failed to retireve branches for '$owner' and '$repo' running query '$query'"
     exit 1
   }
-  $openPullRequests = @($pullRequests | Where-Object { $_.State -eq "open" })
 
-  if ($openPullRequests.Count -gt 0 -and !$DeleteBranchesEvenIfThereIsOpenPR) {
-    LogDebug "CentralRepoId is not configured and found open PRs associate with branch [ $branchName ]. Skipping..."
+  return $all_branches
+}
+
+LogDebug "Operating on Repo '$RepoId'"
+
+# Setup GH_TOKEN for the gh cli commands
+if ($AuthToken) {
+  $env:GH_TOKEN = $AuthToken
+}
+
+$owner, $repo = $RepoId -split "/"
+$branches = Get-AllBranchesAndPullRequestInfo $owner $repo
+
+foreach ($branch in $branches)
+{
+  $branchName = $branch.Name
+  if ($branchName -notmatch $BranchRegex) {
     continue
   }
+  $openPullRequests = @($branch.pullRequests | Where-Object { !$_.Closed })
 
-  # If there is date filter, then check if branch last commit older than the date.
-  if ($LastCommitOlderThan)
+  # If we have a central PR that created this branch still open don't delete the branch
+  if ($CentralRepoId)
   {
-    if (!$res.object -or !$res.object.url) {
-      LogWarning "No commit url returned from response. Skipping... "
+    $pullRequestNumber = $matches["PrNumber"]
+    # If central PR number is not found, then skip
+    if (!$pullRequestNumber) {
+      LogError "No PR number found in the branch name. Please check the branch name '$branchName'. Skipping..."
       continue
     }
-    try {
-      $commitDate = Get-GithubReferenceCommitDate -commitUrl $res.object.url -AuthToken $AuthToken
-      if (!$commitDate) {
-        LogDebug "No last commit date found. Skipping."
-        continue
-      }
-      if ($commitDate -gt $LastCommitOlderThan) {
-        LogDebug "The branch $branch last commit date [ $commitDate ] is newer than the date $LastCommitOlderThan. Skipping."
-        continue
-      }
 
-      LogDebug "Branch [ $branchName ] in repo [ $RepoId ] has a last commit date [ $commitDate ] that is older than $LastCommitOlderThan. "
+    $centralPR = gh pr view --json 'url,closed' --repo $CentralRepoId $pullRequestNumber | ConvertFrom-Json
+    if ($LASTEXITCODE) {
+      LogError "PR '$pullRequestNumber' not found in repo '$CentralRepoId'. Skipping..."
+      continue;
+    } else {
+      LogDebug "Found central PR $($centralPR.url) and Closed=$($centralPR.closed)"
+      if (!$centralPR.Closed) {
+        # Skipping if there is an open central PR open for the branch.
+        LogDebug "Central PR is still open so skipping the deletion of branch '$branchName'. Skipping..."
+        continue;
+      }
     }
-    catch {
-      LogError "Get-GithubReferenceCommitDate failed with exception:`n$_"
-      exit 1
+  }
+  else {
+    # Not CentralRepoId - not associated with a central repo PR
+    if ($openPullRequests.Count -gt 0 -and !$DeleteBranchesEvenIfThereIsOpenPR) {
+      LogDebug "Found open PRs associate with branch '$branchName'. Skipping..."
+      continue
+    }
+  }
+
+  # If there is date filter, then check if branch last commit is older than the date.
+  if ($LastCommitOlderThan)
+  {
+    $commitDate = $branch.committedDate
+    if ($commitDate -gt $LastCommitOlderThan) {
+      LogDebug "The branch $branch last commit date '$commitDate' is newer than the date '$LastCommitOlderThan'. Skipping..."
+      continue
     }
   }
 
   foreach ($openPullRequest in $openPullRequests) {
-    Write-Host "Open pull Request [ $($openPullRequest.html_url) ] will be closed after branch deletion."
+    Write-Host "Note: Open pull Request '$($openPullRequest.url)' will be closed after branch deletion, given the central PR is closed."
   }
 
-  try 
-  {
-    if ($PSCmdlet.ShouldProcess("[ $branchName ] in [ $RepoId ]", "Deleting branches on cleanup script")) {
-      Remove-GitHubSourceReferences -RepoId $RepoId -Ref $branch -AuthToken $AuthToken
-      Write-Host "The branch [ $branchName ] with sha [ $($res.object.sha) ] in [ $RepoId ] has been deleted."
+  $commitUrl = $branch.commitUrl
+  if ($PSCmdlet.ShouldProcess("'$branchName' in '$RepoId'", "Deleting branch on cleanup script")) {
+    gh api "repos/${RepoId}/git/refs/heads/${branchName}" -X DELETE
+    if ($LASTEXITCODE) {
+      LogError "Delection of branch '$branchName` failed"
     }
-  }
-  catch {
-    LogError "Remove-GitHubSourceReferences failed with exception:`n$_"
-    exit 1
+    Write-Host "The branch '$branchName' at commit '$commitUrl' in '$RepoId' has been deleted."
   }
 }
