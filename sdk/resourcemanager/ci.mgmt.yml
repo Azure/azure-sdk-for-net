@@ -119,6 +119,7 @@ trigger:
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
+    - sdk/networkanalytics/Azure.ResourceManager.NetworkAnalytics
     - sdk/networkcloud/Azure.ResourceManager.NetworkCloud
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
     - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability
@@ -301,6 +302,7 @@ pr:
     - sdk/mysql/Azure.ResourceManager.MySql
     - sdk/netapp/Azure.ResourceManager.NetApp
     - sdk/network/Azure.ResourceManager.Network
+    - sdk/networkanalytics/Azure.ResourceManager.NetworkAnalytics
     - sdk/networkcloud/Azure.ResourceManager.NetworkCloud
     - sdk/networkfunction/Azure.ResourceManager.NetworkFunction
     - sdk/newrelicobservability/Azure.ResourceManager.NewRelicObservability

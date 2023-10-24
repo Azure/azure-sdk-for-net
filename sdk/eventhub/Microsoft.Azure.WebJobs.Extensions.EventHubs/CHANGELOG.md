@@ -26,6 +26,10 @@
 
   We recommend testing to ensure no breaking changes are introducing to your function app before updating existing applications to version 6.0.0 or newer of the Event Hubs extension, especially if you have code code that was written to expect 10 as the max event batch size.
 
+### Bugs Fixed
+
+- Fixed an issue where checkpoints were not always written when using a minimum batch size with low throughput.
+
 ## 5.5.0 (2023-08-11)
 
 ### Bugs Fixed

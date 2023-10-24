@@ -68,7 +68,7 @@ namespace Azure.Storage.DataMovement.Tests
             throw new NotImplementedException();
         }
 
-        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        public override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             throw new NotImplementedException();
         }
@@ -78,7 +78,7 @@ namespace Azure.Storage.DataMovement.Tests
             return Task.FromResult(new StorageResourceProperties(default, default, Buffer.Length, default));
         }
 
-        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        public override StorageResourceCheckpointData GetSourceCheckpointData()
         {
             throw new NotImplementedException();
         }

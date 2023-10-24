@@ -350,7 +350,7 @@ If you choose "Use another account" and type in an MSA outlook.com account, it f
 
 ![Fail on use another account](./images/MSA2.png)
 
-Since version `1.0.0-beta.4` of [Azure.Identity.BrokeredAuthentication](https://www.nuget.org/packages/Azure.Identity.BrokeredAuthentication), you can set the `IsMsaPassthroughEnabled` property on `InteractiveBrowserCredentialBrokerOptions` or `SharedTokenCacheCredentialBrokerOptions` to `true`. MSA outlook.com accounts that are logged in to Windows are automatically listed:
+Since version `1.0.0-beta.4` of [Azure.Identity.Broker](https://www.nuget.org/packages/Azure.Identity.BrokeredAuthentication), you can set the `IsMsaPassthroughEnabled` property on `InteractiveBrowserCredentialBrokerOptions` or `SharedTokenCacheCredentialBrokerOptions` to `true`. MSA outlook.com accounts that are logged in to Windows are automatically listed:
 
 ![Enable MSA](./images/MSA3.png)
 
