@@ -274,7 +274,7 @@
 /sdk/communication/Azure.Communication.ShortCodes/                 @guilhermeluizsp @danielav7
 
 # PRLabel: %Communication - SMS
-/sdk/communication/Azure.Communication.Sms/                        @RoyHerrod @arifibrahim4
+/sdk/communication/Azure.Communication.Sms/                        @DimaKolomiiets @ozgurcivi-msft @gfeitosa-msft @phermanov-msft @ilyapaliakou-msft
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
@@ -722,7 +722,7 @@
 /sdk/schemaregistry/                                               @jsquire @JoshLove-msft
 
 # ServiceLabel: %Schema Registry %Service Attention
-#/sdk/schemaregistry/                                              @hmlam
+#/<NotInRepo>/                                                     @hmlam
 
 # ServiceLabel: %SignalR %Service Attention
 /sdk/signalr/                                                      @sffamily @chenkennt @Y-Sindo

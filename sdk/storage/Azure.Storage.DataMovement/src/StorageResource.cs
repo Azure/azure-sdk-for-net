@@ -32,5 +32,17 @@ namespace Azure.Storage.DataMovement
         /// NOTE: Must be no more than 5 characters long.
         /// </summary>
         public abstract string ProviderId { get; }
+
+        /// <summary>
+        /// Gets the source checkpoint data for this resource that will be written to the checkpointer.
+        /// </summary>
+        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
+        public abstract StorageResourceCheckpointData GetSourceCheckpointData();
+
+        /// <summary>
+        /// Gets the destination checkpoint data for this resource that will be written to the checkpointer.
+        /// </summary>
+        /// <returns>A <see cref="StorageResourceCheckpointData"/> containing the checkpoint information for this resource.</returns>
+        public abstract StorageResourceCheckpointData GetDestinationCheckpointData();
     }
 }

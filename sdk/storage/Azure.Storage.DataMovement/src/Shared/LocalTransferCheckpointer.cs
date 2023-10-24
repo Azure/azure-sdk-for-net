@@ -79,7 +79,9 @@ namespace Azure.Storage.DataMovement
                 false, /* enumerationComplete */
                 new DataTransferStatusInternal(),
                 source.Uri.ToSanitizedString(),
-                destination.Uri.ToSanitizedString());
+                destination.Uri.ToSanitizedString(),
+                source.GetSourceCheckpointData(),
+                destination.GetDestinationCheckpointData());
 
             using (Stream headerStream = new MemoryStream())
             {
@@ -152,13 +154,19 @@ namespace Azure.Storage.DataMovement
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             if (_transferStates.TryGetValue(transferId, out JobPlanFile jobPlanFile))
             {
+                // Lock MMF
+                await jobPlanFile.WriteLock.WaitAsync().ConfigureAwait(false);
+
                 using (MemoryMappedFile mmf = MemoryMappedFile.CreateFromFile(jobPlanFile.FilePath))
                 using (MemoryMappedViewStream mmfStream = mmf.CreateViewStream(offset, length, MemoryMappedFileAccess.Read))
                 {
                     await mmfStream.CopyToAsync(copiedStream).ConfigureAwait(false);
-                    copiedStream.Position = 0;
-                    return copiedStream;
                 }
+
+                // Release MMF
+                jobPlanFile.WriteLock.Release();
+                copiedStream.Position = 0;
+                return copiedStream;
             }
             else
             {

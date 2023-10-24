@@ -37,6 +37,11 @@ namespace Azure.Storage.DataMovement
         public virtual string SourceProviderId { get; internal set; }
 
         /// <summary>
+        /// The additional checkpoint data specific to the source resource.
+        /// </summary>
+        public virtual byte[] SourceCheckpointData { get; internal set; }
+
+        /// <summary>
         /// Contains the type id for the destination resource to use during rehydration.
         /// Will be null if <see cref="IsContainer"/> is true.
         /// </summary>
@@ -51,6 +56,11 @@ namespace Azure.Storage.DataMovement
         /// A string ID for the destination resource provider that should be used for rehydration.
         /// </summary>
         public virtual string DestinationProviderId { get; internal set; }
+
+        /// <summary>
+        /// The additional checkpoint data specific to the destination resource.
+        /// </summary>
+        public virtual byte[] DestinationCheckpointData { get; internal set; }
 
         /// <summary>
         /// Defines whether or not this was a container transfer, in order to rehydrate the StorageResource.
