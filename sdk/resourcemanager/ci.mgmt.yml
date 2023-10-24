@@ -28,6 +28,7 @@ trigger:
     - sdk/automation/Azure.ResourceManager.Automation
     - sdk/avs/Azure.ResourceManager.Avs
     - sdk/azurestackhci/Azure.ResourceManager.Hci
+    - sdk/azurestackhci-arcvm/Azure.ResourceManager.ArcVm
     - sdk/batch/Azure.ResourceManager.Batch
     - sdk/billing/Azure.ResourceManager.Billing
     - sdk/billingbenefits/Azure.ResourceManager.BillingBenefits
@@ -211,6 +212,7 @@ pr:
     - sdk/automation/Azure.ResourceManager.Automation
     - sdk/avs/Azure.ResourceManager.Avs
     - sdk/azurestackhci/Azure.ResourceManager.Hci
+    - sdk/azurestackhci-arcvm/Azure.ResourceManager.ArcVm
     - sdk/batch/Azure.ResourceManager.Batch
     - sdk/billing/Azure.ResourceManager.Billing
     - sdk/billingbenefits/Azure.ResourceManager.BillingBenefits
