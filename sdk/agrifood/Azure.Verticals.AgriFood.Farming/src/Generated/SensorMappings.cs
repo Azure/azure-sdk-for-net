@@ -16,7 +16,10 @@ using Azure.Core.Pipeline;
 namespace Azure.Verticals.AgriFood.Farming
 {
     // Data plane generated sub-client.
-    /// <summary> The SensorMappings sub-client. </summary>
+    /// <summary>
+    /// The SensorMappings sub-client.
+    /// Hello World
+    /// </summary>
     public partial class SensorMappings
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://farmbeats.azure.net/.default" };
