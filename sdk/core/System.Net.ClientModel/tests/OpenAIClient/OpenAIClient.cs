@@ -14,7 +14,7 @@ public class OpenAIClient
     private readonly HttpPipeline _pipeline;
     private readonly KeyCredential _credential;
 
-    public OpenAIClient(KeyCredential credential, OpenAIClientOptions options = default)
+    public OpenAIClient(KeyCredential credential, OpenAIClientOptions? options = default)
     {
         _credential = credential;
         _pipeline = HttpPipelineBuilder.Build(new PipelineBuilderOptions());

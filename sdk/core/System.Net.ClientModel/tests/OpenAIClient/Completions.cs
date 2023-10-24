@@ -9,9 +9,9 @@ namespace OpenAI;
 
 public class Completions
 {
-    public IReadOnlyList<Choice> Choices { get; internal set; }
+    public IReadOnlyList<Choice>? Choices { get; internal set; }
     public DateTimeOffset Created { get; internal set; }
-    public string Id { get; internal set; }
+    public string? Id { get; internal set; }
 
     internal static Completions Deserialize(BinaryData data)
     {

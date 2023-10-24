@@ -7,7 +7,7 @@ namespace OpenAI;
 
 public class Choice
 {
-    public string Text { get; internal set; }
+    public string? Text { get; internal set; }
     public int Index { get; internal set; }
 
     internal static Choice Deserialize(JsonElement choiceJson)
