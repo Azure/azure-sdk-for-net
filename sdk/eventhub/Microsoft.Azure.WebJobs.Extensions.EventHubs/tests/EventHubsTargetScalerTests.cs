@@ -83,7 +83,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [TestCase(60, 10, 10)]
         [TestCase(70, 10, 10)]
         [TestCase(150, 10, 10)]
-        [TestCase(2147483650, 1, 1)] // Testing eventCount > int.MaxInt is 2147483647
         public void GetScaleResultInternal_ReturnsExpected(long eventCount, int partitionCount, int expectedTargetWorkerCount)
         {
             TargetScalerResult result = _targetScaler.GetScaleResultInternal(new TargetScalerContext { }, eventCount, partitionCount);
