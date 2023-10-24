@@ -140,6 +140,38 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies functionality of the <see cref="BlobCheckpointStore.UpdateCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public async Task UpdateCheckpointAsyncOldOverloadDelegatesTheCall()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+
+            var expectedNamespace = "fakeNS";
+            var expectedHub = "fakeHub";
+            var expectedConsumerGroup = "fakeGroup";
+            var expectedPartition = "fakePart";
+            var expectedOffset = 123;
+            var expectedSequence = 999;
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var blobCheckpointStore = new BlobCheckpointStore(mockCheckpointStore.Object);
+
+            await blobCheckpointStore.UpdateCheckpointAsync(expectedNamespace, expectedHub, expectedConsumerGroup, expectedPartition, expectedOffset, expectedSequence, cancellationSource.Token);
+
+            mockCheckpointStore.Verify(store => store.UpdateCheckpointAsync(
+                expectedNamespace,
+                expectedHub,
+                expectedConsumerGroup,
+                expectedPartition,
+                expectedOffset,
+                expectedSequence,
+                cancellationSource.Token),
+            Times.Once);
+        }
+
+        /// <summary>
         ///   Verifies functionality of the <see cref="BlobCheckpointStore" /> constructor.
         /// </summary>
         ///

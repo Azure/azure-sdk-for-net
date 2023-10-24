@@ -289,9 +289,9 @@ namespace Azure.Messaging.EventHubs.Tests
                EventHubName = eventHubName;
                ConsumerGroup = consumerGroup;
                PartitionId = partitionId;
-                StartingPosition = startingPosition;
-                LastModified = lastModified;
-                ClientIdentifier = clientIdentifier;
+               StartingPosition = startingPosition;
+               LastModified = lastModified;
+               ClientIdentifier = clientIdentifier;
             }
         }
     }

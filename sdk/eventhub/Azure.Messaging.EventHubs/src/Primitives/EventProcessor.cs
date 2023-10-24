@@ -2220,10 +2220,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                              string partitionId,
                                                              string clientIdentifier,
                                                              CheckpointPosition checkpointStartingPosition,
-                                                             CancellationToken cancellationToken)
-            {
-                await Processor.UpdateCheckpointAsync(partitionId, checkpointStartingPosition, cancellationToken).ConfigureAwait(false);
-            }
+                                                             CancellationToken cancellationToken) => await Processor.UpdateCheckpointAsync(partitionId, checkpointStartingPosition, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>

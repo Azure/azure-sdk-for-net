@@ -33,11 +33,11 @@ namespace Azure.Messaging.EventHubs.Processor
         /// </summary>
         ///
         /// <param name="sequenceNumber">The sequence number to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
-        /// <param name="offset">An optional offset to associate with the checkpoint, intended as informational metadata.</param>
+        /// <param name="offset">An optional offset to associate with the checkpoint, intended as informational metadata. If not provided, a default value of long.MinValue will be used as metadata.</param>
         ///
-        public CheckpointPosition(long sequenceNumber, long? offset = null)
+        public CheckpointPosition(long sequenceNumber, long offset = long.MinValue)
         {
-            Offset = offset ?? long.MinValue;
+            Offset = offset;
             SequenceNumber = sequenceNumber;
         }
 
