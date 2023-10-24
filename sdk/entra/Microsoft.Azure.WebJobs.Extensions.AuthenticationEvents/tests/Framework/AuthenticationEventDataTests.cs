@@ -34,11 +34,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             dataObj["authenticationContext"] = context;
             dataObj["@odata.type"] = "microsoft.graph.onTokenIssuanceStartCalloutData";
             if (hasTenantIdKey)
+            {
                 dataObj["tenantId"] = hasTenantIdValue ? TenantId : string.Empty;
+            }
             if (hasAuthenticationEventListenerIdKey)
+            {
                 dataObj["authenticationEventListenerId"] = hasAuthenticationEventListenerIdValue ? AuthenticationEventListenerId : string.Empty;
+            }
             if (hasCustomAuthenticationExtensionIdKey)
+            {
                 dataObj["customAuthenticationExtensionId"] = hasCustomAuthenticationExtensionIdValue ? CustomAuthenticationExtensionId : string.Empty;
+            }
 
             return jsonObj.ToString();
         }
