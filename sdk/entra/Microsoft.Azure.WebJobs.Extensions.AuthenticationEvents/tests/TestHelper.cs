@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Buffers;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
@@ -266,15 +270,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// <summary>Creates the issuance start Legacy response.</summary>
         /// <returns>A newly created TokenIssuanceStartResponse for version preview_10_01_2021</returns>
         public static TokenIssuanceStartResponse CreateTokenIssuanceStartResponse()
-        {
-
-            JObject jBody = JObject.Parse(ReadResource(MainAssembly, String.Join(".", DefaultNamespace, "Templates", "CloudEventActionableTemplate.json")));
-            (jBody["data"]["@odata.type"] as JValue).Value = "microsoft.graph.onTokenIssuanceStartResponseData";
+		{
+            JsonObject jsonObject = (JsonObject)JsonNode.Parse(ReadResource(MainAssembly, String.Join(".", DefaultNamespace, "Templates", "CloudEventActionableTemplate.json")));
+			jsonObject["data"]["@odata.type"] = "microsoft.graph.onTokenIssuanceStartResponseData";
 
 
             return new TokenIssuanceStartResponse()
             {
-                Body = jBody.ToString()
+                Body = jsonObject.ToString()
             };
         }
 
@@ -286,7 +289,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             if (IsJson(expected))
             {
-                var jExpected = JToken.Parse(expected);
+				/// Todo: replace with JsonNode when deepequal equivalent is available. 
+				var jExpected = JToken.Parse(expected);
                 var jActual = JToken.Parse(actual);
 
                 return JToken.DeepEquals(jActual, jExpected);

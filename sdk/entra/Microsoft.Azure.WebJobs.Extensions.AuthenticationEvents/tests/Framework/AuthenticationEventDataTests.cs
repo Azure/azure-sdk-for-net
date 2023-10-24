@@ -45,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
                 writer.WriteString("customAuthenticationExtensionId", hasCustomAuthenticationExtensionIdValue ? CustomAuthenticationExtensionId : string.Empty); 
             writer.WriteEndObject();
             writer.WriteEndObject();
-            writer.Flush();
+            writer.FlushAsync();
 
             return Encoding.UTF8.GetString(stream.ToArray());
         }
