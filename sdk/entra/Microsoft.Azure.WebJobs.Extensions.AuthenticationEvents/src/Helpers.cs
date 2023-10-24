@@ -118,10 +118,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
 
             // try parsing input to json object
-            var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(input));
-            JsonDocument.TryParseValue(ref reader, out var jsonObj);
-
-            return jsonObj != null;
+            using (var jsonDoc = JsonDocument.Parse(input))
+            {
+                return jsonDoc != null;
+            }
         }
 
         internal static AuthenticationEventAction GetEventActionForActionType(string actionType)

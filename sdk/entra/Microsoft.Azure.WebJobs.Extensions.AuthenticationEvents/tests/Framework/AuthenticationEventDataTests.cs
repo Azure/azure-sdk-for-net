@@ -1,7 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Text.Json;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.using System;
+
+using System;
+using System.Text.Json.Nodes;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data;
 using NUnit.Framework;
@@ -23,31 +24,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             bool hasCustomAuthenticationExtensionIdKey = true,
             bool hasCustomAuthenticationExtensionIdValue = true)
         {
-            var options = new JsonWriterOptions
-            {
-                Indented = true
-            };
+            JsonObject jsonObj = new();
 
-            var stream = new MemoryStream();
-            var writer = new Utf8JsonWriter(stream, options);
+            JsonObject context = new();
+            context["protocol"] = "SAML";
 
-            writer.WriteStartObject();
-            writer.WriteStartObject("data");
-            writer.WriteStartObject("authenticationContext");
-            writer.WriteString("protocol", "SAML");
-            writer.WriteEndObject();
-            writer.WriteString("@odata.type", "microsoft.graph.onTokenIssuanceStartCalloutData");
+            JsonObject dataObj = new();
+            jsonObj["data"] = dataObj;
+            dataObj["authenticationContext"] = context;
+            dataObj["@odata.type"] = "microsoft.graph.onTokenIssuanceStartCalloutData";
             if (hasTenantIdKey)
-                writer.WriteString("tenantId", hasTenantIdValue ? TenantId : string.Empty);
+                dataObj["tenantId"] = hasTenantIdValue ? TenantId : string.Empty;
             if (hasAuthenticationEventListenerIdKey)
-                writer.WriteString("authenticationEventListenerId", hasAuthenticationEventListenerIdValue ? AuthenticationEventListenerId : string.Empty);
+                dataObj["authenticationEventListenerId"] = hasAuthenticationEventListenerIdValue ? AuthenticationEventListenerId : string.Empty;
             if (hasCustomAuthenticationExtensionIdKey)
-                writer.WriteString("customAuthenticationExtensionId", hasCustomAuthenticationExtensionIdValue ? CustomAuthenticationExtensionId : string.Empty); 
-            writer.WriteEndObject();
-            writer.WriteEndObject();
-            writer.FlushAsync();
+                dataObj["customAuthenticationExtensionId"] = hasCustomAuthenticationExtensionIdValue ? CustomAuthenticationExtensionId : string.Empty;
 
-            return Encoding.UTF8.GetString(stream.ToArray());
+            return jsonObj.ToString();
         }
 
         [Test]
