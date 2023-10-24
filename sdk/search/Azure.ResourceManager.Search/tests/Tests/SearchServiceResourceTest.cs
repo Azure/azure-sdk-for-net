@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             {
                 SkuName = SearchSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.AreEqual(DefaultLocation, result.Data.Location);
             Assert.AreEqual(SearchSkuName.Standard, result.Data.Sku.Name);
             Assert.AreEqual(1, result.Data.PartitionCount);
-            Assert.AreEqual(3, result.Data.ReplicaCount);
+            Assert.AreEqual(1, result.Data.ReplicaCount);
             Assert.AreEqual(SearchServiceHostingMode.Default, result.Data.HostingMode);
         }
 
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             {
                 SkuName = SearchSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             {
                 SkuName = SearchSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             SearchServicePatch patch = new SearchServicePatch(DefaultLocation)
             {
                 PartitionCount = 2,
-                ReplicaCount = 4,
+                ReplicaCount = 3,
             };
             SearchServiceResource item = (await SearchResource.UpdateAsync(patch)).Value;
             Assert.IsNotNull(item);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             Assert.AreEqual(name, item.Data.Name);
             Assert.AreEqual(SearchSkuName.Standard, item.Data.Sku.Name);
             Assert.AreEqual(2, item.Data.PartitionCount);
-            Assert.AreEqual(4, item.Data.ReplicaCount);
+            Assert.AreEqual(3, item.Data.ReplicaCount);
             Assert.AreEqual(SearchServiceHostingMode.Default, item.Data.HostingMode);
         }
 
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             {
                 SkuName = SearchSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             {
                 SkuName = SearchSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             {
                 SkuName = SearchSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             {
                 SkuName = SearchSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             {
                 SkuName = SearchSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             {
                 SkuName = SearchSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             {
                 SkuName = SearchSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
             {
                 SkuName = SearchSkuName.Standard,
                 PartitionCount = 1,
-                ReplicaCount = 3,
+                ReplicaCount = 1,
                 HostingMode = SearchServiceHostingMode.Default
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
