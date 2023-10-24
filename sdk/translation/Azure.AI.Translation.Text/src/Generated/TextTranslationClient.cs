@@ -35,6 +35,7 @@ namespace Azure.AI.Translation.Text
     /// Dictionary lookup. Returns equivalent words for the source term in the target language.
     ///
     /// Dictionary example Returns grammatical structure and context examples for the source term and target term pair.
+    /// Hello World
     /// </summary>
     public partial class TextTranslationClient
     {
