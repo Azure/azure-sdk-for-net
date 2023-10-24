@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
             {
                 Properties = new ConfigurationGroupSchemaPropertiesFormat()
                 {
-                    SchemaDefinition = ReadJsonFile(CGSchemaFileName).ToString(),
+                    SchemaDefinition = ReadJsonFile(CGSchemaFileName).ToString(Newtonsoft.Json.Formatting.None),
                 }
             };
             var lro = await publisher
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                 DeployParametersMappingRuleProfile = new AzureCoreArmTemplateDeployMappingRuleProfile()
                 {
                     ApplicationEnablement = ApplicationEnablement.Unknown,
-                    TemplateParameters = ReadJsonFile(VnetArmTemplateMappingFileName).ToString()
+                    TemplateParameters = ReadJsonFile(VnetArmTemplateMappingFileName).ToString(Newtonsoft.Json.Formatting.None)
                 },
                 ArtifactProfile = new AzureCoreArmTemplateArtifactProfile()
                 {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
             {
                 NetworkFunctionType = NetworkFunctionType.VirtualNetworkFunction,
                 NetworkFunctionTemplate = nfTemplate,
-                DeployParameters = ReadJsonFile(DeployParametersFileName).ToString()
+                DeployParameters = ReadJsonFile(DeployParametersFileName).ToString(Newtonsoft.Json.Formatting.None)
             };
 
             var nfdvData = new NetworkFunctionDefinitionVersionData(location)
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.HybridNetwork.Tests
                         ArtifactVersion = "1.0.0",
                         ArtifactStoreReferenceId = artifactStore.Id,
                     },
-                    ParameterValues = ReadJsonFile(NfArmTemplateMappingFileName).ToString(),
+                    ParameterValues = ReadJsonFile(NfArmTemplateMappingFileName).ToString(Newtonsoft.Json.Formatting.None),
                     TemplateType = TemplateType.ArmTemplate
                 }
             };
