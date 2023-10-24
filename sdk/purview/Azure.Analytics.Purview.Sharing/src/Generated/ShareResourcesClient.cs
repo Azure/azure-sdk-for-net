@@ -14,7 +14,10 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Purview.Sharing
 {
     // Data plane generated client.
-    /// <summary> The ShareResources service client. </summary>
+    /// <summary>
+    /// The ShareResources service client.
+    /// Hello World
+    /// </summary>
     public partial class ShareResourcesClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };

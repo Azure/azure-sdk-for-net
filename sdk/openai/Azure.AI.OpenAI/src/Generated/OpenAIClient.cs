@@ -15,7 +15,10 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.OpenAI
 {
     // Data plane generated client.
-    /// <summary> Azure OpenAI APIs for completions and search. </summary>
+    /// <summary>
+    /// Azure OpenAI APIs for completions and search
+    /// Hello World
+    /// </summary>
     public partial class OpenAIClient
     {
         private const string AuthorizationHeader = "api-key";
