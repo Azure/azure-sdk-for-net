@@ -46,93 +46,6 @@ namespace Azure.Storage.DataMovement
             return result;
         }
 
-        internal static async Task<(string Source, string Destination)> GetResourcePathsAsync(
-            this TransferCheckpointer checkpointer,
-            string transferId,
-            CancellationToken cancellationToken)
-        {
-            int startIndex = DataMovementConstants.JobPartPlanFile.SourcePathLengthIndex;
-            int readLength = DataMovementConstants.JobPartPlanFile.DestinationExtraQueryLengthIndex - startIndex;
-
-            int partCount = await checkpointer.CurrentJobPartCountAsync(transferId).ConfigureAwait(false);
-            string storedSourcePath = default;
-            string storedDestPath = default;
-            for (int i = 0; i < partCount; i++)
-            {
-                using (Stream stream = await checkpointer.ReadableStreamAsync(
-                    transferId: transferId,
-                    partNumber: i,
-                    offset: startIndex,
-                    readSize: readLength,
-                    cancellationToken: cancellationToken).ConfigureAwait(false))
-                {
-                    BinaryReader reader = new BinaryReader(stream);
-
-                    // Read Source Path Length
-                    byte[] pathLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
-                    ushort pathLength = pathLengthBuffer.ToUShort();
-
-                    // Read Source Path
-                    byte[] pathBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.PathStrNumBytes);
-                    string sourcePath = pathBuffer.ToString(pathLength);
-
-                    // Set the stream position to the start of the destination path
-                    reader.BaseStream.Position = DataMovementConstants.JobPartPlanFile.DestinationPathLengthIndex - startIndex;
-
-                    // Read Destination Path Length
-                    pathLengthBuffer = reader.ReadBytes(DataMovementConstants.UShortSizeInBytes);
-                    pathLength = pathLengthBuffer.ToUShort();
-
-                    // Read Destination Path
-                    pathBuffer = reader.ReadBytes(DataMovementConstants.JobPartPlanFile.PathStrNumBytes);
-                    string destPath = pathBuffer.ToString(pathLength);
-
-                    if (string.IsNullOrEmpty(storedSourcePath))
-                    {
-                        // If we currently don't have a path
-                        storedSourcePath = sourcePath;
-                        storedDestPath = destPath;
-                    }
-                    else
-                    {
-                        // If there's already an existing path, let's compare the two paths
-                        // and find the common parent path.
-                        storedSourcePath = GetLongestCommonString(storedSourcePath, sourcePath);
-                        storedDestPath = GetLongestCommonString(storedDestPath, destPath);
-                    }
-                }
-            }
-
-            if (partCount == 1)
-            {
-                return (storedSourcePath, storedDestPath);
-            }
-            else
-            {
-                // The resulting stored paths are just longest common string, trim to last / to get a path
-                return (TrimStringToPath(storedSourcePath), TrimStringToPath(storedDestPath));
-            }
-        }
-
-        private static string GetLongestCommonString(string path1, string path2)
-        {
-            int length = Math.Min(path1.Length, path2.Length);
-            int index = 0;
-
-            while (index < length && path1[index] == path2[index])
-            {
-                index++;
-            }
-
-            return path1.Substring(0, index);
-        }
-
-        private static string TrimStringToPath(string path)
-        {
-            int lastSlash = path.Replace('\\', '/').LastIndexOf('/');
-            return path.Substring(0, lastSlash);
-        }
-
         internal static async Task<(string Source, string Destination)> GetResourceIdsAsync(
             this TransferCheckpointer checkpointer,
             string transferId,
@@ -143,11 +56,11 @@ namespace Azure.Storage.DataMovement
 
             string sourceResourceId;
             string destinationResourceId;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: startIndex,
-                readSize: readLength,
+                length: readLength,
                 cancellationToken: cancellationToken).ConfigureAwait(false))
             {
                 BinaryReader reader = new BinaryReader(stream);
@@ -214,11 +127,11 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken)
         {
             string value;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: startIndex,
-                readSize: streamReadLength,
+                length: streamReadLength,
                 cancellationToken: cancellationToken).ConfigureAwait(false))
             {
                 BinaryReader reader = new BinaryReader(stream);
@@ -243,11 +156,11 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken)
         {
             string value;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: startIndex,
-                readSize: streamReadLength,
+                length: streamReadLength,
                 cancellationToken: cancellationToken).ConfigureAwait(false))
             {
                 BinaryReader reader = new BinaryReader(stream);
@@ -270,11 +183,11 @@ namespace Azure.Storage.DataMovement
             CancellationToken cancellationToken)
         {
             byte value;
-            using (Stream stream = await checkpointer.ReadableStreamAsync(
+            using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
                 transferId: transferId,
                 partNumber: 0,
                 offset: startIndex,
-                readSize: DataMovementConstants.OneByte,
+                length: DataMovementConstants.OneByte,
                 cancellationToken: cancellationToken).ConfigureAwait(false))
             {
                 BinaryReader reader = new BinaryReader(stream);
@@ -283,6 +196,102 @@ namespace Azure.Storage.DataMovement
                 value = reader.ReadByte();
             }
             return value;
+        }
+
+        internal static JobPlanStatus ToJobPlanStatus(this DataTransferStatus transferStatus)
+        {
+            if (transferStatus == default)
+            {
+                return JobPlanStatus.None;
+            }
+
+            JobPlanStatus jobPlanStatus = (JobPlanStatus)Enum.Parse(typeof(JobPlanStatus), transferStatus.State.ToString());
+            if (transferStatus.HasFailedItems)
+            {
+                jobPlanStatus |= JobPlanStatus.HasFailed;
+            }
+            if (transferStatus.HasSkippedItems)
+            {
+                jobPlanStatus |= JobPlanStatus.HasSkipped;
+            }
+
+            return jobPlanStatus;
+        }
+
+        internal static DataTransferStatus ToDataTransferStatus(this JobPlanStatus jobPlanStatus)
+        {
+            DataTransferState state;
+            if (jobPlanStatus.HasFlag(JobPlanStatus.Queued))
+            {
+                state = DataTransferState.Queued;
+            }
+            else if (jobPlanStatus.HasFlag(JobPlanStatus.InProgress))
+            {
+                state = DataTransferState.InProgress;
+            }
+            else if (jobPlanStatus.HasFlag(JobPlanStatus.Pausing))
+            {
+                state = DataTransferState.Pausing;
+            }
+            else if (jobPlanStatus.HasFlag(JobPlanStatus.Stopping))
+            {
+                state = DataTransferState.Stopping;
+            }
+            else if (jobPlanStatus.HasFlag(JobPlanStatus.Paused))
+            {
+                state = DataTransferState.Paused;
+            }
+            else if (jobPlanStatus.HasFlag(JobPlanStatus.Completed))
+            {
+                state = DataTransferState.Completed;
+            }
+            else
+            {
+                state = DataTransferState.None;
+            }
+
+            bool hasFailed = jobPlanStatus.HasFlag(JobPlanStatus.HasFailed);
+            bool hasSkipped = jobPlanStatus.HasFlag(JobPlanStatus.HasSkipped);
+
+            return new DataTransferStatusInternal(state, hasFailed, hasSkipped);
+        }
+
+        /// <summary>
+        /// Writes the given length and offset and increments currentOffset accordingly.
+        /// </summary>
+        /// <param name="writer">The writer to write to.</param>
+        /// <param name="length">The length of the variable length field.</param>
+        /// <param name="currentOffset">
+        /// A reference to the current offset of the variable length fields
+        /// that will be used to set the offset and then incremented.
+        /// </param>
+        internal static void WriteVariableLengthFieldInfo(
+            BinaryWriter writer,
+            int length,
+            ref int currentOffset)
+        {
+            // Write the offset, -1 if size is 0
+            if (length > 0)
+            {
+                writer.Write(currentOffset);
+                currentOffset += length;
+            }
+            else
+            {
+                writer.Write(-1);
+            }
+
+            // Write the length
+            writer.Write(length);
+        }
+
+        internal static string ToSanitizedString(this Uri uri)
+        {
+            UriBuilder builder = new(uri);
+
+            // Remove any query parameters (including SAS)
+            builder.Query = string.Empty;
+            return builder.Uri.AbsoluteUri;
         }
     }
 }

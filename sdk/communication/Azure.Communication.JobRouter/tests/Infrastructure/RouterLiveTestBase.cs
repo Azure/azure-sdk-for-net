@@ -9,7 +9,6 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
 using NUnit.Framework;
@@ -161,7 +160,7 @@ namespace Azure.Communication.JobRouter.Tests.Infrastructure
 
         #region Support assertions
 
-        protected void AssertQueueResponseIsEqual(Response<Models.RouterQueue> upsertQueueResponse, string queueId, string distributionPolicyId, string? queueName = default, IDictionary<string, LabelValue?>? queueLabels = default, string? exceptionPolicyId = default)
+        protected void AssertQueueResponseIsEqual(Response<RouterQueue> upsertQueueResponse, string queueId, string distributionPolicyId, string? queueName = default, IDictionary<string, LabelValue?>? queueLabels = default, string? exceptionPolicyId = default)
         {
             var response = upsertQueueResponse.Value;
 

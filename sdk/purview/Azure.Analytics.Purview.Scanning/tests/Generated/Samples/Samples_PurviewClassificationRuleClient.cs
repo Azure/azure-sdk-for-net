@@ -16,11 +16,11 @@ using NUnit.Framework;
 
 namespace Azure.Analytics.Purview.Scanning.Samples
 {
-    public class Samples_PurviewClassificationRuleClient
+    public partial class Samples_PurviewClassificationRuleClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetProperties()
+        public void Example_GetProperties_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -30,12 +30,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetProperties_Async()
+        public async Task Example_GetProperties_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -45,7 +44,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -82,34 +80,32 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CreateOrUpdate()
+        public void Example_CreateOrUpdate_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = client.CreateOrUpdate(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CreateOrUpdate_Async()
+        public async Task Example_CreateOrUpdate_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            RequestContent content = null;
+            using RequestContent content = null;
             Response response = await client.CreateOrUpdateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -120,7 +116,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -146,7 +142,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             TokenCredential credential = new DefaultAzureCredential();
             PurviewClassificationRuleClient client = new PurviewClassificationRuleClient(endpoint, "<ClassificationRuleName>", credential);
 
-            RequestContent content = RequestContent.Create(new
+            using RequestContent content = RequestContent.Create(new
             {
                 properties = new
                 {
@@ -166,7 +162,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Delete()
+        public void Example_Delete_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -176,12 +172,11 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Delete_Async()
+        public async Task Example_Delete_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -191,7 +186,6 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("kind").ToString());
-            Console.WriteLine(result.ToString());
         }
 
         [Test]
@@ -228,7 +222,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TagVersion()
+        public void Example_TagVersion_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -242,7 +236,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TagVersion_Async()
+        public async Task Example_TagVersion_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -302,7 +296,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetVersions()
+        public void Example_GetVersions_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -311,14 +305,13 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             foreach (BinaryData item in client.GetVersions(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetVersions_Async()
+        public async Task Example_GetVersions_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
@@ -327,8 +320,7 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             await foreach (BinaryData item in client.GetVersionsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
             }
         }
 
@@ -343,9 +335,9 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             foreach (BinaryData item in client.GetVersions(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
 
@@ -360,9 +352,9 @@ namespace Azure.Analytics.Purview.Scanning.Samples
             await foreach (BinaryData item in client.GetVersionsAsync(null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-                Console.WriteLine(result[0].GetProperty("kind").ToString());
-                Console.WriteLine(result[0].GetProperty("id").ToString());
-                Console.WriteLine(result[0].GetProperty("name").ToString());
+                Console.WriteLine(result.GetProperty("kind").ToString());
+                Console.WriteLine(result.GetProperty("id").ToString());
+                Console.WriteLine(result.GetProperty("name").ToString());
             }
         }
     }

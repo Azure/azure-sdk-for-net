@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
@@ -13,16 +13,16 @@ using System.Threading.Tasks;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication of a service principal in to Azure Active Directory using a X509 certificate that is assigned to it's App Registration. More information
+    /// Enables authentication of a service principal to Microsoft Entra ID using a X509 certificate that is assigned to it's App Registration. More information
     /// on how to configure certificate authentication can be found here:
-    /// https://docs.microsoft.com/azure/active-directory/develop/active-directory-certificate-credentials#register-your-certificate-with-azure-ad
+    /// https://learn.microsoft.com/azure/active-directory/develop/active-directory-certificate-credentials#register-your-certificate-with-azure-ad
     /// </summary>
     public class ClientCertificateCredential : TokenCredential
     {
         internal const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/clientcertificatecredential/troubleshoot";
 
         /// <summary>
-        /// Gets the Azure Active Directory tenant (directory) Id of the service principal
+        /// Gets the Microsoft Entra tenant (directory) ID of the service principal
         /// </summary>
         internal string TenantId { get; }
 
@@ -46,9 +46,9 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Microsoft Entra ID with the specified certificate.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificatePath">The path to a file which contains both the client certificate and private key.</param>
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath)
@@ -56,32 +56,32 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Microsoft Entra ID with the specified certificate.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificatePath">The path to a file which contains both the client certificate and private key.</param>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, TokenCredentialOptions options)
             : this(tenantId, clientId, clientCertificatePath, null, options, null, null)
         { }
 
         /// <summary>
-        /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Microsoft Entra ID with the specified certificate.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificatePath">The path to a file which contains both the client certificate and private key.</param>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         public ClientCertificateCredential(string tenantId, string clientId, string clientCertificatePath, ClientCertificateCredentialOptions options)
             : this(tenantId, clientId, clientCertificatePath, null, options, null, null)
         { }
 
         /// <summary>
-        /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Microsoft Entra ID with the specified certificate.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
         public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate)
@@ -89,24 +89,24 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Microsoft Entra ID with the specified certificate.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, TokenCredentialOptions options)
             : this(tenantId, clientId, clientCertificate, options, null, null)
         { }
 
         /// <summary>
-        /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Azure Active Directory with the specified certificate.
+        /// Creates an instance of the ClientCertificateCredential with the details needed to authenticate against Microsoft Entra ID with the specified certificate.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientCertificate">The authentication X509 Certificate of the service principal</param>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         public ClientCertificateCredential(string tenantId, string clientId, X509Certificate2 clientCertificate, ClientCertificateCredentialOptions options)
             : this(tenantId, clientId, clientCertificate, options, null, null)
         { }
@@ -171,7 +171,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate. Acquired tokens are
+        /// Obtains a token from Microsoft Entra ID, using the specified X509 certificate to authenticate. Acquired tokens are
         /// cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
         /// instances to optimize cache effectiveness.
         /// </summary>
@@ -196,7 +196,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified X509 certificate to authenticate. Acquired tokens are
+        /// Obtains a token from Microsoft Entra ID, using the specified X509 certificate to authenticate. Acquired tokens are
         /// cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
         /// instances to optimize cache effectiveness.
         /// </summary>

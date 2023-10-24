@@ -49,10 +49,10 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Verify StorageResourceContainer correctly invokes path scanner and returns the given files
             List<ShareFileClient> results = new();
-            await foreach (StorageResource res in resource.GetStorageResourcesInternal())
+            await foreach (StorageResource res in resource.GetStorageResourcesInternalAsync())
             {
-                Assert.That(res, Is.TypeOf(typeof(ShareFileStorageResourceItem)));
-                results.Add((res as ShareFileStorageResourceItem).ShareFileClient);
+                Assert.That(res, Is.TypeOf(typeof(ShareFileStorageResource)));
+                results.Add((res as ShareFileStorageResource).ShareFileClient);
             }
             Assert.That(results, Is.EquivalentTo(expectedFiles.Select(mock => mock.Object)));
         }
@@ -73,8 +73,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             StorageResourceItem resourceItem = resourceContainer.GetStorageResourceReferenceInternal(
                 string.Join("/", pathSegments));
 
-            Assert.That(resourceItem, Is.TypeOf(typeof(ShareFileStorageResourceItem)));
-            ShareFileStorageResourceItem fileResourceItem = resourceItem as ShareFileStorageResourceItem;
+            Assert.That(resourceItem, Is.TypeOf(typeof(ShareFileStorageResource)));
+            ShareFileStorageResource fileResourceItem = resourceItem as ShareFileStorageResource;
             Assert.That(fileResourceItem.ShareFileClient.Path,
                 Is.EqualTo(startingDir.Path + "/" + string.Join("/", pathSegments)));
             Assert.That(fileResourceItem.ShareFileClient.Name, Is.EqualTo(pathSegments.Last()));

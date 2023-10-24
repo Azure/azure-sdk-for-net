@@ -32,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="dataDeletionDetectionPolicy">
         /// The data deletion detection policy for the datasource.
         /// Please note <see cref="Models.DataDeletionDetectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SoftDeleteColumnDeletionDetectionPolicy"/>.
+        /// The available derived classes include <see cref="NativeBlobSoftDeleteDeletionDetectionPolicy"/> and <see cref="SoftDeleteColumnDeletionDetectionPolicy"/>.
         /// </param>
         /// <param name="etag"> The ETag of the data source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your datasource definition when you want full assurance that no one, not even Microsoft, can decrypt your data source definition in Azure Cognitive Search. Once you have encrypted your data source definition, it will always remain encrypted. Azure Cognitive Search will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your datasource definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
@@ -73,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// The data deletion detection policy for the datasource.
         /// Please note <see cref="Models.DataDeletionDetectionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="SoftDeleteColumnDeletionDetectionPolicy"/>.
+        /// The available derived classes include <see cref="NativeBlobSoftDeleteDeletionDetectionPolicy"/> and <see cref="SoftDeleteColumnDeletionDetectionPolicy"/>.
         /// </summary>
         public DataDeletionDetectionPolicy DataDeletionDetectionPolicy { get; set; }
         /// <summary> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your datasource definition when you want full assurance that no one, not even Microsoft, can decrypt your data source definition in Azure Cognitive Search. Once you have encrypted your data source definition, it will always remain encrypted. Azure Cognitive Search will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your datasource definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </summary>

@@ -5504,6 +5504,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public PipelineExternalComputeScaleProperties() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        public int? NumberOfExternalNodes { get { throw null; } set { } }
+        public int? NumberOfPipelineNodes { get { throw null; } set { } }
         public int? TimeToLive { get { throw null; } set { } }
     }
     public partial class PipelineVariableSpecification
@@ -6373,6 +6375,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class SelfHostedIntegrationRuntime : Azure.ResourceManager.DataFactory.Models.DataFactoryIntegrationRuntimeProperties
     {
         public SelfHostedIntegrationRuntime() { }
+        public bool? IsSelfContainedInteractiveAuthoringEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.LinkedIntegrationRuntimeType LinkedInfo { get { throw null; } set { } }
     }
     public partial class SelfHostedIntegrationRuntimeNode
@@ -6429,6 +6432,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Capabilities { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.IntegrationRuntimeInternalChannelEncryptionMode? InternalChannelEncryption { get { throw null; } }
+        public bool? IsSelfContainedInteractiveAuthoringEnabled { get { throw null; } }
         public string LatestVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataFactory.Models.LinkedIntegrationRuntime> Links { get { throw null; } }
         public System.TimeSpan? LocalTimeZoneOffset { get { throw null; } }

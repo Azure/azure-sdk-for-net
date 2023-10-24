@@ -20,7 +20,6 @@ namespace Azure.AI.OpenAI.Tests.Samples
 
             #region Snippet:TranslateAudio
             using Stream audioStreamFromFile = File.OpenRead("mySpanishAudioFile.mp3");
-            BinaryData audioFileData = BinaryData.FromStream(audioStreamFromFile);
 
             var translationOptions = new AudioTranslationOptions()
             {

@@ -198,7 +198,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.PublicAudience);
+            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.DefaultAudience);
 
             DataLakeServiceClient aadServiceClient = InstrumentClient(new DataLakeServiceClient(
                 service.Uri,
@@ -236,7 +236,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeServiceClient service = DataLakeClientBuilder.GetServiceClient_Hns();
 
             // Act - Create new blob client with the OAuth Credential and Audience
-            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.DataLakeServiceAccountAudience(service.AccountName));
+            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.CreateDataLakeServiceAccountAudience(service.AccountName));
 
             DataLakeServiceClient aadServiceClient = InstrumentClient(new DataLakeServiceClient(
                 service.Uri,

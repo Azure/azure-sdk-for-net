@@ -5,14 +5,23 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Support.Models;
 
 namespace Azure.ResourceManager.Support
 {
     /// <summary> A class to add extension methods to TenantResource. </summary>
     internal partial class TenantResourceExtensionClient : ArmResource
     {
+        private ClientDiagnostics _tenantSupportTicketSupportTicketsNoSubscriptionClientDiagnostics;
+        private SupportTicketsNoSubscriptionRestOperations _tenantSupportTicketSupportTicketsNoSubscriptionRestClient;
+
         /// <summary> Initializes a new instance of the <see cref="TenantResourceExtensionClient"/> class for mocking. </summary>
         protected TenantResourceExtensionClient()
         {
@@ -25,6 +34,9 @@ namespace Azure.ResourceManager.Support
         {
         }
 
+        private ClientDiagnostics TenantSupportTicketSupportTicketsNoSubscriptionClientDiagnostics => _tenantSupportTicketSupportTicketsNoSubscriptionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Support", TenantSupportTicketResource.ResourceType.Namespace, Diagnostics);
+        private SupportTicketsNoSubscriptionRestOperations TenantSupportTicketSupportTicketsNoSubscriptionRestClient => _tenantSupportTicketSupportTicketsNoSubscriptionRestClient ??= new SupportTicketsNoSubscriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(TenantSupportTicketResource.ResourceType));
+
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
@@ -36,6 +48,82 @@ namespace Azure.ResourceManager.Support
         public virtual SupportAzureServiceCollection GetSupportAzureServices()
         {
             return GetCachedClient(Client => new SupportAzureServiceCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of TenantSupportTicketResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of TenantSupportTicketResources and their operations over a TenantSupportTicketResource. </returns>
+        public virtual TenantSupportTicketCollection GetTenantSupportTickets()
+        {
+            return GetCachedClient(Client => new TenantSupportTicketCollection(Client, Id));
+        }
+
+        /// <summary> Gets a collection of TenantFileWorkspaceResources in the TenantResource. </summary>
+        /// <returns> An object representing collection of TenantFileWorkspaceResources and their operations over a TenantFileWorkspaceResource. </returns>
+        public virtual TenantFileWorkspaceCollection GetTenantFileWorkspaces()
+        {
+            return GetCachedClient(Client => new TenantFileWorkspaceCollection(Client, Id));
+        }
+
+        /// <summary>
+        /// Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTicketsNoSubscription_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<SupportNameAvailabilityResult>> CheckNameAvailabilitySupportTicketsNoSubscriptionAsync(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = TenantSupportTicketSupportTicketsNoSubscriptionClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameAvailabilitySupportTicketsNoSubscription");
+            scope.Start();
+            try
+            {
+                var response = await TenantSupportTicketSupportTicketsNoSubscriptionRestClient.CheckNameAvailabilityAsync(content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of a resource name. This API should be used to check the uniqueness of the name for support ticket creation for the selected subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Support/checkNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTicketsNoSubscription_CheckNameAvailability</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Input to check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SupportNameAvailabilityResult> CheckNameAvailabilitySupportTicketsNoSubscription(SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            using var scope = TenantSupportTicketSupportTicketsNoSubscriptionClientDiagnostics.CreateScope("TenantResourceExtensionClient.CheckNameAvailabilitySupportTicketsNoSubscription");
+            scope.Start();
+            try
+            {
+                var response = TenantSupportTicketSupportTicketsNoSubscriptionRestClient.CheckNameAvailability(content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }

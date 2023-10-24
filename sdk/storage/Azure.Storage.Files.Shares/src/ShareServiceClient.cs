@@ -274,7 +274,7 @@ namespace Azure.Storage.Files.Shares
             : this(
                   serviceUri: serviceUri,
                   authentication: credential.AsPolicy(
-                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? ShareAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? ShareAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
                     options),
                   options: options ?? new ShareClientOptions(),
                   sharedKeyCredential: null,
@@ -325,7 +325,10 @@ namespace Azure.Storage.Files.Shares
                 sasCredential: sasCredential,
                 tokenCredential: tokenCredential,
                 clientDiagnostics: new ClientDiagnostics(options),
-                clientOptions: options);
+                clientOptions: options)
+            {
+                Audience = options.Audience ?? ShareAudience.DefaultAudience,
+            };
             _serviceRestClient = BuildServiceRestClient();
         }
 
