@@ -451,12 +451,18 @@ namespace Azure.Messaging.EventHubs.Primitives
             if (metadata.TryGetValue(BlobMetadataKey.Offset, out var str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out var result))
             {
                 offset = result;
-                startingPosition = EventPosition.FromOffset(result, false);
+                if (offset != long.MinValue)
+                {
+                    startingPosition = EventPosition.FromOffset(result, false);
+                }
             }
             if (metadata.TryGetValue(BlobMetadataKey.SequenceNumber, out str) && long.TryParse(str, NumberStyles.Integer, CultureInfo.InvariantCulture, out result))
             {
                 sequenceNumber = result;
-                startingPosition ??= EventPosition.FromSequenceNumber(result, false);
+                if (sequenceNumber != long.MinValue)
+                {
+                    startingPosition ??= EventPosition.FromSequenceNumber(result, false);
+                }
             }
             if (metadata.TryGetValue(BlobMetadataKey.ClientIdentifier, out str))
             {

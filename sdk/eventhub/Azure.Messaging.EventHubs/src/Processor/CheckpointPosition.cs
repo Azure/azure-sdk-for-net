@@ -16,14 +16,13 @@ namespace Azure.Messaging.EventHubs.Processor
     public struct CheckpointPosition : IEquatable<CheckpointPosition>
     {
         /// <summary>
-        ///   The offset to associate with the checkpoint. This value will be used for informational metadata in almost all cases. If there is no sequence number associated
-        ///   with the checkpoint, this value will be used for positioning when events are read.
+        ///   If provided, this indicates that a processor should begin reading from the next event in the stream. If not provided, <see cref="CheckpointPosition.Offset"/> will be set to long.MinValue.
         /// </summary>
         ///
         public long Offset { get; }
 
         /// <summary>
-        ///   The sequence number to associate with the checkpoint. It indicates that a processor should begin reading from the next event in the stream.
+        ///   The sequence number to associate with the checkpoint. If no offset is present, this indicates that a processor should begin reading from the next event in the stream.
         /// </summary>
         ///
         public long SequenceNumber { get; }
@@ -32,8 +31,8 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   Initializes a new instance of the <see cref="CheckpointPosition"/> struct.
         /// </summary>
         ///
-        /// <param name="sequenceNumber">The sequence number to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
-        /// <param name="offset">An optional offset to associate with the checkpoint, intended as informational metadata. If not provided, a default value of long.MinValue will be used as metadata.</param>
+        /// <param name="sequenceNumber">The sequence number to associate with the checkpoint. If no offset is present, this indicates that a processor should begin reading from the next event in the stream.</param>
+        /// <param name="offset">An offset to associate with the checkpoint. If provided, this indicates that a processor should begin reading from the next event in the stream. If not provided, <see cref="CheckpointPosition.Offset"/> will be set to long.MinValue.</param>
         ///
         public CheckpointPosition(long sequenceNumber, long offset = long.MinValue)
         {

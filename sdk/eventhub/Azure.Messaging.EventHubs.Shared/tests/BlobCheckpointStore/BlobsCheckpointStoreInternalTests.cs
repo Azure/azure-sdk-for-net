@@ -376,7 +376,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                            new Dictionary<string, string>
                                            {
                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
-                                               {BlobMetadataKey.Offset, expectedOffset.ToString()}
+                                               {BlobMetadataKey.Offset, expectedOffset.ToString()},
+                                               {BlobMetadataKey.SequenceNumber, long.MinValue.ToString()}
                                            })
             };
             var target = new BlobCheckpointStoreInternal(new MockBlobContainerClient() { Blobs = blobList });
@@ -406,6 +407,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                            new Dictionary<string, string>
                                            {
                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
+                                               {BlobMetadataKey.Offset, long.MinValue.ToString()},
                                                {BlobMetadataKey.SequenceNumber, expectedSequence.ToString()}
                                            })
             };
@@ -418,7 +420,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
             var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
-            Assert.That(blobCheckpoint.Offset, Is.Null, "The offset should have been null.");
+            Assert.That(blobCheckpoint.Offset, Is.EqualTo(long.MinValue), "The offset should have been long.MinValue.");
             Assert.That(expectedSequence, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
         }
 
@@ -471,7 +473,9 @@ namespace Azure.Messaging.EventHubs.Tests
                                            "snapshot",
                                            new Dictionary<string, string>
                                            {
-                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()}
+                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
+                                               {BlobMetadataKey.Offset, long.MinValue.ToString()},
+                                               {BlobMetadataKey.SequenceNumber, long.MinValue.ToString()}
                                            })
             };
 
