@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Updated api-version to `2023-09-01`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
