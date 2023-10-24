@@ -14,27 +14,27 @@ using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Support
 {
-    internal class SupportTicketOperationSource : IOperationSource<SupportTicketResource>
+    internal class SubscriptionSupportTicketOperationSource : IOperationSource<SubscriptionSupportTicketResource>
     {
         private readonly ArmClient _client;
 
-        internal SupportTicketOperationSource(ArmClient client)
+        internal SubscriptionSupportTicketOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        SupportTicketResource IOperationSource<SupportTicketResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        SubscriptionSupportTicketResource IOperationSource<SubscriptionSupportTicketResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream);
             var data = SupportTicketData.DeserializeSupportTicketData(document.RootElement);
-            return new SupportTicketResource(_client, data);
+            return new SubscriptionSupportTicketResource(_client, data);
         }
 
-        async ValueTask<SupportTicketResource> IOperationSource<SupportTicketResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<SubscriptionSupportTicketResource> IOperationSource<SubscriptionSupportTicketResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
             var data = SupportTicketData.DeserializeSupportTicketData(document.RootElement);
-            return new SupportTicketResource(_client, data);
+            return new SubscriptionSupportTicketResource(_client, data);
         }
     }
 }

@@ -5,14 +5,18 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.Support.Models
 {
     /// <summary> Updates severity, ticket status, and contact details in the support ticket. </summary>
-    public partial class SupportTicketPatch
+    public partial class UpdateSupportTicket
     {
-        /// <summary> Initializes a new instance of SupportTicketPatch. </summary>
-        public SupportTicketPatch()
+        /// <summary> Initializes a new instance of UpdateSupportTicket. </summary>
+        public UpdateSupportTicket()
         {
+            SecondaryConsent = new ChangeTrackingList<SecondaryConsent>();
         }
 
         /// <summary> Severity level. </summary>
@@ -21,5 +25,9 @@ namespace Azure.ResourceManager.Support.Models
         public SupportTicketStatus? Status { get; set; }
         /// <summary> Contact details to be updated on the support ticket. </summary>
         public SupportContactProfileContent ContactDetails { get; set; }
+        /// <summary> Advanced diagnostic consent to be updated on the support ticket. </summary>
+        public AdvancedDiagnosticConsent? AdvancedDiagnosticConsent { get; set; }
+        /// <summary> This property indicates secondary consents for the support ticket. </summary>
+        public IList<SecondaryConsent> SecondaryConsent { get; }
     }
 }

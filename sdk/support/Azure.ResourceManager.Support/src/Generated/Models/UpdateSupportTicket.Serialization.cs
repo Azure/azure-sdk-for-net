@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class SupportTicketPatch : IUtf8JsonSerializable
+    public partial class UpdateSupportTicket : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -29,6 +29,21 @@ namespace Azure.ResourceManager.Support.Models
             {
                 writer.WritePropertyName("contactDetails"u8);
                 writer.WriteObjectValue(ContactDetails);
+            }
+            if (Optional.IsDefined(AdvancedDiagnosticConsent))
+            {
+                writer.WritePropertyName("advancedDiagnosticConsent"u8);
+                writer.WriteStringValue(AdvancedDiagnosticConsent.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(SecondaryConsent))
+            {
+                writer.WritePropertyName("secondaryConsent"u8);
+                writer.WriteStartArray();
+                foreach (var item in SecondaryConsent)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
