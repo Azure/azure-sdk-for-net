@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.ArcVm.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -37,6 +38,16 @@ namespace Azure.ResourceManager.ArcVm.Tests
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
             ResourceGroupData input = new ResourceGroupData(location);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
+            return lro.Value;
+        }
+
+        protected async Task<GalleryImageResource> CreateGalleryImageAsync(ResourceGroupResource resourceGroup, string galleryImageName, AzureLocation location)
+        {
+            var imageData = new GalleryImageData(location)
+            {
+                OSType = OperatingSystemType.Windows
+            };
+            var lro = await resourceGroup.GetGalleryImages().CreateOrUpdateAsync(WaitUntil.Completed, galleryImageName, imageData);
             return lro.Value;
         }
     }
