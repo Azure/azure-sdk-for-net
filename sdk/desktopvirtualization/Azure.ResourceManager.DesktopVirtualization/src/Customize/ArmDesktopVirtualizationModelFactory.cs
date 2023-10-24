@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Models;
-using SystemData = Azure.ResourceManager.DesktopVirtualization.Models.SystemData;
+using SystemData = Azure.ResourceManager.Models.SystemData;
 using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Customize
