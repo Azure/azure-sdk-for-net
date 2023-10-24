@@ -3,16 +3,15 @@
 
 #nullable disable
 
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.Maintenance.Models;
-using Azure.ResourceManager.Resources;
-using System.Threading.Tasks;
-using System.Threading;
-using System;
 
 namespace Azure.ResourceManager.Maintenance.Mocking
 {
-    public partial class MaintenanceResourceGroupMockingExtension : ArmResource
+    public partial class MockableMaintenanceResourceGroupResource : ArmResource
     {
         /// <summary>
         /// Track maintenance updates to resource with parent

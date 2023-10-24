@@ -3,13 +3,12 @@
 
 #nullable disable
 
-using Azure.ResourceManager.Reservations.Models;
-using Azure.ResourceManager.Resources;
 using System.Threading;
+using Azure.ResourceManager.Reservations.Models;
 
 namespace Azure.ResourceManager.Reservations.Mocking
 {
-    public partial class ReservationsTenantMockingExtension : ArmResource
+    public partial class MockableReservationsTenantResource : ArmResource
     {
         /// <summary>
         /// List the reservations and the roll up counts of reservations group by provisioning states that the user has access to in the current tenant.

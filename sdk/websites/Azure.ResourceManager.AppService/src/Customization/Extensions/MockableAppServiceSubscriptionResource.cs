@@ -12,7 +12,7 @@ using Azure.ResourceManager.AppService.Models;
 namespace Azure.ResourceManager.AppService.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    public partial class AppServiceSubscriptionMockingExtension : ArmResource
+    public partial class MockableAppServiceSubscriptionResource : ArmResource
     {
         /// <summary>
         /// Description for List all apps that are assigned to a hostname.

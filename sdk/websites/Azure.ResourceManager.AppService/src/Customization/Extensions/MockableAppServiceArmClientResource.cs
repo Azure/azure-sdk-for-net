@@ -9,7 +9,7 @@ using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Mocking
 {
-    public partial class AppServiceArmClientMockingExtension : ArmResource
+    public partial class MockableAppServiceArmClientResource : ArmResource
     {
         // we have to customize this because the WebSiteTriggeredwebJobResource.CreateResourceIdentifier method now has an overload and the generated version cannot compile
         /// <summary>

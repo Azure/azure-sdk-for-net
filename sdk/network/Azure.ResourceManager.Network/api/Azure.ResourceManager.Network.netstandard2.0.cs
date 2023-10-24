@@ -5811,9 +5811,9 @@ namespace Azure.ResourceManager.Network
 }
 namespace Azure.ResourceManager.Network.Mocking
 {
-    public partial class NetworkArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNetworkArmClient : Azure.ResourceManager.ArmResource
     {
-        protected NetworkArmClientMockingExtension() { }
+        protected MockableNetworkArmClient() { }
         public virtual Azure.ResourceManager.Network.AdminRuleGroupResource GetAdminRuleGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Network.ApplicationGatewayPrivateEndpointConnectionResource GetApplicationGatewayPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Network.ApplicationGatewayResource GetApplicationGatewayResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -5923,16 +5923,16 @@ namespace Azure.ResourceManager.Network.Mocking
         public virtual Azure.ResourceManager.Network.VpnSiteResource GetVpnSiteResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource GetWebApplicationFirewallPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class NetworkManagementGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNetworkManagementGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected NetworkManagementGroupMockingExtension() { }
+        protected MockableNetworkManagementGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Network.ManagementGroupNetworkManagerConnectionResource> GetManagementGroupNetworkManagerConnection(string networkManagerConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.ManagementGroupNetworkManagerConnectionResource>> GetManagementGroupNetworkManagerConnectionAsync(string networkManagerConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Network.ManagementGroupNetworkManagerConnectionCollection GetManagementGroupNetworkManagerConnections() { throw null; }
     }
-    public partial class NetworkResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNetworkResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected NetworkResourceGroupMockingExtension() { }
+        protected MockableNetworkResourceGroupResource() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility>> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkServiceAsync(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Network.ApplicationGatewayResource> GetApplicationGateway(string applicationGatewayName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -6079,9 +6079,9 @@ namespace Azure.ResourceManager.Network.Mocking
         public virtual Azure.Response<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource> GetWebApplicationFirewallPolicy(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.WebApplicationFirewallPolicyResource>> GetWebApplicationFirewallPolicyAsync(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class NetworkSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableNetworkSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected NetworkSubscriptionMockingExtension() { }
+        protected MockableNetworkSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Network.Models.DnsNameAvailabilityResult> CheckDnsNameAvailability(Azure.Core.AzureLocation location, string domainNameLabel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Network.Models.DnsNameAvailabilityResult>> CheckDnsNameAvailabilityAsync(Azure.Core.AzureLocation location, string domainNameLabel, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityPrivateLinkService(Azure.WaitUntil waitUntil, Azure.Core.AzureLocation location, Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

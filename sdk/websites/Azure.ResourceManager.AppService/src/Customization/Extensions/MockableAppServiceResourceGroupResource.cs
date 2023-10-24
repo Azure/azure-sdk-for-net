@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.AppService.Mocking
 {
     /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
-    public partial class AppServiceResourceGroupMockingExtension : ArmResource
+    public partial class MockableAppServiceResourceGroupResource : ArmResource
     {
         /// <summary>
         /// Description for List all ResourceHealthMetadata for all sites in the resource group in the subscription.

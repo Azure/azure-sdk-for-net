@@ -177,16 +177,16 @@ namespace Azure.ResourceManager.Maintenance
 }
 namespace Azure.ResourceManager.Maintenance.Mocking
 {
-    public partial class MaintenanceArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMaintenanceArmClient : Azure.ResourceManager.ArmResource
     {
-        protected MaintenanceArmClientMockingExtension() { }
+        protected MockableMaintenanceArmClient() { }
         public virtual Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource GetMaintenanceApplyUpdateResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Maintenance.MaintenanceConfigurationResource GetMaintenanceConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Maintenance.MaintenancePublicConfigurationResource GetMaintenancePublicConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class MaintenanceResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMaintenanceResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected MaintenanceResourceGroupMockingExtension() { }
+        protected MockableMaintenanceResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdate(string providerName, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource>> CreateOrUpdateApplyUpdateAsync(string providerName, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Maintenance.MaintenanceApplyUpdateResource> CreateOrUpdateApplyUpdateByParent(string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -236,9 +236,9 @@ namespace Azure.ResourceManager.Maintenance.Mocking
         public virtual Azure.Response<Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData> UpdateConfigurationAssignmentByResourceGroup(string configurationAssignmentName, Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData>> UpdateConfigurationAssignmentByResourceGroupAsync(string configurationAssignmentName, Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MaintenanceSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableMaintenanceSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected MaintenanceSubscriptionMockingExtension() { }
+        protected MockableMaintenanceSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentBySubscription(string configurationAssignmentName, Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentBySubscriptionAsync(string configurationAssignmentName, Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Maintenance.Models.MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentBySubscription(string configurationAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

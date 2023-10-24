@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace Azure.ResourceManager.Reservations.Mocking
 {
-    public partial class ReservationsSubscriptionMockingExtension : ArmResource
+    public partial class MockableReservationsSubscriptionResource : ArmResource
     {
         /// <summary>
         /// Get the regions and skus that are available for RI purchase for the specified Azure subscription.

@@ -5510,9 +5510,9 @@ namespace Azure.ResourceManager.Sql
 }
 namespace Azure.ResourceManager.Sql.Mocking
 {
-    public partial class SqlArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSqlArmClient : Azure.ResourceManager.ArmResource
     {
-        protected SqlArmClientMockingExtension() { }
+        protected MockableSqlArmClient() { }
         public virtual Azure.ResourceManager.Sql.BackupShortTermRetentionPolicyResource GetBackupShortTermRetentionPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.DatabaseAdvancedThreatProtectionResource GetDatabaseAdvancedThreatProtectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.DataMaskingPolicyResource GetDataMaskingPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -5640,9 +5640,9 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual Azure.ResourceManager.Sql.WorkloadClassifierResource GetWorkloadClassifierResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Sql.WorkloadGroupResource GetWorkloadGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class SqlResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSqlResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected SqlResourceGroupMockingExtension() { }
+        protected MockableSqlResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Sql.InstanceFailoverGroupResource> GetInstanceFailoverGroup(Azure.Core.AzureLocation locationName, string failoverGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.InstanceFailoverGroupResource>> GetInstanceFailoverGroupAsync(Azure.Core.AzureLocation locationName, string failoverGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.InstanceFailoverGroupCollection GetInstanceFailoverGroups(Azure.Core.AzureLocation locationName) { throw null; }
@@ -5692,9 +5692,9 @@ namespace Azure.ResourceManager.Sql.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.VirtualClusterResource>> GetVirtualClusterAsync(string virtualClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Sql.VirtualClusterCollection GetVirtualClusters() { throw null; }
     }
-    public partial class SqlSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableSqlSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected SqlSubscriptionMockingExtension() { }
+        protected MockableSqlSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Sql.Models.SqlNameAvailabilityResponse> CheckSqlServerNameAvailability(Azure.ResourceManager.Sql.Models.SqlNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sql.Models.SqlNameAvailabilityResponse>> CheckSqlServerNameAvailabilityAsync(Azure.ResourceManager.Sql.Models.SqlNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Sql.Models.SqlLocationCapabilities> GetCapabilitiesByLocation(Azure.Core.AzureLocation locationName, Azure.ResourceManager.Sql.Models.SqlCapabilityGroup? include = default(Azure.ResourceManager.Sql.Models.SqlCapabilityGroup?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

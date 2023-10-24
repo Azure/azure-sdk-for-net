@@ -15,7 +15,6 @@ namespace Azure.ResourceManager.SecurityCenter
     /// <summary> A class to add extension methods to Azure.ResourceManager.SecurityCenter. </summary>
     public static partial class SecurityCenterExtensions
     {
-        #region SubscriptionGovernanceRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="SubscriptionGovernanceRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// </summary>
@@ -26,16 +25,9 @@ namespace Azure.ResourceManager.SecurityCenter
         [Obsolete("This method is obsolete and will be removed in a future release. Please use GetGovernanceRuleResource.", false)]
         public static SubscriptionGovernanceRuleResource GetSubscriptionGovernanceRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SubscriptionGovernanceRuleResource.ValidateResourceId(id);
-                return new SubscriptionGovernanceRuleResource(client, id);
-            }
-            );
+            return GetMockableSecurityCenterArmClient(client).GetSubscriptionGovernanceRuleResource(id);
         }
-        #endregion
 
-        #region SecurityConnectorGovernanceRuleResource
         /// <summary>
         /// Gets an object representing a <see cref="SecurityConnectorGovernanceRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SecurityConnectorGovernanceRuleResource.CreateResourceIdentifier" /> to create a <see cref="SecurityConnectorGovernanceRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -47,14 +39,8 @@ namespace Azure.ResourceManager.SecurityCenter
         [Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public static SecurityConnectorGovernanceRuleResource GetSecurityConnectorGovernanceRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SecurityConnectorGovernanceRuleResource.ValidateResourceId(id);
-                return new SecurityConnectorGovernanceRuleResource(client, id);
-            }
-            );
+            return GetMockableSecurityCenterArmClient(client).GetSecurityConnectorGovernanceRuleResource(id);
         }
-        #endregion
 
         /// <summary> Gets a collection of SubscriptionGovernanceRuleResources in the SubscriptionResource. </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -63,7 +49,7 @@ namespace Azure.ResourceManager.SecurityCenter
         [Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public static SubscriptionGovernanceRuleCollection GetSubscriptionGovernanceRules(this SubscriptionResource subscriptionResource)
         {
-            return GetSecurityCenterSubscriptionMockingExtension(subscriptionResource).GetSubscriptionGovernanceRules();
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionGovernanceRules();
         }
 
         /// <summary>
@@ -89,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter
         [Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public static async Task<Response<SubscriptionGovernanceRuleResource>> GetSubscriptionGovernanceRuleAsync(this SubscriptionResource subscriptionResource, string ruleId, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetSubscriptionGovernanceRules().GetAsync(ruleId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionGovernanceRuleAsync(ruleId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -115,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter
         [Obsolete("This method is obsolete and will be removed in a future release.", false)]
         public static Response<SubscriptionGovernanceRuleResource> GetSubscriptionGovernanceRule(this SubscriptionResource subscriptionResource, string ruleId, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetSubscriptionGovernanceRules().Get(ruleId, cancellationToken);
+            return GetMockableSecurityCenterSubscriptionResource(subscriptionResource).GetSubscriptionGovernanceRule(ruleId, cancellationToken);
         }
     }
 }

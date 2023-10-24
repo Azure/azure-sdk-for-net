@@ -210,17 +210,17 @@ namespace Azure.ResourceManager.Reservations
 }
 namespace Azure.ResourceManager.Reservations.Mocking
 {
-    public partial class ReservationsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableReservationsArmClient : Azure.ResourceManager.ArmResource
     {
-        protected ReservationsArmClientMockingExtension() { }
+        protected MockableReservationsArmClient() { }
         public virtual Azure.ResourceManager.Reservations.QuotaRequestDetailResource GetQuotaRequestDetailResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Reservations.ReservationDetailResource GetReservationDetailResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Reservations.ReservationOrderResource GetReservationOrderResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Reservations.ReservationQuotaResource GetReservationQuotaResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ReservationsSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableReservationsSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected ReservationsSubscriptionMockingExtension() { }
+        protected MockableReservationsSubscriptionResource() { }
         public virtual Azure.ResourceManager.Reservations.ReservationQuotaCollection GetAllReservationQuota(string providerId, Azure.Core.AzureLocation location) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Reservations.Models.AppliedReservationData> GetAppliedReservations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.Models.AppliedReservationData>> GetAppliedReservationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -234,9 +234,9 @@ namespace Azure.ResourceManager.Reservations.Mocking
         public virtual Azure.Response<Azure.ResourceManager.Reservations.ReservationQuotaResource> GetReservationQuota(string providerId, Azure.Core.AzureLocation location, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Reservations.ReservationQuotaResource>> GetReservationQuotaAsync(string providerId, Azure.Core.AzureLocation location, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ReservationsTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableReservationsTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected ReservationsTenantMockingExtension() { }
+        protected MockableReservationsTenantResource() { }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.Models.CalculateExchangeResult> CalculateReservationExchange(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.CalculateExchangeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Reservations.Models.CalculateExchangeResult>> CalculateReservationExchangeAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Reservations.Models.CalculateExchangeContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Reservations.Models.CalculatePriceResult> CalculateReservationOrder(Azure.ResourceManager.Reservations.Models.ReservationPurchaseContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
