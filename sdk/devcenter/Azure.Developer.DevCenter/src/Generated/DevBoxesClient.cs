@@ -15,7 +15,10 @@ using Azure.Core.Pipeline;
 namespace Azure.Developer.DevCenter
 {
     // Data plane generated client.
-    /// <summary> The DevBoxes service client. </summary>
+    /// <summary>
+    /// The DevBoxes service client.
+    /// Hello World
+    /// </summary>
     public partial class DevBoxesClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://devcenter.azure.com/.default" };
