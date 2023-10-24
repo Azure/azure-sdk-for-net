@@ -41,21 +41,22 @@ namespace Azure.Communication
         /// <summary>The id of the Microsoft Teams app.</summary>
         public string TeamsAppId { get; }
 
-        /// <summary> The cloud that the bot belongs to. </summary>
+        /// <summary> The cloud that the app belongs to. </summary>
         public CommunicationCloudEnvironment Cloud { get; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="MicrosoftTeamsAppIdentifier"/>.
         /// </summary>
         /// <param name="teamsAppId">Id of the Microsoft teams app. The unique Microsoft app ID for Teams.</param>
-        /// <param name="cloud">The cloud that the Microsoft bot belongs to. A null value translates to the Public cloud.</param>
+        /// <param name="cloud">The cloud that the Microsoft teams app belongs to. A null value translates to the Public cloud.</param>
+        /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when the <paramref name="teamsAppId"/> is null.
         /// </exception>
         /// <exception cref="System.ArgumentException">
         /// Thrown when the <paramref name="teamsAppId"/> is empty.
         /// </exception>
-        public MicrosoftTeamsAppIdentifier(string teamsAppId, CommunicationCloudEnvironment? cloud = null)
+        public MicrosoftTeamsAppIdentifier(string teamsAppId, CommunicationCloudEnvironment? cloud = null, string rawId = null)
         {
             Argument.AssertNotNullOrEmpty(teamsAppId, nameof(teamsAppId));
             TeamsAppId = teamsAppId;
@@ -67,7 +68,7 @@ namespace Azure.Communication
 
         /// <inheritdoc />
         public override bool Equals(CommunicationIdentifier other)
-            => other is MicrosoftTeamsAppIdentifier botIdentifier
-            && botIdentifier.RawId == RawId;
+            => other is MicrosoftTeamsAppIdentifier appIdentifier
+            && appIdentifier.RawId == RawId;
     }
 }

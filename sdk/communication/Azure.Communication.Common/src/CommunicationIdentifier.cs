@@ -13,9 +13,7 @@ namespace Azure.Communication
         internal const string Phone = "4:";
         internal const string TeamsAppPublicCloud = "28:orgid:";
         internal const string TeamsAppDodCloud = "28:dod:";
-        internal const string TeamsAppDodCloudGlobal = "28:dod-global:";
         internal const string TeamsAppGcchCloud = "28:gcch:";
-        internal const string TeamsAppGcchCloudGlobal = "28:gcch-global:";
         internal const string TeamUserAnonymous = "8:teamsvisitor:";
         internal const string TeamUserPublicCloud = "8:orgid:";
         internal const string TeamUserDodCloud = "8:dod:";
@@ -64,7 +62,7 @@ namespace Azure.Communication
         /// When storing rawIds, use this function to restore the identifier that was encoded in the rawId.
         /// </summary>
         /// <param name="rawId">The rawId to be translated to its identifier representation.</param>
-        /// <returns>Returns <see cref="CommunicationUserIdentifier"/>, <see cref="PhoneNumberIdentifier"/>, <see cref="MicrosoftTeamsUserIdentifier"/>, or <see cref="UnknownIdentifier"/> based on the identifier type.</returns>
+        /// <returns>Returns <see cref="CommunicationUserIdentifier"/>, <see cref="PhoneNumberIdentifier"/>, <see cref="MicrosoftTeamsUserIdentifier"/>, <see cref="MicrosoftTeamsAppIdentifier"/>, or <see cref="UnknownIdentifier"/> based on the identifier type.</returns>
         public static CommunicationIdentifier FromRawId(string rawId)
         {
             Argument.AssertNotNullOrEmpty(rawId, nameof(rawId));
