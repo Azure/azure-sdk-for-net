@@ -15,7 +15,10 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Purview.Catalog
 {
     // Data plane generated sub-client.
-    /// <summary> The PurviewEntities sub-client. </summary>
+    /// <summary>
+    /// The PurviewEntities sub-client.
+    /// Hello World
+    /// </summary>
     public partial class PurviewEntities
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };

@@ -15,7 +15,10 @@ using Azure.Core.Pipeline;
 namespace Azure.Analytics.Purview.Scanning
 {
     // Data plane generated client.
-    /// <summary> The PurviewClassificationRule service client. </summary>
+    /// <summary>
+    /// The PurviewClassificationRule service client.
+    /// Hello World
+    /// </summary>
     public partial class PurviewClassificationRuleClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://purview.azure.net/.default" };
