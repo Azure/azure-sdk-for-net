@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// </summary>
         public EventTriggerMetrics()
         {
-            var assembly = AssemblyName.GetAssemblyName("Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents");
+            var assembly = AssemblyName.GetAssemblyName("Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.dll");
 
             ProductVersion = assembly.Version.ToString();
             Framework = RuntimeInformation.FrameworkDescription;
@@ -30,29 +30,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>
         /// The client library's product name
         /// </summary>
-        public static string ProductName = "AuthenticationEvents";
+        public const string ProductName = "AuthenticationEvents";
 
         /// <summary>
         /// Get the platform of the event trigger based on the OS.
         /// </summary>
         /// <returns>OS Name</returns>
-        private static string Platform;
+        public static string Platform { get; private set; }
 
         /// <summary>
         /// Product version of the event trigger. Example: 1.0.0-beta, 1.0.0, 2.0.0
         /// </summary>
-        private static string ProductVersion;
+        public static string ProductVersion { get; private set; }
 
         /// <summary>
         /// Framework of the event trigger. Example: .NET, JS, TS, PY
         /// </summary>
-        private static string Framework;
+        public static string Framework { get; private set; }
 
         /// <summary>
         /// Header key to add the metrics to.
         /// User-Agent is the standard header to add metrics to recommended by Azure sdk guidelines.
         /// </summary>
-        public static string MetricsHeader = "User-Agent";
+        public const string MetricsHeader = "User-Agent";
 
         /// <summary>
         /// Set the metrics on the response message.
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             if (message != null)
             {
                 var headers = message.Headers;
-                AddOrReplaceToHeader(headers, GetHeaderValue(Platform, ProductVersion, Framework));
+                AddOrReplaceToHeader(headers, GetHeaderValueFormatted(Platform, ProductVersion, Framework));
             }
         }
 
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             headers.Add(MetricsHeader, value);
         }
 
-        private static string GetHeaderValue(string platform, string version, string runtime)
+        private static string GetHeaderValueFormatted(string platform, string version, string runtime)
         {
             return $"azsdk-net-{ProductName}/{version} ({runtime}; {platform.Trim()})";
         }

@@ -29,11 +29,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             HttpResponseMessage message = new() { };
             new EventTriggerMetrics().SetMetricHeaders(message);
 
+            Assert.IsNotEmpty(EventTriggerMetrics.Framework, "Framework should note be empty");
+            Assert.IsNotEmpty(EventTriggerMetrics.ProductVersion, "ProductVersion should not be empty");
+            Assert.IsNotEmpty(EventTriggerMetrics.Platform, "Platform should not be empty");
+
             var headers = message.Headers;
             Assert.IsTrue(headers.Contains(EventTriggerMetrics.MetricsHeader));
             
             string headerValue = headers.GetValues(EventTriggerMetrics.MetricsHeader).First();
-            Assert.AreEqual(GetTestHeaderValue(), headerValue, "Verify default header values match");
+            Assert.IsNotEmpty(headerValue, "Header value should not be empty or null");
+        }
+
+        [Test]
+        [Description("Verify if sets the headers is in the correct format")]
+        public void TestSetMetricFormat()
+        {
+            HttpResponseMessage message = new() { };
+            new EventTriggerMetrics().SetMetricHeaders(message);
+
+            var headers = message.Headers;
+            Assert.IsTrue(headers.Contains(EventTriggerMetrics.MetricsHeader));
+
+            string headerValue = headers.GetValues(EventTriggerMetrics.MetricsHeader).First();
+
+            Assert.AreEqual(GetTestHeaderValue(), headerValue, "Verify format of header values matches");
         }
 
         [Test]
@@ -53,10 +72,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         }
 
         private static string GetTestHeaderValue(
-            string framework = ".NETStandard,Version=v2.0",
-            string version = "1.0.0.0",
-            string platform = "Microsoft Windows 10.0.22621")
+            string framework = null,
+            string version = null,
+            string platform = null)
         {
+            framework ??= EventTriggerMetrics.Framework;
+            version ??= EventTriggerMetrics.ProductVersion;
+            platform ??= EventTriggerMetrics.Platform;
+
             return $"azsdk-net-{EventTriggerMetrics.ProductName}/{version} ({framework}; {platform})";
         }
     }
