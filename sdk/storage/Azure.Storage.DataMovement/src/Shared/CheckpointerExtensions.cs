@@ -58,14 +58,8 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Writes the given length and offset and increments currentOffset accordingly.
         /// </summary>
-        /// <param name="writer">The writer to write to.</param>
-        /// <param name="length">The length of the variable length field.</param>
-        /// <param name="currentOffset">
-        /// A reference to the current offset of the variable length fields
-        /// that will be used to set the offset and then incremented.
-        /// </param>
         internal static void WriteVariableLengthFieldInfo(
-            BinaryWriter writer,
+            this BinaryWriter writer,
             int length,
             ref int currentOffset)
         {
