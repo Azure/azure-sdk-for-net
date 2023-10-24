@@ -1008,9 +1008,9 @@ namespace Azure.ResourceManager.Avs
 }
 namespace Azure.ResourceManager.Avs.Mocking
 {
-    public partial class AvsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAvsArmClient : Azure.ResourceManager.ArmResource
     {
-        protected AvsArmClientMockingExtension() { }
+        protected MockableAvsArmClient() { }
         public virtual Azure.ResourceManager.Avs.AvsCloudLinkResource GetAvsCloudLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Avs.AvsPrivateCloudAddonResource GetAvsPrivateCloudAddonResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Avs.AvsPrivateCloudClusterResource GetAvsPrivateCloudClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1035,16 +1035,16 @@ namespace Azure.ResourceManager.Avs.Mocking
         public virtual Azure.ResourceManager.Avs.WorkloadNetworkVirtualMachineResource GetWorkloadNetworkVirtualMachineResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Avs.WorkloadNetworkVmGroupResource GetWorkloadNetworkVmGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class AvsResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAvsResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected AvsResourceGroupMockingExtension() { }
+        protected MockableAvsResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Avs.AvsPrivateCloudResource> GetAvsPrivateCloud(string privateCloudName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.AvsPrivateCloudResource>> GetAvsPrivateCloudAsync(string privateCloudName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Avs.AvsPrivateCloudCollection GetAvsPrivateClouds() { throw null; }
     }
-    public partial class AvsSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAvsSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected AvsSubscriptionMockingExtension() { }
+        protected MockableAvsSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaAvailabilityResult> CheckAvsQuotaAvailability(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionQuotaAvailabilityResult>> CheckAvsQuotaAvailabilityAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Avs.Models.AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.Avs.Models.AvsSku sku = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }

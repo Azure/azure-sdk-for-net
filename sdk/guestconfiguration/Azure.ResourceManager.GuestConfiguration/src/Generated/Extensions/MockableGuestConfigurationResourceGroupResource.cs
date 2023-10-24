@@ -41,47 +41,5 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
         }
-
-        /// <summary>
-        /// List all guest configuration assignments for a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestConfigurationAssignments_RGList</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GuestConfigurationVmAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<GuestConfigurationVmAssignmentResource> GetGuestConfigurationAssignmentsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateRGListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new GuestConfigurationVmAssignmentResource(Client, GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(e)), GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationAssignments", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// List all guest configuration assignments for a resource group.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.GuestConfiguration/guestConfigurationAssignments</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GuestConfigurationAssignments_RGList</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GuestConfigurationVmAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<GuestConfigurationVmAssignmentResource> GetGuestConfigurationAssignments(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => GuestConfigurationVmAssignmentGuestConfigurationAssignmentsRestClient.CreateRGListRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new GuestConfigurationVmAssignmentResource(Client, GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(e)), GuestConfigurationVmAssignmentGuestConfigurationAssignmentsClientDiagnostics, Pipeline, "MockableGuestConfigurationResourceGroupResource.GetGuestConfigurationAssignments", "value", null, cancellationToken);
-        }
     }
 }

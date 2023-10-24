@@ -3,20 +3,13 @@
 
 #nullable disable
 
-using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AlertsManagement;
 using Azure.ResourceManager.AlertsManagement.Models;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AlertsManagement.Mocking
 {
-    public partial class AlertsManagementSubscriptionMockingExtension : ArmResource
+    public partial class MockableAlertsManagementSubscriptionResource : ArmResource
     {
         /// <summary>
         /// Get a summarized count of your alerts grouped by various parameters (e.g. grouping by &apos;Severity&apos; returns the count of alerts for each severity).

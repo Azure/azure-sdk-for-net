@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventTypeUnderTopic" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventTypeUnderTopic> GetEventTypesAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return GetEventGridArmClientMockingExtension(client).GetEventTypesAsync(scope, cancellationToken);
+            return GetMockableEventGridArmClient(client).GetEventTypesAsync(scope, cancellationToken);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventTypeUnderTopic" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventTypeUnderTopic> GetEventTypes(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            return GetEventGridArmClientMockingExtension(client).GetEventTypes(scope, cancellationToken);
+            return GetMockableEventGridArmClient(client).GetEventTypes(scope, cancellationToken);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventGridSubscriptionData> GetGlobalEventSubscriptionsDataForTopicTypeAsync(this SubscriptionResource subscriptionResource, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetEventGridSubscriptionMockingExtension(subscriptionResource).GetGlobalEventSubscriptionsDataForTopicTypeAsync(topicTypeName, filter, top, cancellationToken);
+            return GetMockableEventGridSubscriptionResource(subscriptionResource).GetGlobalEventSubscriptionsDataForTopicTypeAsync(topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventGridSubscriptionData> GetGlobalEventSubscriptionsDataForTopicType(this SubscriptionResource subscriptionResource, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetEventGridSubscriptionMockingExtension(subscriptionResource).GetGlobalEventSubscriptionsDataForTopicType(topicTypeName, filter, top, cancellationToken);
+            return GetMockableEventGridSubscriptionResource(subscriptionResource).GetGlobalEventSubscriptionsDataForTopicType(topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsDataAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetEventGridSubscriptionMockingExtension(subscriptionResource).GetRegionalEventSubscriptionsDataAsync(location, filter, top, cancellationToken);
+            return GetMockableEventGridSubscriptionResource(subscriptionResource).GetRegionalEventSubscriptionsDataAsync(location, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsData(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetEventGridSubscriptionMockingExtension(subscriptionResource).GetRegionalEventSubscriptionsData(location, filter, top, cancellationToken);
+            return GetMockableEventGridSubscriptionResource(subscriptionResource).GetRegionalEventSubscriptionsData(location, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsDataForTopicTypeAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetEventGridSubscriptionMockingExtension(subscriptionResource).GetRegionalEventSubscriptionsDataForTopicTypeAsync(location, topicTypeName, filter, top, cancellationToken);
+            return GetMockableEventGridSubscriptionResource(subscriptionResource).GetRegionalEventSubscriptionsDataForTopicTypeAsync(location, topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsDataForTopicType(this SubscriptionResource subscriptionResource, AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetEventGridSubscriptionMockingExtension(subscriptionResource).GetRegionalEventSubscriptionsDataForTopicType(location, topicTypeName, filter, top, cancellationToken);
+            return GetMockableEventGridSubscriptionResource(subscriptionResource).GetRegionalEventSubscriptionsDataForTopicType(location, topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventGridSubscriptionData> GetGlobalEventSubscriptionsDataForTopicTypeAsync(this ResourceGroupResource resourceGroupResource, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetEventGridResourceGroupMockingExtension(resourceGroupResource).GetGlobalEventSubscriptionsDataForTopicTypeAsync(topicTypeName, filter, top, cancellationToken);
+            return GetMockableEventGridSubscriptionResource(resourceGroupResource).GetGlobalEventSubscriptionsDataForTopicTypeAsync(topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventGridSubscriptionData> GetGlobalEventSubscriptionsDataForTopicType(this ResourceGroupResource resourceGroupResource, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetEventGridResourceGroupMockingExtension(resourceGroupResource).GetGlobalEventSubscriptionsDataForTopicType(topicTypeName, filter, top, cancellationToken);
+            return GetMockableEventGridSubscriptionResource(resourceGroupResource).GetGlobalEventSubscriptionsDataForTopicType(topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsDataAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetEventGridResourceGroupMockingExtension(resourceGroupResource).GetRegionalEventSubscriptionsDataAsync(location, filter, top, cancellationToken);
+            return GetMockableEventGridResourceGroupResource(resourceGroupResource).GetRegionalEventSubscriptionsDataAsync(location, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsData(this ResourceGroupResource resourceGroupResource, AzureLocation location, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetEventGridResourceGroupMockingExtension(resourceGroupResource).GetRegionalEventSubscriptionsData(location, filter, top, cancellationToken);
+            return GetMockableEventGridResourceGroupResource(resourceGroupResource).GetRegionalEventSubscriptionsData(location, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> An async collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsDataForTopicTypeAsync(this ResourceGroupResource resourceGroupResource, AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetEventGridResourceGroupMockingExtension(resourceGroupResource).GetRegionalEventSubscriptionsDataForTopicTypeAsync(location, topicTypeName, filter, top, cancellationToken);
+            return GetMockableEventGridResourceGroupResource(resourceGroupResource).GetRegionalEventSubscriptionsDataForTopicTypeAsync(location, topicTypeName, filter, top, cancellationToken);
         }
 
         /// <summary>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <returns> A collection of <see cref="EventGridSubscriptionData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<EventGridSubscriptionData> GetRegionalEventSubscriptionsDataForTopicType(this ResourceGroupResource resourceGroupResource, AzureLocation location, string topicTypeName, string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
-            return GetEventGridResourceGroupMockingExtension(resourceGroupResource).GetRegionalEventSubscriptionsDataForTopicType(location, topicTypeName, filter, top, cancellationToken);
+            return GetMockableEventGridResourceGroupResource(resourceGroupResource).GetRegionalEventSubscriptionsDataForTopicType(location, topicTypeName, filter, top, cancellationToken);
         }
     }
 }

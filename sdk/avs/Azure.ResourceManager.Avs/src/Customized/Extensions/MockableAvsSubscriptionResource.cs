@@ -11,7 +11,7 @@ using Azure.ResourceManager.Avs.Models;
 namespace Azure.ResourceManager.Avs.Mocking
 {
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
-    public partial class AvsSubscriptionMockingExtension : ArmResource
+    public partial class MockableAvsSubscriptionResource : ArmResource
     {
         /// <summary>
         /// Return trial status for subscription by region

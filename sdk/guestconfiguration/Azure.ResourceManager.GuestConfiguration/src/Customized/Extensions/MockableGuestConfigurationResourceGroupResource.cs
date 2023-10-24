@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
     [CodeGenSuppress("GetGuestConfigurationVmAssignments", typeof(string))]
     [CodeGenSuppress("GetGuestConfigurationHcrpAssignments", typeof(string))]
     [CodeGenSuppress("GetGuestConfigurationVmssAssignments", typeof(string))]
-    public partial class GuestConfigurationResourceGroupMockingExtension : ArmResource
+    public partial class MockableGuestConfigurationResourceGroupResource : ArmResource
     {
         /// <summary>
         /// List all guest configuration assignments for a resource group.

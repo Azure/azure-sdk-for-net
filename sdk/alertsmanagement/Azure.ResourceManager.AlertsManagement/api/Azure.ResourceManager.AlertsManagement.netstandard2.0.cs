@@ -153,23 +153,23 @@ namespace Azure.ResourceManager.AlertsManagement
 }
 namespace Azure.ResourceManager.AlertsManagement.Mocking
 {
-    public partial class AlertsManagementArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAlertsManagementArmClient : Azure.ResourceManager.ArmResource
     {
-        protected AlertsManagementArmClientMockingExtension() { }
+        protected MockableAlertsManagementArmClient() { }
         public virtual Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource GetAlertProcessingRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AlertsManagement.ServiceAlertResource GetServiceAlertResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.AlertsManagement.SmartGroupResource GetSmartGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class AlertsManagementResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAlertsManagementResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected AlertsManagementResourceGroupMockingExtension() { }
+        protected MockableAlertsManagementResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource> GetAlertProcessingRule(string alertProcessingRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource>> GetAlertProcessingRuleAsync(string alertProcessingRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AlertsManagement.AlertProcessingRuleCollection GetAlertProcessingRules() { throw null; }
     }
-    public partial class AlertsManagementSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAlertsManagementSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected AlertsManagementSubscriptionMockingExtension() { }
+        protected MockableAlertsManagementSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource> GetAlertProcessingRules(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.AlertsManagement.AlertProcessingRuleResource> GetAlertProcessingRulesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.ServiceAlertResource> GetServiceAlert(System.Guid alertId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -183,9 +183,9 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.SmartGroupResource>> GetSmartGroupAsync(System.Guid smartGroupId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AlertsManagement.SmartGroupCollection GetSmartGroups() { throw null; }
     }
-    public partial class AlertsManagementTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableAlertsManagementTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected AlertsManagementTenantMockingExtension() { }
+        protected MockableAlertsManagementTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata> GetServiceAlertMetadata(Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AlertsManagement.Models.ServiceAlertMetadata>> GetServiceAlertMetadataAsync(Azure.ResourceManager.AlertsManagement.Models.RetrievedInformationIdentifier identifier, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

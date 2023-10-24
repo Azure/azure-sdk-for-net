@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EventGrid.Mocking
 {
-    public partial class EventGridArmClientMockingExtension : ArmResource
+    public partial class MockableEventGridArmClient : ArmResource
     {
         private ClientDiagnostics _eventGridTopicTopicsClientDiagnostics;
         private TopicsRestOperations _eventGridTopicTopicsRestClient;

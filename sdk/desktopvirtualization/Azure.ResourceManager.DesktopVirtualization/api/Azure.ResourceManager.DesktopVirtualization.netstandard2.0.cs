@@ -636,9 +636,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
 }
 namespace Azure.ResourceManager.DesktopVirtualization.Mocking
 {
-    public partial class DesktopVirtualizationArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDesktopVirtualizationArmClient : Azure.ResourceManager.ArmResource
     {
-        protected DesktopVirtualizationArmClientMockingExtension() { }
+        protected MockableDesktopVirtualizationArmClient() { }
         public virtual Azure.ResourceManager.DesktopVirtualization.HostPoolResource GetHostPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DesktopVirtualization.MsixPackageResource GetMsixPackageResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DesktopVirtualization.ScalingPlanPooledScheduleResource GetScalingPlanPooledScheduleResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -650,9 +650,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         public virtual Azure.ResourceManager.DesktopVirtualization.VirtualDesktopResource GetVirtualDesktopResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource GetVirtualWorkspaceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DesktopVirtualizationResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDesktopVirtualizationResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected DesktopVirtualizationResourceGroupMockingExtension() { }
+        protected MockableDesktopVirtualizationResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> GetHostPool(string hostPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.HostPoolResource>> GetHostPoolAsync(string hostPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DesktopVirtualization.HostPoolCollection GetHostPools() { throw null; }
@@ -666,9 +666,9 @@ namespace Azure.ResourceManager.DesktopVirtualization.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceResource>> GetVirtualWorkspaceAsync(string workspaceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DesktopVirtualization.VirtualWorkspaceCollection GetVirtualWorkspaces() { throw null; }
     }
-    public partial class DesktopVirtualizationSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDesktopVirtualizationSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected DesktopVirtualizationSubscriptionMockingExtension() { }
+        protected MockableDesktopVirtualizationSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> GetHostPools(int? pageSize = default(int?), bool? isDescending = default(bool?), int? initialSkip = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Pageable<Azure.ResourceManager.DesktopVirtualization.HostPoolResource> GetHostPools(System.Threading.CancellationToken cancellationToken) { throw null; }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static async Task<Response<AvsSubscriptionTrialAvailabilityResult>> CheckAvsTrialAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
         {
-            return await GetAvsSubscriptionMockingExtension(subscriptionResource).CheckAvsTrialAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAvsSubscriptionResource(subscriptionResource).CheckAvsTrialAvailabilityAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Avs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public static Response<AvsSubscriptionTrialAvailabilityResult> CheckAvsTrialAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken)
         {
-            return GetAvsSubscriptionMockingExtension(subscriptionResource).CheckAvsTrialAvailability(location, cancellationToken);
+            return GetMockableAvsSubscriptionResource(subscriptionResource).CheckAvsTrialAvailability(location, cancellationToken);
         }
     }
 }

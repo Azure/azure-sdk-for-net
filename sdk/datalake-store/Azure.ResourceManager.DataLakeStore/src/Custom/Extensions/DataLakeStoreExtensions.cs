@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> An async collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataLakeStoreAccountBasicData> GetAccountsAsync(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            return GetDataLakeStoreSubscriptionMockingExtension(subscriptionResource).GetAccountsAsync(filter, top, skip, select, orderBy, count, cancellationToken);
+            return GetMockableDataLakeStoreSubscriptionResource(subscriptionResource).GetAccountsAsync(filter, top, skip, select, orderBy, count, cancellationToken);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataLakeStore
         /// <returns> A collection of <see cref="DataLakeStoreAccountBasicData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataLakeStoreAccountBasicData> GetAccounts(this SubscriptionResource subscriptionResource, string filter = null, int? top = null, int? skip = null, string select = null, string orderBy = null, bool? count = null, CancellationToken cancellationToken = default)
         {
-            return GetDataLakeStoreSubscriptionMockingExtension(subscriptionResource).GetAccounts(filter, top, skip, select, orderBy, count, cancellationToken);
+            return GetMockableDataLakeStoreSubscriptionResource(subscriptionResource).GetAccounts(filter, top, skip, select, orderBy, count, cancellationToken);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     [CodeGenSuppress("GetGuestConfigurationAssignmentsAsync", typeof(CancellationToken))]
     [CodeGenSuppress("GetGuestConfigurationAssignments", typeof(CancellationToken))]
-    public partial class GuestConfigurationSubscriptionMockingExtension : ArmResource
+    public partial class MockableGuestConfigurationSubscriptionResource : ArmResource
     {
         /// <summary>
         /// List all guest configuration assignments for a subscription.

@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Mocking
 {
-    public partial class DesktopVirtualizationSubscriptionMockingExtension : ArmResource
+    public partial class MockableDesktopVirtualizationSubscriptionResource : ArmResource
     {
         /// <summary>
         /// List hostPools in subscription.

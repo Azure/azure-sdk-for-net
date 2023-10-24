@@ -1482,9 +1482,9 @@ namespace Azure.ResourceManager.EventGrid
 }
 namespace Azure.ResourceManager.EventGrid.Mocking
 {
-    public partial class EventGridArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableEventGridArmClient : Azure.ResourceManager.ArmResource
     {
-        protected EventGridArmClientMockingExtension() { }
+        protected MockableEventGridArmClient() { }
         public virtual Azure.ResourceManager.EventGrid.CaCertificateResource GetCaCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.EventGrid.DomainEventSubscriptionResource GetDomainEventSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.EventGrid.DomainTopicEventSubscriptionResource GetDomainTopicEventSubscriptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -1525,9 +1525,9 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         public virtual Azure.ResourceManager.EventGrid.TopicTypeResource GetTopicTypeResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.EventGrid.VerifiedPartnerResource GetVerifiedPartnerResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class EventGridResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableEventGridResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected EventGridResourceGroupMockingExtension() { }
+        protected MockableEventGridResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.EventGridDomainResource> GetEventGridDomain(string domainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.EventGridDomainResource>> GetEventGridDomainAsync(string domainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.EventGrid.EventGridDomainCollection GetEventGridDomains() { throw null; }
@@ -1560,9 +1560,9 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.SystemTopicResource>> GetSystemTopicAsync(string systemTopicName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.EventGrid.SystemTopicCollection GetSystemTopics() { throw null; }
     }
-    public partial class EventGridSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableEventGridSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected EventGridSubscriptionMockingExtension() { }
+        protected MockableEventGridSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.EventGridDomainResource> GetEventGridDomains(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.EventGridDomainResource> GetEventGridDomainsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.EventGridNamespaceResource> GetEventGridNamespaces(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1588,9 +1588,9 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         public virtual Azure.Pageable<Azure.ResourceManager.EventGrid.SystemTopicResource> GetSystemTopics(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.EventGrid.SystemTopicResource> GetSystemTopicsAsync(string filter = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class EventGridTenantMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableEventGridTenantResource : Azure.ResourceManager.ArmResource
     {
-        protected EventGridTenantMockingExtension() { }
+        protected MockableEventGridTenantResource() { }
         public virtual Azure.Response<Azure.ResourceManager.EventGrid.TopicTypeResource> GetTopicType(string topicTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EventGrid.TopicTypeResource>> GetTopicTypeAsync(string topicTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.EventGrid.TopicTypeCollection GetTopicTypes() { throw null; }

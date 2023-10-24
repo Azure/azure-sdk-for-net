@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<HostPoolResource> GetHostPoolsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
         {
-            return GetDesktopVirtualizationSubscriptionMockingExtension(subscriptionResource).GetHostPoolsAsync(cancellationToken);
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetHostPoolsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<HostPoolResource> GetHostPools(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
         {
-            return GetDesktopVirtualizationSubscriptionMockingExtension(subscriptionResource).GetHostPools(cancellationToken);
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetHostPools(cancellationToken);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AsyncPageable<ScalingPlanResource> GetScalingPlansAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
         {
-            return GetDesktopVirtualizationSubscriptionMockingExtension(subscriptionResource).GetScalingPlansAsync(cancellationToken);
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetScalingPlansAsync(cancellationToken);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Pageable<ScalingPlanResource> GetScalingPlans(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken)
         {
-            return GetDesktopVirtualizationSubscriptionMockingExtension(subscriptionResource).GetScalingPlans(cancellationToken);
+            return GetMockableDesktopVirtualizationSubscriptionResource(subscriptionResource).GetScalingPlans(cancellationToken);
         }
     }
 }
