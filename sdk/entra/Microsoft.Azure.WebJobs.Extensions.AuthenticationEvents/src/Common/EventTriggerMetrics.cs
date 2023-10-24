@@ -1,62 +1,85 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>
     /// Static class to set the metric headers for each event trigger.
     /// </summary>
-    public static class EventTriggerMetrics
+    public sealed class EventTriggerMetrics
     {
+        /// <summary>
+        /// Default constructor for eventmetrics
+        /// </summary>
+        private EventTriggerMetrics()
+        {
+            var assembly = AssemblyName.GetAssemblyName("Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.dll");
+
+            ProductVersion = assembly.Version.ToString();
+            Framework = RuntimeInformation.FrameworkDescription;
+            Platform = RuntimeInformation.OSDescription ?? "unknown";
+        }
+
+        /// <summary>
+        /// Lazy immplementation to make sure that only one instance is created and returned, while delaying the creation till needed.
+        /// </summary>
+        private static readonly Lazy<EventTriggerMetrics> lazyEventTrigger = new Lazy<EventTriggerMetrics>(() => new EventTriggerMetrics());
+
+        /// <summary>
+        /// The singleton instance for event trigger metrics
+        /// </summary>
+        public static EventTriggerMetrics Instance
+        {
+            get
+            {
+                return lazyEventTrigger.Value;
+            }
+        }
+
         /// <summary>
         /// The client library's product name
         /// </summary>
-        public static string ProductName = "AuthenticationEvents";
-
-        /// <summary>
-        /// Current executing assembly
-        /// </summary>
-        private static readonly Assembly assembly = typeof(EventTriggerMetrics).Assembly;
+        public const string ProductName = "AuthenticationEvents";
 
         /// <summary>
         /// Get the platform of the event trigger based on the OS.
         /// </summary>
         /// <returns>OS Name</returns>
-        private static string Platform => RuntimeInformation.OSDescription ?? "unknown";
+        public static string Platform { get; private set; }
 
         /// <summary>
         /// Product version of the event trigger. Example: 1.0.0-beta, 1.0.0, 2.0.0
         /// </summary>
-        private static string ProductVersion => assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
+        public static string ProductVersion { get; private set; }
 
         /// <summary>
-        /// Runtime of the event trigger. Example: .NET, JS, TS, PY
+        /// Framework of the event trigger. Example: .NET, JS, TS, PY
         /// </summary>
-        private static string Framework => assembly.GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName;
+        public static string Framework { get; private set; }
 
         /// <summary>
         /// Header key to add the metrics to.
         /// User-Agent is the standard header to add metrics to recommended by Azure sdk guidelines.
         /// </summary>
-        public static string MetricsHeader = "User-Agent";
+        public const string MetricsHeader = "User-Agent";
 
         /// <summary>
         /// Set the metrics on the response message.
         /// </summary>
         /// <param name="message">The reponse message</param>
-        internal static void SetMetricHeaders(HttpResponseMessage message)
+        internal void SetMetricHeaders(HttpResponseMessage message)
         {
             if (message != null)
             {
                 var headers = message.Headers;
-                headers.AddOrReplaceToHeader(GetHeaderValue(Platform, ProductVersion, Framework));
+                AddOrReplaceToHeader(headers, GetHeaderValueFormatted(Platform, ProductVersion, Framework));
             }
         }
 
@@ -65,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// </summary>
         /// <param name="headers"><see cref="HttpHeaders"/> to add the key and value to</param>
         /// <param name="value">Header value to add</param>
-        private static void AddOrReplaceToHeader(this HttpHeaders headers, string value)
+        private static void AddOrReplaceToHeader(HttpHeaders headers, string value)
         {
             if (headers.Contains(MetricsHeader))
             {
@@ -76,9 +99,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             headers.Add(MetricsHeader, value);
         }
 
-        private static string GetHeaderValue(string platform, string version, string runtime)
+        private static string GetHeaderValueFormatted(string platform, string version, string runtime)
         {
-            return $"azsdk-net-{ProductName}/{version} ({runtime}; {platform})";
+            return $"azsdk-net-{ProductName}/{version} ({runtime}; {platform.Trim()})";
         }
     }
 }

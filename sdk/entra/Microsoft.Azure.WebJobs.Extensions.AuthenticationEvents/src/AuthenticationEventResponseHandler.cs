@@ -31,17 +31,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         public AuthenticationEventResponse Response
         {
             get => _response;
-            internal set
+            private set
             {
                 if (value != null)
                 {
                     _response = value;
 
                     // Set metrics on the headers for the response
-                    EventTriggerMetrics.SetMetricHeaders(_response);
+                    EventTriggerMetrics.Instance.SetMetricHeaders(_response);
                 }
             }
         }
+
+        internal AuthenticationEventResponseHandler() { }
 
         /// <summary>Gets the type.</summary>
         /// <value>The type.</value>

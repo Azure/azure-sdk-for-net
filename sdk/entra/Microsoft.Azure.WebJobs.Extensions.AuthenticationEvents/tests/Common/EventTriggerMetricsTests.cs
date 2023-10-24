@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Net.Http;
 
@@ -16,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         public void TestSetMetricHeadersNull()
         {
             HttpResponseMessage message = null;
-            Assert.DoesNotThrow(() => EventTriggerMetrics.SetMetricHeaders(message));
+            Assert.DoesNotThrow(() => EventTriggerMetrics.Instance.SetMetricHeaders(message));
             Assert.IsNull(
                 anObject: message,
                 message: "Verify AuthenticationEventRequestBase is not set to anything when null.");
@@ -27,13 +28,32 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         public  void TestSetMetricHeaders()
         {
             HttpResponseMessage message = new() { };
-            EventTriggerMetrics.SetMetricHeaders(message);
+            EventTriggerMetrics.Instance.SetMetricHeaders(message);
+
+            Assert.IsNotEmpty(EventTriggerMetrics.Framework, "Framework should note be empty");
+            Assert.IsNotEmpty(EventTriggerMetrics.ProductVersion, "ProductVersion should not be empty");
+            Assert.IsNotEmpty(EventTriggerMetrics.Platform, "Platform should not be empty");
 
             var headers = message.Headers;
             Assert.IsTrue(headers.Contains(EventTriggerMetrics.MetricsHeader));
             
             string headerValue = headers.GetValues(EventTriggerMetrics.MetricsHeader).First();
-            Assert.AreEqual(GetTestHeaderValue(), headerValue, "Verify default header values match");
+            Assert.IsNotEmpty(headerValue, "Header value should not be empty or null");
+        }
+
+        [Test]
+        [Description("Verify if sets the headers is in the correct format")]
+        public void TestSetMetricFormat()
+        {
+            HttpResponseMessage message = new() { };
+            EventTriggerMetrics.Instance.SetMetricHeaders(message);
+
+            var headers = message.Headers;
+            Assert.IsTrue(headers.Contains(EventTriggerMetrics.MetricsHeader));
+
+            string headerValue = headers.GetValues(EventTriggerMetrics.MetricsHeader).First();
+
+            Assert.AreEqual(GetTestHeaderValue(), headerValue, "Verify format of header values matches");
         }
 
         [Test]
@@ -43,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             HttpResponseMessage message = new() { };
             message.Headers.Add(EventTriggerMetrics.MetricsHeader, "test");
 
-            EventTriggerMetrics.SetMetricHeaders(message);
+            EventTriggerMetrics.Instance.SetMetricHeaders(message);
 
             var headers = message.Headers;
             Assert.IsTrue(headers.Contains(EventTriggerMetrics.MetricsHeader));
@@ -53,11 +73,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         }
 
         private static string GetTestHeaderValue(
-            string framework = ".NETStandard,Version=v2.0",
-            string version = "1.0.0.0",
-            string platform = "Microsoft Windows 10.0.22621")
+            string framework = null,
+            string version = null,
+            string platform = null)
         {
-            return $"azsdk-net-{EventTriggerMetrics.ProductName}/{version} ({framework}; {platform})";
+            framework ??= EventTriggerMetrics.Framework;
+            version ??= EventTriggerMetrics.ProductVersion;
+            platform ??= EventTriggerMetrics.Platform;
+
+            return $"azsdk-net-{EventTriggerMetrics.ProductName}/{version} ({framework}; {platform.Trim()})";
         }
     }
 }
