@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="description"> Description of ApplicationGroup. </param>
         /// <param name="friendlyName"> Friendly name of ApplicationGroup. </param>
         /// <param name="showInFeed"> Boolean representing whether the applicationGroup is show in the feed. </param>
-        internal VirtualApplicationGroupPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, string description, string friendlyName, bool? showInFeed) : base(id, name, resourceType, systemData)
+        internal VirtualApplicationGroupPatch(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, string description, string friendlyName, bool? showInFeed) : base(id, name, resourceType, systemData)
         {
             Tags = tags;
             Description = description;

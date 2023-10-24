@@ -5,9 +5,14 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DesktopVirtualization.Models;
 using Azure.ResourceManager.Models;
+using SystemData = Azure.ResourceManager.DesktopVirtualization.Models.SystemData;
+using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Customize
 {
+    /// <summary>
+    /// A factory for creating Azure.ResourceManager.DesktopVirtualization.Models instances.
+    /// </summary>
     public static partial class ArmDesktopVirtualizationModelFactory
     {
         /// <param name="id"> The id. </param>
@@ -95,7 +100,6 @@ namespace Azure.ResourceManager.DesktopVirtualization.Customize
 
         public static VirtualApplicationGroupData VirtualApplicationGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string objectId, string description, string friendlyName, ResourceIdentifier hostPoolId, ResourceIdentifier workspaceId, VirtualApplicationGroupType applicationGroupType, bool? isCloudPCResource, ResourceIdentifier managedBy, string kind, ETag? etag, ManagedServiceIdentity identity, DesktopVirtualizationSku sku, ArmPlan plan)
             => VirtualApplicationGroupData(id, name, resourceType, systemData, tags, location, objectId, description, friendlyName, hostPoolId, workspaceId, applicationGroupType, isCloudPCResource, default, managedBy, kind, etag, identity, sku, plan);
-
         /// <summary> Initializes a new instance of VirtualApplicationGroupPatch. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>

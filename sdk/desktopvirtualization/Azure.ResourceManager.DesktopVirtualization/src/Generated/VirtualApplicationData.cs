@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="iconIndex"> Index of the icon. </param>
         /// <param name="iconHash"> Hash of the icon. </param>
         /// <param name="iconContent"> the icon a 64 bit string as a byte array. </param>
-        internal VirtualApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, string description, string friendlyName, string filePath, string msixPackageFamilyName, string msixPackageApplicationId, RemoteApplicationType? applicationType, VirtualApplicationCommandLineSetting commandLineSetting, string commandLineArguments, bool? showInPortal, string iconPath, int? iconIndex, string iconHash, BinaryData iconContent) : base(id, name, resourceType, systemData)
+        internal VirtualApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string objectId, string description, string friendlyName, string filePath, string msixPackageFamilyName, string msixPackageApplicationId, RemoteApplicationType? applicationType, VirtualApplicationCommandLineSetting commandLineSetting, string commandLineArguments, bool? showInPortal, string iconPath, int? iconIndex, string iconHash, BinaryData iconContent) : base(id, name, resourceType, systemData)
         {
             ObjectId = objectId;
             Description = description;

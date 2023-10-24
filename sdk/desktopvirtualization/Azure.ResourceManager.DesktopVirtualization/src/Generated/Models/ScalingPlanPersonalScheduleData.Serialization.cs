@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Optional<ResourceManager.Models.SystemData> systemData = default;
             Optional<IList<DesktopVirtualizationDayOfWeek>> daysOfWeek = default;
             Optional<ScalingActionTime> rampUpStartTime = default;
             Optional<StartupBehavior> rampUpAutoStartHosts = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

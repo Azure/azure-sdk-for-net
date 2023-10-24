@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="isActive"> Set a version of the package to be active across hostpool. </param>
         /// <param name="isRegularRegistration"> Set Registration mode. Regular or Delayed. </param>
         /// <param name="displayName"> Display name for MSIX Package. </param>
-        internal MsixPackagePatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isActive, bool? isRegularRegistration, string displayName) : base(id, name, resourceType, systemData)
+        internal MsixPackagePatch(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, bool? isActive, bool? isRegularRegistration, string displayName) : base(id, name, resourceType, systemData)
         {
             IsActive = isActive;
             IsRegularRegistration = isRegularRegistration;

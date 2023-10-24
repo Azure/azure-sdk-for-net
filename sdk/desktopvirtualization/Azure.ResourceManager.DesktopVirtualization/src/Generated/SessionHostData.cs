@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <param name="lastUpdatedOn"> The timestamp of the last update. </param>
         /// <param name="updateErrorMessage"> The error message. </param>
         /// <param name="sessionHostHealthCheckResults"> List of SessionHostHealthCheckReports. </param>
-        internal SessionHostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string objectId, DateTimeOffset? lastHeartBeatOn, int? sessions, string agentVersion, bool? allowNewSession, string vmId, ResourceIdentifier resourceId, string assignedUser, string friendlyName, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxsStackVersion, SessionHostUpdateState? updateState, DateTimeOffset? lastUpdatedOn, string updateErrorMessage, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults) : base(id, name, resourceType, systemData)
+        internal SessionHostData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string objectId, DateTimeOffset? lastHeartBeatOn, int? sessions, string agentVersion, bool? allowNewSession, string vmId, ResourceIdentifier resourceId, string assignedUser, string friendlyName, SessionHostStatus? status, DateTimeOffset? statusTimestamp, string osVersion, string sxsStackVersion, SessionHostUpdateState? updateState, DateTimeOffset? lastUpdatedOn, string updateErrorMessage, IReadOnlyList<SessionHostHealthCheckReport> sessionHostHealthCheckResults) : base(id, name, resourceType, systemData)
         {
             ObjectId = objectId;
             LastHeartBeatOn = lastHeartBeatOn;
