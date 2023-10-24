@@ -512,7 +512,7 @@ namespace Azure.Communication.Identity.Tests
         [TestCase(ServiceVersion.V2021_03_07, TestName = "CreateIdentityWithServiceVersion_V2021_03_07")]
         [TestCase(ServiceVersion.V2022_06_01, TestName = "CreateIdentityWithServiceVersion_V2022_06_01")]
         [TestCase(ServiceVersion.V2022_10_01, TestName = "CreateIdentityWithServiceVersion_V2022_10_01")]
-        [TestCase(ServiceVersion.V2022_10_01, TestName = "CreateIdentityWithServiceVersion_V2023_10_01")]
+        [TestCase(ServiceVersion.V2023_10_01, TestName = "CreateIdentityWithServiceVersion_V2023_10_01")]
         public async Task CreateIdentityWithDifferentServiceVersions(ServiceVersion version)
         {
             try
