@@ -128,7 +128,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The deserialized application/json digital twin and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <typeparam name="T">The type to deserialize the digital twin to.</typeparam>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
@@ -194,7 +194,7 @@ namespace Azure.DigitalTwins.Core
         /// <returns>The deserialized application/json digital twin and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <typeparam name="T">The type to deserialize the digital twin to.</typeparam>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
@@ -247,7 +247,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="digitalTwin"/> is <c>null</c>.
@@ -336,7 +336,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="digitalTwin"/> is <c>null</c>.
         /// </exception>
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         public virtual Response<T> CreateOrReplaceDigitalTwin<T>(
             string digitalTwinId,
@@ -382,7 +382,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
@@ -432,7 +432,7 @@ namespace Azure.DigitalTwins.Core
         /// </para>
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
@@ -469,7 +469,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="jsonPatchDocument"/> is <c>null</c>.
@@ -510,7 +510,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="jsonPatchDocument"/> is <c>null</c>.
@@ -549,7 +549,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> is <c>null</c>.
@@ -600,7 +600,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> is <c>null</c>.
@@ -643,7 +643,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <example>
         /// <exception cref="ArgumentNullException">
@@ -710,7 +710,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> is <c>null</c>.
         /// </exception>
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <seealso cref="UpdateComponentAsync(string, string, JsonPatchDocument, ETag?, CancellationToken)"/>
         public virtual Response UpdateComponent(
@@ -758,7 +758,7 @@ namespace Azure.DigitalTwins.Core
         /// </para>
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
@@ -851,7 +851,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
@@ -924,7 +924,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
@@ -1003,7 +1003,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> is <c>null</c>.
@@ -1072,7 +1072,7 @@ namespace Azure.DigitalTwins.Core
         /// </para>
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
@@ -1129,7 +1129,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
@@ -1177,7 +1177,7 @@ namespace Azure.DigitalTwins.Core
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
         /// </exception>
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <seealso cref="DeleteRelationship(string, string, ETag?, CancellationToken)"/>
         public virtual async Task<Response> DeleteRelationshipAsync(string digitalTwinId, string relationshipId, ETag? ifMatch = null, CancellationToken cancellationToken = default)
@@ -1213,7 +1213,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
@@ -1270,7 +1270,7 @@ namespace Azure.DigitalTwins.Core
         /// </remarks>
         /// <typeparam name="T">The type to deserialize the relationship to.</typeparam>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
@@ -1365,7 +1365,7 @@ namespace Azure.DigitalTwins.Core
         /// </para>
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
@@ -1419,7 +1419,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
@@ -1472,7 +1472,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="relationshipId"/> is <c>null</c>.
@@ -1515,7 +1515,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetModels" language="csharp">
@@ -1608,7 +1608,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <seealso cref="GetModelsAsync(GetModelsOptions, CancellationToken)"/>
         public virtual Pageable<DigitalTwinsModelData> GetModels(GetModelsOptions options = null, CancellationToken cancellationToken = default)
@@ -1671,7 +1671,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
@@ -1711,7 +1711,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
@@ -1752,7 +1752,7 @@ namespace Azure.DigitalTwins.Core
         /// </para>
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
@@ -1807,7 +1807,7 @@ namespace Azure.DigitalTwins.Core
         /// </para>
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
@@ -1837,7 +1837,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The created models and the HTTP response <see cref="Response{T}"/>.</returns>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <remarks>
         /// <para>
@@ -1901,7 +1901,7 @@ namespace Azure.DigitalTwins.Core
         /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/concepts-models">Understand twin models in Azure Digital Twins.</see>
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <seealso cref="CreateModelsAsync(IEnumerable{string}, CancellationToken)"/>
         public virtual Response<DigitalTwinsModelData[]> CreateModels(IEnumerable<string> dtdlModels, CancellationToken cancellationToken = default)
@@ -1946,7 +1946,7 @@ namespace Azure.DigitalTwins.Core
         /// </para>
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
@@ -2002,7 +2002,7 @@ namespace Azure.DigitalTwins.Core
         /// </para>
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="modelId"/> is <c>null</c>.
@@ -2396,7 +2396,7 @@ namespace Azure.DigitalTwins.Core
         /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/how-to-query-graph#query-limitations">Query limitations</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleQueryTwins" language="csharp">
@@ -2515,7 +2515,7 @@ namespace Azure.DigitalTwins.Core
         /// <see href="https://docs.microsoft.com/en-us/azure/digital-twins/how-to-query-graph#query-limitations">Query limitations</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <example>
         /// A basic query for all digital twins: SELECT * FROM digitalTwins.
@@ -2614,7 +2614,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <example>
         /// <code snippet="Snippet:DigitalTwinsSampleGetEventRoutes" language="csharp">
@@ -2699,7 +2699,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <seealso cref="GetEventRoutesAsync(CancellationToken)"/>
         public virtual Pageable<DigitalTwinsEventRoute> GetEventRoutes(CancellationToken cancellationToken = default)
@@ -2773,7 +2773,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
@@ -2806,7 +2806,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
@@ -2841,7 +2841,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
@@ -2885,7 +2885,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
@@ -2918,7 +2918,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
@@ -2957,7 +2957,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="eventRouteId"/> is <c>null</c>.
@@ -2995,7 +2995,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="payload"/> is <c>null</c>.
@@ -3060,7 +3060,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="payload"/> is <c>null</c>.
@@ -3117,7 +3117,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> or <paramref name="payload"/> is <c>null</c>.
@@ -3193,7 +3193,7 @@ namespace Azure.DigitalTwins.Core
         /// For more samples, see <see href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/samples">our repo samples</see>.
         /// </remarks>
         /// <exception cref="RequestFailedException">
-        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and <see cref="RequestFailedException.Status"/> properties for more details.
+        /// The exception that captures the errors from the service. Check the <see cref="RequestFailedException.ErrorCode"/> and Status properties for more details.
         /// </exception>
         /// <exception cref="ArgumentNullException">
         /// The exception is thrown when <paramref name="digitalTwinId"/> or <paramref name="componentName"/> or <paramref name="payload"/> is <c>null</c>.

@@ -685,7 +685,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="tableName">The name of the table to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table. If the table already exists, then <see cref="Response.Status"/> is 409. The <see cref="Response"/> can be accessed via the GetRawResponse() method.</returns>
+        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table. If the table already exists, then Status is 409. The <see cref="Response"/> can be accessed via the GetRawResponse() method.</returns>
         public virtual Response<TableItem> CreateTableIfNotExists(string tableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
@@ -724,7 +724,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="tableName">The name of the table to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table. If the table already exists, then <see cref="Response.Status"/> is 409. The <see cref="Response"/> can be accessed via the GetRawResponse() method.</returns>
+        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table. If the table already exists, then Status is 409. The <see cref="Response"/> can be accessed via the GetRawResponse() method.</returns>
         public virtual async Task<Response<TableItem>> CreateTableIfNotExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
