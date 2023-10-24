@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Initializes a new instance of TriggerCriterion. </summary>
         /// <param name="name"> Trigger criterion name. </param>
         /// <param name="value"> Trigger criterion value. </param>
-        internal TriggerCriterion(Name? name, string value)
+        internal TriggerCriterion(SelfHelpName? name, string value)
         {
             Name = name;
             Value = value;
         }
 
         /// <summary> Trigger criterion name. </summary>
-        public Name? Name { get; set; }
+        public SelfHelpName? Name { get; set; }
         /// <summary> Trigger criterion value. </summary>
         public string Value { get; set; }
     }

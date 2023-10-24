@@ -8,18 +8,18 @@
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Filter criterion. </summary>
-    public partial class Filter
+    public partial class SelfHelpFilter
     {
-        /// <summary> Initializes a new instance of Filter. </summary>
-        public Filter()
+        /// <summary> Initializes a new instance of SelfHelpFilter. </summary>
+        public SelfHelpFilter()
         {
         }
 
-        /// <summary> Initializes a new instance of Filter. </summary>
+        /// <summary> Initializes a new instance of SelfHelpFilter. </summary>
         /// <param name="name"> Filter name. </param>
         /// <param name="values"> Filter values. </param>
         /// <param name="operator"> Filter operator. </param>
-        internal Filter(string name, string values, string @operator)
+        internal SelfHelpFilter(string name, string values, string @operator)
         {
             Name = name;
             Values = values;

@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<string> solutionId = default;
             Optional<string> content = default;
             Optional<string> title = default;
-            Optional<Confidence> confidence = default;
+            Optional<SelfHelpConfidence> confidence = default;
             Optional<string> source = default;
-            Optional<ResultType> resultType = default;
+            Optional<SelfHelpResultType> resultType = default;
             Optional<int> rank = default;
             Optional<string> link = default;
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    confidence = new Confidence(property.Value.GetString());
+                    confidence = new SelfHelpConfidence(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("source"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    resultType = new ResultType(property.Value.GetString());
+                    resultType = new SelfHelpResultType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rank"u8))

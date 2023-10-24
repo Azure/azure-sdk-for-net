@@ -11,22 +11,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Filter group. </summary>
-    internal partial class FilterGroup
+    internal partial class SelfHelpFilterGroup
     {
-        /// <summary> Initializes a new instance of FilterGroup. </summary>
-        public FilterGroup()
+        /// <summary> Initializes a new instance of SelfHelpFilterGroup. </summary>
+        public SelfHelpFilterGroup()
         {
-            Filter = new ChangeTrackingList<Filter>();
+            Filter = new ChangeTrackingList<SelfHelpFilter>();
         }
 
-        /// <summary> Initializes a new instance of FilterGroup. </summary>
+        /// <summary> Initializes a new instance of SelfHelpFilterGroup. </summary>
         /// <param name="filter"> List of filters. </param>
-        internal FilterGroup(IList<Filter> filter)
+        internal SelfHelpFilterGroup(IList<SelfHelpFilter> filter)
         {
             Filter = filter;
         }
 
         /// <summary> List of filters. </summary>
-        public IList<Filter> Filter { get; }
+        public IList<SelfHelpFilter> Filter { get; }
     }
 }

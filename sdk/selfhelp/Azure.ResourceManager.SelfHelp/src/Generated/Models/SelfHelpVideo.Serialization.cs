@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class Video : IUtf8JsonSerializable
+    public partial class SelfHelpVideo : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             writer.WriteEndObject();
         }
 
-        internal static Video DeserializeVideo(JsonElement element)
+        internal static SelfHelpVideo DeserializeSelfHelpVideo(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new Video(src.Value, title.Value, replacementKey.Value);
+            return new SelfHelpVideo(src.Value, title.Value, replacementKey.Value);
         }
     }
 }

@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<IList<SolutionsDiagnostic>> diagnostics = default;
             Optional<IList<SolutionsTroubleshooters>> troubleshooters = default;
             Optional<IList<MetricsBasedChart>> metricsBasedCharts = default;
-            Optional<IList<Video>> videos = default;
-            Optional<IList<VideoGroup>> videoGroups = default;
+            Optional<IList<SelfHelpVideo>> videos = default;
+            Optional<IList<SelfHelpVideoGroup>> videoGroups = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("webResults"u8))
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    List<Video> array = new List<Video>();
+                    List<SelfHelpVideo> array = new List<SelfHelpVideo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Video.DeserializeVideo(item));
+                        array.Add(SelfHelpVideo.DeserializeSelfHelpVideo(item));
                     }
                     videos = array;
                     continue;
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    List<VideoGroup> array = new List<VideoGroup>();
+                    List<SelfHelpVideoGroup> array = new List<SelfHelpVideoGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VideoGroup.DeserializeVideoGroup(item));
+                        array.Add(SelfHelpVideoGroup.DeserializeSelfHelpVideoGroup(item));
                     }
                     videoGroups = array;
                     continue;

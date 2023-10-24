@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
                 { "SearchText","Can not RDP"}
             };
 
-            List<Section> sections = new List<Section>();
+            List<SelfHelpSection> sections = new List<SelfHelpSection>();
             SolutionResourceProperties properties = new SolutionResourceProperties(triggerCriterionList, parameters, null, null, null, null, null, sections);
             ResourceType resourceType = new ResourceType("Microsoft.KeyVault/vaults");
             var data = new SolutionResourceData(scope, null, resourceType, null, properties);
