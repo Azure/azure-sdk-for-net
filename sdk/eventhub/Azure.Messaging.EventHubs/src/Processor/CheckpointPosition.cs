@@ -7,26 +7,26 @@ using System.ComponentModel;
 using System.Text;
 using Azure.Core;
 
-namespace Azure.Messaging.EventHubs.Consumer
+namespace Azure.Messaging.EventHubs.Processor
 {
     /// <summary>
     ///   The position in a partition's event stream to use when updating a checkpoint, indicating that an event processor should begin reading from the next event.
     /// </summary>
     ///
-    public struct CheckpointPosition
+    public struct CheckpointPosition : IEquatable<CheckpointPosition>
     {
         /// <summary>
         ///   The offset to associate with the checkpoint. This value will be used for informational metadata in almost all cases. If there is no sequence number associated
         ///   with the checkpoint, this value will be used for positioning when events are read.
         /// </summary>
         ///
-        public long? Offset { get; internal set; }
+        public long? Offset { get; }
 
         /// <summary>
         ///   The sequence number to associate with the checkpoint. It indicates that a processor should begin reading from the next event in the stream.
         /// </summary>
         ///
-        public long SequenceNumber { get; internal set; }
+        public long SequenceNumber { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="CheckpointPosition"/> struct.
@@ -106,8 +106,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         public override string ToString()
         {
-            var stringRepresentation = $"Sequence Number: [{SequenceNumber}] | Offset: [{Offset}]";
-            return stringRepresentation;
+            return $"Sequence Number: [{SequenceNumber}] | Offset: [{Offset}]";
         }
 
         /// <summary>
