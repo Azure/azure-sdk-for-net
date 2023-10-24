@@ -61,7 +61,7 @@ namespace Azure.Core.Pipeline
 
             Encoding? requestTextEncoding = null;
 
-            if (request.TryGetHeader(HttpHeader.Names.ContentType, out var contentType))
+            if (request.TryGetHeaderInternal(HttpHeader.Names.ContentType, out var contentType))
             {
                 ContentTypeUtilities.TryGetTextEncoding(contentType, out requestTextEncoding);
             }

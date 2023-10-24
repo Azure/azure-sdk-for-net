@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
+using System.Net.ClientModel.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Core
@@ -12,9 +12,10 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public sealed class HttpMessage : IDisposable
+    public sealed class HttpMessage : PipelineMessage
     {
         private ArrayBackedPropertyBag<ulong, object> _propertyBag;
+
         private Response? _response;
 
         /// <summary>
@@ -23,10 +24,15 @@ namespace Azure.Core
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
+            : this((PipelineRequest)request, responseClassifier)
         {
-            Argument.AssertNotNull(request, nameof(Request));
-            Request = request;
-            ResponseClassifier = responseClassifier;
+        }
+
+        internal HttpMessage(PipelineRequest request, ResponseErrorClassifier classifier)
+            : base(request, classifier)
+        {
+            Argument.AssertNotNull(request, nameof(request));
+
             BufferResponse = true;
             _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
         }
@@ -34,43 +40,58 @@ namespace Azure.Core
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
-        public Request Request { get; }
+        public new Request Request { get => (Request)base.Request; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> associated with this message. Throws an exception if it wasn't set yet.
         /// To avoid the exception use <see cref="HasResponse"/> property to check.
         /// </summary>
-        public Response Response
+        public new Response Response
+        {
+            get => ResponseInternal!;
+            set => ResponseInternal = value;
+        }
+
+        private Response? ResponseInternal
         {
             get
             {
-                if (_response == null)
+                if (_response is not null)
                 {
-#pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
-#pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
+                    return _response;
                 }
-                return _response;
+
+                if (base.Response is null)
+                {
+                    throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
+                }
+
+                if (base.Response is not Response response)
+                {
+                    throw new InvalidOperationException($"Invalid response type: '{base.Response.GetType()}'.");
+                }
+
+                return response;
             }
-            set => _response = value;
+
+            set => base.Response = _response = value!;
         }
 
         /// <summary>
         /// Gets the value indicating if the response is set on this message.
         /// </summary>
-        public bool HasResponse => _response != null;
+        public new bool HasResponse => _response != null || base.HasResponse;
 
-        internal void ClearResponse() => _response = null;
-
-        /// <summary>
-        /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="HttpMessage"/> processing.
-        /// </summary>
-        public CancellationToken CancellationToken { get; internal set; }
+        internal void ClearResponse() => ResponseInternal = null;
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public ResponseClassifier ResponseClassifier { get; set; }
+        public new ResponseClassifier ResponseClassifier
+        {
+            get => (ResponseClassifier)base.ResponseClassifier;
+            set => base.ResponseClassifier = value;
+        }
 
         /// <summary>
         /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
@@ -177,17 +198,17 @@ namespace Azure.Core
             _propertyBag.Set((ulong)type.TypeHandle.Value, value);
 
         /// <summary>
-        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="Azure.Response.ContentStream"/> or <see cref="Azure.Response.Content"/> would result in exception.
+        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="PipelineResponse.ContentStream"/> or <see cref="PipelineResponse.Content"/> would result in exception.
         /// </summary>
         /// <returns>The content stream or null if response didn't have any.</returns>
         public Stream? ExtractResponseContent()
         {
-            switch (_response?.ContentStream)
+            switch (ResponseInternal?.ContentStream)
             {
                 case ResponseShouldNotBeUsedStream responseContent:
                     return responseContent.Original;
                 case Stream stream:
-                    _response.ContentStream = new ResponseShouldNotBeUsedStream(_response.ContentStream);
+                    ResponseInternal.ContentStream = new ResponseShouldNotBeUsedStream(ResponseInternal.ContentStream);
                     return stream;
                 default:
                     return null;
@@ -197,17 +218,19 @@ namespace Azure.Core
         /// <summary>
         /// Disposes the request and response.
         /// </summary>
-        public void Dispose()
+        public override void Dispose()
         {
             Request.Dispose();
             _propertyBag.Dispose();
 
-            var response = _response;
+            Response? response = _response;
             if (response != null)
             {
-                _response = null;
                 response.Dispose();
+                _response = null;
             }
+
+            base.Dispose();
         }
 
         private class ResponseShouldNotBeUsedStream : Stream

@@ -12,7 +12,6 @@
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
@@ -32,6 +31,10 @@
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)RequestRequestContent.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TypeBinder.cs" LinkBase="Shared" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <ProjectReference Include="..\..\..\core\System.Net.ClientModel\src\System.Net.ClientModel.csproj" />
   </ItemGroup>
 
 </Project>

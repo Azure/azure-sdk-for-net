@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
@@ -8,7 +8,7 @@
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
-
+    
     <!-- TODO: is it really ok to drop support for netcoreapp2.1? -->
     <TargetFrameworks>$(RequiredTargetFrameworks);net461;net472;net5.0;net6.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>

@@ -15,6 +15,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
     <ProjectReference Include="..\src\System.Net.ClientModel.csproj" />
     <ProjectReference Include="client\System.Net.ClientModel.Tests.Client.csproj" />
   </ItemGroup>

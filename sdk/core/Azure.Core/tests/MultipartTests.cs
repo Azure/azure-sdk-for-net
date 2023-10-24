@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
@@ -116,10 +115,10 @@ namespace Azure.Core.Tests
 
             foreach (var response in responses)
             {
-                Assert.That(response.TryGetHeader("Location", out var location));
+                Assert.That(response.TryGetHeaderValue("Location", out string location));
                 Assert.That(location.Contains("RowKey='01'"));
 
-                Assert.That(response.TryGetHeader("Content-Type", out var contentType));
+                Assert.That(response.TryGetHeaderValue("Content-Type", out string contentType));
                 Assert.That(contentType, Is.EqualTo("application/json;odata=fullmetadata;streaming=true;charset=utf-8"));
 
                 var bytes = new byte[response.ContentStream.Length];
@@ -145,21 +144,21 @@ namespace Azure.Core.Tests
 
             var response = responses[0];
             Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.Accepted));
-            Assert.That(response.TryGetHeader("x-ms-version", out var version));
+            Assert.That(response.TryGetHeaderValue("x-ms-version", out string version));
             Assert.That(version, Is.EqualTo("2018-11-09"));
-            Assert.That(response.TryGetHeader("x-ms-request-id", out _));
+            Assert.That(response.TryGetHeaderValue("x-ms-request-id", out string _));
 
             response = responses[1];
             Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.Accepted));
-            Assert.That(response.TryGetHeader("x-ms-version", out version));
+            Assert.That(response.TryGetHeaderValue("x-ms-version", out version));
             Assert.That(version, Is.EqualTo("2018-11-09"));
-            Assert.That(response.TryGetHeader("x-ms-request-id", out _));
+            Assert.That(response.TryGetHeaderValue("x-ms-request-id", out string _));
 
             response = responses[2];
             Assert.That(response.Status, Is.EqualTo((int)HttpStatusCode.NotFound));
-            Assert.That(response.TryGetHeader("x-ms-version", out version));
+            Assert.That(response.TryGetHeaderValue("x-ms-version", out version));
             Assert.That(version, Is.EqualTo("2018-11-09"));
-            Assert.That(response.TryGetHeader("x-ms-request-id", out _));
+            Assert.That(response.TryGetHeaderValue("x-ms-request-id", out string _));
             var bytes = new byte[response.ContentStream.Length];
             await response.ContentStream.ReadAsync(bytes, 0, bytes.Length);
             var content = GetString(bytes, bytes.Length);

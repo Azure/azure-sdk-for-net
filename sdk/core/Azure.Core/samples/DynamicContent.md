@@ -44,7 +44,7 @@ JSON members can be set on the dynamic object.
 
 ```C# Snippet:AzureCoreSetDynamicJsonProperty
 Response response = client.GetWidget();
-dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
+using dynamic widget = response.Content.ToDynamicFromJson(JsonPropertyNames.CamelCase);
 widget.Name = "New Name";
 client.SetWidget(RequestContent.Create(widget));
 ```
