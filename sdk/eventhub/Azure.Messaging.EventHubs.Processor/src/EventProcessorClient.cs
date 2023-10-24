@@ -897,18 +897,14 @@ namespace Azure.Messaging.EventHubs
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
             Argument.AssertNotNull(partitionId, nameof(partitionId));
-            if (checkpointStartingPosition.Offset.HasValue)
-            {
-                // When there's an offset, we allow any value for the sequence number. We still prefer the sequence number for determining position but
-                // if the sequence number is long.MinValue, then we are assuming this is enabling backwards compatibility where no sequence number is
-                // provided for the checkpoint.
 
-                Argument.AssertInRange(checkpointStartingPosition.Offset.Value, long.MinValue + 1, long.MaxValue, nameof(checkpointStartingPosition.Offset));
+            // The default values for both sequence number and offset are long.MinValue to provide backwards compatibility. Ensure that at least one non-default value was provided.
+            if (checkpointStartingPosition.SequenceNumber == long.MinValue)
+            {
+                Argument.AssertInRange(checkpointStartingPosition.Offset, long.MinValue + 1, long.MaxValue, nameof(checkpointStartingPosition.Offset));
             }
             else
             {
-                // If there's no offset, then we enforce that a non-default sequence number was provided.
-
                 Argument.AssertInRange(checkpointStartingPosition.SequenceNumber, long.MinValue + 1, long.MaxValue, nameof(checkpointStartingPosition.SequenceNumber));
             }
 

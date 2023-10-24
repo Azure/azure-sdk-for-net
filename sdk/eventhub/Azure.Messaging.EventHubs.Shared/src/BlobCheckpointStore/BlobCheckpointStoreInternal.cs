@@ -375,7 +375,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                          CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset ?? long.MinValue);
+            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset);
 
             var blobName = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix + partitionId, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
             var blobClient = ContainerClient.GetBlobClient(blobName);
@@ -384,8 +384,12 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 { BlobMetadataKey.Offset, checkpointStartingPosition.Offset.ToString() },
                 { BlobMetadataKey.SequenceNumber, (checkpointStartingPosition.SequenceNumber).ToString(CultureInfo.InvariantCulture) },
-                { BlobMetadataKey.ClientIdentifier, clientIdentifier }
             };
+
+            if (!string.IsNullOrEmpty(clientIdentifier))
+            {
+                metadata.Add(BlobMetadataKey.ClientIdentifier, clientIdentifier);
+            }
 
             try
             {
@@ -405,17 +409,17 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset ?? long.MinValue, ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset, ex);
                 throw new RequestFailedException(BlobsResourceDoesNotExist, ex);
             }
             catch (Exception ex)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset ?? long.MinValue, ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset, ex);
                 throw;
             }
             finally
             {
-                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset ?? long.MinValue);
+                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset);
             }
         }
 

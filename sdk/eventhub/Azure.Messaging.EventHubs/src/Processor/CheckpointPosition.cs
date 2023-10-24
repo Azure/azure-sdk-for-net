@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///   with the checkpoint, this value will be used for positioning when events are read.
         /// </summary>
         ///
-        public long? Offset { get; }
+        public long Offset { get; }
 
         /// <summary>
         ///   The sequence number to associate with the checkpoint. It indicates that a processor should begin reading from the next event in the stream.
@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventHubs.Processor
         ///
         public CheckpointPosition(long sequenceNumber, long? offset = null)
         {
-            Offset = offset;
+            Offset = offset ?? long.MinValue;
             SequenceNumber = sequenceNumber;
         }
 
