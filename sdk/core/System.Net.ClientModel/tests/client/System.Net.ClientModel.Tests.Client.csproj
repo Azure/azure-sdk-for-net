@@ -1,31 +1,33 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  
   <PropertyGroup>
+    <Description>Test client code for use in System.Net.ClientModel test libraries.</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Azure.Core.Experimental\src\Azure.Core.Experimental.csproj" />
-    <ProjectReference Include="..\..\src\Azure.Core.csproj" />
+    <PackageReference Include="Moq" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\System.Net.ClientModel.csproj" />
   </ItemGroup>
 
-  <!-- Shared source from Azure.Core -->
   <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared/Core" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWithVMs.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="TestData\AvailabilitySetData\AvailabilitySetData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWithVMsWireFormat.json">
+    <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWireFormat.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWireFormat.json">
+    <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWithVMs.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWithVMsWireFormat.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\ModelXml.xml">
@@ -34,16 +36,16 @@
     <None Update="TestData\ModelXmlX.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="TestData\ResourceProviderData\ResourceProviderData-Collapsed.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\ResourceProviderData\ResourceProviderData.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="TestData\ModelX\ModelX.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\ModelX\ModelXWireFormat.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ResourceProviderData\ResourceProviderData-Collapsed.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ResourceProviderData\ResourceProviderData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
