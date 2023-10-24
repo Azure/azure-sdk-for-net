@@ -38,7 +38,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     _response = value;
 
                     // Set metrics on the headers for the response
-                    new EventTriggerMetrics().SetMetricHeaders(_response);
+                    EventTriggerMetrics.Instance.SetMetricHeaders(_response);
                 }
             }
         }

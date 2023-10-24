@@ -1,30 +1,46 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>
     /// Static class to set the metric headers for each event trigger.
     /// </summary>
-    public class EventTriggerMetrics
+    public sealed class EventTriggerMetrics
     {
         /// <summary>
         /// Default constructor for eventmetrics
         /// </summary>
-        public EventTriggerMetrics()
+        private EventTriggerMetrics()
         {
             var assembly = AssemblyName.GetAssemblyName("Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.dll");
 
             ProductVersion = assembly.Version.ToString();
             Framework = RuntimeInformation.FrameworkDescription;
             Platform = RuntimeInformation.OSDescription ?? "unknown";
+        }
+
+        /// <summary>
+        /// Lazy immplementation to make sure that only one instance is created and returned, while delaying the creation till needed.
+        /// </summary>
+        private static readonly Lazy<EventTriggerMetrics> lazyEventTrigger = new Lazy<EventTriggerMetrics>(() => new EventTriggerMetrics());
+
+        /// <summary>
+        /// The singleton instance for event trigger metrics
+        /// </summary>
+        public static EventTriggerMetrics Instance
+        {
+            get
+            {
+                return lazyEventTrigger.Value;
+            }
         }
 
         /// <summary>

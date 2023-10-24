@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Net.Http;
 
@@ -16,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         public void TestSetMetricHeadersNull()
         {
             HttpResponseMessage message = null;
-            Assert.DoesNotThrow(() => new EventTriggerMetrics().SetMetricHeaders(message));
+            Assert.DoesNotThrow(() => EventTriggerMetrics.Instance.SetMetricHeaders(message));
             Assert.IsNull(
                 anObject: message,
                 message: "Verify AuthenticationEventRequestBase is not set to anything when null.");
@@ -27,7 +28,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         public  void TestSetMetricHeaders()
         {
             HttpResponseMessage message = new() { };
-            new EventTriggerMetrics().SetMetricHeaders(message);
+            EventTriggerMetrics.Instance.SetMetricHeaders(message);
 
             Assert.IsNotEmpty(EventTriggerMetrics.Framework, "Framework should note be empty");
             Assert.IsNotEmpty(EventTriggerMetrics.ProductVersion, "ProductVersion should not be empty");
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         public void TestSetMetricFormat()
         {
             HttpResponseMessage message = new() { };
-            new EventTriggerMetrics().SetMetricHeaders(message);
+            EventTriggerMetrics.Instance.SetMetricHeaders(message);
 
             var headers = message.Headers;
             Assert.IsTrue(headers.Contains(EventTriggerMetrics.MetricsHeader));
@@ -62,7 +63,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             HttpResponseMessage message = new() { };
             message.Headers.Add(EventTriggerMetrics.MetricsHeader, "test");
 
-            new EventTriggerMetrics().SetMetricHeaders(message);
+            EventTriggerMetrics.Instance.SetMetricHeaders(message);
 
             var headers = message.Headers;
             Assert.IsTrue(headers.Contains(EventTriggerMetrics.MetricsHeader));
@@ -80,7 +81,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             version ??= EventTriggerMetrics.ProductVersion;
             platform ??= EventTriggerMetrics.Platform;
 
-            return $"azsdk-net-{EventTriggerMetrics.ProductName}/{version} ({framework}; {platform})";
+            return $"azsdk-net-{EventTriggerMetrics.ProductName}/{version} ({framework}; {platform.Trim()})";
         }
     }
 }
