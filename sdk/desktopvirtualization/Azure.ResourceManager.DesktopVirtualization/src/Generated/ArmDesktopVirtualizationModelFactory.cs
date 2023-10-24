@@ -39,26 +39,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Gets or sets the plan. </param>
         /// <returns> A new <see cref="DesktopVirtualization.VirtualWorkspaceData"/> instance for mocking. </returns>
-        public static VirtualWorkspaceData VirtualWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string objectId = null, string description = null, string friendlyName = null, IEnumerable<string> applicationGroupReferences = null, bool? isCloudPCResource = null, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = null, ResourceIdentifier managedBy = null, string kind = null, ETag? etag = null, ManagedServiceIdentity identity = null, DesktopVirtualizationSku sku = null, ArmPlan plan = null)
+        public static VirtualWorkspaceData VirtualWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string objectId = null, string description = null, string friendlyName = null, IEnumerable<string> applicationGroupReferences = null, bool? isCloudPCResource = null, DesktopVirtualizationPublicNetworkAccess? publicNetworkAccess = null, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = null, ResourceIdentifier managedBy = null, string kind = null, ETag? etag = null, ManagedServiceIdentity identity = null, DesktopVirtualizationSku sku = null, ArmPlan plan = null)
         {
             tags ??= new Dictionary<string, string>();
             applicationGroupReferences ??= new List<string>();
             privateEndpointConnections ??= new List<DesktopVirtualizationPrivateEndpointConnection>();
 
             return new VirtualWorkspaceData(id, name, resourceType, systemData, tags, location, objectId, description, friendlyName, applicationGroupReferences?.ToList(), isCloudPCResource, publicNetworkAccess, privateEndpointConnections?.ToList(), managedBy, kind, etag, identity, sku, plan);
-        }
-
-        /// <summary> Initializes a new instance of SystemData. </summary>
-        /// <param name="createdBy"> The identity that created the resource. </param>
-        /// <param name="createdByType"> The type of identity that created the resource. </param>
-        /// <param name="createdOn"> The timestamp of resource creation (UTC). </param>
-        /// <param name="lastModifiedBy"> The identity that last modified the resource. </param>
-        /// <param name="lastModifiedByType"> The type of identity that last modified the resource. </param>
-        /// <param name="lastModifiedOn"> The timestamp of resource last modification (UTC). </param>
-        /// <returns> A new <see cref="Models.SystemData"/> instance for mocking. </returns>
-        public static SystemData SystemData(string createdBy = null, CreatedByType? createdByType = null, DateTimeOffset? createdOn = null, string lastModifiedBy = null, CreatedByType? lastModifiedByType = null, DateTimeOffset? lastModifiedOn = null)
-        {
-            return new SystemData(createdBy, createdByType, createdOn, lastModifiedBy, lastModifiedByType, lastModifiedOn);
         }
 
         /// <summary> Initializes a new instance of DesktopVirtualizationPrivateEndpointConnection. </summary>
@@ -70,7 +57,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static DesktopVirtualizationPrivateEndpointConnection DesktopVirtualizationPrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ResourceIdentifier privateEndpointId = null, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState = null, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        public static DesktopVirtualizationPrivateEndpointConnection DesktopVirtualizationPrivateEndpointConnection(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState = null, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
             return new DesktopVirtualizationPrivateEndpointConnection(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
@@ -84,7 +71,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="DesktopVirtualization.DesktopVirtualizationPrivateEndpointConnectionDataData"/> instance for mocking. </returns>
-        public static DesktopVirtualizationPrivateEndpointConnectionDataData DesktopVirtualizationPrivateEndpointConnectionDataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ResourceIdentifier privateEndpointId = null, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState = null, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        public static DesktopVirtualizationPrivateEndpointConnectionDataData DesktopVirtualizationPrivateEndpointConnectionDataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, DesktopVirtualizationPrivateLinkServiceConnectionState connectionState = null, DesktopVirtualizationPrivateEndpointConnectionProvisioningState? provisioningState = null)
         {
             return new DesktopVirtualizationPrivateEndpointConnectionDataData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, connectionState, provisioningState);
         }
@@ -98,7 +85,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static DesktopVirtualizationPrivateLinkResourceData DesktopVirtualizationPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        public static DesktopVirtualizationPrivateLinkResourceData DesktopVirtualizationPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
         {
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
@@ -128,7 +115,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Gets or sets the plan. </param>
         /// <returns> A new <see cref="DesktopVirtualization.ScalingPlanData"/> instance for mocking. </returns>
-        public static ScalingPlanData ScalingPlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string objectId = null, string description = null, string friendlyName = null, string timeZone = null, ScalingHostPoolType? scalingHostPoolType = null, string exclusionTag = null, IEnumerable<ScalingSchedule> schedules = null, IEnumerable<ScalingHostPoolReference> hostPoolReferences = null, ResourceIdentifier managedBy = null, string kind = null, ETag? etag = null, ManagedServiceIdentity identity = null, DesktopVirtualizationSku sku = null, ArmPlan plan = null)
+        public static ScalingPlanData ScalingPlanData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string objectId = null, string description = null, string friendlyName = null, string timeZone = null, ScalingHostPoolType? scalingHostPoolType = null, string exclusionTag = null, IEnumerable<ScalingSchedule> schedules = null, IEnumerable<ScalingHostPoolReference> hostPoolReferences = null, ResourceIdentifier managedBy = null, string kind = null, ETag? etag = null, ManagedServiceIdentity identity = null, DesktopVirtualizationSku sku = null, ArmPlan plan = null)
         {
             tags ??= new Dictionary<string, string>();
             schedules ??= new List<ScalingSchedule>();
@@ -160,7 +147,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="offPeakStartTime"> Starting time for off-peak period. </param>
         /// <param name="offPeakLoadBalancingAlgorithm"> Load balancing algorithm for off-peak period. </param>
         /// <returns> A new <see cref="DesktopVirtualization.ScalingPlanPooledScheduleData"/> instance for mocking. </returns>
-        public static ScalingPlanPooledScheduleData ScalingPlanPooledScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IEnumerable<DesktopVirtualizationDayOfWeek> daysOfWeek = null, ScalingActionTime rampUpStartTime = null, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm = null, int? rampUpMinimumHostsPct = null, int? rampUpCapacityThresholdPct = null, ScalingActionTime peakStartTime = null, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm = null, ScalingActionTime rampDownStartTime = null, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm = null, int? rampDownMinimumHostsPct = null, int? rampDownCapacityThresholdPct = null, bool? rampDownForceLogoffUsers = null, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen = null, int? rampDownWaitTimeMinutes = null, string rampDownNotificationMessage = null, ScalingActionTime offPeakStartTime = null, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm = null)
+        public static ScalingPlanPooledScheduleData ScalingPlanPooledScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<DesktopVirtualizationDayOfWeek> daysOfWeek = null, ScalingActionTime rampUpStartTime = null, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm = null, int? rampUpMinimumHostsPct = null, int? rampUpCapacityThresholdPct = null, ScalingActionTime peakStartTime = null, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm = null, ScalingActionTime rampDownStartTime = null, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm = null, int? rampDownMinimumHostsPct = null, int? rampDownCapacityThresholdPct = null, bool? rampDownForceLogoffUsers = null, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen = null, int? rampDownWaitTimeMinutes = null, string rampDownNotificationMessage = null, ScalingActionTime offPeakStartTime = null, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm = null)
         {
             daysOfWeek ??= new List<DesktopVirtualizationDayOfWeek>();
 
@@ -190,7 +177,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="offPeakStartTime"> Starting time for off-peak period. </param>
         /// <param name="offPeakLoadBalancingAlgorithm"> Load balancing algorithm for off-peak period. </param>
         /// <returns> A new <see cref="Models.ScalingPlanPooledSchedulePatch"/> instance for mocking. </returns>
-        public static ScalingPlanPooledSchedulePatch ScalingPlanPooledSchedulePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IEnumerable<DesktopVirtualizationDayOfWeek> daysOfWeek = null, ScalingActionTime rampUpStartTime = null, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm = null, int? rampUpMinimumHostsPct = null, int? rampUpCapacityThresholdPct = null, ScalingActionTime peakStartTime = null, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm = null, ScalingActionTime rampDownStartTime = null, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm = null, int? rampDownMinimumHostsPct = null, int? rampDownCapacityThresholdPct = null, bool? rampDownForceLogoffUsers = null, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen = null, int? rampDownWaitTimeMinutes = null, string rampDownNotificationMessage = null, ScalingActionTime offPeakStartTime = null, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm = null)
+        public static ScalingPlanPooledSchedulePatch ScalingPlanPooledSchedulePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<DesktopVirtualizationDayOfWeek> daysOfWeek = null, ScalingActionTime rampUpStartTime = null, SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm = null, int? rampUpMinimumHostsPct = null, int? rampUpCapacityThresholdPct = null, ScalingActionTime peakStartTime = null, SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm = null, ScalingActionTime rampDownStartTime = null, SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm = null, int? rampDownMinimumHostsPct = null, int? rampDownCapacityThresholdPct = null, bool? rampDownForceLogoffUsers = null, DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen = null, int? rampDownWaitTimeMinutes = null, string rampDownNotificationMessage = null, ScalingActionTime offPeakStartTime = null, SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm = null)
         {
             daysOfWeek ??= new List<DesktopVirtualizationDayOfWeek>();
 
@@ -229,7 +216,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="offPeakActionOnLogoff"> Action to be taken after a logoff during the off-peak period. </param>
         /// <param name="offPeakMinutesToWaitOnLogoff"> The time in minutes to wait before performing the desired session handling action when a user logs off during the off-peak period. </param>
         /// <returns> A new <see cref="DesktopVirtualization.ScalingPlanPersonalScheduleData"/> instance for mocking. </returns>
-        public static ScalingPlanPersonalScheduleData ScalingPlanPersonalScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IEnumerable<DesktopVirtualizationDayOfWeek> daysOfWeek = null, ScalingActionTime rampUpStartTime = null, StartupBehavior? rampUpAutoStartHosts = null, SetStartVmOnConnect? rampUpStartVmOnConnect = null, SessionHandlingOperation? rampUpActionOnDisconnect = null, int? rampUpMinutesToWaitOnDisconnect = null, SessionHandlingOperation? rampUpActionOnLogoff = null, int? rampUpMinutesToWaitOnLogoff = null, ScalingActionTime peakStartTime = null, SetStartVmOnConnect? peakStartVmOnConnect = null, SessionHandlingOperation? peakActionOnDisconnect = null, int? peakMinutesToWaitOnDisconnect = null, SessionHandlingOperation? peakActionOnLogoff = null, int? peakMinutesToWaitOnLogoff = null, ScalingActionTime rampDownStartTime = null, SetStartVmOnConnect? rampDownStartVmOnConnect = null, SessionHandlingOperation? rampDownActionOnDisconnect = null, int? rampDownMinutesToWaitOnDisconnect = null, SessionHandlingOperation? rampDownActionOnLogoff = null, int? rampDownMinutesToWaitOnLogoff = null, ScalingActionTime offPeakStartTime = null, SetStartVmOnConnect? offPeakStartVmOnConnect = null, SessionHandlingOperation? offPeakActionOnDisconnect = null, int? offPeakMinutesToWaitOnDisconnect = null, SessionHandlingOperation? offPeakActionOnLogoff = null, int? offPeakMinutesToWaitOnLogoff = null)
+        public static ScalingPlanPersonalScheduleData ScalingPlanPersonalScheduleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<DesktopVirtualizationDayOfWeek> daysOfWeek = null, ScalingActionTime rampUpStartTime = null, StartupBehavior? rampUpAutoStartHosts = null, SetStartVmOnConnect? rampUpStartVmOnConnect = null, SessionHandlingOperation? rampUpActionOnDisconnect = null, int? rampUpMinutesToWaitOnDisconnect = null, SessionHandlingOperation? rampUpActionOnLogoff = null, int? rampUpMinutesToWaitOnLogoff = null, ScalingActionTime peakStartTime = null, SetStartVmOnConnect? peakStartVmOnConnect = null, SessionHandlingOperation? peakActionOnDisconnect = null, int? peakMinutesToWaitOnDisconnect = null, SessionHandlingOperation? peakActionOnLogoff = null, int? peakMinutesToWaitOnLogoff = null, ScalingActionTime rampDownStartTime = null, SetStartVmOnConnect? rampDownStartVmOnConnect = null, SessionHandlingOperation? rampDownActionOnDisconnect = null, int? rampDownMinutesToWaitOnDisconnect = null, SessionHandlingOperation? rampDownActionOnLogoff = null, int? rampDownMinutesToWaitOnLogoff = null, ScalingActionTime offPeakStartTime = null, SetStartVmOnConnect? offPeakStartVmOnConnect = null, SessionHandlingOperation? offPeakActionOnDisconnect = null, int? offPeakMinutesToWaitOnDisconnect = null, SessionHandlingOperation? offPeakActionOnLogoff = null, int? offPeakMinutesToWaitOnLogoff = null)
         {
             daysOfWeek ??= new List<DesktopVirtualizationDayOfWeek>();
 
@@ -258,7 +245,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Gets or sets the plan. </param>
         /// <returns> A new <see cref="DesktopVirtualization.VirtualApplicationGroupData"/> instance for mocking. </returns>
-        public static VirtualApplicationGroupData VirtualApplicationGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string objectId = null, string description = null, string friendlyName = null, ResourceIdentifier hostPoolId = null, ResourceIdentifier workspaceId = null, VirtualApplicationGroupType applicationGroupType = default, bool? isCloudPCResource = null, bool? showInFeed = null, ResourceIdentifier managedBy = null, string kind = null, ETag? etag = null, ManagedServiceIdentity identity = null, DesktopVirtualizationSku sku = null, ArmPlan plan = null)
+        public static VirtualApplicationGroupData VirtualApplicationGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string objectId = null, string description = null, string friendlyName = null, ResourceIdentifier hostPoolId = null, ResourceIdentifier workspaceId = null, VirtualApplicationGroupType applicationGroupType = default, bool? isCloudPCResource = null, bool? showInFeed = null, ResourceIdentifier managedBy = null, string kind = null, ETag? etag = null, ManagedServiceIdentity identity = null, DesktopVirtualizationSku sku = null, ArmPlan plan = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -275,7 +262,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="friendlyName"> Friendly name of ApplicationGroup. </param>
         /// <param name="showInFeed"> Boolean representing whether the applicationGroup is show in the feed. </param>
         /// <returns> A new <see cref="Models.VirtualApplicationGroupPatch"/> instance for mocking. </returns>
-        public static VirtualApplicationGroupPatch VirtualApplicationGroupPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, string description = null, string friendlyName = null, bool? showInFeed = null)
+        public static VirtualApplicationGroupPatch VirtualApplicationGroupPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, string description = null, string friendlyName = null, bool? showInFeed = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -293,7 +280,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="iconPath"> Path to the icon. </param>
         /// <param name="iconIndex"> Index of the icon. </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationStartMenuItem"/> instance for mocking. </returns>
-        public static DesktopVirtualizationStartMenuItem DesktopVirtualizationStartMenuItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string appAlias = null, string filePath = null, string commandLineArguments = null, string iconPath = null, int? iconIndex = null)
+        public static DesktopVirtualizationStartMenuItem DesktopVirtualizationStartMenuItem(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string appAlias = null, string filePath = null, string commandLineArguments = null, string iconPath = null, int? iconIndex = null)
         {
             return new DesktopVirtualizationStartMenuItem(id, name, resourceType, systemData, appAlias, filePath, commandLineArguments, iconPath, iconIndex);
         }
@@ -318,7 +305,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="iconHash"> Hash of the icon. </param>
         /// <param name="iconContent"> the icon a 64 bit string as a byte array. </param>
         /// <returns> A new <see cref="DesktopVirtualization.VirtualApplicationData"/> instance for mocking. </returns>
-        public static VirtualApplicationData VirtualApplicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string objectId = null, string description = null, string friendlyName = null, string filePath = null, string msixPackageFamilyName = null, string msixPackageApplicationId = null, RemoteApplicationType? applicationType = null, VirtualApplicationCommandLineSetting commandLineSetting = default, string commandLineArguments = null, bool? showInPortal = null, string iconPath = null, int? iconIndex = null, string iconHash = null, BinaryData iconContent = null)
+        public static VirtualApplicationData VirtualApplicationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string objectId = null, string description = null, string friendlyName = null, string filePath = null, string msixPackageFamilyName = null, string msixPackageApplicationId = null, RemoteApplicationType? applicationType = null, VirtualApplicationCommandLineSetting commandLineSetting = default, string commandLineArguments = null, bool? showInPortal = null, string iconPath = null, int? iconIndex = null, string iconHash = null, BinaryData iconContent = null)
         {
             return new VirtualApplicationData(id, name, resourceType, systemData, objectId, description, friendlyName, filePath, msixPackageFamilyName, msixPackageApplicationId, applicationType, commandLineSetting, commandLineArguments, showInPortal, iconPath, iconIndex, iconHash, iconContent);
         }
@@ -334,7 +321,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="iconHash"> Hash of the icon. </param>
         /// <param name="iconContent"> The icon a 64 bit string as a byte array. </param>
         /// <returns> A new <see cref="DesktopVirtualization.VirtualDesktopData"/> instance for mocking. </returns>
-        public static VirtualDesktopData VirtualDesktopData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string objectId = null, string description = null, string friendlyName = null, string iconHash = null, BinaryData iconContent = null)
+        public static VirtualDesktopData VirtualDesktopData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string objectId = null, string description = null, string friendlyName = null, string iconHash = null, BinaryData iconContent = null)
         {
             return new VirtualDesktopData(id, name, resourceType, systemData, objectId, description, friendlyName, iconHash, iconContent);
         }
@@ -376,7 +363,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Gets or sets the plan. </param>
         /// <returns> A new <see cref="DesktopVirtualization.HostPoolData"/> instance for mocking. </returns>
-        public static HostPoolData HostPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string objectId = null, string friendlyName = null, string description = null, HostPoolType hostPoolType = default, PersonalDesktopAssignmentType? personalDesktopAssignmentType = null, string customRdpProperty = null, int? maxSessionLimit = null, HostPoolLoadBalancerType loadBalancerType = default, int? ring = null, bool? isValidationEnvironment = null, HostPoolRegistrationInfo registrationInfo = null, string vmTemplate = null, IEnumerable<string> applicationGroupReferences = null, string ssoAdfsAuthority = null, string ssoClientId = null, string ssoClientSecretKeyVaultPath = null, HostPoolSsoSecretType? ssoSecretType = null, PreferredAppGroupType preferredAppGroupType = default, bool? startVmOnConnect = null, bool? isCloudPCResource = null, HostPoolPublicNetworkAccess? publicNetworkAccess = null, SessionHostAgentUpdateProperties agentUpdate = null, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = null, ResourceIdentifier managedBy = null, string kind = null, ETag? etag = null, ManagedServiceIdentity identity = null, DesktopVirtualizationSku sku = null, ArmPlan plan = null)
+        public static HostPoolData HostPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string objectId = null, string friendlyName = null, string description = null, HostPoolType hostPoolType = default, PersonalDesktopAssignmentType? personalDesktopAssignmentType = null, string customRdpProperty = null, int? maxSessionLimit = null, HostPoolLoadBalancerType loadBalancerType = default, int? ring = null, bool? isValidationEnvironment = null, HostPoolRegistrationInfo registrationInfo = null, string vmTemplate = null, IEnumerable<string> applicationGroupReferences = null, string ssoAdfsAuthority = null, string ssoClientId = null, string ssoClientSecretKeyVaultPath = null, HostPoolSsoSecretType? ssoSecretType = null, PreferredAppGroupType preferredAppGroupType = default, bool? startVmOnConnect = null, bool? isCloudPCResource = null, HostPoolPublicNetworkAccess? publicNetworkAccess = null, SessionHostAgentUpdateProperties agentUpdate = null, IEnumerable<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = null, ResourceIdentifier managedBy = null, string kind = null, ETag? etag = null, ManagedServiceIdentity identity = null, DesktopVirtualizationSku sku = null, ArmPlan plan = null)
         {
             tags ??= new Dictionary<string, string>();
             applicationGroupReferences ??= new List<string>();
@@ -410,7 +397,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="publicNetworkAccess"> Enabled to allow this resource to be access from the public network. </param>
         /// <param name="agentUpdate"> The session host configuration for updating agent, monitoring agent, and stack component. </param>
         /// <returns> A new <see cref="Models.HostPoolPatch"/> instance for mocking. </returns>
-        public static HostPoolPatch HostPoolPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, string friendlyName = null, string description = null, string customRdpProperty = null, int? maxSessionLimit = null, PersonalDesktopAssignmentType? personalDesktopAssignmentType = null, HostPoolLoadBalancerType? loadBalancerType = null, int? ring = null, bool? isValidationEnvironment = null, HostPoolRegistrationInfoPatch registrationInfo = null, string vmTemplate = null, string ssoAdfsAuthority = null, string ssoClientId = null, string ssoClientSecretKeyVaultPath = null, HostPoolSsoSecretType? ssoSecretType = null, PreferredAppGroupType? preferredAppGroupType = null, bool? startVmOnConnect = null, HostPoolPublicNetworkAccess? publicNetworkAccess = null, SessionHostAgentUpdatePatchProperties agentUpdate = null)
+        public static HostPoolPatch HostPoolPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, string friendlyName = null, string description = null, string customRdpProperty = null, int? maxSessionLimit = null, PersonalDesktopAssignmentType? personalDesktopAssignmentType = null, HostPoolLoadBalancerType? loadBalancerType = null, int? ring = null, bool? isValidationEnvironment = null, HostPoolRegistrationInfoPatch registrationInfo = null, string vmTemplate = null, string ssoAdfsAuthority = null, string ssoClientId = null, string ssoClientSecretKeyVaultPath = null, HostPoolSsoSecretType? ssoSecretType = null, PreferredAppGroupType? preferredAppGroupType = null, bool? startVmOnConnect = null, HostPoolPublicNetworkAccess? publicNetworkAccess = null, SessionHostAgentUpdatePatchProperties agentUpdate = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -429,7 +416,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="activeDirectoryUserName"> The active directory user name. </param>
         /// <param name="createOn"> The timestamp of the user session create. </param>
         /// <returns> A new <see cref="DesktopVirtualization.UserSessionData"/> instance for mocking. </returns>
-        public static UserSessionData UserSessionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string objectId = null, string userPrincipalName = null, VirtualApplicationType? applicationType = null, UserSessionState? sessionState = null, string activeDirectoryUserName = null, DateTimeOffset? createOn = null)
+        public static UserSessionData UserSessionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string objectId = null, string userPrincipalName = null, VirtualApplicationType? applicationType = null, UserSessionState? sessionState = null, string activeDirectoryUserName = null, DateTimeOffset? createOn = null)
         {
             return new UserSessionData(id, name, resourceType, systemData, objectId, userPrincipalName, applicationType, sessionState, activeDirectoryUserName, createOn);
         }
@@ -457,7 +444,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="updateErrorMessage"> The error message. </param>
         /// <param name="sessionHostHealthCheckResults"> List of SessionHostHealthCheckReports. </param>
         /// <returns> A new <see cref="DesktopVirtualization.SessionHostData"/> instance for mocking. </returns>
-        public static SessionHostData SessionHostData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string objectId = null, DateTimeOffset? lastHeartBeatOn = null, int? sessions = null, string agentVersion = null, bool? allowNewSession = null, string vmId = null, ResourceIdentifier resourceId = null, string assignedUser = null, string friendlyName = null, SessionHostStatus? status = null, DateTimeOffset? statusTimestamp = null, string osVersion = null, string sxsStackVersion = null, SessionHostUpdateState? updateState = null, DateTimeOffset? lastUpdatedOn = null, string updateErrorMessage = null, IEnumerable<SessionHostHealthCheckReport> sessionHostHealthCheckResults = null)
+        public static SessionHostData SessionHostData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string objectId = null, DateTimeOffset? lastHeartBeatOn = null, int? sessions = null, string agentVersion = null, bool? allowNewSession = null, string vmId = null, ResourceIdentifier resourceId = null, string assignedUser = null, string friendlyName = null, SessionHostStatus? status = null, DateTimeOffset? statusTimestamp = null, string osVersion = null, string sxsStackVersion = null, SessionHostUpdateState? updateState = null, DateTimeOffset? lastUpdatedOn = null, string updateErrorMessage = null, IEnumerable<SessionHostHealthCheckReport> sessionHostHealthCheckResults = null)
         {
             sessionHostHealthCheckResults ??= new List<SessionHostHealthCheckReport>();
 
@@ -493,7 +480,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="assignedUser"> User assigned to SessionHost. </param>
         /// <param name="friendlyName"> Friendly name of SessionHost. </param>
         /// <returns> A new <see cref="Models.SessionHostPatch"/> instance for mocking. </returns>
-        public static SessionHostPatch SessionHostPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, bool? allowNewSession = null, string assignedUser = null, string friendlyName = null)
+        public static SessionHostPatch SessionHostPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? allowNewSession = null, string assignedUser = null, string friendlyName = null)
         {
             return new SessionHostPatch(id, name, resourceType, systemData, allowNewSession, assignedUser, friendlyName);
         }
@@ -515,7 +502,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="lastUpdatedOn"> Date Package was last updated, found in the appxmanifest.xml. </param>
         /// <param name="packageApplications"> List of package applications. </param>
         /// <returns> A new <see cref="DesktopVirtualization.MsixPackageData"/> instance for mocking. </returns>
-        public static MsixPackageData MsixPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string imagePath = null, string packageName = null, string packageFamilyName = null, string displayName = null, string packageRelativePath = null, bool? isRegularRegistration = null, bool? isActive = null, IEnumerable<MsixPackageDependencies> packageDependencies = null, string version = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<MsixPackageApplications> packageApplications = null)
+        public static MsixPackageData MsixPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string imagePath = null, string packageName = null, string packageFamilyName = null, string displayName = null, string packageRelativePath = null, bool? isRegularRegistration = null, bool? isActive = null, IEnumerable<MsixPackageDependencies> packageDependencies = null, string version = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<MsixPackageApplications> packageApplications = null)
         {
             packageDependencies ??= new List<MsixPackageDependencies>();
             packageApplications ??= new List<MsixPackageApplications>();
@@ -532,7 +519,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="isRegularRegistration"> Set Registration mode. Regular or Delayed. </param>
         /// <param name="displayName"> Display name for MSIX Package. </param>
         /// <returns> A new <see cref="Models.MsixPackagePatch"/> instance for mocking. </returns>
-        public static MsixPackagePatch MsixPackagePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, bool? isActive = null, bool? isRegularRegistration = null, string displayName = null)
+        public static MsixPackagePatch MsixPackagePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isActive = null, bool? isRegularRegistration = null, string displayName = null)
         {
             return new MsixPackagePatch(id, name, resourceType, systemData, isActive, isRegularRegistration, displayName);
         }
@@ -556,7 +543,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="lastUpdatedOn"> Date Package was last updated, found in the appxmanifest.xml. </param>
         /// <param name="packageApplications"> List of package applications. </param>
         /// <returns> A new <see cref="Models.ExpandMsixImage"/> instance for mocking. </returns>
-        public static ExpandMsixImage ExpandMsixImage(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, string packageAlias = null, string imagePath = null, string packageName = null, string packageFamilyName = null, string packageFullName = null, string displayName = null, string packageRelativePath = null, bool? isRegularRegistration = null, bool? isActive = null, IEnumerable<MsixPackageDependencies> packageDependencies = null, string version = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<MsixPackageApplications> packageApplications = null)
+        public static ExpandMsixImage ExpandMsixImage(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string packageAlias = null, string imagePath = null, string packageName = null, string packageFamilyName = null, string packageFullName = null, string displayName = null, string packageRelativePath = null, bool? isRegularRegistration = null, bool? isActive = null, IEnumerable<MsixPackageDependencies> packageDependencies = null, string version = null, DateTimeOffset? lastUpdatedOn = null, IEnumerable<MsixPackageApplications> packageApplications = null)
         {
             packageDependencies ??= new List<MsixPackageDependencies>();
             packageApplications ??= new List<MsixPackageApplications>();

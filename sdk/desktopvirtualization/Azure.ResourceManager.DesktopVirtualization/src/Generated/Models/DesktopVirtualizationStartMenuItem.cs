@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="commandLineArguments"> Command line arguments for StartMenuItem. </param>
         /// <param name="iconPath"> Path to the icon. </param>
         /// <param name="iconIndex"> Index of the icon. </param>
-        internal DesktopVirtualizationStartMenuItem(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string appAlias, string filePath, string commandLineArguments, string iconPath, int? iconIndex) : base(id, name, resourceType, systemData)
+        internal DesktopVirtualizationStartMenuItem(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string appAlias, string filePath, string commandLineArguments, string iconPath, int? iconIndex) : base(id, name, resourceType, systemData)
         {
             AppAlias = appAlias;
             FilePath = filePath;
