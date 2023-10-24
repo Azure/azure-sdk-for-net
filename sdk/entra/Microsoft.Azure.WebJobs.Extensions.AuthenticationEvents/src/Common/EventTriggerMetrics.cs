@@ -20,10 +20,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// </summary>
         public EventTriggerMetrics()
         {
-            var assembly = Assembly.GetAssembly(typeof(EventTriggerMetrics));
-            ProductVersion = assembly.GetCustomAttribute<AssemblyFileVersionAttribute>()?.Version;
-            Framework = assembly.GetCustomAttribute<TargetFrameworkAttribute>()?.FrameworkName;
+            var assembly = AssemblyName.GetAssemblyName("Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents");
 
+            ProductVersion = assembly.Version.ToString();
+            Framework = RuntimeInformation.FrameworkDescription;
             Platform = RuntimeInformation.OSDescription ?? "unknown";
         }
 
