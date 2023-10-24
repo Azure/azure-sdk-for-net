@@ -32,9 +32,7 @@ namespace Azure.Core.Tests
             message.Response = responseMock.Object;
             message.Dispose();
             requestMock.Verify(r => r.Dispose(), Times.Once);
-
-            // TODO: Is it important that it is only once, if Dispose() is idempotent?
-            responseMock.Verify(r => r.Dispose(), Times.AtLeastOnce);
+            responseMock.Verify(r => r.Dispose(), Times.Once);
         }
 
         [Test]
