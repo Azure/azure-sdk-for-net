@@ -15,7 +15,10 @@ using Azure.Security.ConfidentialLedger;
 namespace Azure.Security.ConfidentialLedger.Certificate
 {
     // Data plane generated client.
-    /// <summary> The ConfidentialLedgerCertificate service client. </summary>
+    /// <summary>
+    /// The ConfidentialLedgerCertificate service client.
+    /// Hello World
+    /// </summary>
     public partial class ConfidentialLedgerCertificateClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://confidential-ledger.azure.com/.default" };

@@ -17,7 +17,10 @@ using Azure.Core.Pipeline;
 namespace Azure.Communication.JobRouter
 {
     // Data plane generated client.
-    /// <summary> The JobRouter service client. </summary>
+    /// <summary>
+    /// The JobRouter service client.
+    /// Hello World
+    /// </summary>
     public partial class JobRouterClient
     {
         private readonly HttpPipeline _pipeline;

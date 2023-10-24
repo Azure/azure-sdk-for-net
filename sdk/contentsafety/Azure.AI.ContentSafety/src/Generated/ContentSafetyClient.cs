@@ -16,7 +16,10 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.ContentSafety
 {
     // Data plane generated client.
-    /// <summary> The ContentSafety service client. </summary>
+    /// <summary>
+    /// The ContentSafety service client.
+    /// Hello World
+    /// </summary>
     public partial class ContentSafetyClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";

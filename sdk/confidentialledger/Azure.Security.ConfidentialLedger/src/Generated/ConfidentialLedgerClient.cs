@@ -15,7 +15,10 @@ using Azure.Core.Pipeline;
 namespace Azure.Security.ConfidentialLedger
 {
     // Data plane generated client.
-    /// <summary> The ConfidentialLedger service client. </summary>
+    /// <summary>
+    /// The ConfidentialLedger service client.
+    /// Hello World
+    /// </summary>
     public partial class ConfidentialLedgerClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://confidential-ledger.azure.com/.default" };
