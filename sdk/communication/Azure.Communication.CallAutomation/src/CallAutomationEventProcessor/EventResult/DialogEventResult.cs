@@ -50,6 +50,11 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public DialogLanguageChange DialogLanguageChangeEvent { get; }
 
+        /// <summary>
+        /// <see cref="DialogUpdated"/> event will be returned once the dialog has been updated
+        /// </summary>
+        public DialogUpdated DialogUpdatedEvent { get; }
+
         internal DialogEventResult(
             bool isSuccess,
             DialogCompleted successResult,
@@ -59,7 +64,8 @@ namespace Azure.Communication.CallAutomation
             DialogStarted dialogStartedSuccessEvent,
             DialogTransfer dialogTransferSuccessEvent,
             DialogSensitivityUpdate dialogSensitivityUpdateEvent,
-            DialogLanguageChange dialogLanguageChangeEvent)
+            DialogLanguageChange dialogLanguageChangeEvent,
+            DialogUpdated dialogUpdated)
         {
             IsSuccess = isSuccess;
             DialogCompletedSuccessResult = successResult;
@@ -68,6 +74,7 @@ namespace Azure.Communication.CallAutomation
             DialogHangupSuccessEvent = dialogHangupSuccessEvent;
             DialogStartedSuccessEvent = dialogStartedSuccessEvent;
             DialogTransferSuccessEvent = dialogTransferSuccessEvent;
+            DialogUpdatedEvent = dialogUpdated;
             DialogSensitivityUpdateEvent = dialogSensitivityUpdateEvent;
             DialogLanguageChangeEvent = dialogLanguageChangeEvent;
         }
