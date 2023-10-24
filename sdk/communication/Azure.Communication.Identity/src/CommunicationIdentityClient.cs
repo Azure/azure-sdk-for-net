@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Communication.Pipeline;
@@ -100,8 +99,11 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationUserIdentifierAndToken> response = RestClient.Create(Array.Empty<CommunicationTokenScope>(), cancellationToken: cancellationToken);
+                (Guid repeatabilityRequestId, DateTimeOffset repeatabilityFirstSent) = GetRepeatabilityHeaders();
+
+                ResponseWithHeaders<CommunicationUserIdentifierAndToken, CommunicationIdentityCreateHeaders> response = RestClient.Create(repeatabilityRequestId, repeatabilityFirstSent, Array.Empty<CommunicationTokenScope>(), cancellationToken: cancellationToken);
                 var id = response.Value.Identity.Id;
+                var repeatabilityResult = response.Headers.RepeatabilityResult;
                 return Response.FromValue(new CommunicationUserIdentifier(id), response.GetRawResponse());
             }
             catch (Exception ex)
@@ -119,7 +121,9 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                Response<CommunicationUserIdentifierAndToken> response = await RestClient.CreateAsync(Array.Empty<CommunicationTokenScope>(), cancellationToken: cancellationToken).ConfigureAwait(false);
+                (Guid repeatabilityRequestId, DateTimeOffset repeatabilityFirstSent) = GetRepeatabilityHeaders();
+
+                Response<CommunicationUserIdentifierAndToken> response = await RestClient.CreateAsync(repeatabilityRequestId, repeatabilityFirstSent, Array.Empty<CommunicationTokenScope>(), cancellationToken: cancellationToken).ConfigureAwait(false);
                 var id = response.Value.Identity.Id;
                 return Response.FromValue(new CommunicationUserIdentifier(id), response.GetRawResponse());
             }
@@ -140,9 +144,10 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
+                (Guid repeatabilityRequestId, DateTimeOffset repeatabilityFirstSent) = GetRepeatabilityHeaders();
                 int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
-                return RestClient.Create(scopes, expiresIn, cancellationToken);
+                return RestClient.Create(repeatabilityRequestId, repeatabilityFirstSent, scopes, expiresIn, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -169,9 +174,10 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
+                (Guid repeatabilityRequestId, DateTimeOffset repeatabilityFirstSent) = GetRepeatabilityHeaders();
                 int? expiresIn = GetTokenExpirationInMinutes(tokenExpiresIn, nameof(tokenExpiresIn));
 
-                return await RestClient.CreateAsync(scopes, expiresIn, cancellationToken).ConfigureAwait(false);
+                return await RestClient.CreateAsync(repeatabilityRequestId, repeatabilityFirstSent, scopes, expiresIn, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -303,7 +309,9 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                return RestClient.RevokeAccessTokens(communicationUser.Id, cancellationToken);
+                (Guid repeatabilityRequestId, DateTimeOffset repeatabilityFirstSent) = GetRepeatabilityHeaders();
+
+                return RestClient.RevokeAccessTokens(communicationUser.Id, repeatabilityRequestId, repeatabilityFirstSent, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -321,7 +329,9 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                return await RestClient.RevokeAccessTokensAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
+                (Guid repeatabilityRequestId, DateTimeOffset repeatabilityFirstSent) = GetRepeatabilityHeaders();
+
+                return await RestClient.RevokeAccessTokensAsync(communicationUser.Id, repeatabilityRequestId, repeatabilityFirstSent, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -379,6 +389,15 @@ namespace Azure.Communication.Identity
             {
                 throw new ArgumentOutOfRangeException($"The {paramName} argument is out of permitted bounds [1,24] hours. Please refer to the documentation and set the value accordingly.", ex);
             }
+        }
+
+        /// <summary>Initializes and returns Repeatability Headers</summary>
+        private (Guid RepeatabilityRequestId, DateTimeOffset RepeatabilityFirstSent) GetRepeatabilityHeaders()
+        {
+            Guid repeatabilityRequestId = Guid.NewGuid();
+            DateTimeOffset repeatabilityFirstSent = DateTimeOffset.UtcNow;
+
+            return (repeatabilityRequestId, repeatabilityFirstSent);
         }
     }
 }
