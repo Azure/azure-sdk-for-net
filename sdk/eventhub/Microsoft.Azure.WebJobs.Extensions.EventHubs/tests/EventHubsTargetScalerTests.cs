@@ -84,6 +84,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [TestCase(70, 10, 10)]
         [TestCase(150, 10, 10)]
         [TestCase(2147483650, 1, 1)] // Testing eventCount > int.MaxInt is 2147483647
+        [TestCase(2147483650, 214748365, 214748365)] // Event count is > int.MaxInt, but final target worker count is within bounds
         public void GetScaleResultInternal_ReturnsExpected(long eventCount, int partitionCount, int expectedTargetWorkerCount)
         {
             TargetScalerResult result = _targetScaler.GetScaleResultInternal(new TargetScalerContext { InstanceConcurrency = 10 }, eventCount, partitionCount);
@@ -128,9 +129,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [TestCase(21, new[] { 1, 4, 10, 20 }, 20)]
         [TestCase(0, new[] { 1, 4, 10, 20 }, 1)]
         [TestCase(10, new[] { 1, 4, 10, 20 }, 10)]
-        [TestCase(2147483650, new[] { 1, 4, 10, 20 }, 20)] // workerCount exceeds MaxInt
-        [TestCase(2147483650, new[] { 1 }, 1)]
-        public void GetSortedValidWorkerCountsForPartitionCount_ReturnsExpected(long workerCount, int[] sortedWorkerCountList, int expectedValidWorkerCount)
+        public void GetSortedValidWorkerCountsForPartitionCount_ReturnsExpected(int workerCount, int[] sortedWorkerCountList, int expectedValidWorkerCount)
         {
             int actualValidWorkerCount = EventHubsTargetScaler.GetValidWorkerCount(workerCount, sortedWorkerCountList);
             Assert.AreEqual(expectedValidWorkerCount, actualValidWorkerCount);
