@@ -124,8 +124,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                    string eventHubName,
                                    string consumerGroup,
                                    string clientIdentifier,
-                                   string sequenceNumber,
-                                   string offset,
+                                   long sequenceNumber,
+                                   long offset,
                                    string exception);
 
         /// <summary>
@@ -145,8 +145,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                       string eventHubName,
                                       string consumerGroup,
                                       string clientIdentifier,
-                                      string sequenceNumber,
-                                      string offset);
+                                      long sequenceNumber,
+                                      long offset);
 
         /// <summary>
         ///   Indicates that an attempt to create/update a checkpoint has started.
@@ -165,8 +165,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                    string eventHubName,
                                    string consumerGroup,
                                    string clientIdentifier,
-                                   string sequenceNumber,
-                                   string offset);
+                                   long sequenceNumber,
+                                   long offset);
 
         /// <summary>
         ///   Indicates that an attempt to retrieve claim partition ownership has completed.
@@ -294,7 +294,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                    string consumerGroup,
                                    string partitionId,
                                    string clientIdentifier,
-                                   string lastModified);
+                                   DateTimeOffset lastModified);
 
         /// <summary>
         ///   Indicates that an unhandled exception was encountered while retrieving a checkpoint.

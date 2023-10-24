@@ -762,7 +762,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 };
 
                 var checkpointUsed = (checkpoint != null);
-                var checkpointLastModified = checkpointUsed ? checkpoint.LastModified.ToString() : null;
+                var checkpointLastModified = checkpointUsed ? checkpoint.LastModified : null;
                 var checkpointAuthor = checkpointUsed ? checkpoint.ClientIdentifier : null;
 
                 Logger.EventProcessorPartitionProcessingEventPositionDetermined(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, startingPosition.ToString(), checkpointUsed, checkpointLastModified, checkpointAuthor);
@@ -1079,7 +1079,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected virtual Task UpdateCheckpointAsync(string partitionId,
                                                      long offset,
                                                      long? sequenceNumber,
-                                                     CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, new CheckpointPosition { SequenceNumber = sequenceNumber ?? long.MinValue, Offset = offset }, cancellationToken);
+                                                     CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, new CheckpointPosition(sequenceNumber ?? long.MinValue, offset), cancellationToken);
 
         /// <summary>
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream

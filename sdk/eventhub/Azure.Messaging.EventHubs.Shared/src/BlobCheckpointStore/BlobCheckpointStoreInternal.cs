@@ -349,7 +349,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             finally
             {
-                GetCheckpointComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, checkpoint?.ClientIdentifier, checkpoint?.LastModified.ToString());
+                GetCheckpointComplete(fullyQualifiedNamespace, eventHubName, consumerGroup, partitionId, checkpoint?.ClientIdentifier, checkpoint?.LastModified ?? default);
             }
         }
 
@@ -375,7 +375,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                          CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber.ToString(), checkpointStartingPosition.Offset.ToString());
+            UpdateCheckpointStart(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset ?? long.MinValue);
 
             var blobName = string.Format(CultureInfo.InvariantCulture, CheckpointPrefix + partitionId, fullyQualifiedNamespace.ToLowerInvariant(), eventHubName.ToLowerInvariant(), consumerGroup.ToLowerInvariant());
             var blobClient = ContainerClient.GetBlobClient(blobName);
@@ -405,17 +405,17 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             catch (RequestFailedException ex) when (ex.ErrorCode == BlobErrorCode.ContainerNotFound)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber.ToString(), checkpointStartingPosition.Offset.ToString(), ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset ?? long.MinValue, ex);
                 throw new RequestFailedException(BlobsResourceDoesNotExist, ex);
             }
             catch (Exception ex)
             {
-                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber.ToString(), checkpointStartingPosition.Offset.ToString(), ex);
+                UpdateCheckpointError(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset ?? long.MinValue, ex);
                 throw;
             }
             finally
             {
-                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber.ToString(), checkpointStartingPosition.Offset.ToString());
+                UpdateCheckpointComplete(partitionId, fullyQualifiedNamespace, eventHubName, consumerGroup, clientIdentifier, checkpointStartingPosition.SequenceNumber, checkpointStartingPosition.Offset ?? long.MinValue);
             }
         }
 
@@ -701,7 +701,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string consumerGroup,
                                            string partitionId,
                                            string clientIdentifier,
-                                           string lastModified);
+                                           DateTimeOffset lastModified);
 
         /// <summary>
         ///   Indicates that an unhandled exception was encountered while retrieving a checkpoint.
@@ -751,8 +751,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string eventHubName,
                                            string consumerGroup,
                                            string clientIdentifier,
-                                           string sequenceNumber,
-                                           string offset,
+                                           long sequenceNumber,
+                                           long offset,
                                            Exception exception);
 
         /// <summary>
@@ -772,8 +772,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                                               string eventHubName,
                                               string consumerGroup,
                                               string clientIdentifier,
-                                              string sequenceNumber,
-                                              string offset);
+                                              long sequenceNumber,
+                                              long offset);
 
         /// <summary>
         ///   Indicates that an attempt to create/update a checkpoint has started.
@@ -792,8 +792,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                                            string eventHubName,
                                            string consumerGroup,
                                            string clientIdentifier,
-                                           string sequenceNumber,
-                                           string offset);
+                                           long sequenceNumber,
+                                           long offset);
 
         /// <summary>
         ///   Indicates that an attempt to retrieve claim partition ownership has completed.

@@ -2159,7 +2159,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
                                                                                      string consumerGroup,
                                                                                      string startingPosition,
                                                                                      bool checkpointUsed,
-                                                                                     string lastModified,
+                                                                                     DateTimeOffset? lastModified,
                                                                                      string authorIdentifier)
         {
             if (IsEnabled())
