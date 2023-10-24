@@ -86,7 +86,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
         internal TargetScalerResult GetScaleResultInternal(TargetScalerContext context, long eventCount, int partitionCount)
         {
             int desiredConcurrency = GetDesiredConcurrencyInternal(context);
-            int desiredWorkerCount = (int)Math.Ceiling(eventCount / (decimal)desiredConcurrency);
+            long desiredWorkerCount = (long)Math.Ceiling(eventCount / (decimal)desiredConcurrency);
             int[] sortedValidWorkerCounts = GetSortedValidWorkerCountsForPartitionCount(partitionCount);
             int validatedTargetWorkerCount = GetValidWorkerCount(desiredWorkerCount, sortedValidWorkerCounts);
 
@@ -163,9 +163,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
         /// <param name="workerCount">The value that we want to find in the sortedValues list (if it exists), or the next largest element.</param>
         /// <param name="sortedValidWorkerCountList">The list of valid worker counts. This must be sorted.</param>
         /// <returns></returns>
-        internal static int GetValidWorkerCount(int workerCount, int[] sortedValidWorkerCountList)
+        internal static int GetValidWorkerCount(long workerCount, int[] sortedValidWorkerCountList)
         {
-            int i = Array.BinarySearch(sortedValidWorkerCountList, workerCount);
+            // Handling cases where workerCount exceeds int.MaxInt
+            if (workerCount > int.MaxValue)
+            {
+                return sortedValidWorkerCountList.Last();
+            }
+
+            int i = Array.BinarySearch(sortedValidWorkerCountList, (int)workerCount);
             if (i >= 0)
             {
                 return sortedValidWorkerCountList[i];

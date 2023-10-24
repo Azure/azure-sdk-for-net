@@ -127,7 +127,9 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [TestCase(21, new[] { 1, 4, 10, 20 }, 20)]
         [TestCase(0, new[] { 1, 4, 10, 20 }, 1)]
         [TestCase(10, new[] { 1, 4, 10, 20 }, 10)]
-        public void GetSortedValidWorkerCountsForPartitionCount_ReturnsExpected(int workerCount, int[] sortedWorkerCountList, int expectedValidWorkerCount)
+        [TestCase(2147483650, new[] { 1, 4, 10, 20 }, 20)] // workerCount exceeds MaxInt
+        [TestCase(2147483650, new[] { 1 }, 1)]
+        public void GetSortedValidWorkerCountsForPartitionCount_ReturnsExpected(long workerCount, int[] sortedWorkerCountList, int expectedValidWorkerCount)
         {
             int actualValidWorkerCount = EventHubsTargetScaler.GetValidWorkerCount(workerCount, sortedWorkerCountList);
             Assert.AreEqual(expectedValidWorkerCount, actualValidWorkerCount);
