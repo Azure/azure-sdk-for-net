@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MobileNetwork
             Optional<int> ueMtu = default;
             MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = default;
             Optional<DiagnosticsUploadConfiguration> diagnosticsUpload = default;
-            Optional<EventHubConfiguration> eventHub = default;
+            Optional<MobileNetworkEventHubConfiguration> eventHub = default;
             Optional<SignalingConfiguration> signaling = default;
             Optional<BinaryData> interopSettings = default;
             foreach (var property in element.EnumerateObject())
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            eventHub = EventHubConfiguration.DeserializeEventHubConfiguration(property0.Value);
+                            eventHub = MobileNetworkEventHubConfiguration.DeserializeMobileNetworkEventHubConfiguration(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("signaling"u8))

@@ -11,29 +11,29 @@ using Azure.Core;
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary> Configuration for sending packet core events to Azure Event Hub. </summary>
-    public partial class EventHubConfiguration
+    public partial class MobileNetworkEventHubConfiguration
     {
-        /// <summary> Initializes a new instance of EventHubConfiguration. </summary>
+        /// <summary> Initializes a new instance of MobileNetworkEventHubConfiguration. </summary>
         /// <param name="id"> Resource ID  of Azure Event Hub to send packet core events to. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public EventHubConfiguration(string id)
+        public MobileNetworkEventHubConfiguration(ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of EventHubConfiguration. </summary>
+        /// <summary> Initializes a new instance of MobileNetworkEventHubConfiguration. </summary>
         /// <param name="id"> Resource ID  of Azure Event Hub to send packet core events to. </param>
         /// <param name="reportingInterval"> The duration (in seconds) between UE usage reports. </param>
-        internal EventHubConfiguration(string id, int? reportingInterval)
+        internal MobileNetworkEventHubConfiguration(ResourceIdentifier id, int? reportingInterval)
         {
             Id = id;
             ReportingInterval = reportingInterval;
         }
 
         /// <summary> Resource ID  of Azure Event Hub to send packet core events to. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> The duration (in seconds) between UE usage reports. </summary>
         public int? ReportingInterval { get; set; }
     }

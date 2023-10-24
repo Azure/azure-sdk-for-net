@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="eventHub"> Configuration for sending packet core events to an Azure Event Hub. </param>
         /// <param name="signaling"> Signaling configuration for the packet core. </param>
         /// <param name="interopSettings"> Settings to allow interoperability with third party components e.g. RANs and UEs. </param>
-        internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IList<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, IList<string> controlPlaneAccessVirtualIPv4Addresses, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, EventHubConfiguration eventHub, SignalingConfiguration signaling, BinaryData interopSettings) : base(id, name, resourceType, systemData, tags, location)
+        internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IList<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, IList<string> controlPlaneAccessVirtualIPv4Addresses, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, MobileNetworkEventHubConfiguration eventHub, SignalingConfiguration signaling, BinaryData interopSettings) : base(id, name, resourceType, systemData, tags, location)
         {
             UserAssignedIdentity = userAssignedIdentity;
             ProvisioningState = provisioningState;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> Configuration for sending packet core events to an Azure Event Hub. </summary>
-        public EventHubConfiguration EventHub { get; set; }
+        public MobileNetworkEventHubConfiguration EventHub { get; set; }
         /// <summary> Signaling configuration for the packet core. </summary>
         internal SignalingConfiguration Signaling { get; set; }
         /// <summary> The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute. </summary>

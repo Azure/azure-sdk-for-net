@@ -107,6 +107,8 @@ rename-mapping:
   DiagnosticsPackage: MobileNetworkDiagnosticsPackage
   DataNetwork: MobileDataNetwork
   AttachedDataNetwork: MobileAttachedDataNetwork
+  EventHubConfiguration: MobileNetworkEventHubConfiguration
+  EventHubConfiguration.id: -|arm-id
   
 
 directive:

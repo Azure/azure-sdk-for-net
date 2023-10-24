@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class EventHubConfiguration : IUtf8JsonSerializable
+    public partial class MobileNetworkEventHubConfiguration : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -25,19 +25,19 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             writer.WriteEndObject();
         }
 
-        internal static EventHubConfiguration DeserializeEventHubConfiguration(JsonElement element)
+        internal static MobileNetworkEventHubConfiguration DeserializeMobileNetworkEventHubConfiguration(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             Optional<int> reportingInterval = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("reportingInterval"u8))
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     continue;
                 }
             }
-            return new EventHubConfiguration(id, Optional.ToNullable(reportingInterval));
+            return new MobileNetworkEventHubConfiguration(id, Optional.ToNullable(reportingInterval));
         }
     }
 }
