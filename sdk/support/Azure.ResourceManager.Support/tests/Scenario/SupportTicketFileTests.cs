@@ -60,7 +60,8 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task CreateAndUpload()
         {
             //  Create file
-            var fileName = $"dotnet_sdk_test_{DateTime.Now.Ticks.ToString()}.txt";
+            var assetName = Recording.GenerateAssetName("test");
+            var fileName = $"dotnet_sdk_test_new_file_{assetName}.txt";
             var resource = SupportTicketFileResource.CreateResourceIdentifier(_subscriptionId, _existSupportTicketFileWorkspaceName, fileName);
             var fileData = new SupportFileDetailData(resource, fileName, resource.ResourceType, new ResourceManager.Models.SystemData(), DateTimeOffset.Now, 4, 4, 1);
             await _supportTicketFileCollection.CreateOrUpdateAsync(WaitUntil.Completed, fileName, fileData);

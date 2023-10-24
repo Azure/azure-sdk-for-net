@@ -33,7 +33,8 @@ namespace Azure.ResourceManager.Support.Tests
         [RecordedTest]
         public async Task CheckSupportTicketNameAvailability()
         {
-            var supportTicketName = $"dotnet_{DateTime.Now.Ticks.ToString()}";
+            var assetName = Recording.GenerateAssetName("test");
+            var supportTicketName = $"dotnet_{assetName}";
             var supportTicket = await _supportAzureServiceCollection.GetAsync(_existSupportTicketName);
             var content = new SupportNameAvailabilityContent(supportTicketName, SupportResourceType.MicrosoftSupportSupportTickets);
             var result = await supportTicket.Value.CheckCommunicationNameAvailabilityAsync(content);
@@ -59,7 +60,8 @@ namespace Azure.ResourceManager.Support.Tests
         [RecordedTest]
         public async Task Create()
         {
-            var supportTicketName = $"dotnet_sdk_test_{DateTime.Now.Ticks.ToString()}";
+            var assetName = Recording.GenerateAssetName("test");
+            var supportTicketName = $"dotnet_sdk_test_new_ticket_name_{assetName}";
             await _supportAzureServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, supportTicketName, BuildSupportTicketData());
             var supportTicket = await _supportAzureServiceCollection.GetAsync(supportTicketName);
             Assert.IsNotNull(supportTicket);
@@ -72,13 +74,13 @@ namespace Azure.ResourceManager.Support.Tests
         public async Task Update()
         {
             var supportTicket = await _supportAzureServiceCollection.GetAsync(_existSupportTicketName);
-            var severity = supportTicket.Value.Data.Severity;
+            var firstName = supportTicket.Value.Data.ContactDetails.FirstName;
             await supportTicket.Value.UpdateAsync(BuildUpdateSupportTicket(supportTicket.Value.Data));
             supportTicket = await _supportAzureServiceCollection.GetAsync(_existSupportTicketName);
             Assert.IsNotNull(supportTicket);
             Assert.IsNotEmpty(supportTicket.Value.Data.Id);
             Assert.AreEqual(supportTicket.Value.Data.Name, _existSupportTicketName);
-            Assert.AreNotEqual(supportTicket.Value.Data.Severity, severity);
+            Assert.AreNotEqual(supportTicket.Value.Data.ContactDetails.FirstName, firstName);
         }
 
         private void ValidateGetSupportTicket(SupportTicketData supportTicket, string supportTicketName)
@@ -105,11 +107,13 @@ namespace Azure.ResourceManager.Support.Tests
 
         private UpdateSupportTicket BuildUpdateSupportTicket(SupportTicketData supportTicket)
         {
-            //  Change severity to Minimal if Moderate and vice versa
-            var severity = supportTicket.Severity.Value == "Minimal" ? "Moderate" : "Minimal";
+            var assetName = Recording.GenerateAssetName("test");
             var updateSupportTicket = new UpdateSupportTicket()
             {
-                Severity = severity,
+                ContactDetails = new SupportContactProfileContent()
+                {
+                    FirstName = $"firstName_{assetName}"
+                }
             };
             return updateSupportTicket;
         }
