@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="resultType"> Result type of the search result. </param>
         /// <param name="rank"> rank of the search result. </param>
         /// <param name="link"> Link to the document. </param>
-        internal SearchResult(string solutionId, string content, string title, SelfHelpConfidence? confidence, string source, SelfHelpResultType? resultType, int? rank, string link)
+        internal SearchResult(string solutionId, string content, string title, SelfHelpConfidence? confidence, string source, ResultType? resultType, int? rank, string link)
         {
             SolutionId = solutionId;
             Content = content;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Source of the search result. </summary>
         public string Source { get; set; }
         /// <summary> Result type of the search result. </summary>
-        public SelfHelpResultType? ResultType { get; set; }
+        public ResultType? ResultType { get; set; }
         /// <summary> rank of the search result. </summary>
         public int? Rank { get; set; }
         /// <summary> Link to the document. </summary>

@@ -78,14 +78,9 @@ rename-mapping:
   ImportanceLevel: SelfHelpImportanceLevel
   DiagnosticProvisioningState: SelfHelpProvisioningState
   Filter: SelfHelpFilter
-  FilterGroup: SelfHelpFilterGroup
   Confidence: SelfHelpConfidence
   Section: SelfHelpSection
   Video: SelfHelpVideo
-  Type: SelfHelpType
-  ResultType: SelfHelpResultType
-  Name: SelfHelpName
-  VideoGroup: SelfHelpVideoGroup
 
 override-operation-name:
   CheckNameAvailability_Post: CheckSelfHelpNameAvailability

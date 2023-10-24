@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="title"> Chart title. </param>
         /// <param name="filterGroup"> Filter group. </param>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
-        internal MetricsBasedChart(string name, AggregationType? aggregationType, TimeSpan? timeSpanDuration, string title, SelfHelpFilterGroup filterGroup, string replacementKey)
+        internal MetricsBasedChart(string name, AggregationType? aggregationType, TimeSpan? timeSpanDuration, string title, FilterGroup filterGroup, string replacementKey)
         {
             Name = name;
             AggregationType = aggregationType;
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Chart title. </summary>
         public string Title { get; set; }
         /// <summary> Filter group. </summary>
-        internal SelfHelpFilterGroup FilterGroup { get; set; }
+        internal FilterGroup FilterGroup { get; set; }
         /// <summary> List of filters. </summary>
         public IList<SelfHelpFilter> Filter
         {
             get
             {
                 if (FilterGroup is null)
-                    FilterGroup = new SelfHelpFilterGroup();
+                    FilterGroup = new FilterGroup();
                 return FilterGroup.Filter;
             }
         }

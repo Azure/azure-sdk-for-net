@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<AggregationType> aggregationType = default;
             Optional<TimeSpan> timeSpanDuration = default;
             Optional<string> title = default;
-            Optional<SelfHelpFilterGroup> filterGroup = default;
+            Optional<FilterGroup> filterGroup = default;
             Optional<string> replacementKey = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    filterGroup = SelfHelpFilterGroup.DeserializeSelfHelpFilterGroup(property.Value);
+                    filterGroup = FilterGroup.DeserializeFilterGroup(property.Value);
                     continue;
                 }
                 if (property.NameEquals("replacementKey"u8))

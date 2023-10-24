@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Troubleshooters = new ChangeTrackingList<SolutionsTroubleshooters>();
             MetricsBasedCharts = new ChangeTrackingList<MetricsBasedChart>();
             Videos = new ChangeTrackingList<SelfHelpVideo>();
-            VideoGroups = new ChangeTrackingList<SelfHelpVideoGroup>();
+            VideoGroups = new ChangeTrackingList<VideoGroup>();
         }
 
         /// <summary> Initializes a new instance of ReplacementMaps. </summary>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="metricsBasedCharts"> Solution metrics based charts. </param>
         /// <param name="videos"> Video solutions, which have the power to engage the customer by stimulating their senses. </param>
         /// <param name="videoGroups"> Group of Videos. </param>
-        internal ReplacementMaps(IList<WebResult> webResults, IList<SolutionsDiagnostic> diagnostics, IList<SolutionsTroubleshooters> troubleshooters, IList<MetricsBasedChart> metricsBasedCharts, IList<SelfHelpVideo> videos, IList<SelfHelpVideoGroup> videoGroups)
+        internal ReplacementMaps(IList<WebResult> webResults, IList<SolutionsDiagnostic> diagnostics, IList<SolutionsTroubleshooters> troubleshooters, IList<MetricsBasedChart> metricsBasedCharts, IList<SelfHelpVideo> videos, IList<VideoGroup> videoGroups)
         {
             WebResults = webResults;
             Diagnostics = diagnostics;
@@ -52,6 +52,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> Video solutions, which have the power to engage the customer by stimulating their senses. </summary>
         public IList<SelfHelpVideo> Videos { get; }
         /// <summary> Group of Videos. </summary>
-        public IList<SelfHelpVideoGroup> VideoGroups { get; }
+        public IList<VideoGroup> VideoGroups { get; }
     }
 }

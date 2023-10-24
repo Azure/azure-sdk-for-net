@@ -191,25 +191,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResultType left, Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResultType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Confidence : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.Confidence>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Confidence(string value) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.Confidence High { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.Confidence Low { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.Confidence Medium { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SelfHelp.Models.Confidence other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.Confidence left, Azure.ResourceManager.SelfHelp.Models.Confidence right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SelfHelp.Models.Confidence (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.Confidence left, Azure.ResourceManager.SelfHelp.Models.Confidence right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ContinueRequestBody
     {
         public ContinueRequestBody() { }
@@ -236,18 +217,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.ExecutionStatus left, Azure.ResourceManager.SelfHelp.Models.ExecutionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Filter
-    {
-        public Filter() { }
-        public string Name { get { throw null; } set { } }
-        public string Operator { get { throw null; } set { } }
-        public string Values { get { throw null; } set { } }
-    }
     public partial class MetricsBasedChart
     {
         public MetricsBasedChart() { }
         public Azure.ResourceManager.SelfHelp.Models.AggregationType? AggregationType { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.Filter> Filter { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SelfHelpFilter> Filter { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public string ReplacementKey { get { throw null; } set { } }
         public System.TimeSpan? TimeSpanDuration { get { throw null; } set { } }
@@ -318,7 +292,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.MetricsBasedChart> MetricsBasedCharts { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SolutionsTroubleshooters> Troubleshooters { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.VideoGroup> VideoGroups { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.Video> Videos { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SelfHelpVideo> Videos { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.WebResult> WebResults { get { throw null; } }
     }
     public partial class ResponseOption
@@ -361,7 +335,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public partial class SearchResult
     {
         public SearchResult() { }
-        public Azure.ResourceManager.SelfHelp.Models.Confidence? Confidence { get { throw null; } set { } }
+        public Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence? Confidence { get { throw null; } set { } }
         public string Content { get { throw null; } set { } }
         public string Link { get { throw null; } set { } }
         public int? Rank { get { throw null; } set { } }
@@ -370,12 +344,24 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public string Source { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
     }
-    public partial class Section
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SelfHelpConfidence : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence>
     {
-        public Section() { }
-        public string Content { get { throw null; } set { } }
-        public Azure.ResourceManager.SelfHelp.Models.ReplacementMaps ReplacementMaps { get { throw null; } set { } }
-        public string Title { get { throw null; } set { } }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SelfHelpConfidence(string value) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence High { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence Low { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence Medium { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence left, Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence left, Azure.ResourceManager.SelfHelp.Models.SelfHelpConfidence right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class SelfHelpDiagnosticInfo
     {
@@ -427,6 +413,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpError> Details { get { throw null; } }
         public string ErrorType { get { throw null; } }
         public string Message { get { throw null; } }
+    }
+    public partial class SelfHelpFilter
+    {
+        public SelfHelpFilter() { }
+        public string Name { get { throw null; } set { } }
+        public string Operator { get { throw null; } set { } }
+        public string Values { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SelfHelpImportanceLevel : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.SelfHelpImportanceLevel>
@@ -480,6 +473,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState left, Azure.ResourceManager.SelfHelp.Models.SelfHelpProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class SelfHelpSection
+    {
+        public SelfHelpSection() { }
+        public string Content { get { throw null; } set { } }
+        public Azure.ResourceManager.SelfHelp.Models.ReplacementMaps ReplacementMaps { get { throw null; } set { } }
+        public string Title { get { throw null; } set { } }
+    }
     public partial class SelfHelpSolutionMetadata : Azure.ResourceManager.Models.ResourceData
     {
         public SelfHelpSolutionMetadata() { }
@@ -492,6 +492,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties> Solutions { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string SolutionType { get { throw null; } set { } }
+    }
+    public partial class SelfHelpVideo : Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo
+    {
+        public SelfHelpVideo() { }
+        public string ReplacementKey { get { throw null; } set { } }
     }
     public partial class SolutionMetadataProperties
     {
@@ -532,7 +537,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
         public Azure.ResourceManager.SelfHelp.Models.SolutionProvisioningState? ProvisioningState { get { throw null; } set { } }
         public Azure.ResourceManager.SelfHelp.Models.ReplacementMaps ReplacementMaps { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.Section> Sections { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SelfHelpSection> Sections { get { throw null; } }
         public string SolutionId { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.TriggerCriterion> TriggerCriteria { get { throw null; } }
@@ -654,11 +659,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static implicit operator Azure.ResourceManager.SelfHelp.Models.Type (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.Type left, Azure.ResourceManager.SelfHelp.Models.Type right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class Video : Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo
-    {
-        public Video() { }
-        public string ReplacementKey { get { throw null; } set { } }
     }
     public partial class VideoGroup
     {

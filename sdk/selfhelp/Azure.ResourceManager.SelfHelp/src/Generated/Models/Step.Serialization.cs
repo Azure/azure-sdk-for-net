@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<string> guidance = default;
             Optional<ExecutionStatus> executionStatus = default;
             Optional<string> executionStatusDescription = default;
-            Optional<SelfHelpType> type = default;
+            Optional<Type> type = default;
             Optional<bool> isLastStep = default;
             Optional<IReadOnlyList<StepInput>> inputs = default;
             Optional<AutomatedCheckResult> automatedCheckResults = default;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    type = new SelfHelpType(property.Value.GetString());
+                    type = new Type(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isLastStep"u8))

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 
     public class TroubleshooterTests : SelfHelpManagementTestBase
     {
-        public TroubleshooterTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+        public TroubleshooterTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
         {
         }
 

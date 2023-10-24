@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<string> title = default;
             Optional<SelfHelpConfidence> confidence = default;
             Optional<string> source = default;
-            Optional<SelfHelpResultType> resultType = default;
+            Optional<ResultType> resultType = default;
             Optional<int> rank = default;
             Optional<string> link = default;
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    resultType = new SelfHelpResultType(property.Value.GetString());
+                    resultType = new ResultType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rank"u8))
