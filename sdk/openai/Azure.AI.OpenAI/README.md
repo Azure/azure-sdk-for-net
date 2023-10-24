@@ -418,7 +418,15 @@ See [the Azure OpenAI using your own data quickstart](https://learn.microsoft.co
 **NOTE:** The concurrent use of [Chat Functions](#use-chat-functions) and Azure Chat Extensions on a single request is not yet supported. Supplying both will result in the Chat Functions information being ignored and the operation behaving as if only the Azure Chat Extensions were provided. To address this limitation, consider separating the evaluation of Chat Functions and Azure Chat Extensions across multiple requests in your solution design.
 
 ```C# Snippet:ChatUsingYourOwnData
-var chatCompletionsOptions = new ChatCompletionsOptions()
+AzureCognitiveSearchChatExtensionConfiguration config = new()
+{
+    SearchEndpoint = new Uri("https://your-contoso-search-resource.search.windows.net"),
+    IndexName = "contoso-products-index",
+};
+
+config.SetSearchKey("<your Cognitive Search resource API key>");
+
+ChatCompletionsOptions chatCompletionsOptions = new()
 {
     DeploymentName = "gpt-35-turbo-0613",
     Messages =
@@ -428,29 +436,26 @@ var chatCompletionsOptions = new ChatCompletionsOptions()
             "You are a helpful assistant that answers questions about the Contoso product database."),
         new ChatMessage(ChatRole.User, "What are the best-selling Contoso products this month?")
     },
+
     // The addition of AzureChatExtensionsOptions enables the use of Azure OpenAI capabilities that add to
     // the behavior of Chat Completions, here the "using your own data" feature to supplement the context
     // with information from an Azure Cognitive Search resource with documents that have been indexed.
     AzureExtensionsOptions = new AzureChatExtensionsOptions()
     {
-        Extensions =
-        {
-            new AzureCognitiveSearchChatExtensionConfiguration()
-            {
-                SearchEndpoint = new Uri("https://your-contoso-search-resource.search.windows.net"),
-                IndexName = "contoso-products-index",
-                SearchKey = new AzureKeyCredential("<your Cognitive Search resource API key>"),
-            }
-        }
+        Extensions = { config }
     }
 };
+
 Response<ChatCompletions> response = await client.GetChatCompletionsAsync(chatCompletionsOptions);
 ChatMessage message = response.Value.Choices[0].Message;
+
 // The final, data-informed response still appears in the ChatMessages as usual
 Console.WriteLine($"{message.Role}: {message.Content}");
+
 // Responses that used extensions will also have Context information that includes special Tool messages
 // to explain extension activity and provide supplemental information like citations.
 Console.WriteLine($"Citations and other information:");
+
 foreach (ChatMessage contextMessage in message.AzureExtensionsContext.Messages)
 {
     // Note: citations and other extension payloads from the "tool" role are often encoded JSON documents
