@@ -15,7 +15,10 @@ using Azure.Core.Pipeline;
 namespace Azure.Health.Insights.ClinicalMatching
 {
     // Data plane generated client.
-    /// <summary> The ClinicalMatching service client. </summary>
+    /// <summary>
+    /// The ClinicalMatching service client.
+    /// Hello World
+    /// </summary>
     public partial class ClinicalMatchingClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";

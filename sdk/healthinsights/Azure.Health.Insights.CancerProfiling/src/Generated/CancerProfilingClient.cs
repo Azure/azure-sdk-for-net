@@ -15,7 +15,10 @@ using Azure.Core.Pipeline;
 namespace Azure.Health.Insights.CancerProfiling
 {
     // Data plane generated client.
-    /// <summary> The CancerProfiling service client. </summary>
+    /// <summary>
+    /// The CancerProfiling service client.
+    /// Hello World
+    /// </summary>
     public partial class CancerProfilingClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
