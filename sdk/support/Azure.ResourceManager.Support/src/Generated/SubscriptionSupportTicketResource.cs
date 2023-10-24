@@ -19,48 +19,48 @@ using Azure.ResourceManager.Support.Models;
 namespace Azure.ResourceManager.Support
 {
     /// <summary>
-    /// A Class representing a SupportTicket along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SupportTicketResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSupportTicketResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSupportTicket method.
+    /// A Class representing a SubscriptionSupportTicket along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SubscriptionSupportTicketResource" />
+    /// from an instance of <see cref="ArmClient" /> using the GetSubscriptionSupportTicketResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetSubscriptionSupportTicket method.
     /// </summary>
-    public partial class SupportTicketResource : ArmResource
+    public partial class SubscriptionSupportTicketResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SupportTicketResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="SubscriptionSupportTicketResource"/> instance. </summary>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string supportTicketName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}";
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _supportTicketClientDiagnostics;
-        private readonly SupportTicketsRestOperations _supportTicketRestClient;
+        private readonly ClientDiagnostics _subscriptionSupportTicketSupportTicketsClientDiagnostics;
+        private readonly SupportTicketsRestOperations _subscriptionSupportTicketSupportTicketsRestClient;
         private readonly ClientDiagnostics _supportTicketCommunicationCommunicationsClientDiagnostics;
         private readonly CommunicationsRestOperations _supportTicketCommunicationCommunicationsRestClient;
         private readonly SupportTicketData _data;
 
-        /// <summary> Initializes a new instance of the <see cref="SupportTicketResource"/> class for mocking. </summary>
-        protected SupportTicketResource()
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionSupportTicketResource"/> class for mocking. </summary>
+        protected SubscriptionSupportTicketResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SupportTicketResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref = "SubscriptionSupportTicketResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SupportTicketResource(ArmClient client, SupportTicketData data) : this(client, data.Id)
+        internal SubscriptionSupportTicketResource(ArmClient client, SupportTicketData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SupportTicketResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SubscriptionSupportTicketResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SupportTicketResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SubscriptionSupportTicketResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _supportTicketClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string supportTicketApiVersion);
-            _supportTicketRestClient = new SupportTicketsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, supportTicketApiVersion);
+            _subscriptionSupportTicketSupportTicketsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string subscriptionSupportTicketSupportTicketsApiVersion);
+            _subscriptionSupportTicketSupportTicketsRestClient = new SupportTicketsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionSupportTicketSupportTicketsApiVersion);
             _supportTicketCommunicationCommunicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Support", SupportTicketCommunicationResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(SupportTicketCommunicationResource.ResourceType, out string supportTicketCommunicationCommunicationsApiVersion);
             _supportTicketCommunicationCommunicationsRestClient = new CommunicationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, supportTicketCommunicationCommunicationsApiVersion);
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Support
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SupportTicketCommunicationResources in the SupportTicket. </summary>
+        /// <summary> Gets a collection of SupportTicketCommunicationResources in the SubscriptionSupportTicket. </summary>
         /// <returns> An object representing collection of SupportTicketCommunicationResources and their operations over a SupportTicketCommunicationResource. </returns>
         public virtual SupportTicketCommunicationCollection GetSupportTicketCommunications()
         {
@@ -146,36 +146,57 @@ namespace Azure.ResourceManager.Support
             return GetSupportTicketCommunications().Get(communicationName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of SupportTicketChatTranscriptResources in the SubscriptionSupportTicket. </summary>
+        /// <returns> An object representing collection of SupportTicketChatTranscriptResources and their operations over a SupportTicketChatTranscriptResource. </returns>
+        public virtual SupportTicketChatTranscriptCollection GetSupportTicketChatTranscripts()
+        {
+            return GetCachedClient(Client => new SupportTicketChatTranscriptCollection(Client, Id));
+        }
+
         /// <summary>
-        /// Get ticket details for an Azure subscription. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
+        /// Returns chatTranscript details for a support ticket under a subscription.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SupportTickets_Get</description>
+        /// <description>ChatTranscripts_Get</description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="chatTranscriptName"> ChatTranscript name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SupportTicketResource>> GetAsync(CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SupportTicketChatTranscriptResource>> GetSupportTicketChatTranscriptAsync(string chatTranscriptName, CancellationToken cancellationToken = default)
         {
-            using var scope = _supportTicketClientDiagnostics.CreateScope("SupportTicketResource.Get");
-            scope.Start();
-            try
-            {
-                var response = await _supportTicketRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SupportTicketResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await GetSupportTicketChatTranscripts().GetAsync(chatTranscriptName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Returns chatTranscript details for a support ticket under a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}/chatTranscripts/{chatTranscriptName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ChatTranscripts_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="chatTranscriptName"> ChatTranscript name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="chatTranscriptName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatTranscriptName"/> is null. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SupportTicketChatTranscriptResource> GetSupportTicketChatTranscript(string chatTranscriptName, CancellationToken cancellationToken = default)
+        {
+            return GetSupportTicketChatTranscripts().Get(chatTranscriptName, cancellationToken);
         }
 
         /// <summary>
@@ -192,16 +213,16 @@ namespace Azure.ResourceManager.Support
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SupportTicketResource> Get(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionSupportTicketResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _supportTicketClientDiagnostics.CreateScope("SupportTicketResource.Get");
+            using var scope = _subscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("SubscriptionSupportTicketResource.Get");
             scope.Start();
             try
             {
-                var response = _supportTicketRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
+                var response = await _subscriptionSupportTicketSupportTicketsRestClient.GetAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SupportTicketResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SubscriptionSupportTicketResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +232,39 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary>
-        /// This API allows you to update the severity level, ticket status, and your contact information in the support ticket.&lt;br/&gt;&lt;br/&gt;Note: The severity levels cannot be changed if a support ticket is actively being worked upon by an Azure support engineer. In such a case, contact your support engineer to request severity update by adding a new communication using the Communications API.&lt;br/&gt;&lt;br/&gt;Changing the ticket status to _closed_ is allowed only on an unassigned case. When an engineer is actively working on the ticket, send your ticket closure request by sending a note to your engineer.
+        /// Get ticket details for an Azure subscription. Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Support/supportTickets/{supportTicketName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SupportTickets_Get</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<SubscriptionSupportTicketResource> Get(CancellationToken cancellationToken = default)
+        {
+            using var scope = _subscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("SubscriptionSupportTicketResource.Get");
+            scope.Start();
+            try
+            {
+                var response = _subscriptionSupportTicketSupportTicketsRestClient.Get(Id.SubscriptionId, Id.Name, cancellationToken);
+                if (response.Value == null)
+                    throw new RequestFailedException(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionSupportTicketResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This API allows you to update the severity level, ticket status, advanced diagnostic consent and your contact information in the support ticket.&lt;br/&gt;&lt;br/&gt;Note: The severity levels cannot be changed if a support ticket is actively being worked upon by an Azure support engineer. In such a case, contact your support engineer to request severity update by adding a new communication using the Communications API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -223,19 +276,19 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> UpdateSupportTicket object. </param>
+        /// <param name="updateSupportTicket"> UpdateSupportTicket object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<SupportTicketResource>> UpdateAsync(SupportTicketPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="updateSupportTicket"/> is null. </exception>
+        public virtual async Task<Response<SubscriptionSupportTicketResource>> UpdateAsync(UpdateSupportTicket updateSupportTicket, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(updateSupportTicket, nameof(updateSupportTicket));
 
-            using var scope = _supportTicketClientDiagnostics.CreateScope("SupportTicketResource.Update");
+            using var scope = _subscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("SubscriptionSupportTicketResource.Update");
             scope.Start();
             try
             {
-                var response = await _supportTicketRestClient.UpdateAsync(Id.SubscriptionId, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SupportTicketResource(Client, response.Value), response.GetRawResponse());
+                var response = await _subscriptionSupportTicketSupportTicketsRestClient.UpdateAsync(Id.SubscriptionId, Id.Name, updateSupportTicket, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new SubscriptionSupportTicketResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -245,7 +298,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary>
-        /// This API allows you to update the severity level, ticket status, and your contact information in the support ticket.&lt;br/&gt;&lt;br/&gt;Note: The severity levels cannot be changed if a support ticket is actively being worked upon by an Azure support engineer. In such a case, contact your support engineer to request severity update by adding a new communication using the Communications API.&lt;br/&gt;&lt;br/&gt;Changing the ticket status to _closed_ is allowed only on an unassigned case. When an engineer is actively working on the ticket, send your ticket closure request by sending a note to your engineer.
+        /// This API allows you to update the severity level, ticket status, advanced diagnostic consent and your contact information in the support ticket.&lt;br/&gt;&lt;br/&gt;Note: The severity levels cannot be changed if a support ticket is actively being worked upon by an Azure support engineer. In such a case, contact your support engineer to request severity update by adding a new communication using the Communications API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -257,19 +310,19 @@ namespace Azure.ResourceManager.Support
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="patch"> UpdateSupportTicket object. </param>
+        /// <param name="updateSupportTicket"> UpdateSupportTicket object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<SupportTicketResource> Update(SupportTicketPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="updateSupportTicket"/> is null. </exception>
+        public virtual Response<SubscriptionSupportTicketResource> Update(UpdateSupportTicket updateSupportTicket, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(updateSupportTicket, nameof(updateSupportTicket));
 
-            using var scope = _supportTicketClientDiagnostics.CreateScope("SupportTicketResource.Update");
+            using var scope = _subscriptionSupportTicketSupportTicketsClientDiagnostics.CreateScope("SubscriptionSupportTicketResource.Update");
             scope.Start();
             try
             {
-                var response = _supportTicketRestClient.Update(Id.SubscriptionId, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new SupportTicketResource(Client, response.Value), response.GetRawResponse());
+                var response = _subscriptionSupportTicketSupportTicketsRestClient.Update(Id.SubscriptionId, Id.Name, updateSupportTicket, cancellationToken);
+                return Response.FromValue(new SubscriptionSupportTicketResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -298,7 +351,7 @@ namespace Azure.ResourceManager.Support
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _supportTicketCommunicationCommunicationsClientDiagnostics.CreateScope("SupportTicketResource.CheckCommunicationNameAvailability");
+            using var scope = _supportTicketCommunicationCommunicationsClientDiagnostics.CreateScope("SubscriptionSupportTicketResource.CheckCommunicationNameAvailability");
             scope.Start();
             try
             {
@@ -332,7 +385,7 @@ namespace Azure.ResourceManager.Support
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _supportTicketCommunicationCommunicationsClientDiagnostics.CreateScope("SupportTicketResource.CheckCommunicationNameAvailability");
+            using var scope = _supportTicketCommunicationCommunicationsClientDiagnostics.CreateScope("SubscriptionSupportTicketResource.CheckCommunicationNameAvailability");
             scope.Start();
             try
             {
