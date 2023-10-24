@@ -84,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [TestCase(70, 10, 10)]
         [TestCase(150, 10, 10)]
         [TestCase(2147483650, 1, 1)] // Testing eventCount > int.MaxInt is 2147483647
-        [TestCase(21474836500, 2147483647, 2147483647)] // Testing eventCount > int.MaxInt is 2147483647
+        [TestCase(21474836500, 2147483647, 2147483647)] // Testing eventCount > int.MaxInt is 2147483647, with default concurrency 10
         [TestCase(2147483650, 214748365, 214748365)] // Event count is > int.MaxInt, but final target worker count is within bounds
         public void GetScaleResultInternal_ReturnsExpected(long eventCount, int partitionCount, int expectedTargetWorkerCount)
         {
