@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of ServiceEndpointPolicyDefinitionResources and their operations over a ServiceEndpointPolicyDefinitionResource. </returns>
         public virtual ServiceEndpointPolicyDefinitionCollection GetServiceEndpointPolicyDefinitions()
         {
-            return GetCachedClient(Client => new ServiceEndpointPolicyDefinitionCollection(Client, Id));
+            return GetCachedClient(client => new ServiceEndpointPolicyDefinitionCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ServiceEndpointPolicyDefinitionResource>> GetServiceEndpointPolicyDefinitionAsync(string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.Network
         /// </summary>
         /// <param name="serviceEndpointPolicyDefinitionName"> The name of the service endpoint policy definition name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serviceEndpointPolicyDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ServiceEndpointPolicyDefinitionResource> GetServiceEndpointPolicyDefinition(string serviceEndpointPolicyDefinitionName, CancellationToken cancellationToken = default)
         {
