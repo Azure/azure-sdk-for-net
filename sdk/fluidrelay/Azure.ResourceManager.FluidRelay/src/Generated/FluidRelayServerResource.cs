@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <returns> An object representing collection of FluidRelayContainerResources and their operations over a FluidRelayContainerResource. </returns>
         public virtual FluidRelayContainerCollection GetFluidRelayContainers()
         {
-            return GetCachedClient(Client => new FluidRelayContainerCollection(Client, Id));
+            return GetCachedClient(client => new FluidRelayContainerCollection(client, Id));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.FluidRelay
         /// </summary>
         /// <param name="fluidRelayContainerName"> The Fluid Relay container resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FluidRelayContainerResource>> GetFluidRelayContainerAsync(string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
@@ -134,8 +134,8 @@ namespace Azure.ResourceManager.FluidRelay
         /// </summary>
         /// <param name="fluidRelayContainerName"> The Fluid Relay container resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="fluidRelayContainerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fluidRelayContainerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FluidRelayContainerResource> GetFluidRelayContainer(string fluidRelayContainerName, CancellationToken cancellationToken = default)
         {
