@@ -27,6 +27,13 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             var resourceName = "DiagRpGwPubDev";
             var troubleshooterResourceName = string.Empty;
 
+            //We have hard-coded the troubleshooterResourceName since Recording.GenerateAssetName(Guid.NewGuid().ToString()) does not generate
+            //a GUID. If we just use Guid.NewGuid().ToString() it will create new GUID everytime but it wont be able to match the
+            //test recordings
+            //If you need to update the tests
+            //1.Generate new guid and update the troubleshooterResourceName
+            //2.Run the test in record mode to record the tests with new troubleshooterResourceName
+            //3.Push the recordings to the assets-sdk
             if (isAsync)
             {
                 troubleshooterResourceName = "0c16f71c-e791-4da2-80d7-f93ddfa2c239";
