@@ -58,10 +58,10 @@ namespace System.Net.ClientModel.Tests.Internal.Perf
 
         [Benchmark]
         [BenchmarkCategory("ModelReaderWriter")]
-        public BinaryData Write_ModelWriter()
+        public bool Write_ModelWriter()
         {
             using var writer = new ModelWriter(_model, _options);
-            return writer.ToBinaryData();
+            return writer.TryComputeLength(out var length);
         }
 
         [Benchmark]
