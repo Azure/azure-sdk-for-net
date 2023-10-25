@@ -46,7 +46,7 @@ steps:
         Start-Process $(Build.BinariesDirectory)/test-proxy/test-proxy.exe `
           -ArgumentList "--storage-location ${{ parameters.rootFolder }}" `
           -NoNewWindow -PassThru -RedirectStandardOutput ${{ parameters.rootFolder }}/test-proxy.log `
-          -RedirectStandardError ${{ ${{ parameters.rootFolder }}/test-proxy-err.log
+          -RedirectStandardError ${{ parameters.rootFolder }}/test-proxy-err.log
       displayName: 'Run the testproxy - windows'
       condition: and(succeeded(), eq(variables['Agent.OS'],'Windows_NT'), ${{ parameters.condition }})
 
