@@ -121,6 +121,18 @@ namespace Azure.ResourceManager.Kusto.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SandboxCustomImageResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SandboxCustomImageResource.CreateResourceIdentifier" /> to create a <see cref="SandboxCustomImageResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SandboxCustomImageResource" /> object. </returns>
+        public virtual SandboxCustomImageResource GetSandboxCustomImageResource(ResourceIdentifier id)
+        {
+            SandboxCustomImageResource.ValidateResourceId(id);
+            return new SandboxCustomImageResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="KustoPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="KustoPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="KustoPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>

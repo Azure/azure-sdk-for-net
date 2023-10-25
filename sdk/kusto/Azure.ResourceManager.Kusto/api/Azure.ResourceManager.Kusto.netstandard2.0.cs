@@ -594,6 +594,7 @@ namespace Azure.ResourceManager.Kusto.Mocking
         public virtual Azure.ResourceManager.Kusto.KustoPrivateEndpointConnectionResource GetKustoPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Kusto.KustoPrivateLinkResource GetKustoPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.Kusto.KustoScriptResource GetKustoScriptResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Kusto.SandboxCustomImageResource GetSandboxCustomImageResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableKustoResourceGroupResource : Azure.ResourceManager.ArmResource
     {

@@ -99,26 +99,29 @@ namespace Azure.ResourceManager.ElasticSan
             return GetMockableElasticSanArmClient(client).GetElasticSanPrivateEndpointConnectionResource(id);
         }
 
-        #region ElasticSanSnapshotResource
         /// <summary>
         /// Gets an object representing an <see cref="ElasticSanSnapshotResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ElasticSanSnapshotResource.CreateResourceIdentifier" /> to create an <see cref="ElasticSanSnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableElasticSanArmClient.GetElasticSanSnapshotResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="ElasticSanSnapshotResource" /> object. </returns>
         public static ElasticSanSnapshotResource GetElasticSanSnapshotResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ElasticSanSnapshotResource.ValidateResourceId(id);
-                return new ElasticSanSnapshotResource(client, id);
-            }
-            );
+            return GetMockableElasticSanArmClient(client).GetElasticSanSnapshotResource(id);
         }
-        #endregion
 
-        /// <summary> Gets a collection of ElasticSanResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of ElasticSanResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableElasticSanResourceGroupResource.GetElasticSans()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <returns> An object representing collection of ElasticSanResources and their operations over a ElasticSanResource. </returns>
         public static ElasticSanCollection GetElasticSans(this ResourceGroupResource resourceGroupResource)

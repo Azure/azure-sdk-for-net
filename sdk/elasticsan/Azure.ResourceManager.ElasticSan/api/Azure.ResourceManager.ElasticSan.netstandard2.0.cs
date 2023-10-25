@@ -251,6 +251,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         protected MockableElasticSanArmClient() { }
         public virtual Azure.ResourceManager.ElasticSan.ElasticSanPrivateEndpointConnectionResource GetElasticSanPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ElasticSan.ElasticSanResource GetElasticSanResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ElasticSan.ElasticSanSnapshotResource GetElasticSanSnapshotResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ElasticSan.ElasticSanVolumeGroupResource GetElasticSanVolumeGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ElasticSan.ElasticSanVolumeResource GetElasticSanVolumeResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }

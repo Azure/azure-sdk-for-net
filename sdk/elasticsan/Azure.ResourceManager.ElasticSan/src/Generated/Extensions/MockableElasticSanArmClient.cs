@@ -83,5 +83,17 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
             ElasticSanPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new ElasticSanPrivateEndpointConnectionResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ElasticSanSnapshotResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticSanSnapshotResource.CreateResourceIdentifier" /> to create an <see cref="ElasticSanSnapshotResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ElasticSanSnapshotResource" /> object. </returns>
+        public virtual ElasticSanSnapshotResource GetElasticSanSnapshotResource(ResourceIdentifier id)
+        {
+            ElasticSanSnapshotResource.ValidateResourceId(id);
+            return new ElasticSanSnapshotResource(Client, id);
+        }
     }
 }

@@ -8,7 +8,7 @@ using Azure.ResourceManager.DataLakeAnalytics.Models;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
 {
-    public partial class DataLakeAnalyticsSubscriptionMockingExtension : ArmResource
+    public partial class MockableDataLakeAnalyticsSubscriptionResource : ArmResource
     {
         /// <summary>
         /// Gets the first page of Data Lake Analytics accounts, if any, within the current subscription. This includes a link to the next page, if any.

@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An object representing collection of SandboxCustomImageResources and their operations over a SandboxCustomImageResource. </returns>
         public virtual SandboxCustomImageCollection GetSandboxCustomImages()
         {
-            return GetCachedClient(Client => new SandboxCustomImageCollection(Client, Id));
+            return GetCachedClient(client => new SandboxCustomImageCollection(client, Id));
         }
 
         /// <summary>
@@ -349,8 +349,8 @@ namespace Azure.ResourceManager.Kusto
         /// </summary>
         /// <param name="sandboxCustomImageName"> The name of the sandbox custom image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sandboxCustomImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sandboxCustomImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sandboxCustomImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SandboxCustomImageResource>> GetSandboxCustomImageAsync(string sandboxCustomImageName, CancellationToken cancellationToken = default)
         {
@@ -372,8 +372,8 @@ namespace Azure.ResourceManager.Kusto
         /// </summary>
         /// <param name="sandboxCustomImageName"> The name of the sandbox custom image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="sandboxCustomImageName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="sandboxCustomImageName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sandboxCustomImageName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SandboxCustomImageResource> GetSandboxCustomImage(string sandboxCustomImageName, CancellationToken cancellationToken = default)
         {

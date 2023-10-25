@@ -290,9 +290,9 @@ namespace Azure.ResourceManager.DataLakeAnalytics
 }
 namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
 {
-    public partial class DataLakeAnalyticsArmClientMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataLakeAnalyticsArmClient : Azure.ResourceManager.ArmResource
     {
-        protected DataLakeAnalyticsArmClientMockingExtension() { }
+        protected MockableDataLakeAnalyticsArmClient() { }
         public virtual Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountResource GetDataLakeAnalyticsAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsComputePolicyResource GetDataLakeAnalyticsComputePolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsFirewallRuleResource GetDataLakeAnalyticsFirewallRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
@@ -300,16 +300,16 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         public virtual Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsStorageContainerResource GetDataLakeAnalyticsStorageContainerResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.DataLakeAnalytics.DataLakeStoreAccountInformationResource GetDataLakeStoreAccountInformationResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class DataLakeAnalyticsResourceGroupMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataLakeAnalyticsResourceGroupResource : Azure.ResourceManager.ArmResource
     {
-        protected DataLakeAnalyticsResourceGroupMockingExtension() { }
+        protected MockableDataLakeAnalyticsResourceGroupResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountResource> GetDataLakeAnalyticsAccount(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountResource>> GetDataLakeAnalyticsAccountAsync(string accountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.DataLakeAnalytics.DataLakeAnalyticsAccountCollection GetDataLakeAnalyticsAccounts() { throw null; }
     }
-    public partial class DataLakeAnalyticsSubscriptionMockingExtension : Azure.ResourceManager.ArmResource
+    public partial class MockableDataLakeAnalyticsSubscriptionResource : Azure.ResourceManager.ArmResource
     {
-        protected DataLakeAnalyticsSubscriptionMockingExtension() { }
+        protected MockableDataLakeAnalyticsSubscriptionResource() { }
         public virtual Azure.Response<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityResult> CheckDataLakeAnalyticsAccountNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityResult>> CheckDataLakeAnalyticsAccountNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.DataLakeAnalytics.Models.DataLakeAnalyticsAccountBasic> GetAccounts(Azure.ResourceManager.DataLakeAnalytics.Models.SubscriptionResourceGetAccountsOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
