@@ -24,7 +24,7 @@ namespace Azure.Communication.Chat
     }
     public partial class ChatAttachment
     {
-        public ChatAttachment(string id, Azure.Communication.Chat.AttachmentType attachmentType) { }
+        internal ChatAttachment() { }
         public Azure.Communication.Chat.AttachmentType AttachmentType { get { throw null; } }
         public string Extension { get { throw null; } }
         public string Id { get { throw null; } }

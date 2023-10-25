@@ -12,7 +12,7 @@ namespace Azure.Communication.Chat
         /// <param name="id"> Id of the attachment. </param>
         /// <param name="attachmentType"> The type of attachment. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public ChatAttachment(string id, AttachmentType attachmentType)
+        internal ChatAttachment(string id, AttachmentType attachmentType)
         {
             Id = id;
             AttachmentType = attachmentType;
