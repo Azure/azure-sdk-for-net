@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.Developer.DevCenter
 {
-    /// <summary> Client options for DevCenter library clients. </summary>
-    public partial class DevCenterClientOptions : ClientOptions
+    /// <summary> Client options for Azure.Developer.DevCenter library clients. </summary>
+    public partial class AzureDeveloperDevCenterClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_04_01;
 
@@ -24,8 +24,8 @@ namespace Azure.Developer.DevCenter
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of DevCenterClientOptions. </summary>
-        public DevCenterClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of AzureDeveloperDevCenterClientOptions. </summary>
+        public AzureDeveloperDevCenterClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
