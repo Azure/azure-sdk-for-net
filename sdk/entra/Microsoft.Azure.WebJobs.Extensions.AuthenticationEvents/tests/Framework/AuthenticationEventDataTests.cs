@@ -36,15 +36,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
 
             if (hasTenantIdKey)
             {
-                dataObj["tenantId"] = hasTenantIdValue ? TenantId : "";
+                dataObj["tenantId"] = hasTenantIdValue ? TenantId : string.Empty;
             }
             if (hasAuthenticationEventListenerIdKey)
             {
-                dataObj["authenticationEventListenerId"] = hasAuthenticationEventListenerIdValue ? AuthenticationEventListenerId : "";
+                dataObj["authenticationEventListenerId"] = hasAuthenticationEventListenerIdValue ? AuthenticationEventListenerId : string.Empty;
             }
             if (hasCustomAuthenticationExtensionIdKey)
             {
-                dataObj["customAuthenticationExtensionId"] = hasCustomAuthenticationExtensionIdValue ? CustomAuthenticationExtensionId : "";
+                dataObj["customAuthenticationExtensionId"] = hasCustomAuthenticationExtensionIdValue ? CustomAuthenticationExtensionId : string.Empty;
             }
 
             return obj.ToString();
