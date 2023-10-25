@@ -129,13 +129,13 @@ namespace Azure.Storage.DataMovement.Blobs
             }
         }
 
-        public override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected override StorageResourceCheckpointData GetSourceCheckpointData()
         {
             // Source blob type does not matter for container
             return new BlobSourceCheckpointData(BlobType.Block);
         }
 
-        public override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new BlobDestinationCheckpointData(
                 _options?.BlobType ?? BlobType.Block,

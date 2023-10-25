@@ -852,12 +852,12 @@ namespace Azure.Storage.DataMovement.JobPlan
             // AtomicPartStatus.HasSkippedItems
             bool partStatusHasSkipped = Convert.ToBoolean(reader.ReadByte());
 
-            DataTransferStatus atomicJobStatus = new DataTransferStatusInternal(
+            DataTransferStatus atomicJobStatus = new DataTransferStatus(
                 jobStatusState,
                 jobStatusHasFailed,
                 jobStatusHasSkipped);
 
-            DataTransferStatus atomicPartStatus = new DataTransferStatusInternal(
+            DataTransferStatus atomicPartStatus = new DataTransferStatus(
                 partStatusState,
                 partStatusHasFailed,
                 partStatusHasSkipped);
