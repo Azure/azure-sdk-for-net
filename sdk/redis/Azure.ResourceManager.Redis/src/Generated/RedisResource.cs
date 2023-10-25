@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An object representing collection of RedisFirewallRuleResources and their operations over a RedisFirewallRuleResource. </returns>
         public virtual RedisFirewallRuleCollection GetRedisFirewallRules()
         {
-            return GetCachedClient(Client => new RedisFirewallRuleCollection(Client, Id));
+            return GetCachedClient(client => new RedisFirewallRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -116,8 +116,8 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="ruleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RedisFirewallRuleResource>> GetRedisFirewallRuleAsync(string ruleName, CancellationToken cancellationToken = default)
         {
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="ruleName"> The name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RedisFirewallRuleResource> GetRedisFirewallRule(string ruleName, CancellationToken cancellationToken = default)
         {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An object representing collection of RedisPatchScheduleResources and their operations over a RedisPatchScheduleResource. </returns>
         public virtual RedisPatchScheduleCollection GetRedisPatchSchedules()
         {
-            return GetCachedClient(Client => new RedisPatchScheduleCollection(Client, Id));
+            return GetCachedClient(client => new RedisPatchScheduleCollection(client, Id));
         }
 
         /// <summary>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An object representing collection of RedisLinkedServerWithPropertyResources and their operations over a RedisLinkedServerWithPropertyResource. </returns>
         public virtual RedisLinkedServerWithPropertyCollection GetRedisLinkedServerWithProperties()
         {
-            return GetCachedClient(Client => new RedisLinkedServerWithPropertyCollection(Client, Id));
+            return GetCachedClient(client => new RedisLinkedServerWithPropertyCollection(client, Id));
         }
 
         /// <summary>
@@ -218,8 +218,8 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="linkedServerName"> The name of the linked server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RedisLinkedServerWithPropertyResource>> GetRedisLinkedServerWithPropertyAsync(string linkedServerName, CancellationToken cancellationToken = default)
         {
@@ -241,8 +241,8 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="linkedServerName"> The name of the linked server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RedisLinkedServerWithPropertyResource> GetRedisLinkedServerWithProperty(string linkedServerName, CancellationToken cancellationToken = default)
         {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Redis
         /// <returns> An object representing collection of RedisPrivateEndpointConnectionResources and their operations over a RedisPrivateEndpointConnectionResource. </returns>
         public virtual RedisPrivateEndpointConnectionCollection GetRedisPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new RedisPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new RedisPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -271,8 +271,8 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RedisPrivateEndpointConnectionResource>> GetRedisPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -294,8 +294,8 @@ namespace Azure.ResourceManager.Redis
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RedisPrivateEndpointConnectionResource> GetRedisPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {

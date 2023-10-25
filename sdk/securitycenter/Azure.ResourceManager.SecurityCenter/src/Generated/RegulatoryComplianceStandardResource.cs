@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of RegulatoryComplianceControlResources and their operations over a RegulatoryComplianceControlResource. </returns>
         public virtual RegulatoryComplianceControlCollection GetRegulatoryComplianceControls()
         {
-            return GetCachedClient(Client => new RegulatoryComplianceControlCollection(Client, Id));
+            return GetCachedClient(client => new RegulatoryComplianceControlCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="regulatoryComplianceControlName"> Name of the regulatory compliance control object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RegulatoryComplianceControlResource>> GetRegulatoryComplianceControlAsync(string regulatoryComplianceControlName, CancellationToken cancellationToken = default)
         {
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </summary>
         /// <param name="regulatoryComplianceControlName"> Name of the regulatory compliance control object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceControlName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceControlName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RegulatoryComplianceControlResource> GetRegulatoryComplianceControl(string regulatoryComplianceControlName, CancellationToken cancellationToken = default)
         {

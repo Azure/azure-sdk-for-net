@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Sql
         /// <returns> An object representing collection of ManagedDatabaseColumnResources and their operations over a ManagedDatabaseColumnResource. </returns>
         public virtual ManagedDatabaseColumnCollection GetManagedDatabaseColumns()
         {
-            return GetCachedClient(Client => new ManagedDatabaseColumnCollection(Client, Id));
+            return GetCachedClient(client => new ManagedDatabaseColumnCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagedDatabaseColumnResource>> GetManagedDatabaseColumnAsync(string columnName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Sql
         /// </summary>
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ManagedDatabaseColumnResource> GetManagedDatabaseColumn(string columnName, CancellationToken cancellationToken = default)
         {
