@@ -13,8 +13,10 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 
     public class TroubleshooterTests : SelfHelpManagementTestBase
     {
-        public TroubleshooterTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        private bool isAsync = true;
+        public TroubleshooterTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
         {
+            this.isAsync = isAsync;
         }
 
         [Test]
@@ -23,7 +25,17 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             var subId = "6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba";
             var resourceGroupName = "DiagnosticsRp-Gateway-Public-Dev-Global";
             var resourceName = "DiagRpGwPubDev";
-            var troubleshooterResourceName = Guid.NewGuid().ToString();
+            var troubleshooterResourceName = string.Empty;
+
+            if (isAsync)
+            {
+                troubleshooterResourceName = "0c16f71c-e791-4da2-80d7-f93ddfa2c239";
+            }
+            else
+            {
+                troubleshooterResourceName = "cc5feaab-3b50-40b9-aaa4-754b6b5e3898";
+            }
+
             ResourceIdentifier scope = new ResourceIdentifier($"/subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{resourceName}");
             TroubleshooterResourceData resourceData = CreateTroubleshooterResourceData(scope);
 
