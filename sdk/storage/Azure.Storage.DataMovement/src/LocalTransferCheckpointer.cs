@@ -384,7 +384,7 @@ namespace Azure.Storage.DataMovement
             // First, retrieve all valid job plan files
             foreach (string path in Directory.EnumerateFiles(
                 _pathToCheckpointer,
-                $"*.{DataMovementConstants.JobPlanFile.FileExtension}",
+                $"*{DataMovementConstants.JobPlanFile.FileExtension}",
                 SearchOption.TopDirectoryOnly))
             {
                 // TODO: Should we check for valid schema version inside file now?
@@ -400,10 +400,10 @@ namespace Azure.Storage.DataMovement
             }
 
             // Retrieve all valid job part plan files stored in the checkpointer path.
-            foreach (string path in Directory.EnumerateFiles(_pathToCheckpointer, "*", SearchOption.TopDirectoryOnly)
-                .Where(f => Path.HasExtension(string.Concat(
-                    DataMovementConstants.JobPartPlanFile.FileExtension,
-                    DataMovementConstants.JobPartPlanFile.SchemaVersion))))
+            foreach (string path in Directory.EnumerateFiles(
+                _pathToCheckpointer,
+                $"*{DataMovementConstants.JobPartPlanFile.FileExtension}",
+                SearchOption.TopDirectoryOnly))
             {
                 // Ensure each file has the correct format
                 if (JobPartPlanFileName.TryParseJobPartPlanFileName(path, out JobPartPlanFileName partPlanFileName))

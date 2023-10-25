@@ -58,6 +58,9 @@ namespace Azure.Storage
         public static ArgumentException MissingCheckpointerPath(string directoryPath)
             => throw new ArgumentException($"Could not initialize the LocalTransferCheckpointer because the folderPath passed does not exist. Please create the {directoryPath}, folder path first.");
 
+        public static ArgumentException InvalidJobPartFileName(string fileName)
+            => new ArgumentException($"Invalid Checkpoint File: The following checkpoint file contains an invalid file name {fileName}");
+
         public static ArgumentException InvalidTransferIdFileName(string fileName)
             => new ArgumentException($"Invalid Checkpoint File: The following checkpoint file contains a Transfer ID that is invalid {fileName}");
 
@@ -66,9 +69,6 @@ namespace Azure.Storage
 
         public static ArgumentException InvalidJobPartNumberFileName(string fileName)
             => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number, could not convert to a integer: {fileName}");
-
-        public static ArgumentException InvalidSchemaVersionFileName(string schemaVersion)
-            => new ArgumentException($"Invalid Job Part Plan File: Job Part Schema version: {schemaVersion} does not match the Schema Version supported by the package: {DataMovementConstants.JobPartPlanFile.SchemaVersion}. Please consider altering the package version that supports the respective version.");
 
         public static ArgumentException InvalidPlanFileElement(string elementName, int expectedSize, int actualSize)
             => throw new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" failed.\n Expected size: {expectedSize}\n Actual Size: {actualSize}");

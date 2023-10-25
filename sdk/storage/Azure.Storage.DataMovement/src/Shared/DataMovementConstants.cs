@@ -68,7 +68,7 @@ namespace Azure.Storage.DataMovement
             internal const string SchemaVersion_b1 = "b1";
             internal const string SchemaVersion = SchemaVersion_b1;
 
-            internal const string FileExtension = "ndm";
+            internal const string FileExtension = ".ndm";
 
             internal const int VersionStrLength = 2;
             internal const int VersionStrNumBytes = VersionStrLength * 2;
@@ -106,8 +106,7 @@ namespace Azure.Storage.DataMovement
             internal const string SchemaVersion = SchemaVersion_b3; // TODO: remove b for beta
 
             // Job Plan file extension. e.g. the file extension will look like {transferid}--{jobpartNumber}.steV{schemaVersion}
-            internal const string FileExtension = ".steV";
-            internal const string JobPlanFileNameDelimiter = "--";
+            internal const string FileExtension = ".ndmpart";
             internal const int JobPartLength = 5;
             internal const int IdSize = 36; // Size of a guid with hyphens
             internal const int CustomHeaderMaxBytes = 256;

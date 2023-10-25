@@ -176,7 +176,7 @@ namespace Azure.Storage.DataMovement.Tests
                 sourceCheckpointData,
                 destinationCheckpointData);
 
-            string filePath = Path.Combine(checkpointPath, $"{transferId}.{DataMovementConstants.JobPlanFile.FileExtension}");
+            string filePath = Path.Combine(checkpointPath, $"{transferId}{DataMovementConstants.JobPlanFile.FileExtension}");
             using (FileStream stream = File.Create(filePath))
             {
                 header.Serialize(stream);
