@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automation
         /// <returns> An object representing collection of HybridRunbookWorkerResources and their operations over a HybridRunbookWorkerResource. </returns>
         public virtual HybridRunbookWorkerCollection GetHybridRunbookWorkers()
         {
-            return GetCachedClient(Client => new HybridRunbookWorkerCollection(Client, Id));
+            return GetCachedClient(client => new HybridRunbookWorkerCollection(client, Id));
         }
 
         /// <summary>
@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="hybridRunbookWorkerId"> The hybrid runbook worker id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hybridRunbookWorkerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hybridRunbookWorkerId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HybridRunbookWorkerResource>> GetHybridRunbookWorkerAsync(string hybridRunbookWorkerId, CancellationToken cancellationToken = default)
         {
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.Automation
         /// </summary>
         /// <param name="hybridRunbookWorkerId"> The hybrid runbook worker id. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="hybridRunbookWorkerId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="hybridRunbookWorkerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="hybridRunbookWorkerId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HybridRunbookWorkerResource> GetHybridRunbookWorker(string hybridRunbookWorkerId, CancellationToken cancellationToken = default)
         {

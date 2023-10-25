@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Avs
         /// <returns> An object representing collection of ScriptCmdletResources and their operations over a ScriptCmdletResource. </returns>
         public virtual ScriptCmdletCollection GetScriptCmdlets()
         {
-            return GetCachedClient(Client => new ScriptCmdletCollection(Client, Id));
+            return GetCachedClient(client => new ScriptCmdletCollection(client, Id));
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="scriptCmdletName"> Name of the script cmdlet resource in the script package in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptCmdletName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptCmdletName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptCmdletName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ScriptCmdletResource>> GetScriptCmdletAsync(string scriptCmdletName, CancellationToken cancellationToken = default)
         {
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Avs
         /// </summary>
         /// <param name="scriptCmdletName"> Name of the script cmdlet resource in the script package in the private cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="scriptCmdletName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="scriptCmdletName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scriptCmdletName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ScriptCmdletResource> GetScriptCmdlet(string scriptCmdletName, CancellationToken cancellationToken = default)
         {
