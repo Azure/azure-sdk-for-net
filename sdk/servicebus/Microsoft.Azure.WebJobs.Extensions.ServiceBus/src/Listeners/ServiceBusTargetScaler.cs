@@ -98,7 +98,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Listeners
 
             try
             {
-                targetWorkerCount = (int)Math.Ceiling(messageCount / (decimal)concurrency);
+                checked
+                {
+                    targetWorkerCount = (int)Math.Ceiling(messageCount / (decimal)concurrency);
+                }
             }
             catch (OverflowException)
             {
