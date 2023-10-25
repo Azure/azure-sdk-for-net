@@ -8,7 +8,7 @@ receiver. The correct strategy to use will depend on the specific scenario.
 ## Storing the Entire `ServiceBusReceivedMessage`
 
 If it is necessary to store the entire message and then rehydrate it in another process, use the following strategy.
-First we can get the raw AMQP message bytes and lock token as shown below:
+First we can get the raw AMQP message bytes and lock token as shown below:  
 *Note: The lock token is not
 actually part of the AMQP message so it needs to stored separately from the AMQP bytes.*
 
@@ -55,7 +55,7 @@ ReadOnlyMemory<byte> lockTokenBytes = Guid.Parse(receivedMessage.LockToken).ToBy
 ```
 
 
-In order to rehydrate the message in another process using the lock token, we would do the following:
+In order to rehydrate the message in another process using the lock token, we would do the following:  
 *Note: Because we only stored the lock token, when we rehydrate the message all of the properties of the
 `ServiceBusReceivedMessage` other than `LockToken` will have default values.*
 
