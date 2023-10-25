@@ -19,29 +19,11 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
             Optional<string> recordingId = default;
             Optional<RecordingState> state = default;
             Optional<DateTimeOffset> startDateTime = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("callConnectionId"u8))
-                {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"u8))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"u8))
-                {
-                    correlationId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("recordingId"u8))
                 {
                     recordingId = property.Value.GetString();
@@ -66,7 +48,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecordingStateChanged(callConnectionId.Value, serverCallId.Value, correlationId.Value, recordingId.Value, state, Optional.ToNullable(startDateTime));
+            return new RecordingStateChanged(recordingId.Value, state, Optional.ToNullable(startDateTime));
         }
     }
 }

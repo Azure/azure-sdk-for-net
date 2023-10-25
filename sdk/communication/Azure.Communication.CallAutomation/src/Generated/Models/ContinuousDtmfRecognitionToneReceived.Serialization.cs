@@ -19,11 +19,6 @@ namespace Azure.Communication.CallAutomation
                 return null;
             }
             Optional<ToneInfo> toneInfo = default;
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
-            Optional<ResultInformation> resultInformation = default;
-            Optional<string> operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("toneInfo"u8))
@@ -35,37 +30,8 @@ namespace Azure.Communication.CallAutomation
                     toneInfo = ToneInfo.DeserializeToneInfo(property.Value);
                     continue;
                 }
-                if (property.NameEquals("callConnectionId"u8))
-                {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"u8))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"u8))
-                {
-                    correlationId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resultInformation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    resultInformation = ResultInformation.DeserializeResultInformation(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("operationContext"u8))
-                {
-                    operationContext = property.Value.GetString();
-                    continue;
-                }
             }
-            return new ContinuousDtmfRecognitionToneReceived(toneInfo.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value, resultInformation.Value, operationContext.Value);
+            return new ContinuousDtmfRecognitionToneReceived(toneInfo.Value);
         }
     }
 }

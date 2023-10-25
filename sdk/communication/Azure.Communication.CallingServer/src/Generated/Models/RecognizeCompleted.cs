@@ -24,20 +24,14 @@ namespace Azure.Communication.CallingServer
         /// </param>
         /// <param name="collectTonesResult"> Defines the result for RecognitionType = Dtmf. </param>
         /// <param name="version"> Used to determine the version of the event. </param>
-        /// <param name="callConnectionId"> Call connection ID. </param>
-        /// <param name="serverCallId"> Server call ID. </param>
-        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="publicEventType"> The public event namespace used as the "type" property in the CloudEvent. </param>
-        internal RecognizeCompleted(string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, string version, string callConnectionId, string serverCallId, string correlationId, string publicEventType)
+        internal RecognizeCompleted(string operationContext, ResultInformation resultInformation, CallMediaRecognitionType recognitionType, CollectTonesResult collectTonesResult, string version, string publicEventType)
         {
             OperationContext = operationContext;
             ResultInformation = resultInformation;
             RecognitionType = recognitionType;
             CollectTonesResult = collectTonesResult;
             Version = version;
-            CallConnectionId = callConnectionId;
-            ServerCallId = serverCallId;
-            CorrelationId = correlationId;
             PublicEventType = publicEventType;
         }
 

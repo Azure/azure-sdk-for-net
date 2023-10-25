@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="data"> The ApiManagementGateway to use. </param>
+        /// <param name="data"> The ApiManagementGatewayData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<Response<ApiManagementGatewayResource>> UpdateAsync(ETag ifMatch, ApiManagementGatewayData data, CancellationToken cancellationToken = default)
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </summary>
         /// <param name="ifMatch"> ETag of the Entity. ETag should match the current entity state from the header response of the GET request or it should be * for unconditional update. </param>
-        /// <param name="data"> The ApiManagementGateway to use. </param>
+        /// <param name="data"> The ApiManagementGatewayData to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual Response<ApiManagementGatewayResource> Update(ETag ifMatch, ApiManagementGatewayData data, CancellationToken cancellationToken = default)
