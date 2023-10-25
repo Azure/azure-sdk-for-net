@@ -210,7 +210,7 @@ Semantic search enhances the quality of search results for text-based queries. B
 
 To learn more about Semantic Search, you can refer to the [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/search/Azure.Search.Documents/samples/Sample08_SemanticSearch.md).
 
-Additionally, for more comprehensive information about Semantic Search, including its concepts and usage, you can refer to the [documentation](https://learn.microsoft.com/en-us/azure/search/semantic-search-overview). The documentation provides in-depth explanations and guidance on leveraging the power of Semantic Search in Azure Cognitive Search.
+Additionally, for more comprehensive information about Semantic Search, including its concepts and usage, you can refer to the [documentation](https://learn.microsoft.com/azure/search/semantic-search-overview). The documentation provides in-depth explanations and guidance on leveraging the power of Semantic Search in Azure Cognitive Search.
 
 #### Vector Search
 
