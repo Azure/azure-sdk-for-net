@@ -11,7 +11,6 @@ namespace Azure.Communication.Chat
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public AttachmentType(string value) { throw null; }
-        public static Azure.Communication.Chat.AttachmentType File { get { throw null; } }
         public static Azure.Communication.Chat.AttachmentType Image { get { throw null; } }
         public bool Equals(Azure.Communication.Chat.AttachmentType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

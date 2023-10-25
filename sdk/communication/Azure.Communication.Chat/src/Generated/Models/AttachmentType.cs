@@ -23,12 +23,9 @@ namespace Azure.Communication.Chat
         }
 
         private const string ImageValue = "image";
-        private const string FileValue = "file";
 
         /// <summary> image. </summary>
         public static AttachmentType Image { get; } = new AttachmentType(ImageValue);
-        /// <summary> file. </summary>
-        public static AttachmentType File { get; } = new AttachmentType(FileValue);
         /// <summary> Determines if two <see cref="AttachmentType"/> values are the same. </summary>
         public static bool operator ==(AttachmentType left, AttachmentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AttachmentType"/> values are not the same. </summary>
