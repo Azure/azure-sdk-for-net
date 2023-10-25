@@ -1,14 +1,14 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2023-10-25)
 
 ### Features Added
 
+- Updated to Fleet GA API version `2023-10-15`.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Remove preview features (hubprofile, private fleet)
 
 ## 1.0.0-beta.2 (2023-10-13)
 

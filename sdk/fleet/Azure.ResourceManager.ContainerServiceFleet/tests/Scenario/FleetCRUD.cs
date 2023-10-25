@@ -42,19 +42,8 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             ContainerServiceFleetCollection fleetCollection = resourceGroupResource.GetContainerServiceFleets();
 
             string fleetName = Recording.GenerateAssetName("fleet-");
-            ContainerServiceFleetData fleetData = new ContainerServiceFleetData(DefaultLocation)
-            {
-                HubProfile = new FleetHubProfile()
-                {
-                    DnsPrefix = "dnsprefix1",
-                    AgentProfile = new ContainerServiceFleetAgentProfile()
-                },
-                Tags =
-                {
-                    ["archv2"] = "",
-                    ["tier"] = "production",
-                },
-            };
+            ContainerServiceFleetData fleetData = new ContainerServiceFleetData(DefaultLocation);
+
             ResourceIdentifier fleetResourceId = ContainerServiceFleetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, fleetName);
             // Test Fleet operations
             ArmOperation<ContainerServiceFleetResource> createFleetLRO = await fleetCollection.CreateOrUpdateAsync(WaitUntil.Completed, fleetName, fleetData);
