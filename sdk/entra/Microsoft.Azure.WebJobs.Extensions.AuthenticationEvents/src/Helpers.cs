@@ -9,9 +9,9 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
-using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -118,9 +118,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
 
             // try parsing input to json object
-            var jsonObj = JToken.Parse(input);
-
-            return jsonObj != null;
+            using (var jsonDoc = JsonDocument.Parse(input))
+            {
+                return jsonDoc != null;
+            }
         }
 
         internal static AuthenticationEventAction GetEventActionForActionType(string actionType)

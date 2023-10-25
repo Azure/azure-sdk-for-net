@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
@@ -16,7 +17,6 @@ using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
-using Newtonsoft.Json;
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.EmptyResponse;
 using AuthenticationEventMetadata = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventMetadata;
 
@@ -253,7 +253,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     throw new RequestValidationException(AuthenticationEventResource.Ex_Invalid_JsonPayload);
                 }
             }
-            catch (JsonReaderException ex)
+            catch (JsonException ex)
             {
                 throw new RequestValidationException($"{AuthenticationEventResource.Ex_Invalid_JsonPayload}: {ex.Message}", ex.InnerException);
             }

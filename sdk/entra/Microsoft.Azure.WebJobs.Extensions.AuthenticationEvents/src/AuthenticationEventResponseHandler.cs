@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Host.Bindings;
-using Newtonsoft.Json;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -174,7 +173,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
             return responseType.BaseType.GetGenericTypeDefinition() == typeof(ActionableResponse<>) ||
                    responseType.BaseType.GetGenericTypeDefinition() == typeof(ActionableCloudEventResponse<>) ?
-                     (AuthenticationEventResponse)System.Text.Json.JsonSerializer.Deserialize(response.ToString(), responseType, GetSerializerOptions()) :
+                     (AuthenticationEventResponse)JsonSerializer.Deserialize(response.ToString(), responseType, GetSerializerOptions()) :
                      null;
         }
 
@@ -233,7 +232,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     throw new ResponseValidationException(AuthenticationEventResource.Ex_Invalid_Return);
                 }
             }
-            catch (JsonReaderException ex)
+            catch (JsonException ex)
             {
                 throw new ResponseValidationException($"{AuthenticationEventResource.Ex_Invalid_Return}: {ex.Message}", ex.InnerException);
             }

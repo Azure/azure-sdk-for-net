@@ -14,7 +14,7 @@
 - Made the request validation errors return 500. This way, we can identify that 500 errors as internal and should be marked as failures whereas response object errors should return 400s since they are customer input errors and should be identified as CallerErrors in our service.
 - Made the ODataType field in the request a required field.
 - Made the errors for JSON payload more descriptive when an invalid character is passed.
-- Added newtonsoft check to validate payload is JSON format.
+- Added JsonDocument TryParse check to validate payload is JSON format.
 
 ## 1.0.0-beta.3 (2022-12-13)
 

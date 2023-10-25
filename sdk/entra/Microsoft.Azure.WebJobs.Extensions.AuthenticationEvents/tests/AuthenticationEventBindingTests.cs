@@ -39,7 +39,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             {
                 Test = Payload.TokenIssuanceStart.RequestWithXmlBody,
                 Message = "Testing request with XML payload throws an error",
-                ExceptionMessage = "Invalid Json Payload: Unexpected character encountered while parsing value: <. Path '', line 0, position 0."
+                ExceptionMessage = "Invalid Json Payload: '<' is an invalid start of a value. LineNumber: 0 | BytePositionInLine: 0."
             }.ToArray;
 #endregion
 
