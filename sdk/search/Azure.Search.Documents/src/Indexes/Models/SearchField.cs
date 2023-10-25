@@ -52,7 +52,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Gets or sets a value indicating whether the field is full-text searchable. The default is null.
         /// This means it will undergo analysis such as word-breaking during indexing.
-        /// This property can be true only for <see cref="SearchFieldDataType.String"/> or "Collection(DataType.String)". It must be false for non-string simple fields, and null for complex fields.
+        /// This property can be true only for <see cref="SearchFieldDataType.String"/>, "Collection(DataType.String)" or "Collection(DataType.Single)". It must be false for non-string simple fields, and null for complex fields.
         /// </summary>
         /// <remarks>
         /// <para>
@@ -60,7 +60,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </para>
         /// <para>
         /// This field must be set according to constraints described in the summary, or the server may respond with an error.
-        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, <see cref="VectorSearchField"/> and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
         /// </para>
         /// </remarks>
         [CodeGenMember("Searchable")]
@@ -77,7 +77,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </para>
         /// <para>
         /// This field must be set according to constraints described in the summary, or the server may respond with an error.
-        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, <see cref="VectorSearchField"/> and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
         /// </para>
         /// </remarks>
         [CodeGenMember("Filterable")]
@@ -94,7 +94,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </para>
         /// <para>
         /// This field must be set according to constraints described in the summary, or the server may respond with an error.
-        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, <see cref="VectorSearchField"/> and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
         /// </para>
         /// </remarks>
         public bool? IsHidden
@@ -112,7 +112,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </summary>
         /// <remarks>
         /// This field must be set according to constraints described in the summary, or the server may respond with an error.
-        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, <see cref="VectorSearchField"/> and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
         /// </remarks>
         [CodeGenMember("Sortable")]
         public bool? IsSortable { get; set; }
@@ -128,7 +128,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </para>
         /// <para>
         /// This field must be set according to constraints described in the summary, or the server may respond with an error.
-        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, <see cref="VectorSearchField"/> and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
         /// </para>
         /// </remarks>
         [CodeGenMember("Facetable")]
@@ -140,7 +140,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </summary>
         /// <remarks>
         /// This field must be set according to constraints described in the summary, or the server may respond with an error.
-        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
+        /// Instead, consider using the <see cref="SimpleField"/>, <see cref="SearchableField"/>, <see cref="VectorSearchField"/> and <see cref="ComplexField"/> classes to help you more easily create a <see cref="SearchIndex"/>.
         /// </remarks>
         [CodeGenMember("Key")]
         public bool? IsKey { get; set; }

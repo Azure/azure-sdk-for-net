@@ -1026,25 +1026,45 @@ namespace Azure.Search.Documents.Tests
 
             source.Facets = new List<string> { "facet1", "facet2" };
             source.Filter = "searchFilter";
-            // source.IncludeTotalCount = null;
-            source.QueryCaptionHighlightEnabled = false;
-            // source.QueryType = null;
+            source.IncludeTotalCount = null;
+            source.QueryType = null;
             source.Select = null;
             source.SessionId = "SessionId";
             source.Size = 100;
             source.Skip = null;
-
+            source.SemanticSearch = new SemanticSearchOptions()
+            {
+                SemanticConfigurationName = "my-config",
+                QueryAnswer = new QueryAnswer() { AnswerType = QueryAnswerType.Extractive, Count = 5, Threshold = 0.9 },
+                QueryCaption = new QueryCaption() { CaptionType = QueryCaptionType.Extractive, HighlightEnabled = true },
+                SemanticErrorMode = SemanticErrorMode.Partial,
+                SemanticMaxWaitInMilliseconds = TimeSpan.FromMilliseconds(1000),
+            };
+            source.VectorSearch = new VectorSearchOptions()
+            {
+                VectorizableQueries = { new VectorQuery(VectorSearchEmbeddings.SearchVectorizeDescription) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector", "CategoryVector" } } },
+                FilterMode = VectorFilterMode.PostFilter
+            };
             SearchOptions clonedSearchOptions = source.Clone();
 
             CollectionAssert.AreEquivalent(source.Facets, clonedSearchOptions.Facets); // A non-null collection with multiple items
             Assert.AreEqual(source.Filter, clonedSearchOptions.Filter); // A string value
             Assert.IsNull(clonedSearchOptions.IncludeTotalCount); // An unset bool? value
-            Assert.AreEqual(source.QueryCaptionHighlightEnabled, clonedSearchOptions.QueryCaptionHighlightEnabled); // A bool? value
             Assert.IsNull(source.QueryType); // An unset enum? value
             Assert.IsNull(clonedSearchOptions.Select); // A `null` collection
             Assert.AreEqual(source.SessionId, clonedSearchOptions.SessionId); // A string value
             Assert.AreEqual(source.Size, clonedSearchOptions.Size); // An int? value
             Assert.IsNull(clonedSearchOptions.Skip); // An int? value set as `null`
+            Assert.AreEqual(source.SemanticSearch.SemanticConfigurationName, clonedSearchOptions.SemanticSearch.SemanticConfigurationName);
+            Assert.AreEqual(source.SemanticSearch.QueryAnswer.AnswerType, clonedSearchOptions.SemanticSearch.QueryAnswer.AnswerType);
+            Assert.AreEqual(source.SemanticSearch.QueryAnswer.Count, clonedSearchOptions.SemanticSearch.QueryAnswer.Count);
+            Assert.AreEqual(source.SemanticSearch.QueryAnswer.Threshold, clonedSearchOptions.SemanticSearch.QueryAnswer.Threshold);
+            Assert.AreEqual(source.SemanticSearch.QueryCaption.CaptionType, clonedSearchOptions.SemanticSearch.QueryCaption.CaptionType);
+            Assert.AreEqual(source.SemanticSearch.QueryCaption.HighlightEnabled, clonedSearchOptions.SemanticSearch.QueryCaption.HighlightEnabled);
+            Assert.AreEqual(source.SemanticSearch.SemanticErrorMode, clonedSearchOptions.SemanticSearch.SemanticErrorMode);
+            Assert.AreEqual(source.SemanticSearch.SemanticMaxWaitInMilliseconds, clonedSearchOptions.SemanticSearch.SemanticMaxWaitInMilliseconds);
+            Assert.AreEqual(source.VectorSearch.VectorizableQueries, clonedSearchOptions.VectorSearch.VectorizableQueries);
+            Assert.AreEqual(source.VectorSearch.FilterMode, clonedSearchOptions.VectorSearch.FilterMode);
         }
 
         /* TODO: Enable these Track 1 tests when we have support for index creation

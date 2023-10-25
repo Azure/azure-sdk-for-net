@@ -39,12 +39,7 @@ namespace Azure.Search.Documents.Tests
                     new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
                     new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
                     new SearchableField("descriptionFr") { AnalyzerName = LexicalAnalyzerName.FrLucene },
-                    new SearchField("descriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
-                    {
-                        IsSearchable = true,
-                        VectorSearchDimensions = 1536,
-                        VectorSearchProfile = "my-vector-profile"
-                    },
+                    new VectorSearchField("descriptionVector") { VectorSearchDimensions = 1536, VectorSearchProfileName = "my-vector-profile" },
                     new SearchableField("category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                     new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
                     new SimpleField("parkingIncluded", SearchFieldDataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
@@ -87,23 +82,23 @@ namespace Azure.Search.Documents.Tests
                     },
                     Algorithms =
                     {
-                        new HnswVectorSearchAlgorithmConfiguration( "my-hsnw-vector-config")
+                        new HnswAlgorithmConfiguration( "my-hsnw-vector-config")
                     }
                 },
-                SemanticSettings = new()
+                SemanticSearch = new()
                 {
                     Configurations =
                     {
                        new SemanticConfiguration("my-semantic-config", new()
                        {
-                           TitleField = new(){ FieldName = "hotelName" },
+                           TitleField = new SemanticField("hotelName"),
                            ContentFields =
                            {
-                               new() { FieldName = "description" }
+                               new SemanticField("description")
                            },
                            KeywordFields =
                            {
-                               new() { FieldName = "category" }
+                               new SemanticField("category")
                            }
                        })
                     }

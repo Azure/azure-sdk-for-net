@@ -4,13 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using Azure.Core;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Options for <see cref="SearchClient.SearchAsync"/> that
+    /// Options for <see cref="SearchClient.SearchAsync(string, SearchOptions, CancellationToken)"/> that
     /// allow specifying filtering, sorting, faceting, paging, and other search
     /// query behaviors.
     /// </summary>
@@ -18,10 +19,6 @@ namespace Azure.Search.Documents
     [CodeGenModel("SearchRequest")]
     public partial class SearchOptions
     {
-        private const string QueryAnswerCountRaw = "count-";
-        private const string QueryAnswerThresholdRaw = "threshold-";
-        private const string QueryCaptionRawSplitter = "|highlight-";
-
         /// <summary>
         /// Initializes a new instance of SearchOptions from a continuation
         /// token to continue fetching results from a previous search.
@@ -161,153 +158,66 @@ namespace Azure.Search.Documents
         [CodeGenMember("ScoringParameters")]
         public IList<string> ScoringParameters { get; internal set; } = new List<string>();
 
+        /// <summary> Options for performing Semantic Search. </summary>
+        public SemanticSearchOptions SemanticSearch { get; set; } = new SemanticSearchOptions();
+
+        /// <summary> Options for performing Vector Search. </summary>
+        public VectorSearchOptions VectorSearch { get; set; } = new VectorSearchOptions();
+
         /// <summary> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </summary>
         [CodeGenMember("SemanticConfiguration")]
-        public string SemanticConfigurationName { get; set; }
-
-        /// <summary> A value that specifies whether <see cref="SearchResults{T}.Answers"/> should be returned as part of the search response. </summary>
-        public QueryAnswerType? QueryAnswer { get; set; }
-
-        /// <summary> A value that specifies the number of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response. </summary>
-        public int? QueryAnswerCount { get; set; }
-
-        /// <summary> A value that specifies the threshold of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response. </summary>
-        public double? QueryAnswerThreshold { get; set; }
-
-        /// <summary> Constructed from <see cref="QueryAnswer"/>, <see cref="QueryAnswerCount"/> and <see cref="QueryAnswerThreshold"/>. For example: "extractive|count-1,threshold-0.7"</summary>
-        [CodeGenMember("Answers")]
-        internal string QueryAnswerRaw
+        private string SemanticConfigurationName
         {
-            get
-            {
-                if (QueryAnswer.HasValue)
-                {
-                    StringBuilder queryAnswerStringValue = new(QueryAnswer.Value.ToString());
-
-                    int tokens = 0;
-                    char NextToken() => tokens++ == 0 ? '|' : ',';
-
-                    if (QueryAnswerCount.HasValue)
-                    {
-                        queryAnswerStringValue.Append(NextToken()).Append($"{QueryAnswerCountRaw}{QueryAnswerCount.Value}");
-                        tokens = 1;
-                    }
-
-                    if (QueryAnswerThreshold.HasValue)
-                    {
-                        queryAnswerStringValue.Append(NextToken()).Append($"{QueryAnswerThresholdRaw}{QueryAnswerThreshold.Value}");
-                    }
-
-                    return queryAnswerStringValue.ToString();
-                }
-
-                return null;
-            }
-            set
-            {
-                if (!string.IsNullOrEmpty(value)) // If the value is - "extractive" or "extractive|count-1" or "extractive|threshold-0.7" or "extractive|count-5,threshold-0.9" or "extractive|threshold-0.8,count-4"
-                {
-                    string[] queryAnswerValues = value.Split('|');
-                    if (!string.IsNullOrEmpty(queryAnswerValues[0]))
-                    {
-                        QueryAnswer = new QueryAnswerType(queryAnswerValues[0]);
-                    }
-
-                    if (queryAnswerValues.Length == 2)
-                    {
-                        var queryAnswerParams = queryAnswerValues[1].Split(',');
-                        if (queryAnswerParams.Length <= 2)
-                        {
-                            foreach (var param in queryAnswerParams)
-                            {
-                                if (param.Contains(QueryAnswerCountRaw))
-                                {
-                                    var countPart = param.Substring(param.IndexOf(QueryAnswerCountRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerCountRaw.Length);
-                                    if (int.TryParse(countPart, out int countValue))
-                                    {
-                                        QueryAnswerCount = countValue;
-                                    }
-                                }
-                                else if (param.Contains(QueryAnswerThresholdRaw))
-                                {
-                                    var thresholdPart = param.Substring(param.IndexOf(QueryAnswerThresholdRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerThresholdRaw.Length);
-                                    if (double.TryParse(thresholdPart, out double thresholdValue))
-                                    {
-                                        QueryAnswerThreshold = thresholdValue;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            get { return SemanticSearch?.SemanticConfigurationName; }
+            set { SemanticSearch.SemanticConfigurationName = value; }
         }
 
-        /// <summary>
-        /// A value that specifies whether <see cref="SearchResult{T}.Captions"/> should be returned as part of the search response.
-        /// <para>The default value is <see cref="QueryCaptionType.None"/>.</para>
-        /// </summary>
-        public QueryCaptionType? QueryCaption { get; set; }
-
-        /// <summary>
-        /// If <see cref="QueryCaption"/> is set to <see cref="QueryCaptionType.Extractive"/>, setting this to <c>true</c> enables highlighting of the returned captions.
-        /// It populates <see cref="CaptionResult.Highlights"/>.
-        /// <para>The default value is <c>true</c>.</para>
-        /// </summary>
-        public bool? QueryCaptionHighlightEnabled { get; set; }
-
-        /// <summary> Constructed from <see cref="QueryCaption"/> and <see cref="QueryCaptionHighlightEnabled"/>.</summary>
-        [CodeGenMember("Captions")]
-        internal string QueryCaptionRaw
+        /// <summary> Constructed from <see cref="QueryAnswer.AnswerType"/>, <see cref="QueryAnswer.Count"/> and <see cref="QueryAnswer.Threshold"/>. For example: "extractive|count-1,threshold-0.7"</summary>
+        [CodeGenMember("Answers")]
+        private string QueryAnswerRaw
         {
-            get
-            {
-                string queryCaptionStringValue = null;
+            get { return SemanticSearch?.QueryAnswer?.QueryAnswerRaw; }
+            set { SemanticSearch.QueryAnswer.QueryAnswerRaw = value; }
+        }
 
-                if (QueryCaption.HasValue)
-                {
-                    if (QueryCaption.Value == QueryCaptionType.Extractive)
-                    {
-                        queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlightEnabled.GetValueOrDefault(true)}";
-                    }
-                    else
-                    {
-                        queryCaptionStringValue = QueryCaption.Value.ToString();
-                    }
-                }
+        /// <summary> Constructed from <see cref="QueryCaption.CaptionType"/> and <see cref="QueryCaption.HighlightEnabled"/>.</summary>
+        [CodeGenMember("Captions")]
+        private string QueryCaptionRaw
+        {
+            get { return SemanticSearch?.QueryCaption?.QueryCaptionRaw; }
+            set { SemanticSearch.QueryCaption.QueryCaptionRaw = value; }
+        }
 
-                return queryCaptionStringValue;
-            }
+        /// <summary> Allows the user to choose whether a semantic call should fail completely (default / current behavior), or to return partial results. </summary>
+        [CodeGenMember("SemanticErrorHandling")]
+        private SemanticErrorMode? SemanticErrorMode
+        {
+            get { return SemanticSearch?.SemanticErrorMode; }
+            set { SemanticSearch.SemanticErrorMode = value; }
+        }
 
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    QueryCaption = null;
-                    QueryCaptionHighlightEnabled = null;
-                }
-                else
-                {
-                    int splitIndex = value.IndexOf(QueryCaptionRawSplitter, StringComparison.OrdinalIgnoreCase);
-                    if (splitIndex >= 0)
-                    {
-                        var queryCaptionPart = value.Substring(0, splitIndex);
-                        var highlightPart = value.Substring(splitIndex + QueryCaptionRawSplitter.Length);
-
-                        QueryCaption = string.IsNullOrEmpty(queryCaptionPart) ? null : new QueryCaptionType(queryCaptionPart);
-                        QueryCaptionHighlightEnabled = bool.TryParse(highlightPart, out bool highlightValue) ? highlightValue : null;
-                    }
-                    else
-                    {
-                        QueryCaption = new QueryCaptionType(value);
-                        QueryCaptionHighlightEnabled = null;
-                    }
-                }
-            }
+        /// <summary> Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails. </summary>
+        private int? SemanticMaxWaitInMilliseconds
+        {
+            get { return SemanticSearch?.SemanticMaxWaitInMilliseconds?.Milliseconds; }
+            set { SemanticSearch.SemanticMaxWaitInMilliseconds = value.HasValue ? TimeSpan.FromMilliseconds(value.Value) : null; }
         }
 
         /// <summary> The query parameters for multi-vector search queries. </summary>
-        public IList<VectorQuery> VectorQueries { get; internal set; } = new List<VectorQuery>();
+        [CodeGenMember("VectorQueries")]
+        private IList<VectorizableQuery> VectorizableQueries
+        {
+            get { return VectorSearch?.VectorizableQueries; }
+            set { VectorSearch.VectorizableQueries = value; }
+        }
+
+        /// <summary> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter' for new indexes. </summary>
+        [CodeGenMember("VectorFilterMode")]
+        private VectorFilterMode? FilterMode
+        {
+            get { return VectorSearch?.FilterMode; }
+            set { VectorSearch.FilterMode = value; }
+        }
 
         /// <summary>
         /// Shallow copy one SearchOptions instance to another.
@@ -327,11 +237,6 @@ namespace Azure.Search.Documents
             destination.IncludeTotalCount = source.IncludeTotalCount;
             destination.MinimumCoverage = source.MinimumCoverage;
             destination.OrderBy = source.OrderBy;
-            destination.QueryAnswer = source.QueryAnswer;
-            destination.QueryAnswerCount = source.QueryAnswerCount;
-            destination.QueryAnswerThreshold = source.QueryAnswerThreshold;
-            destination.QueryCaption = source.QueryCaption;
-            destination.QueryCaptionHighlightEnabled = source.QueryCaptionHighlightEnabled;
             destination.QueryType = source.QueryType;
             destination.ScoringParameters = source.ScoringParameters;
             destination.ScoringProfile = source.ScoringProfile;
@@ -340,12 +245,11 @@ namespace Azure.Search.Documents
             destination.SearchMode = source.SearchMode;
             destination.SearchText = source.SearchText;
             destination.Select = source.Select;
-            destination.SemanticConfigurationName = source.SemanticConfigurationName;
             destination.SessionId = source.SessionId;
             destination.Size = source.Size;
             destination.Skip = source.Skip;
-            destination.VectorQueries = source.VectorQueries;
-            destination.VectorFilterMode = source.VectorFilterMode;
+            destination.SemanticSearch = source.SemanticSearch;
+            destination.VectorSearch = source.VectorSearch;
         }
 
         /// <summary>

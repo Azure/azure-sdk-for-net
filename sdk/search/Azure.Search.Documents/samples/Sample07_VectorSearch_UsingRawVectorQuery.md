@@ -9,7 +9,7 @@ Let's consider the example of a `Hotel`. First, we need to create an index for s
 We will create an instace of `SearchIndex` and define `Hotel` fields.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingRawVectors
-string vectorSearchProfile = "my-vector-profile";
+string vectorSearchProfileName = "my-vector-profile";
 string vectorSearchHnswConfig = "my-hsnw-vector-config";
 int modelDimensions = 1536;
 
@@ -21,29 +21,19 @@ SearchIndex searchIndex = new(indexName)
         new SimpleField("HotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
         new SearchableField("HotelName") { IsFilterable = true, IsSortable = true },
         new SearchableField("Description") { IsFilterable = true },
-        new SearchField("DescriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
-        {
-            IsSearchable = true,
-            VectorSearchDimensions = modelDimensions,
-            VectorSearchProfile = vectorSearchProfile
-        },
+        new VectorSearchField("DescriptionVector") { VectorSearchDimensions = modelDimensions, VectorSearchProfileName = vectorSearchProfileName },
         new SearchableField("Category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-        new SearchField("CategoryVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
-        {
-            IsSearchable = true,
-            VectorSearchDimensions = modelDimensions,
-            VectorSearchProfile = vectorSearchProfile
-        },
+        new VectorSearchField("CategoryVector") { VectorSearchDimensions = modelDimensions, VectorSearchProfileName = vectorSearchProfileName },
     },
     VectorSearch = new()
     {
         Profiles =
         {
-            new VectorSearchProfile(vectorSearchProfile, vectorSearchHnswConfig)
+            new VectorSearchProfile(vectorSearchProfileName, vectorSearchHnswConfig)
         },
         Algorithms =
         {
-            new HnswVectorSearchAlgorithmConfiguration(vectorSearchHnswConfig)
+            new HnswAlgorithmConfiguration(vectorSearchHnswConfig)
         }
     },
 };
@@ -147,10 +137,13 @@ In this vector query, the `VectorQueries` collection contains the vectors repres
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Single_Vector_Search_UsingRawVectors
 IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 
-SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
+SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     new SearchOptions
     {
-        VectorQueries = { new RawVectorQuery() { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
+        VectorSearch = new()
+        {
+           VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+        }
     });
 
 int count = 0;
@@ -171,10 +164,13 @@ In addition to the vector query mentioned above, we can also apply a filter to n
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Filter_UsingRawVectors
 IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 
-SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
+SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     new SearchOptions
     {
-        VectorQueries = { new RawVectorQuery() { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
+        VectorSearch = new()
+        {
+            VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+        },
         Filter = "Category eq 'Luxury'"
     });
 
@@ -202,7 +198,10 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
         "Top hotels in town",
         new SearchOptions
         {
-            VectorQueries = { new RawVectorQuery() { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
+            VectorSearch = new()
+            {
+                VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+            },
         });
 
 int count = 0;
@@ -224,12 +223,14 @@ You can search containing multiple query vectors using the `SearchOptions.Vector
 IReadOnlyList<float> vectorizedDescriptionQuery = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 IReadOnlyList<float> vectorizedCategoryQuery = VectorSearchEmbeddings.SearchVectorizeCategory; // "Luxury hotels in town"
 
-SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
+SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     new SearchOptions
     {
-        VectorQueries = {
-            new RawVectorQuery() { Vector = vectorizedDescriptionQuery, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } },
-            new RawVectorQuery() { Vector = vectorizedCategoryQuery, KNearestNeighborsCount = 3, Fields = { "CategoryVector" } }
+        VectorSearch = new()
+        {
+            VectorizableQueries = {
+                new VectorQuery(vectorizedDescriptionQuery) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } },
+                new VectorQuery(vectorizedCategoryQuery) { KNearestNeighborsCount = 3, Fields = { "CategoryVector" } } }
         },
     });
 
@@ -251,13 +252,13 @@ You can set the `SearchOptions.VectorQueries.Fields` property to multiple vector
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Fields_Vector_Search_UsingRawVectors
 IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 
-SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(null,
+SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     new SearchOptions
     {
-        VectorQueries = { new RawVectorQuery() {
-            Vector = vectorizedResult,
-            KNearestNeighborsCount = 3,
-            Fields = { "DescriptionVector", "CategoryVector" } } }
+        VectorSearch = new()
+        {
+            VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector", "CategoryVector" } } }
+        }
     });
 
 int count = 0;

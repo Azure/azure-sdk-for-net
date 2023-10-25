@@ -127,10 +127,10 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("semanticConfiguration"u8);
                 writer.WriteStringValue(SemanticConfigurationName);
             }
-            if (Optional.IsDefined(SemanticErrorHandling))
+            if (Optional.IsDefined(SemanticErrorMode))
             {
                 writer.WritePropertyName("semanticErrorHandling"u8);
-                writer.WriteStringValue(SemanticErrorHandling.Value.ToString());
+                writer.WriteStringValue(SemanticErrorMode.Value.ToString());
             }
             if (Optional.IsDefined(SemanticMaxWaitInMilliseconds))
             {
@@ -154,20 +154,20 @@ namespace Azure.Search.Documents
                 writer.WritePropertyName("captions"u8);
                 writer.WriteStringValue(QueryCaptionRaw);
             }
-            if (Optional.IsCollectionDefined(VectorQueries))
+            if (Optional.IsCollectionDefined(VectorizableQueries))
             {
                 writer.WritePropertyName("vectorQueries"u8);
                 writer.WriteStartArray();
-                foreach (var item in VectorQueries)
+                foreach (var item in VectorizableQueries)
                 {
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(VectorFilterMode))
+            if (Optional.IsDefined(FilterMode))
             {
                 writer.WritePropertyName("vectorFilterMode"u8);
-                writer.WriteStringValue(VectorFilterMode.Value.ToString());
+                writer.WriteStringValue(FilterMode.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -198,11 +198,11 @@ namespace Azure.Search.Documents
             Optional<int> skip = default;
             Optional<int> top = default;
             Optional<string> semanticConfiguration = default;
-            Optional<SemanticErrorHandling> semanticErrorHandling = default;
+            Optional<SemanticErrorMode> semanticErrorHandling = default;
             Optional<int?> semanticMaxWaitInMilliseconds = default;
             Optional<string> answers = default;
             Optional<string> captions = default;
-            Optional<IList<VectorQuery>> vectorQueries = default;
+            Optional<IList<VectorizableQuery>> vectorQueries = default;
             Optional<VectorFilterMode> vectorFilterMode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -358,7 +358,7 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    semanticErrorHandling = new SemanticErrorHandling(property.Value.GetString());
+                    semanticErrorHandling = new SemanticErrorMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("semanticMaxWaitInMilliseconds"u8))
@@ -387,10 +387,10 @@ namespace Azure.Search.Documents
                     {
                         continue;
                     }
-                    List<VectorQuery> array = new List<VectorQuery>();
+                    List<VectorizableQuery> array = new List<VectorizableQuery>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VectorQuery.DeserializeVectorQuery(item));
+                        array.Add(VectorizableQuery.DeserializeVectorizableQuery(item));
                     }
                     vectorQueries = array;
                     continue;

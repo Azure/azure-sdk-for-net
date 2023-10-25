@@ -1,24 +1,38 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public abstract partial class VectorQuery
+    public partial class VectorQuery : VectorizableQuery
     {
-        /// <summary> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </summary>
-        public IList<string> Fields { get; internal set; } = new List<string>();
-
-        /// <summary>
-        /// Join Fields so it can be sent as a comma separated string.
-        /// </summary>
-        [CodeGenMember("Fields")]
-        internal string FieldsRaw
+        /// <summary> Initializes a new instance of VectorQuery. </summary>
+        /// <param name="vector"> The vector representation of a search query. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vector"/> is null. </exception>
+        public VectorQuery(IReadOnlyList<float> vector)
         {
-            get => Fields.CommaJoin();
-            set => Fields = SearchExtensions.CommaSplit(value);
+            Argument.AssertNotNull(vector, nameof(vector));
+
+            Vector = vector.ToList();
+            Kind = VectorQueryKind.Vector;
         }
+
+        /// <summary> Initializes a new instance of VectorQuery. </summary>
+        /// <param name="vector"> The vector representation of a search query. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vector"/> is null. </exception>
+        private VectorQuery(IEnumerable<float> vector)
+        {
+            Argument.AssertNotNull(vector, nameof(vector));
+
+            Vector = vector.ToList();
+            Kind = VectorQueryKind.Vector;
+        }
+
+        /// <summary> The vector representation of a search query. </summary>
+        public IReadOnlyList<float> Vector { get; set; }
     }
 }

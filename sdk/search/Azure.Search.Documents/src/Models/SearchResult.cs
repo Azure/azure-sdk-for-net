@@ -41,17 +41,9 @@ namespace Azure.Search.Documents.Models
         public IDictionary<string, IList<string>> Highlights { get; internal set; }
 
         /// <summary>
-        /// The relevance score computed by the semantic ranker for the top search results.
-        /// <para>Search results are sorted by the <see cref="RerankerScore"/> first and then by the <see cref="Score"/>.
-        /// <see cref="RerankerScore"/> is only returned for queries of type <see cref="SearchQueryType.Semantic"/>.</para>
+        /// Gets the semantic search result.
         /// </summary>
-        public double? RerankerScore { get; internal set; }
-
-        /// <summary>
-        /// Captions are the most representative passages from the document relatively to the search query.
-        /// <para>They are often used as document summary. <see cref="Captions"/> are only returned for queries of type <see cref="SearchQueryType.Semantic"/>.</para>
-        /// </summary>
-        public IList<CaptionResult> Captions { get; internal set; }
+        public SemanticSearchResult SemanticSearch { get; internal set; }
 
         /// <summary>
         /// The document found by the search query.
@@ -89,6 +81,8 @@ namespace Azure.Search.Documents.Models
         {
             Debug.Assert(options != null);
             SearchResult<T> result = new SearchResult<T>();
+            SemanticSearchResult semanticSearch = new SemanticSearchResult();
+            result.SemanticSearch = semanticSearch;
             foreach (JsonProperty prop in element.EnumerateObject())
             {
                 if (prop.NameEquals(Constants.SearchScoreKeyJson.EncodedUtf8Bytes) &&
@@ -113,16 +107,16 @@ namespace Azure.Search.Documents.Models
                 else if (prop.NameEquals(Constants.SearchRerankerScoreKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    result.RerankerScore = prop.Value.GetDouble();
+                    result.SemanticSearch.RerankerScore = prop.Value.GetDouble();
                 }
                 else if (prop.NameEquals(Constants.SearchCaptionsKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    result.Captions = new List<CaptionResult>();
+                    result.SemanticSearch.Captions = new List<CaptionResult>();
 
                     foreach (JsonElement captionValue in prop.Value.EnumerateArray())
                     {
-                        result.Captions.Add(CaptionResult.DeserializeCaptionResult(captionValue));
+                        result.SemanticSearch.Captions.Add(CaptionResult.DeserializeCaptionResult(captionValue));
                     }
                 }
             }
@@ -153,6 +147,25 @@ namespace Azure.Search.Documents.Models
 
             return result;
         }
+    }
+
+    /// <summary>
+    /// Semantic search result.
+    /// </summary>
+    public class SemanticSearchResult
+    {
+        /// <summary>
+        /// The relevance score computed by the semantic ranker for the top search results.
+        /// <para>Search results are sorted by the <see cref="RerankerScore"/> first and then by the <see cref="SearchResult{T}.Score"/>.
+        /// <see cref="RerankerScore"/> is only returned for queries of type <see cref="SearchQueryType.Semantic"/>.</para>
+        /// </summary>
+        public double? RerankerScore { get; internal set; }
+
+        /// <summary>
+        /// Captions are the most representative passages from the document relatively to the search query.
+        /// <para>They are often used as document summary. <see cref="Captions"/> are only returned for queries of type <see cref="SearchQueryType.Semantic"/>.</para>
+        /// </summary>
+        public IList<CaptionResult> Captions { get; internal set; }
     }
 
     public static partial class SearchModelFactory

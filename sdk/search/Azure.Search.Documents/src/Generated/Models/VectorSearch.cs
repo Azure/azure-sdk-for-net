@@ -25,7 +25,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="algorithms">
         /// Contains configuration options specific to the algorithm used during indexing and/or querying.
         /// Please note <see cref="VectorSearchAlgorithmConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExhaustiveKnnVectorSearchAlgorithmConfiguration"/> and <see cref="HnswVectorSearchAlgorithmConfiguration"/>.
+        /// The available derived classes include <see cref="ExhaustiveKnnAlgorithmConfiguration"/> and <see cref="HnswAlgorithmConfiguration"/>.
         /// </param>
         internal VectorSearch(IList<VectorSearchProfile> profiles, IList<VectorSearchAlgorithmConfiguration> algorithms)
         {
@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <summary>
         /// Contains configuration options specific to the algorithm used during indexing and/or querying.
         /// Please note <see cref="VectorSearchAlgorithmConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExhaustiveKnnVectorSearchAlgorithmConfiguration"/> and <see cref="HnswVectorSearchAlgorithmConfiguration"/>.
+        /// The available derived classes include <see cref="ExhaustiveKnnAlgorithmConfiguration"/> and <see cref="HnswAlgorithmConfiguration"/>.
         /// </summary>
         public IList<VectorSearchAlgorithmConfiguration> Algorithms { get; }
     }

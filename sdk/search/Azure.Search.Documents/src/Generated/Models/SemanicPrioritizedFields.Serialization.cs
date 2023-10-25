@@ -11,7 +11,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class PrioritizedFields : IUtf8JsonSerializable
+    public partial class SemanicPrioritizedFields : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteEndObject();
         }
 
-        internal static PrioritizedFields DeserializePrioritizedFields(JsonElement element)
+        internal static SemanicPrioritizedFields DeserializeSemanicPrioritizedFields(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -93,7 +93,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new PrioritizedFields(titleField.Value, Optional.ToList(prioritizedContentFields), Optional.ToList(prioritizedKeywordsFields));
+            return new SemanicPrioritizedFields(titleField.Value, Optional.ToList(prioritizedContentFields), Optional.ToList(prioritizedKeywordsFields));
         }
     }
 }

@@ -15,20 +15,20 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of VectorSearchProfile. </summary>
         /// <param name="name"> The name to associate with this particular vector search profile. </param>
-        /// <param name="algorithm"> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="algorithm"/> is null. </exception>
-        public VectorSearchProfile(string name, string algorithm)
+        /// <param name="algorithmConfigurationName"> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="algorithmConfigurationName"/> is null. </exception>
+        public VectorSearchProfile(string name, string algorithmConfigurationName)
         {
             Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(algorithm, nameof(algorithm));
+            Argument.AssertNotNull(algorithmConfigurationName, nameof(algorithmConfigurationName));
 
             Name = name;
-            Algorithm = algorithm;
+            AlgorithmConfigurationName = algorithmConfigurationName;
         }
 
         /// <summary> The name to associate with this particular vector search profile. </summary>
         public string Name { get; set; }
         /// <summary> The name of the vector search algorithm configuration that specifies the algorithm and optional parameters. </summary>
-        public string Algorithm { get; set; }
+        public string AlgorithmConfigurationName { get; set; }
     }
 }

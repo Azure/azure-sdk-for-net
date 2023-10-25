@@ -7,15 +7,15 @@
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> The UnknownVectorQuery. </summary>
-    internal partial class UnknownVectorQuery : VectorQuery
+    /// <summary> The UnknownVectorizableQuery. </summary>
+    internal partial class UnknownVectorizableQuery : VectorizableQuery
     {
-        /// <summary> Initializes a new instance of UnknownVectorQuery. </summary>
+        /// <summary> Initializes a new instance of UnknownVectorizableQuery. </summary>
         /// <param name="kind"> The kind of vector query being performed. </param>
         /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
         /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
         /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. Useful for scenarios where exact matches are critical, such as determining ground truth values. </param>
-        internal UnknownVectorQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive) : base(kind, kNearestNeighborsCount, fieldsRaw, exhaustive)
+        internal UnknownVectorizableQuery(VectorQueryKind kind, int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive) : base(kind, kNearestNeighborsCount, fieldsRaw, exhaustive)
         {
             Kind = kind;
         }

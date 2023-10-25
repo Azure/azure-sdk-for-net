@@ -6,7 +6,7 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    public partial class PrioritizedFields
+    public partial class SemanicPrioritizedFields
     {
         /// <summary> Defines the content fields to be used for semantic ranking, captions, highlights, and answers.
         /// <para> For the best result, the selected fields should contain text in natural language form. The order of the fields in the array represents their priority.

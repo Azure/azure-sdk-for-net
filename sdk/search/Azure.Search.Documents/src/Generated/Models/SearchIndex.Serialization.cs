@@ -119,12 +119,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("similarity"u8);
                 writer.WriteObjectValue(Similarity);
             }
-            if (Optional.IsDefined(SemanticSettings))
+            if (Optional.IsDefined(SemanticSearch))
             {
-                if (SemanticSettings != null)
+                if (SemanticSearch != null)
                 {
                     writer.WritePropertyName("semantic"u8);
-                    writer.WriteObjectValue(SemanticSettings);
+                    writer.WriteObjectValue(SemanticSearch);
                 }
                 else
                 {

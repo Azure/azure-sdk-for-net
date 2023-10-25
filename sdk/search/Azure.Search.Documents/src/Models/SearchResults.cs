@@ -53,15 +53,10 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         public IDictionary<string, IList<FacetResult>> Facets { get; internal set; }
 
-        /// <summary> The answers query results for the search operation;
-        /// <c>null</c> if the <see cref="SearchOptions.QueryAnswer"/> parameter was not specified or set to <see cref="QueryAnswerType.None"/>. </summary>
-        public IList<AnswerResult> Answers { get; internal set; }
-
-        /// <summary> Reason that a partial response was returned for a semantic search request. </summary>
-        public SemanticPartialResponseReason? SemanticPartialResponseReason { get; internal set; }
-
-        /// <summary> Type of partial response that was returned for a semantic search request. </summary>
-        public SemanticPartialResponseType? SemanticPartialResponseType { get; internal set; }
+        /// <summary>
+        /// Gets the semantic search result.
+        /// </summary>
+        public SemanticSearchResults SemanticSearch { get; internal set; }
 
         /// <summary>
         /// Gets the first (server side) page of search result values.
@@ -188,6 +183,8 @@ namespace Azure.Search.Documents.Models
             JsonSerializerOptions defaultSerializerOptions = JsonSerialization.SerializerOptions;
 
             SearchResults<T> results = new SearchResults<T>();
+            SemanticSearchResults semanticSearch = new SemanticSearchResults();
+            results.SemanticSearch = semanticSearch;
             foreach (JsonProperty prop in doc.RootElement.EnumerateObject())
             {
                 if (prop.NameEquals(Constants.ODataCountKeyJson.EncodedUtf8Bytes) &&
@@ -240,23 +237,23 @@ namespace Azure.Search.Documents.Models
                 {
                     results.NextOptions = SearchOptions.DeserializeSearchOptions(prop.Value);
                 }
-                else if (prop.NameEquals(Constants.SearchSemanticPartialResponseReasonKeyJson.EncodedUtf8Bytes) &&
+                else if (prop.NameEquals(Constants.SearchSemanticErrorReasonKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    results.SemanticPartialResponseReason = new SemanticPartialResponseReason(prop.Value.GetString());
+                    results.SemanticSearch.SemanticErrorReason = new SemanticErrorReason(prop.Value.GetString());
                 }
-                else if (prop.NameEquals(Constants.SearchSemanticPartialResponseTypeKeyJson.EncodedUtf8Bytes) &&
+                else if (prop.NameEquals(Constants.SearchSemanticSearchResultsTypeKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    results.SemanticPartialResponseType = new SemanticPartialResponseType(prop.Value.GetString());
+                    results.SemanticSearch.SemanticSearchResultsType = new SemanticSearchResultsType(prop.Value.GetString());
                 }
                 else if (prop.NameEquals(Constants.SearchAnswersKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    results.Answers = new List<AnswerResult>();
+                    semanticSearch.Answers = new List<AnswerResult>();
                     foreach (JsonElement answerValue in prop.Value.EnumerateArray())
                     {
-                        results.Answers.Add(AnswerResult.DeserializeAnswerResult(answerValue));
+                        results.SemanticSearch.Answers.Add(AnswerResult.DeserializeAnswerResult(answerValue));
                     }
                 }
                 else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
@@ -276,6 +273,22 @@ namespace Azure.Search.Documents.Models
             }
             return results;
         }
+    }
+
+    /// <summary>
+    /// Semantic search results from an index.
+    /// </summary>
+    public class SemanticSearchResults
+    {
+        /// <summary> The answers query results for the search operation;
+        /// <c>null</c> if the <see cref="QueryAnswer.AnswerType"/> parameter was not specified or set to <see cref="QueryAnswerType.None"/>. </summary>
+        public IList<AnswerResult> Answers { get; internal set; }
+
+        /// <summary> Reason that a partial response was returned for a semantic search request. </summary>
+        public SemanticErrorReason? SemanticErrorReason { get; internal set; }
+
+        /// <summary> Type of partial response that was returned for a semantic search request. </summary>
+        public SemanticSearchResultsType? SemanticSearchResultsType { get; internal set; }
     }
 
     /// <summary>
@@ -325,11 +338,10 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         public IDictionary<string, IList<FacetResult>> Facets => _results.Facets;
 
-        /// <summary> Reason that a partial response was returned for a semantic search request. </summary>
-        public SemanticPartialResponseReason? SemanticPartialResponseReason => _results.SemanticPartialResponseReason;
-
-        /// <summary> Type of partial response that was returned for a semantic search request. </summary>
-        public SemanticPartialResponseType? SemanticPartialResponseType => _results.SemanticPartialResponseType;
+        /// <summary>
+        /// Semantic search results from an index.
+        /// </summary>
+        public SemanticSearchResults SemanticSearch => _results.SemanticSearch;
 
         /// <inheritdoc />
         public override IReadOnlyList<SearchResult<T>> Values =>

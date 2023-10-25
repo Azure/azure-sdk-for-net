@@ -18,7 +18,7 @@ public class MyDocument
     [SearchableField(AnalyzerName = "en.microsoft")]
     public string Description { get; set; }
 
-    [SearchableField(VectorSearchDimensions = "1536", VectorSearchProfile = "my-vector-profile")]
+    [VectorSearchField(VectorSearchDimensions = 1536, VectorSearchProfileName = "my-vector-profile")]
     public IReadOnlyList<float> DescriptionVector { get; set; }
 }
 ```
@@ -28,7 +28,7 @@ public class MyDocument
 We will create an instace of `SearchIndex` and use `FieldBuilder` to define fields based on the `MyDocument` model class.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingFieldBuilder
-string vectorSearchProfile = "my-vector-profile";
+string vectorSearchProfileName = "my-vector-profile";
 string vectorSearchHnswConfig = "my-hsnw-vector-config";
 
 string indexName = "MyDocument";
@@ -40,11 +40,11 @@ SearchIndex searchIndex = new SearchIndex(indexName)
     {
         Profiles =
     {
-        new VectorSearchProfile(vectorSearchProfile, vectorSearchHnswConfig)
+        new VectorSearchProfile(vectorSearchProfileName, vectorSearchHnswConfig)
     },
         Algorithms =
     {
-        new HnswVectorSearchAlgorithmConfiguration(vectorSearchHnswConfig)
+        new HnswAlgorithmConfiguration(vectorSearchHnswConfig)
     }
     },
 };

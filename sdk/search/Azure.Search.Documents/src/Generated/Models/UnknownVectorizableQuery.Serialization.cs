@@ -5,27 +5,16 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    public partial class RawVectorQuery : IUtf8JsonSerializable
+    internal partial class UnknownVectorizableQuery : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Vector))
-            {
-                writer.WritePropertyName("vector"u8);
-                writer.WriteStartArray();
-                foreach (var item in Vector)
-                {
-                    writer.WriteNumberValue(item);
-                }
-                writer.WriteEndArray();
-            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(KNearestNeighborsCount))
@@ -46,33 +35,18 @@ namespace Azure.Search.Documents.Models
             writer.WriteEndObject();
         }
 
-        internal static RawVectorQuery DeserializeRawVectorQuery(JsonElement element)
+        internal static UnknownVectorizableQuery DeserializeUnknownVectorizableQuery(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<float>> vector = default;
-            VectorQueryKind kind = default;
+            VectorQueryKind kind = "Unknown";
             Optional<int> k = default;
             Optional<string> fields = default;
             Optional<bool> exhaustive = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("vector"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<float> array = new List<float>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetSingle());
-                    }
-                    vector = array;
-                    continue;
-                }
                 if (property.NameEquals("kind"u8))
                 {
                     kind = new VectorQueryKind(property.Value.GetString());
@@ -102,7 +76,7 @@ namespace Azure.Search.Documents.Models
                     continue;
                 }
             }
-            return new RawVectorQuery(kind, Optional.ToNullable(k), fields.Value, Optional.ToNullable(exhaustive), Optional.ToList(vector));
+            return new UnknownVectorizableQuery(kind, Optional.ToNullable(k), fields.Value, Optional.ToNullable(exhaustive));
         }
     }
 }

@@ -27,8 +27,8 @@ namespace Azure.Search.Documents.Models
             Optional<SearchOptions> searchNextPageParameters = default;
             IReadOnlyList<SearchResult> value = default;
             Optional<string> odataNextLink = default;
-            Optional<SemanticPartialResponseReason> searchSemanticPartialResponseReason = default;
-            Optional<SemanticPartialResponseType> searchSemanticPartialResponseType = default;
+            Optional<SemanticErrorReason> searchSemanticPartialResponseReason = default;
+            Optional<SemanticSearchResultsType> searchSemanticPartialResponseType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.count"u8))
@@ -120,7 +120,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    searchSemanticPartialResponseReason = new SemanticPartialResponseReason(property.Value.GetString());
+                    searchSemanticPartialResponseReason = new SemanticErrorReason(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("@search.semanticPartialResponseType"u8))
@@ -129,7 +129,7 @@ namespace Azure.Search.Documents.Models
                     {
                         continue;
                     }
-                    searchSemanticPartialResponseType = new SemanticPartialResponseType(property.Value.GetString());
+                    searchSemanticPartialResponseType = new SemanticSearchResultsType(property.Value.GetString());
                     continue;
                 }
             }

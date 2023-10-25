@@ -41,20 +41,26 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 
                 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
                     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
-                    new SearchOptions
-                    {
-                        VectorQueries = { new RawVectorQuery() { Vector = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } },
-                        QueryType = SearchQueryType.Semantic,
-                        SemanticConfigurationName = "my-semantic-config",
-                        QueryCaption = QueryCaptionType.Extractive,
-                        QueryAnswer = QueryAnswerType.Extractive,
+                     new SearchOptions
+                     {
+                         VectorSearch = new()
+                         {
+                             VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+                         },
+                         SemanticSearch = new()
+                         {
+                             SemanticConfigurationName = "my-semantic-config",
+                             QueryCaption = new() { CaptionType = QueryCaptionType.Extractive },
+                             QueryAnswer = new() { AnswerType = QueryAnswerType.Extractive }
+                         },
+                         QueryType = SearchQueryType.Semantic,
                     });
 
                 int count = 0;
                 Console.WriteLine($"Semantic Hybrid Search Results:");
 
                 Console.WriteLine($"\nQuery Answer:");
-                foreach (AnswerResult result in response.Answers)
+                foreach (AnswerResult result in response.SemanticSearch.Answers)
                 {
                     Console.WriteLine($"Answer Highlights: {result.Highlights}");
                     Console.WriteLine($"Answer Text: {result.Text}");
@@ -66,9 +72,9 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     Hotel doc = result.Document;
                     Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
 
-                    if (result.Captions != null)
+                    if (result.SemanticSearch.Captions != null)
                     {
-                        var caption = result.Captions.FirstOrDefault();
+                        var caption = result.SemanticSearch.Captions.FirstOrDefault();
                         if (caption.Highlights != null && caption.Highlights != "")
                         {
                             Console.WriteLine($"Caption Highlights: {caption.Highlights}");
@@ -92,7 +98,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
         private async Task<SearchIndexClient> CreateIndex(SearchResources resources, string name)
         {
             #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Semantic_Hybrid_Search_Index
-            string vectorSearchProfile = "my-vector-profile";
+            string vectorSearchProfileName = "my-vector-profile";
             string vectorSearchHnswConfig = "my-hsnw-vector-config";
             int modelDimensions = 1536;
 
@@ -107,45 +113,35 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     new SimpleField("HotelId", SearchFieldDataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
                     new SearchableField("HotelName") { IsFilterable = true, IsSortable = true },
                     new SearchableField("Description") { IsFilterable = true },
-                    new SearchField("DescriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
-                    {
-                        IsSearchable = true,
-                        VectorSearchDimensions = modelDimensions,
-                        VectorSearchProfile = vectorSearchProfile
-                    },
+                    new VectorSearchField("DescriptionVector") { VectorSearchDimensions = modelDimensions, VectorSearchProfileName = vectorSearchProfileName },
                     new SearchableField("Category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new SearchField("CategoryVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
-                    {
-                        IsSearchable = true,
-                        VectorSearchDimensions = modelDimensions,
-                        VectorSearchProfile = vectorSearchProfile
-                    },
+                    new VectorSearchField("CategoryVector") { VectorSearchDimensions = modelDimensions, VectorSearchProfileName = vectorSearchProfileName },
                 },
                 VectorSearch = new()
                 {
                     Profiles =
                     {
-                        new VectorSearchProfile(vectorSearchProfile, vectorSearchHnswConfig)
+                        new VectorSearchProfile(vectorSearchProfileName, vectorSearchHnswConfig)
                     },
                     Algorithms =
                     {
-                        new HnswVectorSearchAlgorithmConfiguration(vectorSearchHnswConfig)
+                        new HnswAlgorithmConfiguration(vectorSearchHnswConfig)
                     }
                 },
-                SemanticSettings = new()
+                SemanticSearch = new()
                 {
                     Configurations =
                 {
                        new SemanticConfiguration("my-semantic-config", new()
                        {
-                           TitleField = new(){ FieldName = "HotelName" },
+                           TitleField = new SemanticField("HotelName"),
                            ContentFields =
                            {
-                               new() { FieldName = "Description" }
+                               new SemanticField("Description")
                            },
                            KeywordFields =
                            {
-                               new() { FieldName = "Category" }
+                               new SemanticField("Category")
                            }
                        })
                     }

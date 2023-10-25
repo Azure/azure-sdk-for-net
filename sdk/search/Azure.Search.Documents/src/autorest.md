@@ -92,7 +92,7 @@ directive:
   transform: $["x-ms-client-name"] = "SearchServiceError"
 ```
 
-### Rename Dimensions
+### Rename `Dimensions`
 
  To ensure alignment with `VectorSearchConfiguration` in intellisense and documentation, rename the `Dimensions` to `VectorSearchDimensions`.
 
@@ -101,6 +101,153 @@ directive:
 - from: searchservice.json
   where: $.definitions.SearchField.properties.dimensions
   transform: $["x-ms-client-name"] = "vectorSearchDimensions";
+```
+
+### Rename `VectorSearchProfile`
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.SearchField.properties.vectorSearchProfile
+  transform: $["x-ms-client-name"] = "vectorSearchProfileName";
+```
+
+### Make `RawVectorQuery.vector` field Required
+
+```yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.RawVectorQuery
+  transform: $["required"] = ["vector"]
+```
+
+### Make `SemanticField.fieldName` field Required
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.SemanticField
+  transform: $["required"] = ["fieldName"]
+```
+
+### Make `VectorSearchAlgorithmKind` internal
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.VectorSearchAlgorithmKind
+  transform: $["x-accessibility"] = "internal"
+```
+
+### Make `VectorQueryKind` internal
+
+```yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.VectorQueryKind
+  transform: $["x-accessibility"] = "internal"
+```
+
+### Rename `PrioritizedFields` to `SemanticPrioritizedFields`
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.PrioritizedFields
+  transform: $["x-ms-client-name"] = "SemanicPrioritizedFields";
+```
+
+### Rename `SemanticErrorHandling` to `SemanticErrorMode`
+
+```yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.SemanticErrorHandling
+  transform: $["x-ms-enum"].name = "SemanticErrorMode";
+```
+
+### Rename `SemanticPartialResponseReason` to `SemanticErrorReason`
+
+```yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.SemanticPartialResponseReason
+  transform: $["x-ms-enum"].name = "SemanticErrorReason";
+```
+
+### Rename `SemanticPartialResponseType` to `SemanticSearchResultsType`
+
+```yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.SemanticPartialResponseType
+  transform: $["x-ms-enum"].name = "SemanticSearchResultsType";
+```
+
+### Rename `VectorQuery` to `VectorizableQuery`
+
+```yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.VectorQuery
+  transform: $["x-ms-client-name"] = "VectorizableQuery";
+```
+
+
+### Rename `VectorSearchProfile.algorithm` to `VectorSearchProfile.algorithmConfigurationName`
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.VectorSearchProfile.properties.algorithm
+  transform: $["x-ms-client-name"] = "algorithmConfigurationName";
+```
+
+### Rename `RawVectorQuery` to `VectorQuery`
+
+```yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.RawVectorQuery
+  transform: $["x-ms-client-name"] = "VectorQuery";
+```
+
+### Rename `ExhaustiveKnnVectorSearchAlgorithmConfiguration` to `ExhaustiveKnnAlgorithmConfiguration`
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.ExhaustiveKnnVectorSearchAlgorithmConfiguration
+  transform: $["x-ms-client-name"] = "ExhaustiveKnnAlgorithmConfiguration";
+```
+
+### Rename `HnswVectorSearchAlgorithmConfiguration` to `HnswAlgorithmConfiguration`
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.HnswVectorSearchAlgorithmConfiguration
+  transform: $["x-ms-client-name"] = "HnswAlgorithmConfiguration";
+```
+
+### Rename `SearchIndex.SemanticSettings` to `SearchIndex.SemanticSearch`
+
+```yaml
+directive:
+  - from: searchservice.json
+    where: $.definitions.SearchIndex.properties.semantic
+    transform: $["x-ms-client-name"] = "SemanticSearch";
+```
+
+### Rename `PIIDetectionSkill.maskingCharacter` to `PIIDetectionSkill.mask`
+
+```yaml
+directive:
+  - from: searchservice.json
+    where: $.definitions.PIIDetectionSkill
+    transform: >
+      $.properties.maskingCharacter["x-ms-client-name"] = "mask";
+      $.properties.minimumPrecision["x-ms-client-name"] = "MinPrecision";
 ```
 
 ### Add `Edm.Single` in `SearchFieldDataType`

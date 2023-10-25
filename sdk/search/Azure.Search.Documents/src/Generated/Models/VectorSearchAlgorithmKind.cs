@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Search.Documents.Indexes.Models
 {
     /// <summary> The algorithm used for indexing and querying. </summary>
-    public readonly partial struct VectorSearchAlgorithmKind : IEquatable<VectorSearchAlgorithmKind>
+    internal readonly partial struct VectorSearchAlgorithmKind : IEquatable<VectorSearchAlgorithmKind>
     {
         private readonly string _value;
 

@@ -831,6 +831,106 @@ namespace Azure.Search.Documents
                 cancellationToken)
                 .ConfigureAwait(false);
 
+        /// <summary>
+        /// Searches for documents in the search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="options">
+        /// Options that allow specifying filtering, sorting, faceting, paging,
+        /// and other search query behaviors.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the documents matching the query.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// Search and SearchAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T.  You can provide your
+        /// own type <typeparamref name="T"/> or use the dynamic
+        /// <see cref="SearchDocument"/>. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// Azure Cognitive Search might not be able to include all results in
+        /// a single response in which case <see cref="SearchResults{T}.GetResults"/>
+        /// will automatically continue making additional requests as you
+        /// enumerate through the results.  You can also process the results a
+        /// page at a time with the <see cref="Pageable{T}.AsPages(string, int?)"/>
+        /// method.
+        /// </para>
+        /// </remarks>
+        public virtual Response<SearchResults<T>> Search<T>(
+            SearchOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            SearchInternal<T>(
+                null,
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+
+        /// <summary>
+        /// Searches for documents in the search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="options">
+        /// Options that allow specifying filtering, sorting, faceting, paging,
+        /// and other search query behaviors.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the documents matching the query.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// Search and SearchAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T.  You can provide your
+        /// own type <typeparamref name="T"/> or use the dynamic
+        /// <see cref="SearchDocument"/>. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// Azure Cognitive Search might not be able to include all results in
+        /// a single response in which case
+        /// <see cref="SearchResults{T}.GetResultsAsync"/> will automatically
+        /// continue making additional requests as you enumerate through the
+        /// results.  You can also process the results a page at a time with
+        /// the <see cref="AsyncPageable{T}.AsPages(string, int?)"/> method.
+        /// </para>
+        /// </remarks>
+        public async virtual Task<Response<SearchResults<T>>> SearchAsync<T>(
+            SearchOptions options = null,
+            CancellationToken cancellationToken = default) =>
+            await SearchInternal<T>(
+                null,
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+
         private async Task<Response<SearchResults<T>>> SearchInternal<T>(
             string searchText,
             SearchOptions options,

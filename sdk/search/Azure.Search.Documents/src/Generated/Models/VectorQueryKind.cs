@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> The kind of vector query being performed. </summary>
-    public readonly partial struct VectorQueryKind : IEquatable<VectorQueryKind>
+    internal readonly partial struct VectorQueryKind : IEquatable<VectorQueryKind>
     {
         private readonly string _value;
 

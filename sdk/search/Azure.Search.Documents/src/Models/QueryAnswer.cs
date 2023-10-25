@@ -1,0 +1,97 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Azure.Core;
+
+namespace Azure.Search.Documents.Models
+{
+    /// <summary>
+    /// Configuration for how semantic search returns answers to the search.
+    /// </summary>
+    public partial class QueryAnswer
+    {
+        private const string QueryAnswerCountRaw = "count-";
+        private const string QueryAnswerThresholdRaw = "threshold-";
+
+        /// <summary> A value that specifies whether <see cref="SemanticSearchResults.Answers"/> should be returned as part of the search response. </summary>
+        public QueryAnswerType? AnswerType { get; set; }
+
+        /// <summary> A value that specifies the number of <see cref="SemanticSearchResults.Answers"/> that should be returned as part of the search response and will default to 1. </summary>
+        public int? Count { get; set; }
+
+        /// <summary> A value that specifies the threshold of <see cref="SemanticSearchResults.Answers"/> that should be returned as part of the search response. The threshold is optional and will default to 0.7.
+        /// </summary>
+        public double? Threshold { get; set; }
+
+        /// <summary> Constructed from <see cref="AnswerType"/>, <see cref="Count"/> and <see cref="Threshold"/>. For example: "extractive|count-1,threshold-0.7"</summary>
+        internal string QueryAnswerRaw
+        {
+            get
+            {
+                if (AnswerType.HasValue)
+                {
+                    StringBuilder queryAnswerStringValue = new(AnswerType.Value.ToString());
+
+                    int tokens = 0;
+                    char NextToken() => tokens++ == 0 ? '|' : ',';
+
+                    if (Count.HasValue)
+                    {
+                        queryAnswerStringValue.Append(NextToken()).Append($"{QueryAnswerCountRaw}{Count.Value}");
+                        tokens = 1;
+                    }
+
+                    if (Threshold.HasValue)
+                    {
+                        queryAnswerStringValue.Append(NextToken()).Append($"{QueryAnswerThresholdRaw}{Threshold.Value}");
+                    }
+
+                    return queryAnswerStringValue.ToString();
+                }
+
+                return null;
+            }
+            set
+            {
+                if (!string.IsNullOrEmpty(value)) // If the value is - "extractive" or "extractive|count-1" or "extractive|threshold-0.7" or "extractive|count-5,threshold-0.9" or "extractive|threshold-0.8,count-4"
+                {
+                    string[] queryAnswerValues = value.Split('|');
+                    if (!string.IsNullOrEmpty(queryAnswerValues[0]))
+                    {
+                        AnswerType = new QueryAnswerType(queryAnswerValues[0]);
+                    }
+
+                    if (queryAnswerValues.Length == 2)
+                    {
+                        var queryAnswerParams = queryAnswerValues[1].Split(',');
+                        if (queryAnswerParams.Length <= 2)
+                        {
+                            foreach (var param in queryAnswerParams)
+                            {
+                                if (param.Contains(QueryAnswerCountRaw))
+                                {
+                                    var countPart = param.Substring(param.IndexOf(QueryAnswerCountRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerCountRaw.Length);
+                                    if (int.TryParse(countPart, out int countValue))
+                                    {
+                                        Count = countValue;
+                                    }
+                                }
+                                else if (param.Contains(QueryAnswerThresholdRaw))
+                                {
+                                    var thresholdPart = param.Substring(param.IndexOf(QueryAnswerThresholdRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerThresholdRaw.Length);
+                                    if (double.TryParse(thresholdPart, out double thresholdValue))
+                                    {
+                                        Threshold = thresholdValue;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

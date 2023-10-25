@@ -21,9 +21,9 @@ namespace Azure.Search.Documents.Indexes.Models
             set
             {
                 _maskingMode = value;
-                if ((_maskingMode == PiiDetectionSkillMaskingMode.Replace) && (MaskingCharacter == null))
+                if ((_maskingMode == PiiDetectionSkillMaskingMode.Replace) && (Mask == null))
                 {
-                    MaskingCharacter = "*";
+                    Mask = "*";
                 }
             }
         }

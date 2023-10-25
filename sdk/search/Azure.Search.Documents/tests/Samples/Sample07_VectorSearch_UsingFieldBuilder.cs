@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             try
             {
                 #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingFieldBuilder
-                string vectorSearchProfile = "my-vector-profile";
+                string vectorSearchProfileName = "my-vector-profile";
                 string vectorSearchHnswConfig = "my-hsnw-vector-config";
 
                 string indexName = "MyDocument";
@@ -40,11 +40,11 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     {
                         Profiles =
                     {
-                        new VectorSearchProfile(vectorSearchProfile, vectorSearchHnswConfig)
+                        new VectorSearchProfile(vectorSearchProfileName, vectorSearchHnswConfig)
                     },
                         Algorithms =
                     {
-                        new HnswVectorSearchAlgorithmConfiguration(vectorSearchHnswConfig)
+                        new HnswAlgorithmConfiguration(vectorSearchHnswConfig)
                     }
                     },
                 };
@@ -87,7 +87,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             [SearchableField(AnalyzerName = "en.microsoft")]
             public string Description { get; set; }
 
-            [SearchableField(VectorSearchDimensions = "1536", VectorSearchProfile = "my-vector-profile")]
+            [VectorSearchField(VectorSearchDimensions = 1536, VectorSearchProfileName = "my-vector-profile")]
             public IReadOnlyList<float> DescriptionVector { get; set; }
         }
         #endregion

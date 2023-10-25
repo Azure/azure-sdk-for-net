@@ -38,7 +38,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="nextLink"> Continuation URL returned when Azure Cognitive Search can't return all the requested results in a single Search response. You can use this URL to formulate another GET or POST Search request to get the next part of the search response. Make sure to use the same verb (GET or POST) as the request that produced this response. </param>
         /// <param name="semanticPartialResponseReason"> Reason that a partial response was returned for a semantic search request. </param>
         /// <param name="semanticPartialResponseType"> Type of partial response that was returned for a semantic search request. </param>
-        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<AnswerResult> answers, SearchOptions nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticPartialResponseReason? semanticPartialResponseReason, SemanticPartialResponseType? semanticPartialResponseType)
+        internal SearchDocumentsResult(long? count, double? coverage, IReadOnlyDictionary<string, IList<FacetResult>> facets, IReadOnlyList<AnswerResult> answers, SearchOptions nextPageParameters, IReadOnlyList<SearchResult> results, string nextLink, SemanticErrorReason? semanticPartialResponseReason, SemanticSearchResultsType? semanticPartialResponseType)
         {
             Count = count;
             Coverage = coverage;
@@ -66,8 +66,8 @@ namespace Azure.Search.Documents.Models
         /// <summary> Continuation URL returned when Azure Cognitive Search can't return all the requested results in a single Search response. You can use this URL to formulate another GET or POST Search request to get the next part of the search response. Make sure to use the same verb (GET or POST) as the request that produced this response. </summary>
         public string NextLink { get; }
         /// <summary> Reason that a partial response was returned for a semantic search request. </summary>
-        public SemanticPartialResponseReason? SemanticPartialResponseReason { get; }
+        public SemanticErrorReason? SemanticPartialResponseReason { get; }
         /// <summary> Type of partial response that was returned for a semantic search request. </summary>
-        public SemanticPartialResponseType? SemanticPartialResponseType { get; }
+        public SemanticSearchResultsType? SemanticPartialResponseType { get; }
     }
 }

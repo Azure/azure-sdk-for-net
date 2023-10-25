@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("algorithm"u8);
-            writer.WriteStringValue(Algorithm);
+            writer.WriteStringValue(AlgorithmConfigurationName);
             writer.WriteEndObject();
         }
 

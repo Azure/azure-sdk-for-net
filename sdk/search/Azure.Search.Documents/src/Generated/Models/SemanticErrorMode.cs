@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.Search.Documents.Models
 {
     /// <summary> Allows the user to choose whether a semantic call should fail completely, or to return partial results. </summary>
-    public readonly partial struct SemanticErrorHandling : IEquatable<SemanticErrorHandling>
+    public readonly partial struct SemanticErrorMode : IEquatable<SemanticErrorMode>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="SemanticErrorHandling"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SemanticErrorMode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public SemanticErrorHandling(string value)
+        public SemanticErrorMode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.Search.Documents.Models
         private const string FailValue = "fail";
 
         /// <summary> If the semantic processing fails, partial results still return. The definition of partial results depends on what semantic step failed and what was the reason for failure. </summary>
-        public static SemanticErrorHandling Partial { get; } = new SemanticErrorHandling(PartialValue);
+        public static SemanticErrorMode Partial { get; } = new SemanticErrorMode(PartialValue);
         /// <summary> If there is an exception during the semantic processing step, the query will fail and return the appropriate HTTP code depending on the error. </summary>
-        public static SemanticErrorHandling Fail { get; } = new SemanticErrorHandling(FailValue);
-        /// <summary> Determines if two <see cref="SemanticErrorHandling"/> values are the same. </summary>
-        public static bool operator ==(SemanticErrorHandling left, SemanticErrorHandling right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="SemanticErrorHandling"/> values are not the same. </summary>
-        public static bool operator !=(SemanticErrorHandling left, SemanticErrorHandling right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SemanticErrorHandling"/>. </summary>
-        public static implicit operator SemanticErrorHandling(string value) => new SemanticErrorHandling(value);
+        public static SemanticErrorMode Fail { get; } = new SemanticErrorMode(FailValue);
+        /// <summary> Determines if two <see cref="SemanticErrorMode"/> values are the same. </summary>
+        public static bool operator ==(SemanticErrorMode left, SemanticErrorMode right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="SemanticErrorMode"/> values are not the same. </summary>
+        public static bool operator !=(SemanticErrorMode left, SemanticErrorMode right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="SemanticErrorMode"/>. </summary>
+        public static implicit operator SemanticErrorMode(string value) => new SemanticErrorMode(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is SemanticErrorHandling other && Equals(other);
+        public override bool Equals(object obj) => obj is SemanticErrorMode other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(SemanticErrorHandling other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SemanticErrorMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

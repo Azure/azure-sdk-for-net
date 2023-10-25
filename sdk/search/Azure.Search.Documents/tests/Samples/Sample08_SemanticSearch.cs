@@ -38,17 +38,20 @@ namespace Azure.Search.Documents.Tests.Samples
                     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
                     new SearchOptions
                     {
-                        QueryType = SearchQueryType.Semantic,
-                        SemanticConfigurationName = "my-semantic-config",
-                        QueryCaption = QueryCaptionType.Extractive,
-                        QueryAnswer = QueryAnswerType.Extractive,
+                        SemanticSearch = new()
+                        {
+                            SemanticConfigurationName = "my-semantic-config",
+                            QueryCaption = new() { CaptionType = QueryCaptionType.Extractive },
+                            QueryAnswer = new() { AnswerType = QueryAnswerType.Extractive }
+                        },
+                        QueryType = SearchQueryType.Semantic
                     });
 
                 int count = 0;
                 Console.WriteLine($"Semantic Search Results:");
 
                 Console.WriteLine($"\nQuery Answer:");
-                foreach (AnswerResult result in response.Answers)
+                foreach (AnswerResult result in response.SemanticSearch.Answers)
                 {
                     Console.WriteLine($"Answer Highlights: {result.Highlights}");
                     Console.WriteLine($"Answer Text: {result.Text}");
@@ -60,9 +63,9 @@ namespace Azure.Search.Documents.Tests.Samples
                     Hotel doc = result.Document;
                     Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
 
-                    if (result.Captions != null)
+                    if (result.SemanticSearch.Captions != null)
                     {
-                        var caption = result.Captions.FirstOrDefault();
+                        var caption = result.SemanticSearch.Captions.FirstOrDefault();
                         if (caption.Highlights != null && caption.Highlights != "")
                         {
                             Console.WriteLine($"Caption Highlights: {caption.Highlights}");
@@ -99,20 +102,20 @@ namespace Azure.Search.Documents.Tests.Samples
                     new SearchableField("Description") { IsFilterable = true },
                     new SearchableField("Category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                 },
-                SemanticSettings = new()
+                SemanticSearch = new()
                 {
                     Configurations =
                 {
                        new SemanticConfiguration("my-semantic-config", new()
                        {
-                           TitleField = new(){ FieldName = "HotelName" },
+                           TitleField = new SemanticField("HotelName"),
                            ContentFields =
                            {
-                               new() { FieldName = "Description" }
+                               new SemanticField("Description")
                            },
                            KeywordFields =
                            {
-                               new() { FieldName = "Category" }
+                               new SemanticField("Category")
                            }
                        })
                     }
