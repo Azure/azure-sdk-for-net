@@ -497,14 +497,14 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
+        /// <param name="dataSourceType"> The String to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataSourceType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetSystemRulesetsForDataSourceAsync(string,RequestContext)']/*" />
-        public virtual async Task<Response> GetSystemRulesetsForDataSourceAsync(string dataSourceType, RequestContext context)
+        public virtual async Task<Response> GetSystemRulesetsForDataSourceAsync(string dataSourceType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(dataSourceType, nameof(dataSourceType));
 
@@ -532,14 +532,14 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
+        /// <param name="dataSourceType"> The String to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceType"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="dataSourceType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/PurviewScanningServiceClient.xml" path="doc/members/member[@name='GetSystemRulesetsForDataSource(string,RequestContext)']/*" />
-        public virtual Response GetSystemRulesetsForDataSource(string dataSourceType, RequestContext context)
+        public virtual Response GetSystemRulesetsForDataSource(string dataSourceType, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(dataSourceType, nameof(dataSourceType));
 
@@ -567,8 +567,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="version"> The Int32 to use. </param>
-        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
+        /// <param name="version"> The int to use. </param>
+        /// <param name="dataSourceType"> The String to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -599,8 +599,8 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="version"> The Int32 to use. </param>
-        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
+        /// <param name="version"> The int to use. </param>
+        /// <param name="dataSourceType"> The String to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -631,7 +631,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
+        /// <param name="dataSourceType"> The String to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -662,7 +662,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
+        /// <param name="dataSourceType"> The String to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -903,7 +903,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
+        /// <param name="dataSourceType"> The String to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -925,7 +925,7 @@ namespace Azure.Analytics.Purview.Scanning
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="dataSourceType"> The DataSourceType to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
+        /// <param name="dataSourceType"> The String to use. Allowed values: "None" | "AzureSubscription" | "AzureResourceGroup" | "AzureSynapseWorkspace" | "AzureSynapse" | "AdlsGen1" | "AdlsGen2" | "AmazonAccount" | "AmazonS3" | "AmazonSql" | "AzureCosmosDb" | "AzureDataExplorer" | "AzureFileService" | "AzureSqlDatabase" | "AmazonPostgreSql" | "AzurePostgreSql" | "SqlServerDatabase" | "AzureSqlDatabaseManagedInstance" | "AzureSqlDataWarehouse" | "AzureMySql" | "AzureStorage" | "Teradata" | "Oracle" | "SapS4Hana" | "SapEcc" | "PowerBI". </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
@@ -1125,11 +1125,11 @@ namespace Azure.Analytics.Purview.Scanning
             uri.Reset(_endpoint);
             uri.AppendPath("/systemScanRulesets/versions/", false);
             uri.AppendPath(version, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (dataSourceType != null)
             {
                 uri.AppendQuery("dataSourceType", dataSourceType, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1143,11 +1143,11 @@ namespace Azure.Analytics.Purview.Scanning
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/systemScanRulesets/versions/latest", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (dataSourceType != null)
             {
                 uri.AppendQuery("dataSourceType", dataSourceType, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
@@ -1161,11 +1161,11 @@ namespace Azure.Analytics.Purview.Scanning
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/systemScanRulesets/versions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (dataSourceType != null)
             {
                 uri.AppendQuery("dataSourceType", dataSourceType, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

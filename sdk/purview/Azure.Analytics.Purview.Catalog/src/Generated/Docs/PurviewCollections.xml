@@ -120,7 +120,7 @@ using RequestContent content = RequestContent.Create(new
         typeName = "<typeName>",
         lastModifiedTS = "<lastModifiedTS>",
     },
-    referredEntities = new { },
+    referredEntities = new{},
 });
 Response response = await client.CreateOrUpdateEntityAsync("<collection>", content);
 
@@ -309,7 +309,7 @@ using RequestContent content = RequestContent.Create(new
         typeName = "<typeName>",
         lastModifiedTS = "<lastModifiedTS>",
     },
-    referredEntities = new { },
+    referredEntities = new{},
 });
 Response response = client.CreateOrUpdateEntity("<collection>", content);
 
@@ -501,7 +501,7 @@ using RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    referredEntities = new { },
+    referredEntities = new{},
 });
 Response response = await client.CreateOrUpdateEntityInBulkAsync("<collection>", content);
 
@@ -693,7 +693,7 @@ using RequestContent content = RequestContent.Create(new
             lastModifiedTS = "<lastModifiedTS>",
         }
     },
-    referredEntities = new { },
+    referredEntities = new{},
 });
 Response response = client.CreateOrUpdateEntityInBulk("<collection>", content);
 
