@@ -2,9 +2,9 @@
 // Licensed under the MIT License.using System;
 
 using System;
-using System.Text.Json.Nodes;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framework
@@ -24,29 +24,30 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
             bool hasCustomAuthenticationExtensionIdKey = true,
             bool hasCustomAuthenticationExtensionIdValue = true)
         {
-            JsonObject jsonObj = new();
+            JObject obj = new();
 
-            JsonObject context = new();
+            JObject context = new();
             context["protocol"] = "SAML";
 
-            JsonObject dataObj = new();
-            jsonObj["data"] = dataObj;
+            JObject dataObj = new();
+            obj["data"] = dataObj;
             dataObj["authenticationContext"] = context;
             dataObj["@odata.type"] = "microsoft.graph.onTokenIssuanceStartCalloutData";
+
             if (hasTenantIdKey)
             {
-                dataObj["tenantId"] = hasTenantIdValue ? TenantId : string.Empty;
+                dataObj["tenantId"] = hasTenantIdValue ? TenantId : "";
             }
             if (hasAuthenticationEventListenerIdKey)
             {
-                dataObj["authenticationEventListenerId"] = hasAuthenticationEventListenerIdValue ? AuthenticationEventListenerId : string.Empty;
+                dataObj["authenticationEventListenerId"] = hasAuthenticationEventListenerIdValue ? AuthenticationEventListenerId : "";
             }
             if (hasCustomAuthenticationExtensionIdKey)
             {
-                dataObj["customAuthenticationExtensionId"] = hasCustomAuthenticationExtensionIdValue ? CustomAuthenticationExtensionId : string.Empty;
+                dataObj["customAuthenticationExtensionId"] = hasCustomAuthenticationExtensionIdValue ? CustomAuthenticationExtensionId : "";
             }
 
-            return jsonObj.ToString();
+            return obj.ToString();
         }
 
         [Test]
