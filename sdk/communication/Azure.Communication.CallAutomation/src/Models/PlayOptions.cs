@@ -14,6 +14,7 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary>
         /// PlaySource objects representing the sources to play.
+        /// Currently only single play source per request is supported.
         /// </summary>
         public IReadOnlyList<PlaySource> PlaySources { get; }
 
