@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAvailabilitySet()
         {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/GetAvailabilitySet.json
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/GetAvailabilitySet.json
             // this example is just showing the usage of "AvailabilitySets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
             // for more information of creating ScVmmAvailabilitySetResource, please refer to the document of ScVmmAvailabilitySetResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "testrg";
-            string availabilitySetName = "HRAvailabilitySet";
-            ResourceIdentifier scVmmAvailabilitySetResourceId = ScVmmAvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
+            string availabilitySetResourceName = "HRAvailabilitySet";
+            ResourceIdentifier scVmmAvailabilitySetResourceId = ScVmmAvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetResourceName);
             ScVmmAvailabilitySetResource scVmmAvailabilitySet = client.GetScVmmAvailabilitySetResource(scVmmAvailabilitySetResourceId);
 
             // invoke the operation
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteAvailabilitySet()
         {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/DeleteAvailabilitySet.json
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/DeleteAvailabilitySet.json
             // this example is just showing the usage of "AvailabilitySets_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
             // for more information of creating ScVmmAvailabilitySetResource, please refer to the document of ScVmmAvailabilitySetResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "testrg";
-            string availabilitySetName = "HRAvailabilitySet";
-            ResourceIdentifier scVmmAvailabilitySetResourceId = ScVmmAvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
+            string availabilitySetResourceName = "HRAvailabilitySet";
+            ResourceIdentifier scVmmAvailabilitySetResourceId = ScVmmAvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetResourceName);
             ScVmmAvailabilitySetResource scVmmAvailabilitySet = client.GetScVmmAvailabilitySetResource(scVmmAvailabilitySetResourceId);
 
             // invoke the operation
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateAvailabilitySet()
         {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/UpdateAvailabilitySet.json
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/UpdateAvailabilitySet.json
             // this example is just showing the usage of "AvailabilitySets_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
             // for more information of creating ScVmmAvailabilitySetResource, please refer to the document of ScVmmAvailabilitySetResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "testrg";
-            string availabilitySetName = "HRAvailabilitySet";
-            ResourceIdentifier scVmmAvailabilitySetResourceId = ScVmmAvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetName);
+            string availabilitySetResourceName = "HRAvailabilitySet";
+            ResourceIdentifier scVmmAvailabilitySetResourceId = ScVmmAvailabilitySetResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, availabilitySetResourceName);
             ScVmmAvailabilitySetResource scVmmAvailabilitySet = client.GetScVmmAvailabilitySetResource(scVmmAvailabilitySetResourceId);
 
             // invoke the operation
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetScVmmAvailabilitySets_ListAvailabilitySetsBySubscription()
         {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/ListAvailabilitySetsBySubscription.json
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/ListAvailabilitySetsBySubscription.json
             // this example is just showing the usage of "AvailabilitySets_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

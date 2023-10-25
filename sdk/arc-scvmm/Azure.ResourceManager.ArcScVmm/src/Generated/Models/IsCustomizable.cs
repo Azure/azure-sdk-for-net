@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
-    /// <summary> Gets or sets a value indicating whether the vm template is customizable or not. </summary>
+    /// <summary> Gets a value indicating whether the vm template is customizable or not. </summary>
     public readonly partial struct IsCustomizable : IEquatable<IsCustomizable>
     {
         private readonly string _value;

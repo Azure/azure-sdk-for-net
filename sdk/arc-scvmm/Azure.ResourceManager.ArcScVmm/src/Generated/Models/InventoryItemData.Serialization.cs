@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ArcScVmm
             Optional<string> managedResourceId = default;
             Optional<string> uuid = default;
             Optional<string> inventoryItemName = default;
-            Optional<string> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -108,14 +108,18 @@ namespace Azure.ResourceManager.ArcScVmm
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new InventoryItemData(id, name, type, systemData.Value, kind.Value, inventoryType, managedResourceId.Value, uuid.Value, inventoryItemName.Value, provisioningState.Value);
+            return new InventoryItemData(id, name, type, systemData.Value, kind.Value, inventoryType, managedResourceId.Value, uuid.Value, inventoryItemName.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

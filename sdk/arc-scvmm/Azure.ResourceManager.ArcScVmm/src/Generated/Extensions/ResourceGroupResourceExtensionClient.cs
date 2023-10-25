@@ -52,13 +52,6 @@ namespace Azure.ResourceManager.ArcScVmm
             return GetCachedClient(Client => new ScVmmVirtualNetworkCollection(Client, Id));
         }
 
-        /// <summary> Gets a collection of ScVmmVirtualMachineResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ScVmmVirtualMachineResources and their operations over a ScVmmVirtualMachineResource. </returns>
-        public virtual ScVmmVirtualMachineCollection GetScVmmVirtualMachines()
-        {
-            return GetCachedClient(Client => new ScVmmVirtualMachineCollection(Client, Id));
-        }
-
         /// <summary> Gets a collection of ScVmmVirtualMachineTemplateResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ScVmmVirtualMachineTemplateResources and their operations over a ScVmmVirtualMachineTemplateResource. </returns>
         public virtual ScVmmVirtualMachineTemplateCollection GetScVmmVirtualMachineTemplates()

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateInventoryItem()
         {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/CreateInventoryItem.json
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/CreateInventoryItem.json
             // this example is just showing the usage of "InventoryItems_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "testrg";
             string vmmServerName = "ContosoVMMServer";
-            string inventoryItemName = "12345678-1234-1234-1234-123456789abc";
-            ResourceIdentifier inventoryItemResourceId = InventoryItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmmServerName, inventoryItemName);
+            string inventoryItemResourceName = "12345678-1234-1234-1234-123456789abc";
+            ResourceIdentifier inventoryItemResourceId = InventoryItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmmServerName, inventoryItemResourceName);
             InventoryItemResource inventoryItem = client.GetInventoryItemResource(inventoryItemResourceId);
 
             // invoke the operation
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetInventoryItem()
         {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/GetInventoryItem.json
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/GetInventoryItem.json
             // this example is just showing the usage of "InventoryItems_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "testrg";
             string vmmServerName = "ContosoVMMServer";
-            string inventoryItemName = "12345678-1234-1234-1234-123456789abc";
-            ResourceIdentifier inventoryItemResourceId = InventoryItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmmServerName, inventoryItemName);
+            string inventoryItemResourceName = "12345678-1234-1234-1234-123456789abc";
+            ResourceIdentifier inventoryItemResourceId = InventoryItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmmServerName, inventoryItemResourceName);
             InventoryItemResource inventoryItem = client.GetInventoryItemResource(inventoryItemResourceId);
 
             // invoke the operation
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteInventoryItem()
         {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/DeleteInventoryItem.json
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/DeleteInventoryItem.json
             // this example is just showing the usage of "InventoryItems_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "testrg";
             string vmmServerName = "ContosoVMMServer";
-            string inventoryItemName = "12345678-1234-1234-1234-123456789abc";
-            ResourceIdentifier inventoryItemResourceId = InventoryItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmmServerName, inventoryItemName);
+            string inventoryItemResourceName = "12345678-1234-1234-1234-123456789abc";
+            ResourceIdentifier inventoryItemResourceId = InventoryItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vmmServerName, inventoryItemResourceName);
             InventoryItemResource inventoryItem = client.GetInventoryItemResource(inventoryItemResourceId);
 
             // invoke the operation

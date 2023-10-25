@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ArcScVmm;
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Initializes a new instance of VirtualMachineTemplateListResult. </summary>
         /// <param name="value"> List of VirtualMachineTemplates. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal VirtualMachineTemplateListResult(IReadOnlyList<ScVmmVirtualMachineTemplateData> value, string nextLink)
+        internal VirtualMachineTemplateListResult(IReadOnlyList<ScVmmVirtualMachineTemplateData> value, Uri nextLink)
         {
             Value = value;
             NextLink = nextLink;
@@ -32,6 +33,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> List of VirtualMachineTemplates. </summary>
         public IReadOnlyList<ScVmmVirtualMachineTemplateData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
     }
 }

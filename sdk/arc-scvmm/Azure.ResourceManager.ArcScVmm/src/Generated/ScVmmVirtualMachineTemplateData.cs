@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ArcScVmm
             Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
 
             ExtendedLocation = extendedLocation;
-            NetworkInterfaces = new ChangeTrackingList<NetworkInterfaces>();
+            NetworkInterfaces = new ChangeTrackingList<NetworkInterface>();
             Disks = new ChangeTrackingList<VirtualDisk>();
         }
 
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="inventoryItemId"> Gets or sets the inventory Item ID for the resource. </param>
         /// <param name="uuid"> Unique ID of the virtual machine template. </param>
         /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
-        /// <param name="osType"> Gets or sets the type of the os. </param>
-        /// <param name="osName"> Gets or sets os name. </param>
-        /// <param name="computerName"> Gets or sets computer name. </param>
+        /// <param name="osType"> Gets the type of the os. </param>
+        /// <param name="osName"> Gets os name. </param>
+        /// <param name="computerName"> Gets computer name. </param>
         /// <param name="memoryMB"> MemoryMB is the desired size of a virtual machine's memory, in MB. </param>
-        /// <param name="cpuCount"> Gets or sets the desired number of vCPUs for the vm. </param>
-        /// <param name="limitCpuForMigration"> Gets or sets a value indicating whether to enable processor compatibility mode for live migration of VMs. </param>
-        /// <param name="dynamicMemoryEnabled"> Gets or sets a value indicating whether to enable dynamic memory or not. </param>
-        /// <param name="isCustomizable"> Gets or sets a value indicating whether the vm template is customizable or not. </param>
-        /// <param name="dynamicMemoryMaxMB"> Gets or sets the max dynamic memory for the vm. </param>
-        /// <param name="dynamicMemoryMinMB"> Gets or sets the min dynamic memory for the vm. </param>
+        /// <param name="cpuCount"> Gets the desired number of vCPUs for the vm. </param>
+        /// <param name="limitCpuForMigration"> Gets a value indicating whether to enable processor compatibility mode for live migration of VMs. </param>
+        /// <param name="dynamicMemoryEnabled"> Gets a value indicating whether to enable dynamic memory or not. </param>
+        /// <param name="isCustomizable"> Gets a value indicating whether the vm template is customizable or not. </param>
+        /// <param name="dynamicMemoryMaxMB"> Gets the max dynamic memory for the vm. </param>
+        /// <param name="dynamicMemoryMinMB"> Gets the min dynamic memory for the vm. </param>
         /// <param name="isHighlyAvailable"> Gets highly available property. </param>
-        /// <param name="generation"> Gets or sets the generation for the vm. </param>
-        /// <param name="networkInterfaces"> Gets or sets the network interfaces of the template. </param>
-        /// <param name="disks"> Gets or sets the disks of the template. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal ScVmmVirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, string vmmServerId, OSType? osType, string osName, string computerName, int? memoryMB, int? cpuCount, LimitCpuForMigration? limitCpuForMigration, DynamicMemoryEnabled? dynamicMemoryEnabled, IsCustomizable? isCustomizable, int? dynamicMemoryMaxMB, int? dynamicMemoryMinMB, string isHighlyAvailable, int? generation, IReadOnlyList<NetworkInterfaces> networkInterfaces, IReadOnlyList<VirtualDisk> disks, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="generation"> Gets the generation for the vm. </param>
+        /// <param name="networkInterfaces"> Gets the network interfaces of the template. </param>
+        /// <param name="disks"> Gets the disks of the template. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        internal ScVmmVirtualMachineTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, ResourceIdentifier vmmServerId, OSType? osType, string osName, string computerName, int? memoryMB, int? cpuCount, LimitCpuForMigration? limitCpuForMigration, DynamicMemoryEnabled? dynamicMemoryEnabled, IsCustomizable? isCustomizable, int? dynamicMemoryMaxMB, int? dynamicMemoryMinMB, IsHighlyAvailable? isHighlyAvailable, int? generation, IReadOnlyList<NetworkInterface> networkInterfaces, IReadOnlyList<VirtualDisk> disks, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             InventoryItemId = inventoryItemId;
@@ -89,36 +89,36 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <summary> Unique ID of the virtual machine template. </summary>
         public string Uuid { get; set; }
         /// <summary> ARM Id of the vmmServer resource in which this resource resides. </summary>
-        public string VmmServerId { get; set; }
-        /// <summary> Gets or sets the type of the os. </summary>
+        public ResourceIdentifier VmmServerId { get; set; }
+        /// <summary> Gets the type of the os. </summary>
         public OSType? OSType { get; }
-        /// <summary> Gets or sets os name. </summary>
+        /// <summary> Gets os name. </summary>
         public string OSName { get; }
-        /// <summary> Gets or sets computer name. </summary>
+        /// <summary> Gets computer name. </summary>
         public string ComputerName { get; }
         /// <summary> MemoryMB is the desired size of a virtual machine's memory, in MB. </summary>
         public int? MemoryMB { get; }
-        /// <summary> Gets or sets the desired number of vCPUs for the vm. </summary>
+        /// <summary> Gets the desired number of vCPUs for the vm. </summary>
         public int? CpuCount { get; }
-        /// <summary> Gets or sets a value indicating whether to enable processor compatibility mode for live migration of VMs. </summary>
+        /// <summary> Gets a value indicating whether to enable processor compatibility mode for live migration of VMs. </summary>
         public LimitCpuForMigration? LimitCpuForMigration { get; }
-        /// <summary> Gets or sets a value indicating whether to enable dynamic memory or not. </summary>
+        /// <summary> Gets a value indicating whether to enable dynamic memory or not. </summary>
         public DynamicMemoryEnabled? DynamicMemoryEnabled { get; }
-        /// <summary> Gets or sets a value indicating whether the vm template is customizable or not. </summary>
+        /// <summary> Gets a value indicating whether the vm template is customizable or not. </summary>
         public IsCustomizable? IsCustomizable { get; }
-        /// <summary> Gets or sets the max dynamic memory for the vm. </summary>
+        /// <summary> Gets the max dynamic memory for the vm. </summary>
         public int? DynamicMemoryMaxMB { get; }
-        /// <summary> Gets or sets the min dynamic memory for the vm. </summary>
+        /// <summary> Gets the min dynamic memory for the vm. </summary>
         public int? DynamicMemoryMinMB { get; }
         /// <summary> Gets highly available property. </summary>
-        public string IsHighlyAvailable { get; }
-        /// <summary> Gets or sets the generation for the vm. </summary>
+        public IsHighlyAvailable? IsHighlyAvailable { get; }
+        /// <summary> Gets the generation for the vm. </summary>
         public int? Generation { get; }
-        /// <summary> Gets or sets the network interfaces of the template. </summary>
-        public IReadOnlyList<NetworkInterfaces> NetworkInterfaces { get; }
-        /// <summary> Gets or sets the disks of the template. </summary>
+        /// <summary> Gets the network interfaces of the template. </summary>
+        public IReadOnlyList<NetworkInterface> NetworkInterfaces { get; }
+        /// <summary> Gets the disks of the template. </summary>
         public IReadOnlyList<VirtualDisk> Disks { get; }
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public string ProvisioningState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

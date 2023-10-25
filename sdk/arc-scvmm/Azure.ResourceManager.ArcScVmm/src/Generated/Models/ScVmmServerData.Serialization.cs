@@ -65,14 +65,14 @@ namespace Azure.ResourceManager.ArcScVmm
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<VmmServerPropertiesCredentials> credentials = default;
+            Optional<VmmCredential> credentials = default;
             string fqdn = default;
             Optional<int> port = default;
             Optional<string> connectionStatus = default;
             Optional<string> errorMessage = default;
             Optional<string> uuid = default;
             Optional<string> version = default;
-            Optional<string> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ArcScVmm
                             {
                                 continue;
                             }
-                            credentials = VmmServerPropertiesCredentials.DeserializeVmmServerPropertiesCredentials(property0.Value);
+                            credentials = VmmCredential.DeserializeVmmCredential(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("fqdn"u8))
@@ -177,14 +177,18 @@ namespace Azure.ResourceManager.ArcScVmm
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ScVmmServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, credentials.Value, fqdn, Optional.ToNullable(port), connectionStatus.Value, errorMessage.Value, uuid.Value, version.Value, provisioningState.Value);
+            return new ScVmmServerData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, credentials.Value, fqdn, Optional.ToNullable(port), connectionStatus.Value, errorMessage.Value, uuid.Value, version.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

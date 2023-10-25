@@ -23,8 +23,6 @@ namespace Azure.ResourceManager.ArcScVmm
         private CloudsRestOperations _scVmmCloudCloudsRestClient;
         private ClientDiagnostics _scVmmVirtualNetworkVirtualNetworksClientDiagnostics;
         private VirtualNetworksRestOperations _scVmmVirtualNetworkVirtualNetworksRestClient;
-        private ClientDiagnostics _scVmmVirtualMachineVirtualMachinesClientDiagnostics;
-        private VirtualMachinesRestOperations _scVmmVirtualMachineVirtualMachinesRestClient;
         private ClientDiagnostics _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics;
         private VirtualMachineTemplatesRestOperations _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient;
         private ClientDiagnostics _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics;
@@ -48,8 +46,6 @@ namespace Azure.ResourceManager.ArcScVmm
         private CloudsRestOperations ScVmmCloudCloudsRestClient => _scVmmCloudCloudsRestClient ??= new CloudsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ScVmmCloudResource.ResourceType));
         private ClientDiagnostics ScVmmVirtualNetworkVirtualNetworksClientDiagnostics => _scVmmVirtualNetworkVirtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ArcScVmm", ScVmmVirtualNetworkResource.ResourceType.Namespace, Diagnostics);
         private VirtualNetworksRestOperations ScVmmVirtualNetworkVirtualNetworksRestClient => _scVmmVirtualNetworkVirtualNetworksRestClient ??= new VirtualNetworksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ScVmmVirtualNetworkResource.ResourceType));
-        private ClientDiagnostics ScVmmVirtualMachineVirtualMachinesClientDiagnostics => _scVmmVirtualMachineVirtualMachinesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ArcScVmm", ScVmmVirtualMachineResource.ResourceType.Namespace, Diagnostics);
-        private VirtualMachinesRestOperations ScVmmVirtualMachineVirtualMachinesRestClient => _scVmmVirtualMachineVirtualMachinesRestClient ??= new VirtualMachinesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ScVmmVirtualMachineResource.ResourceType));
         private ClientDiagnostics ScVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics => _scVmmVirtualMachineTemplateVirtualMachineTemplatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ArcScVmm", ScVmmVirtualMachineTemplateResource.ResourceType.Namespace, Diagnostics);
         private VirtualMachineTemplatesRestOperations ScVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient => _scVmmVirtualMachineTemplateVirtualMachineTemplatesRestClient ??= new VirtualMachineTemplatesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ScVmmVirtualMachineTemplateResource.ResourceType));
         private ClientDiagnostics ScVmmAvailabilitySetAvailabilitySetsClientDiagnostics => _scVmmAvailabilitySetAvailabilitySetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ArcScVmm", ScVmmAvailabilitySetResource.ResourceType.Namespace, Diagnostics);
@@ -191,50 +187,6 @@ namespace Azure.ResourceManager.ArcScVmm
             HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualNetworkVirtualNetworksRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualNetworkResource(Client, ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(e)), ScVmmVirtualNetworkVirtualNetworksClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScVmmVirtualNetworks", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List of VirtualMachines in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachines</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScVmmVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScVmmVirtualMachineResource> GetScVmmVirtualMachinesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineResource(Client, ScVmmVirtualMachineData.DeserializeScVmmVirtualMachineData(e)), ScVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScVmmVirtualMachines", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List of VirtualMachines in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ScVmm/virtualMachines</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>VirtualMachines_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScVmmVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScVmmVirtualMachineResource> GetScVmmVirtualMachines(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScVmmVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScVmmVirtualMachineVirtualMachinesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScVmmVirtualMachineResource(Client, ScVmmVirtualMachineData.DeserializeScVmmVirtualMachineData(e)), ScVmmVirtualMachineVirtualMachinesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetScVmmVirtualMachines", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

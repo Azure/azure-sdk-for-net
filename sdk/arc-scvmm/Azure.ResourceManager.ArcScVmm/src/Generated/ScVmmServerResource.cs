@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="inventoryItemResourceName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<InventoryItemResource>> GetInventoryItemAsync(string inventoryItemName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<InventoryItemResource>> GetInventoryItemAsync(string inventoryItemResourceName, CancellationToken cancellationToken = default)
         {
-            return await GetInventoryItems().GetAsync(inventoryItemName, cancellationToken).ConfigureAwait(false);
+            return await GetInventoryItems().GetAsync(inventoryItemResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -132,14 +132,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="inventoryItemResourceName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemResourceName"/> is null. </exception>
         [ForwardsClientCalls]
-        public virtual Response<InventoryItemResource> GetInventoryItem(string inventoryItemName, CancellationToken cancellationToken = default)
+        public virtual Response<InventoryItemResource> GetInventoryItem(string inventoryItemResourceName, CancellationToken cancellationToken = default)
         {
-            return GetInventoryItems().Get(inventoryItemName, cancellationToken);
+            return GetInventoryItems().Get(inventoryItemResourceName, cancellationToken);
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Deboards the SCVMM fabric from Azure.
+        /// Removes the SCVMM fabric from Azure.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Forces the resource to be deleted from azure. The corresponding CR would be attempted to be deleted too. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, Force? force = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmServerVmmServersClientDiagnostics.CreateScope("ScVmmServerResource.Delete");
             scope.Start();
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary>
-        /// Deboards the SCVMM fabric from Azure.
+        /// Removes the SCVMM fabric from Azure.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="force"> Forces the resource to be deleted from azure. The corresponding CR would be attempted to be deleted too. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, bool? force = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, Force? force = null, CancellationToken cancellationToken = default)
         {
             using var scope = _scVmmServerVmmServersClientDiagnostics.CreateScope("ScVmmServerResource.Delete");
             scope.Start();

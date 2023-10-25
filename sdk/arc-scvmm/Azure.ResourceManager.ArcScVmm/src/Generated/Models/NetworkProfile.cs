@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Initializes a new instance of NetworkProfile. </summary>
         public NetworkProfile()
         {
-            NetworkInterfaces = new ChangeTrackingList<NetworkInterfaces>();
+            NetworkInterfaces = new ChangeTrackingList<NetworkInterface>();
         }
 
         /// <summary> Initializes a new instance of NetworkProfile. </summary>
         /// <param name="networkInterfaces"> Gets or sets the list of network interfaces associated with the virtual machine. </param>
-        internal NetworkProfile(IList<NetworkInterfaces> networkInterfaces)
+        internal NetworkProfile(IList<NetworkInterface> networkInterfaces)
         {
             NetworkInterfaces = networkInterfaces;
         }
 
         /// <summary> Gets or sets the list of network interfaces associated with the virtual machine. </summary>
-        public IList<NetworkInterfaces> NetworkInterfaces { get; }
+        public IList<NetworkInterface> NetworkInterfaces { get; }
     }
 }

@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <param name="displayName"> Gets the display name of the virtual disk as shown in the vmmServer. This is the fallback label for a disk when the name is not set. </param>
         /// <param name="diskId"> Gets or sets the disk id. </param>
         /// <param name="diskSizeGB"> Gets or sets the disk total size. </param>
-        /// <param name="maxDiskSizeGB"> Gets or sets the max disk size. </param>
+        /// <param name="maxDiskSizeGB"> Gets the max disk size. </param>
         /// <param name="bus"> Gets or sets the disk bus. </param>
         /// <param name="lun"> Gets or sets the disk lun. </param>
         /// <param name="busType"> Gets or sets the disk bus type. </param>
         /// <param name="vhdType"> Gets or sets the disk vhd type. </param>
-        /// <param name="volumeType"> Gets or sets the disk volume type. </param>
+        /// <param name="volumeType"> Gets the disk volume type. </param>
         /// <param name="vhdFormatType"> Gets the disk vhd format type. </param>
         /// <param name="templateDiskId"> Gets or sets the disk id in the template. </param>
         /// <param name="storageQoSPolicy"> The QoS policy for the disk. </param>
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public string DiskId { get; set; }
         /// <summary> Gets or sets the disk total size. </summary>
         public int? DiskSizeGB { get; set; }
-        /// <summary> Gets or sets the max disk size. </summary>
+        /// <summary> Gets the max disk size. </summary>
         public int? MaxDiskSizeGB { get; }
         /// <summary> Gets or sets the disk bus. </summary>
         public int? Bus { get; set; }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         public string BusType { get; set; }
         /// <summary> Gets or sets the disk vhd type. </summary>
         public string VhdType { get; set; }
-        /// <summary> Gets or sets the disk volume type. </summary>
+        /// <summary> Gets the disk volume type. </summary>
         public string VolumeType { get; }
         /// <summary> Gets the disk vhd format type. </summary>
         public string VhdFormatType { get; }

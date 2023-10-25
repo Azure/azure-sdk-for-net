@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="credentials"> Credentials to connect to VMMServer. </param>
         /// <param name="fqdn"> Fqdn is the hostname/ip of the vmmServer. </param>
         /// <param name="port"> Port is the port on which the vmmServer is listening. </param>
-        /// <param name="connectionStatus"> Gets or sets the connection status to the vmmServer. </param>
-        /// <param name="errorMessage"> Gets or sets any error message if connection to vmmServer is having any issue. </param>
+        /// <param name="connectionStatus"> Gets the connection status to the vmmServer. </param>
+        /// <param name="errorMessage"> Gets any error message if connection to vmmServer is having any issue. </param>
         /// <param name="uuid"> Unique ID of vmmServer. </param>
         /// <param name="version"> Version is the version of the vmmSever. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal ScVmmServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, VmmServerPropertiesCredentials credentials, string fqdn, int? port, string connectionStatus, string errorMessage, string uuid, string version, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        internal ScVmmServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, VmmCredential credentials, string fqdn, int? port, string connectionStatus, string errorMessage, string uuid, string version, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             Credentials = credentials;
@@ -66,20 +66,20 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <summary> The extended location. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Credentials to connect to VMMServer. </summary>
-        public VmmServerPropertiesCredentials Credentials { get; set; }
+        public VmmCredential Credentials { get; set; }
         /// <summary> Fqdn is the hostname/ip of the vmmServer. </summary>
         public string Fqdn { get; set; }
         /// <summary> Port is the port on which the vmmServer is listening. </summary>
         public int? Port { get; set; }
-        /// <summary> Gets or sets the connection status to the vmmServer. </summary>
+        /// <summary> Gets the connection status to the vmmServer. </summary>
         public string ConnectionStatus { get; }
-        /// <summary> Gets or sets any error message if connection to vmmServer is having any issue. </summary>
+        /// <summary> Gets any error message if connection to vmmServer is having any issue. </summary>
         public string ErrorMessage { get; }
         /// <summary> Unique ID of vmmServer. </summary>
         public string Uuid { get; }
         /// <summary> Version is the version of the vmmSever. </summary>
         public string Version { get; }
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public string ProvisioningState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

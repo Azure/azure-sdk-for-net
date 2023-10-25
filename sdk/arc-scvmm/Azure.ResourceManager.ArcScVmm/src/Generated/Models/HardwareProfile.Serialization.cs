@@ -45,11 +45,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 writer.WritePropertyName("dynamicMemoryMinMB"u8);
                 writer.WriteNumberValue(DynamicMemoryMinMB.Value);
             }
-            if (Optional.IsDefined(IsHighlyAvailable))
-            {
-                writer.WritePropertyName("isHighlyAvailable"u8);
-                writer.WriteStringValue(IsHighlyAvailable);
-            }
             writer.WriteEndObject();
         }
 
@@ -65,7 +60,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             Optional<DynamicMemoryEnabled> dynamicMemoryEnabled = default;
             Optional<int> dynamicMemoryMaxMB = default;
             Optional<int> dynamicMemoryMinMB = default;
-            Optional<string> isHighlyAvailable = default;
+            Optional<IsHighlyAvailable> isHighlyAvailable = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("memoryMB"u8))
@@ -124,11 +119,15 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                 }
                 if (property.NameEquals("isHighlyAvailable"u8))
                 {
-                    isHighlyAvailable = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isHighlyAvailable = new IsHighlyAvailable(property.Value.GetString());
                     continue;
                 }
             }
-            return new HardwareProfile(Optional.ToNullable(memoryMB), Optional.ToNullable(cpuCount), Optional.ToNullable(limitCpuForMigration), Optional.ToNullable(dynamicMemoryEnabled), Optional.ToNullable(dynamicMemoryMaxMB), Optional.ToNullable(dynamicMemoryMinMB), isHighlyAvailable.Value);
+            return new HardwareProfile(Optional.ToNullable(memoryMB), Optional.ToNullable(cpuCount), Optional.ToNullable(limitCpuForMigration), Optional.ToNullable(dynamicMemoryEnabled), Optional.ToNullable(dynamicMemoryMaxMB), Optional.ToNullable(dynamicMemoryMinMB), Optional.ToNullable(isHighlyAvailable));
         }
     }
 }

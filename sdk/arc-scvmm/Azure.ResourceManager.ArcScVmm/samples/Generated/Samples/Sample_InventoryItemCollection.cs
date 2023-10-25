@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateInventoryItem()
         {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/CreateInventoryItem.json
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/CreateInventoryItem.json
             // this example is just showing the usage of "InventoryItems_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
             InventoryItemCollection collection = scVmmServer.GetInventoryItems();
 
             // invoke the operation
-            string inventoryItemName = "12345678-1234-1234-1234-123456789abc";
+            string inventoryItemResourceName = "12345678-1234-1234-1234-123456789abc";
             InventoryItemData data = new InventoryItemData(InventoryType.Cloud);
-            ArmOperation<InventoryItemResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, inventoryItemName, data);
+            ArmOperation<InventoryItemResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, inventoryItemResourceName, data);
             InventoryItemResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetInventoryItem()
         {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/GetInventoryItem.json
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/GetInventoryItem.json
             // this example is just showing the usage of "InventoryItems_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
             InventoryItemCollection collection = scVmmServer.GetInventoryItems();
 
             // invoke the operation
-            string inventoryItemName = "12345678-1234-1234-1234-123456789abc";
-            InventoryItemResource result = await collection.GetAsync(inventoryItemName);
+            string inventoryItemResourceName = "12345678-1234-1234-1234-123456789abc";
+            InventoryItemResource result = await collection.GetAsync(inventoryItemResourceName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetInventoryItem()
         {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/GetInventoryItem.json
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/GetInventoryItem.json
             // this example is just showing the usage of "InventoryItems_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
             InventoryItemCollection collection = scVmmServer.GetInventoryItems();
 
             // invoke the operation
-            string inventoryItemName = "12345678-1234-1234-1234-123456789abc";
-            bool result = await collection.ExistsAsync(inventoryItemName);
+            string inventoryItemResourceName = "12345678-1234-1234-1234-123456789abc";
+            bool result = await collection.ExistsAsync(inventoryItemResourceName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_GetInventoryItem()
         {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/GetInventoryItem.json
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/GetInventoryItem.json
             // this example is just showing the usage of "InventoryItems_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
             InventoryItemCollection collection = scVmmServer.GetInventoryItems();
 
             // invoke the operation
-            string inventoryItemName = "12345678-1234-1234-1234-123456789abc";
-            NullableResponse<InventoryItemResource> response = await collection.GetIfExistsAsync(inventoryItemName);
+            string inventoryItemResourceName = "12345678-1234-1234-1234-123456789abc";
+            NullableResponse<InventoryItemResource> response = await collection.GetIfExistsAsync(inventoryItemResourceName);
             InventoryItemResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_InventoryItemsListByVMMServer()
         {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/ListInventoryItemsByVMMServer.json
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/ListInventoryItemsByVMMServer.json
             // this example is just showing the usage of "InventoryItems_ListByVMMServer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

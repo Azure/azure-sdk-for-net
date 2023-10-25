@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ArcScVmm.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -69,9 +70,9 @@ namespace Azure.ResourceManager.ArcScVmm
             Optional<SystemData> systemData = default;
             Optional<string> inventoryItemId = default;
             Optional<string> uuid = default;
-            Optional<string> vmmServerId = default;
+            Optional<ResourceIdentifier> vmmServerId = default;
             Optional<string> networkName = default;
-            Optional<string> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -143,7 +144,11 @@ namespace Azure.ResourceManager.ArcScVmm
                         }
                         if (property0.NameEquals("vmmServerId"u8))
                         {
-                            vmmServerId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vmmServerId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("networkName"u8))
@@ -153,14 +158,18 @@ namespace Azure.ResourceManager.ArcScVmm
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ScVmmVirtualNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, networkName.Value, provisioningState.Value);
+            return new ScVmmVirtualNetworkData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, networkName.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

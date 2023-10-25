@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ArcScVmm.Models
 {
     /// <summary> Availability Set model. </summary>
@@ -18,14 +20,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Initializes a new instance of AvailabilitySetListItem. </summary>
         /// <param name="id"> Gets the ARM Id of the microsoft.scvmm/availabilitySets resource. </param>
         /// <param name="name"> Gets or sets the name of the availability set. </param>
-        internal AvailabilitySetListItem(string id, string name)
+        internal AvailabilitySetListItem(ResourceIdentifier id, string name)
         {
             Id = id;
             Name = name;
         }
 
         /// <summary> Gets the ARM Id of the microsoft.scvmm/availabilitySets resource. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
         /// <summary> Gets or sets the name of the availability set. </summary>
         public string Name { get; set; }
     }

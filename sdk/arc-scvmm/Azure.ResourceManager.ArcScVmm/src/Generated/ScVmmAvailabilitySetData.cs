@@ -5,8 +5,10 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ArcScVmm.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -20,8 +22,13 @@ namespace Azure.ResourceManager.ArcScVmm
     {
         /// <summary> Initializes a new instance of ScVmmAvailabilitySetData. </summary>
         /// <param name="location"> The location. </param>
-        public ScVmmAvailabilitySetData(AzureLocation location) : base(location)
+        /// <param name="extendedLocation"> The extended location. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="extendedLocation"/> is null. </exception>
+        public ScVmmAvailabilitySetData(AzureLocation location, ExtendedLocation extendedLocation) : base(location)
         {
+            Argument.AssertNotNull(extendedLocation, nameof(extendedLocation));
+
+            ExtendedLocation = extendedLocation;
         }
 
         /// <summary> Initializes a new instance of ScVmmAvailabilitySetData. </summary>
@@ -34,8 +41,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="extendedLocation"> The extended location. </param>
         /// <param name="availabilitySetName"> Name of the availability set. </param>
         /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal ScVmmAvailabilitySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string availabilitySetName, string vmmServerId, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        internal ScVmmAvailabilitySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string availabilitySetName, ResourceIdentifier vmmServerId, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             AvailabilitySetName = availabilitySetName;
@@ -48,8 +55,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <summary> Name of the availability set. </summary>
         public string AvailabilitySetName { get; set; }
         /// <summary> ARM Id of the vmmServer resource in which this resource resides. </summary>
-        public string VmmServerId { get; set; }
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public string ProvisioningState { get; }
+        public ResourceIdentifier VmmServerId { get; set; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

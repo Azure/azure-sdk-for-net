@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="managedResourceId"> Gets the tracked resource id corresponding to the inventory resource. </param>
         /// <param name="uuid"> Gets the UUID (which is assigned by VMM) for the inventory item. </param>
         /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
-        /// <param name="provisioningState"> Gets the provisioning state. </param>
-        internal InventoryItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, InventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, string provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        internal InventoryItemData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, InventoryType inventoryType, string managedResourceId, string uuid, string inventoryItemName, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             InventoryType = inventoryType;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ArcScVmm
         public string Uuid { get; }
         /// <summary> Gets the Managed Object name in VMM for the inventory item. </summary>
         public string InventoryItemName { get; }
-        /// <summary> Gets the provisioning state. </summary>
-        public string ProvisioningState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

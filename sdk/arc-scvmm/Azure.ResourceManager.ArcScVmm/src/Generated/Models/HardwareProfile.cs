@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <param name="dynamicMemoryMaxMB"> Gets or sets the max dynamic memory for the vm. </param>
         /// <param name="dynamicMemoryMinMB"> Gets or sets the min dynamic memory for the vm. </param>
         /// <param name="isHighlyAvailable"> Gets highly available property. </param>
-        internal HardwareProfile(int? memoryMB, int? cpuCount, LimitCpuForMigration? limitCpuForMigration, DynamicMemoryEnabled? dynamicMemoryEnabled, int? dynamicMemoryMaxMB, int? dynamicMemoryMinMB, string isHighlyAvailable)
+        internal HardwareProfile(int? memoryMB, int? cpuCount, LimitCpuForMigration? limitCpuForMigration, DynamicMemoryEnabled? dynamicMemoryEnabled, int? dynamicMemoryMaxMB, int? dynamicMemoryMinMB, IsHighlyAvailable? isHighlyAvailable)
         {
             MemoryMB = memoryMB;
             CpuCount = cpuCount;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Gets or sets the min dynamic memory for the vm. </summary>
         public int? DynamicMemoryMinMB { get; set; }
         /// <summary> Gets highly available property. </summary>
-        public string IsHighlyAvailable { get; set; }
+        public IsHighlyAvailable? IsHighlyAvailable { get; }
     }
 }

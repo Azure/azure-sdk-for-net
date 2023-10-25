@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCloud()
         {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/GetCloud.json
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/GetCloud.json
             // this example is just showing the usage of "Clouds_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
             // for more information of creating ScVmmCloudResource, please refer to the document of ScVmmCloudResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "testrg";
-            string cloudName = "HRCloud";
-            ResourceIdentifier scVmmCloudResourceId = ScVmmCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudName);
+            string cloudResourceName = "HRCloud";
+            ResourceIdentifier scVmmCloudResourceId = ScVmmCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudResourceName);
             ScVmmCloudResource scVmmCloud = client.GetScVmmCloudResource(scVmmCloudResourceId);
 
             // invoke the operation
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteCloud()
         {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/DeleteCloud.json
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/DeleteCloud.json
             // this example is just showing the usage of "Clouds_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
             // for more information of creating ScVmmCloudResource, please refer to the document of ScVmmCloudResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "testrg";
-            string cloudName = "HRCloud";
-            ResourceIdentifier scVmmCloudResourceId = ScVmmCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudName);
+            string cloudResourceName = "HRCloud";
+            ResourceIdentifier scVmmCloudResourceId = ScVmmCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudResourceName);
             ScVmmCloudResource scVmmCloud = client.GetScVmmCloudResource(scVmmCloudResourceId);
 
             // invoke the operation
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateCloud()
         {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/UpdateCloud.json
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/UpdateCloud.json
             // this example is just showing the usage of "Clouds_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,8 +94,8 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
             // for more information of creating ScVmmCloudResource, please refer to the document of ScVmmCloudResource
             string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
             string resourceGroupName = "testrg";
-            string cloudName = "HRCloud";
-            ResourceIdentifier scVmmCloudResourceId = ScVmmCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudName);
+            string cloudResourceName = "HRCloud";
+            ResourceIdentifier scVmmCloudResourceId = ScVmmCloudResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudResourceName);
             ScVmmCloudResource scVmmCloud = client.GetScVmmCloudResource(scVmmCloudResourceId);
 
             // invoke the operation
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ArcScVmm.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetScVmmClouds_ListCloudsBySubscription()
         {
-            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/preview/2020-06-05-preview/examples/ListCloudsBySubscription.json
+            // Generated from example definition: specification/scvmm/resource-manager/Microsoft.ScVmm/stable/2023-10-07/examples/ListCloudsBySubscription.json
             // this example is just showing the usage of "Clouds_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

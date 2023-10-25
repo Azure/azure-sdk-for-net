@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.ArcScVmm
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-06-05-preview";
+            _apiVersion = apiVersion ?? "2023-10-07";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemName, InventoryItemData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName, InventoryItemData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ArcScVmm
             uri.AppendPath("/providers/Microsoft.ScVmm/vmmServers/", false);
             uri.AppendPath(vmmServerName, true);
             uri.AppendPath("/inventoryItems/", false);
-            uri.AppendPath(inventoryItemName, true);
+            uri.AppendPath(inventoryItemResourceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -64,27 +64,28 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary> Create Or Update InventoryItem. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmmServerName"> Name of the VMMServer. </param>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="inventoryItemResourceName"> Name of the inventoryItem. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/>, <paramref name="inventoryItemName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<InventoryItemData>> CreateAsync(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemName, InventoryItemData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/>, <paramref name="inventoryItemResourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<InventoryItemData>> CreateAsync(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName, InventoryItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNullOrEmpty(inventoryItemResourceName, nameof(inventoryItemResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemResourceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         InventoryItemData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
@@ -97,27 +98,28 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary> Create Or Update InventoryItem. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmmServerName"> Name of the VMMServer. </param>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="inventoryItemResourceName"> Name of the inventoryItem. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/>, <paramref name="inventoryItemName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<InventoryItemData> Create(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemName, InventoryItemData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/>, <paramref name="inventoryItemResourceName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<InventoryItemData> Create(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName, InventoryItemData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNullOrEmpty(inventoryItemResourceName, nameof(inventoryItemResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemName, data);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemResourceName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
+                case 201:
                     {
                         InventoryItemData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
@@ -129,7 +131,7 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -143,7 +145,7 @@ namespace Azure.ResourceManager.ArcScVmm
             uri.AppendPath("/providers/Microsoft.ScVmm/vmmServers/", false);
             uri.AppendPath(vmmServerName, true);
             uri.AppendPath("/inventoryItems/", false);
-            uri.AppendPath(inventoryItemName, true);
+            uri.AppendPath(inventoryItemResourceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -152,21 +154,21 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary> Shows an inventory item. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmmServerName"> Name of the VMMServer. </param>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="inventoryItemResourceName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<InventoryItemData>> GetAsync(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<InventoryItemData>> GetAsync(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNullOrEmpty(inventoryItemResourceName, nameof(inventoryItemResourceName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemResourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -185,21 +187,21 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary> Shows an inventory item. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmmServerName"> Name of the VMMServer. </param>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="inventoryItemResourceName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<InventoryItemData> Get(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<InventoryItemData> Get(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNullOrEmpty(inventoryItemResourceName, nameof(inventoryItemResourceName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemResourceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -217,7 +219,7 @@ namespace Azure.ResourceManager.ArcScVmm
             }
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -231,7 +233,7 @@ namespace Azure.ResourceManager.ArcScVmm
             uri.AppendPath("/providers/Microsoft.ScVmm/vmmServers/", false);
             uri.AppendPath(vmmServerName, true);
             uri.AppendPath("/inventoryItems/", false);
-            uri.AppendPath(inventoryItemName, true);
+            uri.AppendPath(inventoryItemResourceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -240,21 +242,21 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary> Deletes an inventoryItem. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmmServerName"> Name of the VMMServer. </param>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="inventoryItemResourceName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNullOrEmpty(inventoryItemResourceName, nameof(inventoryItemResourceName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemResourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -267,21 +269,21 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary> Deletes an inventoryItem. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmmServerName"> Name of the VMMServer. </param>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="inventoryItemResourceName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="vmmServerName"/> or <paramref name="inventoryItemResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(vmmServerName, nameof(vmmServerName));
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNullOrEmpty(inventoryItemResourceName, nameof(inventoryItemResourceName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, vmmServerName, inventoryItemResourceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -315,8 +317,8 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary> Returns the list of inventoryItems in the given VMMServer. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmmServerName"> Name of the VMMServer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmmServerName"/> is null. </exception>
@@ -344,8 +346,8 @@ namespace Azure.ResourceManager.ArcScVmm
         }
 
         /// <summary> Returns the list of inventoryItems in the given VMMServer. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmmServerName"> Name of the VMMServer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmmServerName"/> is null. </exception>
@@ -388,8 +390,8 @@ namespace Azure.ResourceManager.ArcScVmm
 
         /// <summary> Returns the list of inventoryItems in the given VMMServer. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmmServerName"> Name of the VMMServer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmmServerName"/> is null. </exception>
@@ -419,8 +421,8 @@ namespace Azure.ResourceManager.ArcScVmm
 
         /// <summary> Returns the list of inventoryItems in the given VMMServer. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vmmServerName"> Name of the VMMServer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vmmServerName"/> is null. </exception>

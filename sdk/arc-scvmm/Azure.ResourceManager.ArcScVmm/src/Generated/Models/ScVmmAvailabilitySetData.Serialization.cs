@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ArcScVmm.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -18,11 +19,8 @@ namespace Azure.ResourceManager.ArcScVmm
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ExtendedLocation))
-            {
-                writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
-            }
+            writer.WritePropertyName("extendedLocation"u8);
+            JsonSerializer.Serialize(writer, ExtendedLocation);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -58,7 +56,7 @@ namespace Azure.ResourceManager.ArcScVmm
             {
                 return null;
             }
-            Optional<ExtendedLocation> extendedLocation = default;
+            ExtendedLocation extendedLocation = default;
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -66,16 +64,12 @@ namespace Azure.ResourceManager.ArcScVmm
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> availabilitySetName = default;
-            Optional<string> vmmServerId = default;
-            Optional<string> provisioningState = default;
+            Optional<ResourceIdentifier> vmmServerId = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
                     continue;
                 }
@@ -138,19 +132,27 @@ namespace Azure.ResourceManager.ArcScVmm
                         }
                         if (property0.NameEquals("vmmServerId"u8))
                         {
-                            vmmServerId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vmmServerId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ScVmmAvailabilitySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, availabilitySetName.Value, vmmServerId.Value, provisioningState.Value);
+            return new ScVmmAvailabilitySetData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, availabilitySetName.Value, vmmServerId.Value, Optional.ToNullable(provisioningState));
         }
     }
 }

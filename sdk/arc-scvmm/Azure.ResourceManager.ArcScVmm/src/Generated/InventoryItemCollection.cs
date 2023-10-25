@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -67,21 +67,21 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="inventoryItemResourceName"> Name of the inventoryItem. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<InventoryItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string inventoryItemName, InventoryItemData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemResourceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<InventoryItemResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string inventoryItemResourceName, InventoryItemData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNullOrEmpty(inventoryItemResourceName, nameof(inventoryItemResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _inventoryItemClientDiagnostics.CreateScope("InventoryItemCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _inventoryItemRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, data, cancellationToken).ConfigureAwait(false);
+                var response = await _inventoryItemRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemResourceName, data, cancellationToken).ConfigureAwait(false);
                 var operation = new ArcScVmmArmOperation<InventoryItemResource>(Response.FromValue(new InventoryItemResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -108,21 +108,21 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="inventoryItemResourceName"> Name of the inventoryItem. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<InventoryItemResource> CreateOrUpdate(WaitUntil waitUntil, string inventoryItemName, InventoryItemData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemResourceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<InventoryItemResource> CreateOrUpdate(WaitUntil waitUntil, string inventoryItemResourceName, InventoryItemData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNullOrEmpty(inventoryItemResourceName, nameof(inventoryItemResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _inventoryItemClientDiagnostics.CreateScope("InventoryItemCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _inventoryItemRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, data, cancellationToken);
+                var response = _inventoryItemRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemResourceName, data, cancellationToken);
                 var operation = new ArcScVmmArmOperation<InventoryItemResource>(Response.FromValue(new InventoryItemResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -148,19 +148,19 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="inventoryItemResourceName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual async Task<Response<InventoryItemResource>> GetAsync(string inventoryItemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemResourceName"/> is null. </exception>
+        public virtual async Task<Response<InventoryItemResource>> GetAsync(string inventoryItemResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNullOrEmpty(inventoryItemResourceName, nameof(inventoryItemResourceName));
 
             using var scope = _inventoryItemClientDiagnostics.CreateScope("InventoryItemCollection.Get");
             scope.Start();
             try
             {
-                var response = await _inventoryItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken).ConfigureAwait(false);
+                var response = await _inventoryItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new InventoryItemResource(Client, response.Value), response.GetRawResponse());
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -185,19 +185,19 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="inventoryItemResourceName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual Response<InventoryItemResource> Get(string inventoryItemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemResourceName"/> is null. </exception>
+        public virtual Response<InventoryItemResource> Get(string inventoryItemResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNullOrEmpty(inventoryItemResourceName, nameof(inventoryItemResourceName));
 
             using var scope = _inventoryItemClientDiagnostics.CreateScope("InventoryItemCollection.Get");
             scope.Start();
             try
             {
-                var response = _inventoryItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken);
+                var response = _inventoryItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new InventoryItemResource(Client, response.Value), response.GetRawResponse());
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -266,19 +266,19 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="inventoryItemResourceName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string inventoryItemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemResourceName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string inventoryItemResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNullOrEmpty(inventoryItemResourceName, nameof(inventoryItemResourceName));
 
             using var scope = _inventoryItemClientDiagnostics.CreateScope("InventoryItemCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _inventoryItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _inventoryItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -301,19 +301,19 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="inventoryItemResourceName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual Response<bool> Exists(string inventoryItemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemResourceName"/> is null. </exception>
+        public virtual Response<bool> Exists(string inventoryItemResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNullOrEmpty(inventoryItemResourceName, nameof(inventoryItemResourceName));
 
             using var scope = _inventoryItemClientDiagnostics.CreateScope("InventoryItemCollection.Exists");
             scope.Start();
             try
             {
-                var response = _inventoryItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken: cancellationToken);
+                var response = _inventoryItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -336,19 +336,19 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="inventoryItemResourceName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual async Task<NullableResponse<InventoryItemResource>> GetIfExistsAsync(string inventoryItemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemResourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<InventoryItemResource>> GetIfExistsAsync(string inventoryItemResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNullOrEmpty(inventoryItemResourceName, nameof(inventoryItemResourceName));
 
             using var scope = _inventoryItemClientDiagnostics.CreateScope("InventoryItemCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _inventoryItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _inventoryItemRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<InventoryItemResource>(response.GetRawResponse());
                 return Response.FromValue(new InventoryItemResource(Client, response.Value), response.GetRawResponse());
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/vmmServers/{vmmServerName}/inventoryItems/{inventoryItemResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -373,19 +373,19 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="inventoryItemName"> Name of the inventoryItem. </param>
+        /// <param name="inventoryItemResourceName"> Name of the inventoryItem. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="inventoryItemName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemName"/> is null. </exception>
-        public virtual NullableResponse<InventoryItemResource> GetIfExists(string inventoryItemName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="inventoryItemResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="inventoryItemResourceName"/> is null. </exception>
+        public virtual NullableResponse<InventoryItemResource> GetIfExists(string inventoryItemResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(inventoryItemName, nameof(inventoryItemName));
+            Argument.AssertNotNullOrEmpty(inventoryItemResourceName, nameof(inventoryItemResourceName));
 
             using var scope = _inventoryItemClientDiagnostics.CreateScope("InventoryItemCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _inventoryItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemName, cancellationToken: cancellationToken);
+                var response = _inventoryItemRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, inventoryItemResourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<InventoryItemResource>(response.GetRawResponse());
                 return Response.FromValue(new InventoryItemResource(Client, response.Value), response.GetRawResponse());

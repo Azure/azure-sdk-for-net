@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="cloudName"> Name of the cloud in VMMServer. </param>
         /// <param name="cloudCapacity"> Capacity of the cloud. </param>
         /// <param name="storageQoSPolicies"> List of QoS policies available for the cloud. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal ScVmmCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, string vmmServerId, string cloudName, CloudCapacity cloudCapacity, IReadOnlyList<StorageQoSPolicy> storageQoSPolicies, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        internal ScVmmCloudData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, ResourceIdentifier vmmServerId, string cloudName, CloudCapacity cloudCapacity, IReadOnlyList<StorageQoSPolicy> storageQoSPolicies, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             InventoryItemId = inventoryItemId;
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <summary> Unique ID of the cloud. </summary>
         public string Uuid { get; set; }
         /// <summary> ARM Id of the vmmServer resource in which this resource resides. </summary>
-        public string VmmServerId { get; set; }
+        public ResourceIdentifier VmmServerId { get; set; }
         /// <summary> Name of the cloud in VMMServer. </summary>
         public string CloudName { get; }
         /// <summary> Capacity of the cloud. </summary>
         public CloudCapacity CloudCapacity { get; }
         /// <summary> List of QoS policies available for the cloud. </summary>
         public IReadOnlyList<StorageQoSPolicy> StorageQoSPolicies { get; }
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public string ProvisioningState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

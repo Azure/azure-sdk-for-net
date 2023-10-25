@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -68,22 +68,22 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cloudName"> Name of the Cloud. </param>
+        /// <param name="cloudResourceName"> Name of the Cloud. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ScVmmCloudResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudName, ScVmmCloudData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="cloudResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudResourceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<ScVmmCloudResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cloudResourceName, ScVmmCloudData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
+            Argument.AssertNotNullOrEmpty(cloudResourceName, nameof(cloudResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _scVmmCloudCloudsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ArcScVmmArmOperation<ScVmmCloudResource>(new ScVmmCloudOperationSource(Client), _scVmmCloudCloudsClientDiagnostics, Pipeline, _scVmmCloudCloudsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _scVmmCloudCloudsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudResourceName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ArcScVmmArmOperation<ScVmmCloudResource>(new ScVmmCloudOperationSource(Client), _scVmmCloudCloudsClientDiagnostics, Pipeline, _scVmmCloudCloudsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -109,22 +109,22 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cloudName"> Name of the Cloud. </param>
+        /// <param name="cloudResourceName"> Name of the Cloud. </param>
         /// <param name="data"> Request payload. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ScVmmCloudResource> CreateOrUpdate(WaitUntil waitUntil, string cloudName, ScVmmCloudData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="cloudResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudResourceName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<ScVmmCloudResource> CreateOrUpdate(WaitUntil waitUntil, string cloudResourceName, ScVmmCloudData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
+            Argument.AssertNotNullOrEmpty(cloudResourceName, nameof(cloudResourceName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _scVmmCloudCloudsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, cloudName, data, cancellationToken);
-                var operation = new ArcScVmmArmOperation<ScVmmCloudResource>(new ScVmmCloudOperationSource(Client), _scVmmCloudCloudsClientDiagnostics, Pipeline, _scVmmCloudCloudsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _scVmmCloudCloudsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, cloudResourceName, data, cancellationToken);
+                var operation = new ArcScVmmArmOperation<ScVmmCloudResource>(new ScVmmCloudOperationSource(Client), _scVmmCloudCloudsClientDiagnostics, Pipeline, _scVmmCloudCloudsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, cloudResourceName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -149,19 +149,19 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cloudName"> Name of the Cloud. </param>
+        /// <param name="cloudResourceName"> Name of the Cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
-        public virtual async Task<Response<ScVmmCloudResource>> GetAsync(string cloudName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="cloudResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudResourceName"/> is null. </exception>
+        public virtual async Task<Response<ScVmmCloudResource>> GetAsync(string cloudResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
+            Argument.AssertNotNullOrEmpty(cloudResourceName, nameof(cloudResourceName));
 
             using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.Get");
             scope.Start();
             try
             {
-                var response = await _scVmmCloudCloudsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudName, cancellationToken).ConfigureAwait(false);
+                var response = await _scVmmCloudCloudsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudResourceName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ScVmmCloudResource(Client, response.Value), response.GetRawResponse());
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -186,19 +186,19 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cloudName"> Name of the Cloud. </param>
+        /// <param name="cloudResourceName"> Name of the Cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
-        public virtual Response<ScVmmCloudResource> Get(string cloudName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="cloudResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudResourceName"/> is null. </exception>
+        public virtual Response<ScVmmCloudResource> Get(string cloudResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
+            Argument.AssertNotNullOrEmpty(cloudResourceName, nameof(cloudResourceName));
 
             using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.Get");
             scope.Start();
             try
             {
-                var response = _scVmmCloudCloudsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudName, cancellationToken);
+                var response = _scVmmCloudCloudsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudResourceName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ScVmmCloudResource(Client, response.Value), response.GetRawResponse());
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -267,19 +267,19 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cloudName"> Name of the Cloud. </param>
+        /// <param name="cloudResourceName"> Name of the Cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string cloudName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="cloudResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudResourceName"/> is null. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string cloudResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
+            Argument.AssertNotNullOrEmpty(cloudResourceName, nameof(cloudResourceName));
 
             using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _scVmmCloudCloudsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _scVmmCloudCloudsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -302,19 +302,19 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cloudName"> Name of the Cloud. </param>
+        /// <param name="cloudResourceName"> Name of the Cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
-        public virtual Response<bool> Exists(string cloudName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="cloudResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudResourceName"/> is null. </exception>
+        public virtual Response<bool> Exists(string cloudResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
+            Argument.AssertNotNullOrEmpty(cloudResourceName, nameof(cloudResourceName));
 
             using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.Exists");
             scope.Start();
             try
             {
-                var response = _scVmmCloudCloudsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudName, cancellationToken: cancellationToken);
+                var response = _scVmmCloudCloudsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -337,19 +337,19 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cloudName"> Name of the Cloud. </param>
+        /// <param name="cloudResourceName"> Name of the Cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
-        public virtual async Task<NullableResponse<ScVmmCloudResource>> GetIfExistsAsync(string cloudName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="cloudResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudResourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ScVmmCloudResource>> GetIfExistsAsync(string cloudResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
+            Argument.AssertNotNullOrEmpty(cloudResourceName, nameof(cloudResourceName));
 
             using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _scVmmCloudCloudsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _scVmmCloudCloudsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, cloudResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<ScVmmCloudResource>(response.GetRawResponse());
                 return Response.FromValue(new ScVmmCloudResource(Client, response.Value), response.GetRawResponse());
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ScVmm/clouds/{cloudResourceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -374,19 +374,19 @@ namespace Azure.ResourceManager.ArcScVmm
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cloudName"> Name of the Cloud. </param>
+        /// <param name="cloudResourceName"> Name of the Cloud. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="cloudName"/> is null. </exception>
-        public virtual NullableResponse<ScVmmCloudResource> GetIfExists(string cloudName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="cloudResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="cloudResourceName"/> is null. </exception>
+        public virtual NullableResponse<ScVmmCloudResource> GetIfExists(string cloudResourceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(cloudName, nameof(cloudName));
+            Argument.AssertNotNullOrEmpty(cloudResourceName, nameof(cloudResourceName));
 
             using var scope = _scVmmCloudCloudsClientDiagnostics.CreateScope("ScVmmCloudCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _scVmmCloudCloudsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudName, cancellationToken: cancellationToken);
+                var response = _scVmmCloudCloudsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, cloudResourceName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<ScVmmCloudResource>(response.GetRawResponse());
                 return Response.FromValue(new ScVmmCloudResource(Client, response.Value), response.GetRawResponse());

@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ArcScVmm.Models
             {
                 return null;
             }
-            Optional<IList<NetworkInterfaces>> networkInterfaces = default;
+            Optional<IList<NetworkInterface>> networkInterfaces = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaces"u8))
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
                     {
                         continue;
                     }
-                    List<NetworkInterfaces> array = new List<NetworkInterfaces>();
+                    List<NetworkInterface> array = new List<NetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.NetworkInterfaces.DeserializeNetworkInterfaces(item));
+                        array.Add(NetworkInterface.DeserializeNetworkInterface(item));
                     }
                     networkInterfaces = array;
                     continue;

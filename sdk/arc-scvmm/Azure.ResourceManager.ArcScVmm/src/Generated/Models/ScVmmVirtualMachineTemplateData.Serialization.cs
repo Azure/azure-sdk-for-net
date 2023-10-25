@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ArcScVmm
             Optional<SystemData> systemData = default;
             Optional<string> inventoryItemId = default;
             Optional<string> uuid = default;
-            Optional<string> vmmServerId = default;
+            Optional<ResourceIdentifier> vmmServerId = default;
             Optional<OSType> osType = default;
             Optional<string> osName = default;
             Optional<string> computerName = default;
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.ArcScVmm
             Optional<IsCustomizable> isCustomizable = default;
             Optional<int> dynamicMemoryMaxMB = default;
             Optional<int> dynamicMemoryMinMB = default;
-            Optional<string> isHighlyAvailable = default;
+            Optional<IsHighlyAvailable> isHighlyAvailable = default;
             Optional<int> generation = default;
-            Optional<IReadOnlyList<NetworkInterfaces>> networkInterfaces = default;
+            Optional<IReadOnlyList<NetworkInterface>> networkInterfaces = default;
             Optional<IReadOnlyList<VirtualDisk>> disks = default;
-            Optional<string> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -157,7 +157,11 @@ namespace Azure.ResourceManager.ArcScVmm
                         }
                         if (property0.NameEquals("vmmServerId"u8))
                         {
-                            vmmServerId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vmmServerId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("osType"u8))
@@ -244,7 +248,11 @@ namespace Azure.ResourceManager.ArcScVmm
                         }
                         if (property0.NameEquals("isHighlyAvailable"u8))
                         {
-                            isHighlyAvailable = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isHighlyAvailable = new IsHighlyAvailable(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("generation"u8))
@@ -262,10 +270,10 @@ namespace Azure.ResourceManager.ArcScVmm
                             {
                                 continue;
                             }
-                            List<NetworkInterfaces> array = new List<NetworkInterfaces>();
+                            List<NetworkInterface> array = new List<NetworkInterface>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.NetworkInterfaces.DeserializeNetworkInterfaces(item));
+                                array.Add(NetworkInterface.DeserializeNetworkInterface(item));
                             }
                             networkInterfaces = array;
                             continue;
@@ -286,14 +294,18 @@ namespace Azure.ResourceManager.ArcScVmm
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ScVmmVirtualMachineTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, Optional.ToNullable(osType), osName.Value, computerName.Value, Optional.ToNullable(memoryMB), Optional.ToNullable(cpuCount), Optional.ToNullable(limitCpuForMigration), Optional.ToNullable(dynamicMemoryEnabled), Optional.ToNullable(isCustomizable), Optional.ToNullable(dynamicMemoryMaxMB), Optional.ToNullable(dynamicMemoryMinMB), isHighlyAvailable.Value, Optional.ToNullable(generation), Optional.ToList(networkInterfaces), Optional.ToList(disks), provisioningState.Value);
+            return new ScVmmVirtualMachineTemplateData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, Optional.ToNullable(osType), osName.Value, computerName.Value, Optional.ToNullable(memoryMB), Optional.ToNullable(cpuCount), Optional.ToNullable(limitCpuForMigration), Optional.ToNullable(dynamicMemoryEnabled), Optional.ToNullable(isCustomizable), Optional.ToNullable(dynamicMemoryMaxMB), Optional.ToNullable(dynamicMemoryMinMB), Optional.ToNullable(isHighlyAvailable), Optional.ToNullable(generation), Optional.ToList(networkInterfaces), Optional.ToList(disks), Optional.ToNullable(provisioningState));
         }
     }
 }

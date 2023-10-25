@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ArcScVmm.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -42,8 +43,8 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <param name="uuid"> Unique ID of the virtual network. </param>
         /// <param name="vmmServerId"> ARM Id of the vmmServer resource in which this resource resides. </param>
         /// <param name="networkName"> Name of the virtual network in vmmServer. </param>
-        /// <param name="provisioningState"> Gets or sets the provisioning state. </param>
-        internal ScVmmVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, string vmmServerId, string networkName, string provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        internal ScVmmVirtualNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string inventoryItemId, string uuid, ResourceIdentifier vmmServerId, string networkName, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             InventoryItemId = inventoryItemId;
@@ -60,10 +61,10 @@ namespace Azure.ResourceManager.ArcScVmm
         /// <summary> Unique ID of the virtual network. </summary>
         public string Uuid { get; set; }
         /// <summary> ARM Id of the vmmServer resource in which this resource resides. </summary>
-        public string VmmServerId { get; set; }
+        public ResourceIdentifier VmmServerId { get; set; }
         /// <summary> Name of the virtual network in vmmServer. </summary>
         public string NetworkName { get; }
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public string ProvisioningState { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public ProvisioningState? ProvisioningState { get; }
     }
 }

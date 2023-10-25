@@ -70,11 +70,11 @@ namespace Azure.ResourceManager.ArcScVmm
             Optional<SystemData> systemData = default;
             Optional<string> inventoryItemId = default;
             Optional<string> uuid = default;
-            Optional<string> vmmServerId = default;
+            Optional<ResourceIdentifier> vmmServerId = default;
             Optional<string> cloudName = default;
             Optional<CloudCapacity> cloudCapacity = default;
             Optional<IReadOnlyList<StorageQoSPolicy>> storageQoSPolicies = default;
-            Optional<string> provisioningState = default;
+            Optional<ProvisioningState> provisioningState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -146,7 +146,11 @@ namespace Azure.ResourceManager.ArcScVmm
                         }
                         if (property0.NameEquals("vmmServerId"u8))
                         {
-                            vmmServerId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vmmServerId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("cloudName"u8))
@@ -179,14 +183,18 @@ namespace Azure.ResourceManager.ArcScVmm
                         }
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new ScVmmCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, cloudName.Value, cloudCapacity.Value, Optional.ToList(storageQoSPolicies), provisioningState.Value);
+            return new ScVmmCloudData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation, inventoryItemId.Value, uuid.Value, vmmServerId.Value, cloudName.Value, cloudCapacity.Value, Optional.ToList(storageQoSPolicies), Optional.ToNullable(provisioningState));
         }
     }
 }

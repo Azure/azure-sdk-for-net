@@ -29,14 +29,14 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <summary> Initializes a new instance of InventoryItemsList. </summary>
         /// <param name="nextLink"> Url to follow for getting next page of InventoryItems. </param>
         /// <param name="value"> Array of InventoryItems. </param>
-        internal InventoryItemsList(string nextLink, IReadOnlyList<InventoryItemData> value)
+        internal InventoryItemsList(Uri nextLink, IReadOnlyList<InventoryItemData> value)
         {
             NextLink = nextLink;
             Value = value;
         }
 
         /// <summary> Url to follow for getting next page of InventoryItems. </summary>
-        public string NextLink { get; }
+        public Uri NextLink { get; }
         /// <summary> Array of InventoryItems. </summary>
         public IReadOnlyList<InventoryItemData> Value { get; }
     }
