@@ -41,7 +41,10 @@ namespace Azure.ResourceManager.Batch.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Data);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Data.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Data))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(Password))

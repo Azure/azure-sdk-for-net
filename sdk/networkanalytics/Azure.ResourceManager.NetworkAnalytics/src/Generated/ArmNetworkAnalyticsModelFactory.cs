@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
         /// <param name="databaseRetention"> Field for database data retention in days. </param>
         /// <param name="visualizationUri"> Url for data visualization. </param>
         /// <returns> A new <see cref="Models.DataProductDataType"/> instance for mocking. </returns>
-        public static DataProductDataType DataProductDataType(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkAnalyticsProvisioningState? provisioningState = null, DataProducDataTypeState? state = null, string stateReason = null, int? storageOutputRetention = null, int? databaseCacheRetention = null, int? databaseRetention = null, Uri visualizationUri = null)
+        public static DataProductDataType DataProductDataType(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NetworkAnalyticsProvisioningState? provisioningState = null, DataProductDataTypeState? state = null, string stateReason = null, int? storageOutputRetention = null, int? databaseCacheRetention = null, int? databaseRetention = null, Uri visualizationUri = null)
         {
             return new DataProductDataType(id, name, resourceType, systemData, provisioningState, state, stateReason, storageOutputRetention, databaseCacheRetention, databaseRetention, visualizationUri);
         }
