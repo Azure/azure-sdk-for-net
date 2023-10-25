@@ -41,7 +41,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                     {
                         VectorSearch = new()
                         {
-                           VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+                            VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
                         }
                     });
 

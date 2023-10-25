@@ -4,7 +4,7 @@ Semantic search is a collection of query-related capabilities that improve the q
 * **Improves Search Results**: It adds secondary ranking over an initial search result set by using advanced algorithms that consider the context and meaning of the query, resulting in more relevant search outcomes.
 * **Provides Additional Information**: It also extracts and displays concise captions and answers from the search results, which can be used on a search page to improve the user's search experience.
 
-You can find detailed instructions on semantic search in the [documentation](https://learn.microsoft.com/azure/search/semantic-search-overview). It's important to note that semantic search is disabled by default for all services. To enable semantic search at the service level, please follow the steps outlined [here](https://learn.microsoft.com/azure/search/semantic-how-to-enable-disable?tabs=enable-portal).
+You can find detailed instructions on semantic search in the [documentation](https://learn.microsoft.com/azure/search/semantic-search-overview). It's important to note that semantic search is disabled by default for all services. To enable semantic search at the service level, please follow the steps outlined [here](https://learn.microsoft.com/azure/search/semantic-how-to-enable-disable).
 
 This sample demonstrates how to create an index, upload data, and perform a query for semantic search.
 
@@ -62,7 +62,7 @@ await indexClient.CreateIndexAsync(searchIndex);
 Let's create a simple model type for `Hotel`:
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Model
-    public class Hotel
+public class Hotel
 {
     public string HotelId { get; set; }
     public string HotelName { get; set; }

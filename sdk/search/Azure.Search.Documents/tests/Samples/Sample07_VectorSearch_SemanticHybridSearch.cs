@@ -54,7 +54,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
                              QueryAnswer = new() { AnswerType = QueryAnswerType.Extractive }
                          },
                          QueryType = SearchQueryType.Semantic,
-                    });
+                     });
 
                 int count = 0;
                 Console.WriteLine($"Semantic Hybrid Search Results:");

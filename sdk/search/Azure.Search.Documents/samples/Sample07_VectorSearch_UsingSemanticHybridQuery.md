@@ -174,7 +174,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
              QueryAnswer = new() { AnswerType = QueryAnswerType.Extractive }
          },
          QueryType = SearchQueryType.Semantic,
-    });
+     });
 
 int count = 0;
 Console.WriteLine($"Semantic Hybrid Search Results:");

@@ -237,9 +237,42 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(updatedIndex.Name, createdIndex.Name);
         }
 
-        // TODO: Add a test for VectorFilterMode using both simple and hybrid vector search
-        // TODO: Add a test for updating the profile name of a vector field, which should throw an error.
-        // TODO: Add SemanticMaxWaitInMilliseconds test
+        [Test]
+        public async Task UpdatingVectorProfileNameThrows()
+        {
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
+
+            string indexName = Recording.Random.GetName();
+            resources.IndexName = indexName;
+
+            // Create Index
+            SearchIndex index = new SearchIndex(indexName)
+            {
+                Fields = new FieldBuilder().Build(typeof(Model)),
+                VectorSearch = new()
+                {
+                    Profiles =
+                    {
+                        new VectorSearchProfile("my-vector-profile", "my-hsnw-vector-config")
+                    },
+                    Algorithms =
+                    {
+                        new HnswAlgorithmConfiguration("my-hsnw-vector-config")
+                    }
+                },
+            };
+
+            SearchIndexClient indexClient = resources.GetIndexClient();
+            SearchIndex createdIndex = await indexClient.CreateIndexAsync(index);
+
+            createdIndex.VectorSearch.Profiles[0].Name = "updating-vector-profile-name";
+
+            // Update index
+            RequestFailedException ex = await CatchAsync<RequestFailedException>(
+                async () => await indexClient.CreateOrUpdateIndexAsync(createdIndex));
+            Assert.AreEqual(400, ex.Status);
+            Assert.AreEqual("InvalidRequestParameter", ex.ErrorCode);
+        }
 
         [Test]
         public async Task CreateIndexUsingFieldBuilder()

@@ -81,8 +81,7 @@ namespace Azure.Search.Documents.Models
         {
             Debug.Assert(options != null);
             SearchResult<T> result = new SearchResult<T>();
-            SemanticSearchResult semanticSearch = new SemanticSearchResult();
-            result.SemanticSearch = semanticSearch;
+            result.SemanticSearch = new SemanticSearchResult();
             foreach (JsonProperty prop in element.EnumerateObject())
             {
                 if (prop.NameEquals(Constants.SearchScoreKeyJson.EncodedUtf8Bytes) &&
@@ -112,12 +111,12 @@ namespace Azure.Search.Documents.Models
                 else if (prop.NameEquals(Constants.SearchCaptionsKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    result.SemanticSearch.Captions = new List<CaptionResult>();
-
+                    List<CaptionResult> captionResults = new List<CaptionResult>();
                     foreach (JsonElement captionValue in prop.Value.EnumerateArray())
                     {
-                        result.SemanticSearch.Captions.Add(CaptionResult.DeserializeCaptionResult(captionValue));
+                        captionResults.Add(CaptionResult.DeserializeCaptionResult(captionValue));
                     }
+                    result.SemanticSearch.Captions = captionResults;
                 }
             }
 
@@ -165,7 +164,7 @@ namespace Azure.Search.Documents.Models
         /// Captions are the most representative passages from the document relatively to the search query.
         /// <para>They are often used as document summary. <see cref="Captions"/> are only returned for queries of type <see cref="SearchQueryType.Semantic"/>.</para>
         /// </summary>
-        public IList<CaptionResult> Captions { get; internal set; }
+        public IReadOnlyList<CaptionResult> Captions { get; internal set; }
     }
 
     public static partial class SearchModelFactory

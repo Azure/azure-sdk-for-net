@@ -3059,13 +3059,13 @@ namespace Azure.Search.Documents.Models
     public partial class SemanticSearchResult
     {
         public SemanticSearchResult() { }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Models.CaptionResult> Captions { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.CaptionResult> Captions { get { throw null; } }
         public double? RerankerScore { get { throw null; } }
     }
     public partial class SemanticSearchResults
     {
         public SemanticSearchResults() { }
-        public System.Collections.Generic.IList<Azure.Search.Documents.Models.AnswerResult> Answers { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.Search.Documents.Models.AnswerResult> Answers { get { throw null; } }
         public Azure.Search.Documents.Models.SemanticErrorReason? SemanticErrorReason { get { throw null; } }
         public Azure.Search.Documents.Models.SemanticSearchResultsType? SemanticSearchResultsType { get { throw null; } }
     }

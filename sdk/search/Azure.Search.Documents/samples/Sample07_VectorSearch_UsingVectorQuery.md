@@ -142,7 +142,7 @@ SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
     {
         VectorSearch = new()
         {
-           VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
+            VectorizableQueries = { new VectorQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "DescriptionVector" } } }
         }
     });
 

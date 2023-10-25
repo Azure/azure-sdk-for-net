@@ -9,9 +9,11 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Serialization;
+using Azure.Search.Documents.Indexes.Models;
 
 #pragma warning disable SA1402 // File may only contain a single type
 
@@ -183,8 +185,7 @@ namespace Azure.Search.Documents.Models
             JsonSerializerOptions defaultSerializerOptions = JsonSerialization.SerializerOptions;
 
             SearchResults<T> results = new SearchResults<T>();
-            SemanticSearchResults semanticSearch = new SemanticSearchResults();
-            results.SemanticSearch = semanticSearch;
+            results.SemanticSearch = new SemanticSearchResults();
             foreach (JsonProperty prop in doc.RootElement.EnumerateObject())
             {
                 if (prop.NameEquals(Constants.ODataCountKeyJson.EncodedUtf8Bytes) &&
@@ -250,11 +251,12 @@ namespace Azure.Search.Documents.Models
                 else if (prop.NameEquals(Constants.SearchAnswersKeyJson.EncodedUtf8Bytes) &&
                     prop.Value.ValueKind != JsonValueKind.Null)
                 {
-                    semanticSearch.Answers = new List<AnswerResult>();
+                    List<AnswerResult> answerResults = new List<AnswerResult>();
                     foreach (JsonElement answerValue in prop.Value.EnumerateArray())
                     {
-                        results.SemanticSearch.Answers.Add(AnswerResult.DeserializeAnswerResult(answerValue));
+                        answerResults.Add(AnswerResult.DeserializeAnswerResult(answerValue));
                     }
+                    results.SemanticSearch.Answers = answerResults;
                 }
                 else if (prop.NameEquals(Constants.ValueKeyJson.EncodedUtf8Bytes))
                 {
@@ -282,7 +284,7 @@ namespace Azure.Search.Documents.Models
     {
         /// <summary> The answers query results for the search operation;
         /// <c>null</c> if the <see cref="QueryAnswer.AnswerType"/> parameter was not specified or set to <see cref="QueryAnswerType.None"/>. </summary>
-        public IList<AnswerResult> Answers { get; internal set; }
+        public IReadOnlyList<AnswerResult> Answers { get; internal set; }
 
         /// <summary> Reason that a partial response was returned for a semantic search request. </summary>
         public SemanticErrorReason? SemanticErrorReason { get; internal set; }

@@ -4,7 +4,7 @@ The `FieldBuilder` class allows you to define a Search index from a model type. 
 
 ## Model Creation
 
-Consider the following model, which includes a property named `DescriptionVector` that represents a vector field. To configure a vector field, you must provide the model dimensions, indicating the size of the embeddings generated for this field, as well as the name of the vector search profile that specifies the algorithm configuration in `VectorSearchField` attribute.
+Consider the following model, which includes a property named `DescriptionVector` that represents a vector field. To configure a vector field, you must provide the model dimensions, indicating the size of the embeddings generated for this field, as well as the name of the vector search profile that specifies the algorithm configuration in the `VectorSearchField` attribute.
 
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_FieldBuilder_Model
 public class MyDocument

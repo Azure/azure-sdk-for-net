@@ -213,12 +213,12 @@ namespace Azure.Search.Documents.Tests.Samples
 
         #region Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Search_Model
         public class Hotel
-    {
-        public string HotelId { get; set; }
-        public string HotelName { get; set; }
-        public string Description { get; set; }
-        public string Category { get; set; }
+        {
+            public string HotelId { get; set; }
+            public string HotelName { get; set; }
+            public string Description { get; set; }
+            public string Category { get; set; }
+        }
+        #endregion
     }
-    #endregion
-}
 }
