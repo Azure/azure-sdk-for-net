@@ -20,15 +20,11 @@ namespace Azure.Communication.CallAutomation
         internal CancelAddParticipantSucceeded(CancelAddParticipantSucceededInternal internalEvent)
         {
             OperationContext = internalEvent.OperationContext;
-            Participant = CommunicationIdentifierSerializer.Deserialize(internalEvent.Participant);
             CallConnectionId = internalEvent.CallConnectionId;
             ServerCallId = internalEvent.ServerCallId;
             CorrelationId = internalEvent.CorrelationId;
             InvitationId = internalEvent.InvitationId;
         }
-
-        /// <summary> Participant that has been cancelled. </summary>
-        public CommunicationIdentifier Participant { get; }
 
         /// <summary> Invitation ID used to cancel the request. </summary>
         public string InvitationId { get; }

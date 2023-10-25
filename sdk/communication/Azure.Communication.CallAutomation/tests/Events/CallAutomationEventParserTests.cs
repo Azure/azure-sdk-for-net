@@ -892,7 +892,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
                 invitationId: "invitationId",
-                participant: new CommunicationUserIdentifier("8:acs:12345"),
                 operationContext: "operationContext");
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
@@ -904,7 +903,6 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("callConnectionId", cancelAddParticipantSucceeded.CallConnectionId);
                 Assert.AreEqual("correlationId", cancelAddParticipantSucceeded.CorrelationId);
                 Assert.AreEqual("serverCallId", cancelAddParticipantSucceeded.ServerCallId);
-                Assert.AreEqual("8:acs:12345", cancelAddParticipantSucceeded.Participant.RawId);
                 Assert.AreEqual("invitationId", cancelAddParticipantSucceeded.InvitationId);
             }
             else

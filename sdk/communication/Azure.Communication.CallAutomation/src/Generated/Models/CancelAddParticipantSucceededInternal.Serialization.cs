@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
@@ -23,7 +22,6 @@ namespace Azure.Communication.CallAutomation
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
             Optional<string> operationContext = default;
-            Optional<CommunicationIdentifierModel> participant = default;
             Optional<string> invitationId = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -47,22 +45,13 @@ namespace Azure.Communication.CallAutomation
                     operationContext = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("participant"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    participant = CommunicationIdentifierModel.DeserializeCommunicationIdentifierModel(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("invitationId"u8))
                 {
                     invitationId = property.Value.GetString();
                     continue;
                 }
             }
-            return new CancelAddParticipantSucceededInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, participant.Value, invitationId.Value);
+            return new CancelAddParticipantSucceededInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, invitationId.Value);
         }
     }
 }

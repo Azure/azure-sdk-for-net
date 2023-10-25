@@ -31,7 +31,8 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Target who the call is transferred to. </summary>
         public CommunicationIdentifier TransferTarget { get; }
-        /// <summary> the participant who is being transferred away. </summary>
+
+        /// <summary> The participant who is being transferred away. </summary>
         public CommunicationIdentifier Transferee { get; }
 
         /// <summary>

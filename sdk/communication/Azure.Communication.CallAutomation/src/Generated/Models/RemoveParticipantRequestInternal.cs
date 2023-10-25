@@ -28,7 +28,10 @@ namespace Azure.Communication.CallAutomation
         public CommunicationIdentifierModel ParticipantToRemove { get; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; set; }
-        /// <summary> The callback URI to override the main callback URI. </summary>
-        public string OverrideCallbackUri { get; set; }
+        /// <summary>
+        /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
+        /// </summary>
+        public string OperationCallbackUri { get; set; }
     }
 }

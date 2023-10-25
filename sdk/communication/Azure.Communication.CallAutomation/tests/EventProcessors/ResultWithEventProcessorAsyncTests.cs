@@ -564,7 +564,6 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             var invitationId = "invitationId";
             var callConnection = CreateMockCallConnection(202, CancelAddParticipantPayload);
             CallAutomationEventProcessor handler = callConnection.EventProcessor;
-            var callInvite = CreateMockInvite();
             var response = callConnection.CancelAddParticipant(invitationId);
 
             Assert.AreEqual(202, response.GetRawResponse().Status);
@@ -575,7 +574,6 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
                 ServerCallId,
                 CorelationId,
                 invitationId,
-                callInvite.Target,
                 OperationContext));
 
             CancelAddParticipantEventResult returnedResult = await response.Value.WaitForEventProcessorAsync();

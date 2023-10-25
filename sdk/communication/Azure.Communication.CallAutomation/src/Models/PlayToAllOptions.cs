@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,6 +14,7 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary>
         /// PlaySource objects representing the sources to play.
+        /// Currently only single play source per request is supported.
         /// </summary>
         public IReadOnlyList<PlaySource> PlaySources { get; }
 
@@ -27,9 +29,10 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
 
         /// <summary>
-        /// The callback URI to override the main callback URI.
+        /// The callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
+        /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
-        public string OverrideCallbackUrl { get; set; }
+        public Uri OperationCallbackUri { get; set; }
 
         /// <summary>
         /// Creates a new PlayToAllOptions object.

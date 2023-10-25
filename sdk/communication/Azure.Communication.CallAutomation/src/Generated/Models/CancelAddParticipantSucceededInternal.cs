@@ -5,8 +5,6 @@
 
 #nullable disable
 
-using Azure.Communication;
-
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Successful cancel add participant event. </summary>
@@ -22,15 +20,13 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
-        /// <param name="participant"> Participant that has been cancelled. </param>
         /// <param name="invitationId"> Invitation ID used to cancel the request. </param>
-        internal CancelAddParticipantSucceededInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, CommunicationIdentifierModel participant, string invitationId)
+        internal CancelAddParticipantSucceededInternal(string callConnectionId, string serverCallId, string correlationId, string operationContext, string invitationId)
         {
             CallConnectionId = callConnectionId;
             ServerCallId = serverCallId;
             CorrelationId = correlationId;
             OperationContext = operationContext;
-            Participant = participant;
             InvitationId = invitationId;
         }
 
@@ -42,8 +38,6 @@ namespace Azure.Communication.CallAutomation
         public string CorrelationId { get; }
         /// <summary> Used by customers when calling mid-call actions to correlate the request to the response event. </summary>
         public string OperationContext { get; }
-        /// <summary> Participant that has been cancelled. </summary>
-        public CommunicationIdentifierModel Participant { get; }
         /// <summary> Invitation ID used to cancel the request. </summary>
         public string InvitationId { get; }
     }

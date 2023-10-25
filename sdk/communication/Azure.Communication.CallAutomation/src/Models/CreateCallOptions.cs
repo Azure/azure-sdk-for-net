@@ -36,8 +36,8 @@ namespace Azure.Communication.CallAutomation
         public string OperationContext { get; set; }
 
         /// <summary>
-        /// The endpoint URL of the Azure Cognitive Services resource attached
+        /// The CallIntelligenceOptions to provide resources such as Azure Cognitive Services
         /// </summary>
-        public Uri CognitiveServicesEndpoint { get; set; }
+        public CallIntelligenceOptions CallIntelligenceOptions { get; set; }
     }
 }

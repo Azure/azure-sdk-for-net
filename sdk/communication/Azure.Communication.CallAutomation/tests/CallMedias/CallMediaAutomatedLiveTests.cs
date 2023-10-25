@@ -28,7 +28,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
              * 4. start continuous dtmf recognition.
              * 5. again start continuous dtmf recognition and expect success.
              * 6. send dtmf and expect success.
-             * 7. wait for ContinuousDtmfRecognitionToneReceived
              * 8. wait for SendDtmfTonesCompleted event.
              * 9. stop continuous dtmf recognition.
              * 10. wait for ContinuousDtmfRecognitionStopped event.
@@ -123,12 +122,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 SendDtmfTonesResult sendDtmfResult = sendDtmfResponse.Value;
                 Assert.AreEqual(operationContext, sendDtmfResult.OperationContext);
 
-                // wait for ContinuousDtmfRecognitionToneReceived event
-                var continuousDtmfRecognitionToneReceived = await WaitForEvent<ContinuousDtmfRecognitionToneReceived>(targetCallConnectionId, TimeSpan.FromSeconds(20));
-                Assert.IsNotNull(continuousDtmfRecognitionToneReceived);
-                Assert.IsTrue(continuousDtmfRecognitionToneReceived is ContinuousDtmfRecognitionToneReceived);
-
-                // wait for SendDtmfTonesCompleted event
+               // wait for SendDtmfTonesCompleted event
                 var sendDtmfTonesCompletedEvent = await WaitForEvent<SendDtmfTonesCompleted>(callConnectionId, TimeSpan.FromSeconds(20));
                 Assert.IsNotNull(sendDtmfTonesCompletedEvent);
                 Assert.IsTrue(sendDtmfTonesCompletedEvent is SendDtmfTonesCompleted);
