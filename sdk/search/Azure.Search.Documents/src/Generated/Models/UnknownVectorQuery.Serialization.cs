@@ -10,31 +10,8 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Models
 {
-    internal partial class UnknownVectorQuery : IUtf8JsonSerializable
+    internal partial class UnknownVectorQuery
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(KNearestNeighborsCount))
-            {
-                writer.WritePropertyName("k"u8);
-                writer.WriteNumberValue(KNearestNeighborsCount.Value);
-            }
-            if (Optional.IsDefined(FieldsRaw))
-            {
-                writer.WritePropertyName("fields"u8);
-                writer.WriteStringValue(FieldsRaw);
-            }
-            if (Optional.IsDefined(Exhaustive))
-            {
-                writer.WritePropertyName("exhaustive"u8);
-                writer.WriteBooleanValue(Exhaustive.Value);
-            }
-            writer.WriteEndObject();
-        }
-
         internal static UnknownVectorQuery DeserializeUnknownVectorQuery(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

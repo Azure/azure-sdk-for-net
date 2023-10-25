@@ -7,29 +7,11 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents.Indexes.Models;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    internal partial class UnknownScoringFunction : IUtf8JsonSerializable
+    internal partial class UnknownScoringFunction
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
-            writer.WritePropertyName("fieldName"u8);
-            writer.WriteStringValue(FieldName);
-            writer.WritePropertyName("boost"u8);
-            writer.WriteNumberValue(Boost);
-            if (Optional.IsDefined(Interpolation))
-            {
-                writer.WritePropertyName("interpolation"u8);
-                writer.WriteStringValue(Interpolation.Value.ToSerialString());
-            }
-            writer.WriteEndObject();
-        }
-
         internal static UnknownScoringFunction DeserializeUnknownScoringFunction(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
