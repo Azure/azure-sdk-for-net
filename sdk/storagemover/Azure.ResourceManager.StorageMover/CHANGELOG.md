@@ -5,7 +5,6 @@
 ### Features Added
 
 - Upgrade to API version 2023-10-01
-- Added support for SMB endpoint and SMB file share endpoint.
 
 ## 1.1.0-beta.2 (2023-08-08)
 
