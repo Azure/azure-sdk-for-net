@@ -1,5 +1,19 @@
 # Release History
 
+## 1.2.0 (2023-09-05)
+
+### Features Added
+
+- Private Link support for DesktopVirtualization Management Client, more information can be found [here](https://docs.microsoft.com/azure/virtual-desktop/private-link-service).
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+- Upgraded API version to 2023-09-05
+
 ## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
