@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <returns> An object representing collection of FirmwareResources and their operations over a FirmwareResource. </returns>
         public virtual FirmwareCollection GetFirmwares()
         {
-            return GetCachedClient(Client => new FirmwareCollection(Client, Id));
+            return GetCachedClient(client => new FirmwareCollection(client, Id));
         }
 
         /// <summary>
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </summary>
         /// <param name="firmwareName"> The id of the firmware. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firmwareName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<FirmwareResource>> GetFirmwareAsync(string firmwareName, CancellationToken cancellationToken = default)
         {
@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </summary>
         /// <param name="firmwareName"> The id of the firmware. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="firmwareName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<FirmwareResource> GetFirmware(string firmwareName, CancellationToken cancellationToken = default)
         {
