@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.SelfHelp
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }
         public Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState? ProvisioningState { get { throw null; } }
         public string SolutionId { get { throw null; } set { } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.Step> Steps { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpStep> Steps { get { throw null; } }
     }
 }
 namespace Azure.ResourceManager.SelfHelp.Models
@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata SelfHelpSolutionMetadata(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties> solutions = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.SelfHelp.Models.SelfHelpSolutionMetadata SelfHelpSolutionMetadata(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, string solutionId, string solutionType, string description, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<string>> requiredParameterSets) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpStep SelfHelpStep(string id = null, string title = null, string description = null, string guidance = null, Azure.ResourceManager.SelfHelp.Models.ExecutionStatus? executionStatus = default(Azure.ResourceManager.SelfHelp.Models.ExecutionStatus?), string executionStatusDescription = null, Azure.ResourceManager.SelfHelp.Models.SelfHelpType? stepType = default(Azure.ResourceManager.SelfHelp.Models.SelfHelpType?), bool? isLastStep = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.StepInput> inputs = null, Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult automatedCheckResults = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> insights = null, Azure.ResponseError error = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties SolutionMetadataProperties(string solutionId = null, Azure.ResourceManager.SelfHelp.Models.SolutionType? solutionType = default(Azure.ResourceManager.SelfHelp.Models.SolutionType?), string description = null, System.Collections.Generic.IEnumerable<string> requiredInputs = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.SolutionResourceData SolutionResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.SelfHelp.Models.SolutionResourceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.Step Step(string id = null, string title = null, string description = null, string guidance = null, Azure.ResourceManager.SelfHelp.Models.ExecutionStatus? executionStatus = default(Azure.ResourceManager.SelfHelp.Models.ExecutionStatus?), string executionStatusDescription = null, Azure.ResourceManager.SelfHelp.Models.Type? stepType = default(Azure.ResourceManager.SelfHelp.Models.Type?), bool? isLastStep = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.StepInput> inputs = null, Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult automatedCheckResults = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> insights = null, Azure.ResponseError error = null) { throw null; }
         public static Azure.ResourceManager.SelfHelp.Models.StepInput StepInput(string questionId = null, string questionType = null, string questionContent = null, Azure.ResourceManager.SelfHelp.Models.QuestionContentType? questionContentType = default(Azure.ResourceManager.SelfHelp.Models.QuestionContentType?), string responseHint = null, string recommendedOption = null, string selectedOptionValue = null, Azure.ResourceManager.SelfHelp.Models.ResponseValidationProperties responseValidationProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.ResponseOption> responseOptions = null) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.TroubleshooterResourceData TroubleshooterResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string solutionId = null, System.Collections.Generic.IDictionary<string, string> parameters = null, Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState? provisioningState = default(Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.Step> steps = null) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.TroubleshooterResourceData TroubleshooterResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string solutionId = null, System.Collections.Generic.IDictionary<string, string> parameters = null, Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState? provisioningState = default(Azure.ResourceManager.SelfHelp.Models.TroubleshooterProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.SelfHelp.Models.SelfHelpStep> steps = null) { throw null; }
     }
     public partial class AutomatedCheckResult
     {
@@ -226,25 +226,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public string ReplacementKey { get { throw null; } set { } }
         public System.TimeSpan? TimeSpanDuration { get { throw null; } set { } }
         public string Title { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Name : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.Name>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Name(string value) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.Name ProblemClassificationId { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.Name ReplacementKey { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.Name SolutionId { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SelfHelp.Models.Name other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.Name left, Azure.ResourceManager.SelfHelp.Models.Name right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SelfHelp.Models.Name (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.Name left, Azure.ResourceManager.SelfHelp.Models.Name right) { throw null; }
-        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct QuestionContentType : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.QuestionContentType>
@@ -440,6 +421,25 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.SelfHelpImportanceLevel left, Azure.ResourceManager.SelfHelp.Models.SelfHelpImportanceLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SelfHelpName : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.SelfHelpName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SelfHelpName(string value) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpName ProblemClassificationId { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpName ReplacementKey { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpName SolutionId { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SelfHelp.Models.SelfHelpName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.SelfHelpName left, Azure.ResourceManager.SelfHelp.Models.SelfHelpName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SelfHelp.Models.SelfHelpName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.SelfHelpName left, Azure.ResourceManager.SelfHelp.Models.SelfHelpName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class SelfHelpNameAvailabilityContent
     {
         public SelfHelpNameAvailabilityContent() { }
@@ -492,6 +492,42 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.SelfHelp.Models.SolutionMetadataProperties> Solutions { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public string SolutionType { get { throw null; } set { } }
+    }
+    public partial class SelfHelpStep
+    {
+        internal SelfHelpStep() { }
+        public Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult AutomatedCheckResults { get { throw null; } }
+        public string Description { get { throw null; } }
+        public Azure.ResponseError Error { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.ExecutionStatus? ExecutionStatus { get { throw null; } }
+        public string ExecutionStatusDescription { get { throw null; } }
+        public string Guidance { get { throw null; } }
+        public string Id { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.StepInput> Inputs { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> Insights { get { throw null; } }
+        public bool? IsLastStep { get { throw null; } }
+        public Azure.ResourceManager.SelfHelp.Models.SelfHelpType? StepType { get { throw null; } }
+        public string Title { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SelfHelpType : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.SelfHelpType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SelfHelpType(string value) { throw null; }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpType AutomatedCheck { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpType Decision { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpType Insight { get { throw null; } }
+        public static Azure.ResourceManager.SelfHelp.Models.SelfHelpType Solution { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.SelfHelp.Models.SelfHelpType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.SelfHelpType left, Azure.ResourceManager.SelfHelp.Models.SelfHelpType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.SelfHelp.Models.SelfHelpType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.SelfHelpType left, Azure.ResourceManager.SelfHelp.Models.SelfHelpType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class SelfHelpVideo : Azure.ResourceManager.SelfHelp.Models.VideoGroupVideo
     {
@@ -577,22 +613,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.SolutionType left, Azure.ResourceManager.SelfHelp.Models.SolutionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class Step
-    {
-        internal Step() { }
-        public Azure.ResourceManager.SelfHelp.Models.AutomatedCheckResult AutomatedCheckResults { get { throw null; } }
-        public string Description { get { throw null; } }
-        public Azure.ResponseError Error { get { throw null; } }
-        public Azure.ResourceManager.SelfHelp.Models.ExecutionStatus? ExecutionStatus { get { throw null; } }
-        public string ExecutionStatusDescription { get { throw null; } }
-        public string Guidance { get { throw null; } }
-        public string Id { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.StepInput> Inputs { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.SelfHelp.Models.SelfHelpDiagnosticInsight> Insights { get { throw null; } }
-        public bool? IsLastStep { get { throw null; } }
-        public Azure.ResourceManager.SelfHelp.Models.Type? StepType { get { throw null; } }
-        public string Title { get { throw null; } }
-    }
     public partial class StepInput
     {
         internal StepInput() { }
@@ -609,7 +629,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public partial class TriggerCriterion
     {
         public TriggerCriterion() { }
-        public Azure.ResourceManager.SelfHelp.Models.Name? Name { get { throw null; } set { } }
+        public Azure.ResourceManager.SelfHelp.Models.SelfHelpName? Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -639,26 +659,6 @@ namespace Azure.ResourceManager.SelfHelp.Models
         public string QuestionId { get { throw null; } set { } }
         public Azure.ResourceManager.SelfHelp.Models.QuestionType? QuestionType { get { throw null; } set { } }
         public string Response { get { throw null; } set { } }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Type : System.IEquatable<Azure.ResourceManager.SelfHelp.Models.Type>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Type(string value) { throw null; }
-        public static Azure.ResourceManager.SelfHelp.Models.Type AutomatedCheck { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.Type Decision { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.Type Insight { get { throw null; } }
-        public static Azure.ResourceManager.SelfHelp.Models.Type Solution { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.SelfHelp.Models.Type other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.SelfHelp.Models.Type left, Azure.ResourceManager.SelfHelp.Models.Type right) { throw null; }
-        public static implicit operator Azure.ResourceManager.SelfHelp.Models.Type (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.SelfHelp.Models.Type left, Azure.ResourceManager.SelfHelp.Models.Type right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class VideoGroup
     {

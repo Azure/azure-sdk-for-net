@@ -81,6 +81,9 @@ rename-mapping:
   Confidence: SelfHelpConfidence
   Section: SelfHelpSection
   Video: SelfHelpVideo
+  Step: SelfHelpStep
+  Type: SelfHelpType
+  Name: SelfHelpName
 
 override-operation-name:
   CheckNameAvailability_Post: CheckSelfHelpNameAvailability

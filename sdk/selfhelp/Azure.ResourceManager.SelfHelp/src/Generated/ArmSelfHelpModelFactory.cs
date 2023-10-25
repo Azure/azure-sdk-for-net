@@ -123,15 +123,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="provisioningState"> Status of troubleshooter provisioning. </param>
         /// <param name="steps"> List of step object. </param>
         /// <returns> A new <see cref="SelfHelp.TroubleshooterResourceData"/> instance for mocking. </returns>
-        public static TroubleshooterResourceData TroubleshooterResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, IDictionary<string, string> parameters = null, TroubleshooterProvisioningState? provisioningState = null, IEnumerable<Step> steps = null)
+        public static TroubleshooterResourceData TroubleshooterResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string solutionId = null, IDictionary<string, string> parameters = null, TroubleshooterProvisioningState? provisioningState = null, IEnumerable<SelfHelpStep> steps = null)
         {
             parameters ??= new Dictionary<string, string>();
-            steps ??= new List<Step>();
+            steps ??= new List<SelfHelpStep>();
 
             return new TroubleshooterResourceData(id, name, resourceType, systemData, solutionId, parameters, provisioningState, steps?.ToList());
         }
 
-        /// <summary> Initializes a new instance of Step. </summary>
+        /// <summary> Initializes a new instance of SelfHelpStep. </summary>
         /// <param name="id"> Unique step id. </param>
         /// <param name="title"> Step title. </param>
         /// <param name="description"> Step description. </param>
@@ -144,13 +144,13 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="automatedCheckResults"> Only for AutomatedStep type. </param>
         /// <param name="insights"></param>
         /// <param name="error"> The error detail. </param>
-        /// <returns> A new <see cref="Models.Step"/> instance for mocking. </returns>
-        public static Step Step(string id = null, string title = null, string description = null, string guidance = null, ExecutionStatus? executionStatus = null, string executionStatusDescription = null, Type? stepType = null, bool? isLastStep = null, IEnumerable<StepInput> inputs = null, AutomatedCheckResult automatedCheckResults = null, IEnumerable<SelfHelpDiagnosticInsight> insights = null, ResponseError error = null)
+        /// <returns> A new <see cref="Models.SelfHelpStep"/> instance for mocking. </returns>
+        public static SelfHelpStep SelfHelpStep(string id = null, string title = null, string description = null, string guidance = null, ExecutionStatus? executionStatus = null, string executionStatusDescription = null, SelfHelpType? stepType = null, bool? isLastStep = null, IEnumerable<StepInput> inputs = null, AutomatedCheckResult automatedCheckResults = null, IEnumerable<SelfHelpDiagnosticInsight> insights = null, ResponseError error = null)
         {
             inputs ??= new List<StepInput>();
             insights ??= new List<SelfHelpDiagnosticInsight>();
 
-            return new Step(id, title, description, guidance, executionStatus, executionStatusDescription, stepType, isLastStep, inputs?.ToList(), automatedCheckResults, insights?.ToList(), error);
+            return new SelfHelpStep(id, title, description, guidance, executionStatus, executionStatusDescription, stepType, isLastStep, inputs?.ToList(), automatedCheckResults, insights?.ToList(), error);
         }
 
         /// <summary> Initializes a new instance of StepInput. </summary>

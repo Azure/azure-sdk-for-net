@@ -12,9 +12,9 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class Step
+    public partial class SelfHelpStep
     {
-        internal static Step DeserializeStep(JsonElement element)
+        internal static SelfHelpStep DeserializeSelfHelpStep(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Optional<string> guidance = default;
             Optional<ExecutionStatus> executionStatus = default;
             Optional<string> executionStatusDescription = default;
-            Optional<Type> type = default;
+            Optional<SelfHelpType> type = default;
             Optional<bool> isLastStep = default;
             Optional<IReadOnlyList<StepInput>> inputs = default;
             Optional<AutomatedCheckResult> automatedCheckResults = default;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     {
                         continue;
                     }
-                    type = new Type(property.Value.GetString());
+                    type = new SelfHelpType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("isLastStep"u8))
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     continue;
                 }
             }
-            return new Step(id.Value, title.Value, description.Value, guidance.Value, Optional.ToNullable(executionStatus), executionStatusDescription.Value, Optional.ToNullable(type), Optional.ToNullable(isLastStep), Optional.ToList(inputs), automatedCheckResults.Value, Optional.ToList(insights), error.Value);
+            return new SelfHelpStep(id.Value, title.Value, description.Value, guidance.Value, Optional.ToNullable(executionStatus), executionStatusDescription.Value, Optional.ToNullable(type), Optional.ToNullable(isLastStep), Optional.ToList(inputs), automatedCheckResults.Value, Optional.ToList(insights), error.Value);
         }
     }
 }

@@ -12,16 +12,16 @@ using Azure.Core;
 namespace Azure.ResourceManager.SelfHelp.Models
 {
     /// <summary> Troubleshooter step. </summary>
-    public partial class Step
+    public partial class SelfHelpStep
     {
-        /// <summary> Initializes a new instance of Step. </summary>
-        internal Step()
+        /// <summary> Initializes a new instance of SelfHelpStep. </summary>
+        internal SelfHelpStep()
         {
             Inputs = new ChangeTrackingList<StepInput>();
             Insights = new ChangeTrackingList<SelfHelpDiagnosticInsight>();
         }
 
-        /// <summary> Initializes a new instance of Step. </summary>
+        /// <summary> Initializes a new instance of SelfHelpStep. </summary>
         /// <param name="id"> Unique step id. </param>
         /// <param name="title"> Step title. </param>
         /// <param name="description"> Step description. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="automatedCheckResults"> Only for AutomatedStep type. </param>
         /// <param name="insights"></param>
         /// <param name="error"> The error detail. </param>
-        internal Step(string id, string title, string description, string guidance, ExecutionStatus? executionStatus, string executionStatusDescription, Type? stepType, bool? isLastStep, IReadOnlyList<StepInput> inputs, AutomatedCheckResult automatedCheckResults, IReadOnlyList<SelfHelpDiagnosticInsight> insights, ResponseError error)
+        internal SelfHelpStep(string id, string title, string description, string guidance, ExecutionStatus? executionStatus, string executionStatusDescription, SelfHelpType? stepType, bool? isLastStep, IReadOnlyList<StepInput> inputs, AutomatedCheckResult automatedCheckResults, IReadOnlyList<SelfHelpDiagnosticInsight> insights, ResponseError error)
         {
             Id = id;
             Title = title;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <summary> This field has more detailed status description of the execution status. </summary>
         public string ExecutionStatusDescription { get; }
         /// <summary> Type of Troubleshooting step. </summary>
-        public Type? StepType { get; }
+        public SelfHelpType? StepType { get; }
         /// <summary> is this last step of the workflow. </summary>
         public bool? IsLastStep { get; }
         /// <summary> Gets the inputs. </summary>

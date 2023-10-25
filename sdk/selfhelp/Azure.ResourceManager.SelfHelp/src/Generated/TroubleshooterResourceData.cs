@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp
         public TroubleshooterResourceData()
         {
             Parameters = new ChangeTrackingDictionary<string, string>();
-            Steps = new ChangeTrackingList<Step>();
+            Steps = new ChangeTrackingList<SelfHelpStep>();
         }
 
         /// <summary> Initializes a new instance of TroubleshooterResourceData. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <param name="parameters"> Client input parameters to run Troubleshooter Resource. </param>
         /// <param name="provisioningState"> Status of troubleshooter provisioning. </param>
         /// <param name="steps"> List of step object. </param>
-        internal TroubleshooterResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, IDictionary<string, string> parameters, TroubleshooterProvisioningState? provisioningState, IReadOnlyList<Step> steps) : base(id, name, resourceType, systemData)
+        internal TroubleshooterResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, IDictionary<string, string> parameters, TroubleshooterProvisioningState? provisioningState, IReadOnlyList<SelfHelpStep> steps) : base(id, name, resourceType, systemData)
         {
             SolutionId = solutionId;
             Parameters = parameters;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.SelfHelp
         /// <summary> Status of troubleshooter provisioning. </summary>
         public TroubleshooterProvisioningState? ProvisioningState { get; }
         /// <summary> List of step object. </summary>
-        public IReadOnlyList<Step> Steps { get; }
+        public IReadOnlyList<SelfHelpStep> Steps { get; }
     }
 }

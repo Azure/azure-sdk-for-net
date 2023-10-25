@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SelfHelp
             Optional<string> solutionId = default;
             Optional<IDictionary<string, string>> parameters = default;
             Optional<TroubleshooterProvisioningState> provisioningState = default;
-            Optional<IReadOnlyList<Step>> steps = default;
+            Optional<IReadOnlyList<SelfHelpStep>> steps = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -123,10 +123,10 @@ namespace Azure.ResourceManager.SelfHelp
                             {
                                 continue;
                             }
-                            List<Step> array = new List<Step>();
+                            List<SelfHelpStep> array = new List<SelfHelpStep>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Step.DeserializeStep(item));
+                                array.Add(SelfHelpStep.DeserializeSelfHelpStep(item));
                             }
                             steps = array;
                             continue;
