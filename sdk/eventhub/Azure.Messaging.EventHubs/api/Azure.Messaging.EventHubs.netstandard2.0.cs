@@ -493,8 +493,8 @@ namespace Azure.Messaging.EventHubs.Processor
     public partial struct CheckpointPosition : System.IEquatable<Azure.Messaging.EventHubs.Processor.CheckpointPosition>
     {
         private int _dummyPrimitive;
-        public CheckpointPosition(long sequenceNumber, long offset = (long)-9223372036854775808) { throw null; }
-        public long Offset { get { throw null; } }
+        public CheckpointPosition(long sequenceNumber, long? offset = default(long?)) { throw null; }
+        public long? Offset { get { throw null; } }
         public long SequenceNumber { get { throw null; } }
         public bool Equals(Azure.Messaging.EventHubs.Processor.CheckpointPosition other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
