@@ -76,6 +76,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
 
             var expectedException = new DivideByZeroException();
+            var expectedExceptionOld = new FormatException();
             var partitionId = "fakePart";
             var offset = 12345;
             var sequence = 9987;
@@ -95,7 +96,18 @@ namespace Azure.Messaging.EventHubs.Tests
                     cancellationSource.Token))
                 .ThrowsAsync(expectedException);
 
-            Assert.That(async () => await mockProcessor.InvokeOldUpdateCheckpointAsync(partitionId, offset, sequence, cancellationSource.Token), Throws.Exception.EqualTo(expectedException));
+            mockCheckpointStore
+                .Setup(store => store.UpdateCheckpointAsync(
+                    mockProcessor.FullyQualifiedNamespace,
+                    mockProcessor.EventHubName,
+                    mockProcessor.ConsumerGroup,
+                    partitionId,
+                    offset,
+                    sequence,
+                    cancellationSource.Token))
+                .ThrowsAsync(expectedExceptionOld);
+
+            Assert.That(async () => await mockProcessor.InvokeOldUpdateCheckpointAsync(partitionId, offset, sequence, cancellationSource.Token), Throws.Exception.EqualTo(expectedExceptionOld));
             Assert.That(async () => await mockProcessor.InvokeUpdateCheckpointAsync(partitionId, new CheckpointPosition(sequence, offset), cancellationSource.Token), Throws.Exception.EqualTo(expectedException));
         }
 
