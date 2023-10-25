@@ -30,7 +30,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
-                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Single_Vector_Search_UsingRawVectors
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Single_Vector_Search_UsingVectorQuery
                 IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
@@ -75,7 +75,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
-                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Filter_UsingRawVectors
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Filter_UsingVectorQuery
                 IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
@@ -121,7 +121,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
-                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Simple_Hybrid_Search_UsingRawVectors
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Simple_Hybrid_Search_UsingVectorQuery
                 IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
@@ -167,7 +167,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
-                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Vector_Search_UsingRawVectors
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Vector_Search_UsingVectorQuery
                 IReadOnlyList<float> vectorizedDescriptionQuery = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
                 IReadOnlyList<float> vectorizedCategoryQuery = VectorSearchEmbeddings.SearchVectorizeCategory; // "Luxury hotels in town"
 #if !SNIPPET
@@ -215,7 +215,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 
                 SearchClient searchClient = await UploadDocuments(resources, indexName);
 
-                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Fields_Vector_Search_UsingRawVectors
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Fields_Vector_Search_UsingVectorQuery
                 IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 #if !SNIPPET
                 await Task.Delay(TimeSpan.FromSeconds(1));
@@ -250,7 +250,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 
         private async Task<SearchIndexClient> CreateIndex(SearchResources resources, string name)
         {
-            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingRawVectors
+            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingVectorQuery
             string vectorSearchProfileName = "my-vector-profile";
             string vectorSearchHnswConfig = "my-hsnw-vector-config";
             int modelDimensions = 1536;
@@ -287,7 +287,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             Environment.SetEnvironmentVariable("SEARCH_ENDPOINT", resources.Endpoint.ToString());
             Environment.SetEnvironmentVariable("SEARCH_API_KEY", resources.PrimaryApiKey);
 
-            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Create_Index_UsingRawVectors
+            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Create_Index_UsingVectorQuery
             Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
             string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
             AzureKeyCredential credential = new(key);
@@ -308,7 +308,7 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             string key = resources.PrimaryApiKey;
             AzureKeyCredential credential = new AzureKeyCredential(key);
 
-            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Upload_Documents_UsingRawVectors
+            #region Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Upload_Documents_UsingVectorQuery
             SearchClient searchClient = new(endpoint, indexName, credential);
 #if !SNIPPET
             searchClient = InstrumentClient(new SearchClient(endpoint, indexName, credential, GetSearchClientOptions()));

@@ -144,15 +144,15 @@ await searchClient.IndexDocumentsAsync(IndexDocumentsBatch.Upload(hotelDocuments
 
 ## Query Vector Data
 
-When using `RawVectorQuery`, the query for a vector field must also be a vector. To convert a text query string provided by a user into a vector representation, your application must call an embedding library that provides this capability. Use the same embedding library that you used to generate embeddings in the source documents. For more details on how to generate embeddings, please refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-generate-embeddings). In the sample codes below, we are using hardcoded embeddings to query vector field.
+When using `VectorQuery`, the query for a vector field must also be a vector. To convert a text query string provided by a user into a vector representation, your application must call an embedding library that provides this capability. Use the same embedding library that you used to generate embeddings in the source documents. For more details on how to generate embeddings, please refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-generate-embeddings). In the sample codes below, we are using hardcoded embeddings to query vector field.
 
 Let's query the index and make sure everything works as implemented. You can also refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-query?tabs=portal-vector-query#query-syntax-for-hybrid-search) for more information on querying vector data.
 
 ### Vector Semantic Hybrid Query
 
-In the context of vector search, the `VectorQueries` collection contains the vectors that represent the query input. The `Fields` property specifies which vector fields should be searched. The `KNearestNeighborsCount` property determines the number of nearest neighbors to retrieve as the top hits.
+In the context of vector search, the `VectorizableQueries` collection contains the vectors that represent the query input. The `Fields` property specifies which vector fields should be searched. The `KNearestNeighborsCount` property determines the number of nearest neighbors to retrieve as the top hits.
 
-For semantic search, we will specify `SemanticConfigurationName` as `SearchQueryType.Semantic`. We will use the same `SemanticConfigurationName` that we defined when creating the index. Additionally, we have enabled `QueryCaption` and `QueryAnswer` in the `SearchOptions` to obtain the caption and answer in the response. With these configurations in place, we are prepared to execute a vector semantic hybrid query.
+For semantic search, we will specify `SemanticConfigurationName` as `SearchQueryType.Semantic`. We will use the same `SemanticConfigurationName` that we defined when creating the index. Additionally, we have enabled `QueryCaption` and `QueryAnswer` in the `SearchOptions.SemanticSearch` to obtain the caption and answer in the response. With these configurations in place, we are prepared to execute a vector semantic hybrid query.
 
 With these settings in place, we're ready to execute a vector semantic hybrid query:
 

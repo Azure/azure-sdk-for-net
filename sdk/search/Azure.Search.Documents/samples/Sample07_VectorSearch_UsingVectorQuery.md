@@ -8,7 +8,7 @@ Let's consider the example of a `Hotel`. First, we need to create an index for s
 
 We will create an instace of `SearchIndex` and define `Hotel` fields.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingRawVectors
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingVectorQuery
 string vectorSearchProfileName = "my-vector-profile";
 string vectorSearchHnswConfig = "my-hsnw-vector-config";
 int modelDimensions = 1536;
@@ -41,7 +41,7 @@ SearchIndex searchIndex = new(indexName)
 
 After creating an instance of the `SearchIndex`, we need to instantiate the `SearchIndexClient` and call the `CreateIndex` method to create the search index. 
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Create_Index_UsingRawVectors
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Create_Index_UsingVectorQuery
 Uri endpoint = new(Environment.GetEnvironmentVariable("SEARCH_ENDPOINT"));
 string key = Environment.GetEnvironmentVariable("SEARCH_API_KEY");
 AzureKeyCredential credential = new(key);
@@ -118,7 +118,7 @@ public static Hotel[] GetHotelDocuments()
 
 Now, we can instantiate the `SearchClient` and upload the documents to the `Hotel` index we created earlier:
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Upload_Documents_UsingRawVectors
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Upload_Documents_UsingVectorQuery
 SearchClient searchClient = new(endpoint, indexName, credential);
 Hotel[] hotelDocuments = GetHotelDocuments();
 await searchClient.IndexDocumentsAsync(IndexDocumentsBatch.Upload(hotelDocuments));
@@ -132,9 +132,9 @@ Let's query the index and make sure everything works as implemented. You can als
 
 ### Single Vector Search
 
-In this vector query, the `VectorQueries` collection contains the vectors representing the query input. The `Fields` property specifies which vector fields are searched. The `KNearestNeighborsCount` property specifies the number of nearest neighbors to return as top hits.
+In this vector query, the `VectorizableQueries` collection contains the vectors representing the query input. The `Fields` property specifies which vector fields are searched. The `KNearestNeighborsCount` property specifies the number of nearest neighbors to return as top hits.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Single_Vector_Search_UsingRawVectors
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Single_Vector_Search_UsingVectorQuery
 IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
@@ -161,7 +161,7 @@ Console.WriteLine($"Total number of search results:{count}");
 
 In addition to the vector query mentioned above, we can also apply a filter to narrow down the search results.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Filter_UsingRawVectors
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Filter_UsingVectorQuery
 IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
@@ -191,7 +191,7 @@ A hybrid query combines full text search, semantic search (reranking), and vecto
 
 #### Simple Hybrid Search
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Simple_Hybrid_Search_UsingRawVectors
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Simple_Hybrid_Search_UsingVectorQuery
 IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
@@ -217,9 +217,9 @@ Console.WriteLine($"Total number of search results:{count}");
 
 ### Multi-vector Search
 
-You can search containing multiple query vectors using the `SearchOptions.VectorQueries` property. These queries will be executed concurrently in the search index, with each one searching for similarities in the target vector fields. The result set will be a combination of documents that matched both vector queries. One common use case for this query request is when using models like CLIP for a multi-modal vector search, where the same model can vectorize both image and non-image content.
+You can search containing multiple query vectors using the `SearchOptions.VectorSearch.VectorizableQueries` property. These queries will be executed concurrently in the search index, with each one searching for similarities in the target vector fields. The result set will be a combination of documents that matched both vector queries. One common use case for this query request is when using models like CLIP for a multi-modal vector search, where the same model can vectorize both image and non-image content.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Vector_Search_UsingRawVectors
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Vector_Search_UsingVectorQuery
 IReadOnlyList<float> vectorizedDescriptionQuery = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 IReadOnlyList<float> vectorizedCategoryQuery = VectorSearchEmbeddings.SearchVectorizeCategory; // "Luxury hotels in town"
 
@@ -247,9 +247,9 @@ Console.WriteLine($"Total number of search results:{count}");
 
 ### Multi-field Vector Search
 
-You can set the `SearchOptions.VectorQueries.Fields` property to multiple vector fields. For example, we have vector fields named `DescriptionVector` and `CategoryVector`. Your vector query executes over both the `DescriptionVector` and `CategoryVector` fields, which must have the same embedding space since they share the same query vector.
+You can set the `SearchOptions.VectorSearch.VectorizableQueries.Fields` property to multiple vector fields. For example, we have vector fields named `DescriptionVector` and `CategoryVector`. Your vector query executes over both the `DescriptionVector` and `CategoryVector` fields, which must have the same embedding space since they share the same query vector.
 
-```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Fields_Vector_Search_UsingRawVectors
+```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Multi_Fields_Vector_Search_UsingVectorQuery
 IReadOnlyList<float> vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 
 SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
