@@ -8,11 +8,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.FormRecognizer.DocumentAnalysis;
 
-namespace Azure.AI.FormRecognizer.Models
+namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
-    /// <summary> The UnknownOperationDetails. </summary>
+    /// <summary> Unknown version of OperationDetails. </summary>
     internal partial class UnknownOperationDetails : OperationDetails
     {
         /// <summary> Initializes a new instance of UnknownOperationDetails. </summary>

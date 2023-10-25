@@ -35,6 +35,9 @@ Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
 Console.WriteLine(result.GetProperty("parameters").ToString());
 ]]></code></example>
     </member>
@@ -72,6 +75,9 @@ Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
 Console.WriteLine(result.GetProperty("parameters").ToString());
 ]]></code></example>
     </member>
@@ -240,6 +246,9 @@ await foreach (BinaryData item in client.GetAllEnvironmentsAsync("<projectName>"
     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
     Console.WriteLine(result.GetProperty("parameters").ToString());
 }
 ]]></code></example>
@@ -279,6 +288,9 @@ foreach (BinaryData item in client.GetAllEnvironments("<projectName>", maxCount:
     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
     Console.WriteLine(result.GetProperty("parameters").ToString());
 }
 ]]></code></example>
@@ -318,6 +330,9 @@ await foreach (BinaryData item in client.GetEnvironmentsAsync("<projectName>", "
     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
     Console.WriteLine(result.GetProperty("parameters").ToString());
 }
 ]]></code></example>
@@ -357,6 +372,9 @@ foreach (BinaryData item in client.GetEnvironments("<projectName>", "me", maxCou
     Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
     Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+    Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
     Console.WriteLine(result.GetProperty("parameters").ToString());
 }
 ]]></code></example>
@@ -694,6 +712,9 @@ Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
 Console.WriteLine(result.GetProperty("parameters").ToString());
 ]]></code></example>
     </member>
@@ -746,6 +767,9 @@ Console.WriteLine(result.GetProperty("environmentDefinitionName").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("error").GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("error").GetProperty("details")[0].GetProperty("target").ToString());
 Console.WriteLine(result.GetProperty("parameters").ToString());
 ]]></code></example>
     </member>
