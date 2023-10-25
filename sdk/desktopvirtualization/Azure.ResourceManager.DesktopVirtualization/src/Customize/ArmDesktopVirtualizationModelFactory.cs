@@ -8,7 +8,7 @@ using Azure.ResourceManager.Models;
 using SystemData = Azure.ResourceManager.Models.SystemData;
 using Azure.ResourceManager.DesktopVirtualization;
 
-namespace Azure.ResourceManager.DesktopVirtualization.Customize
+namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
     /// <summary>
     /// A factory for creating Azure.ResourceManager.DesktopVirtualization.Models instances.
