@@ -11,9 +11,9 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
 {
-    public partial class VectorSearchUsingRawVectors : SearchTestBase
+    public partial class VectorSearchUsingVectorQuery : SearchTestBase
     {
-        public VectorSearchUsingRawVectors(bool async, SearchClientOptions.ServiceVersion serviceVersion)
+        public VectorSearchUsingVectorQuery(bool async, SearchClientOptions.ServiceVersion serviceVersion)
             : base(async, SearchClientOptions.ServiceVersion.V2023_11_01, null /* RecordedTestMode.Record /* to re-record */)
         {
         }

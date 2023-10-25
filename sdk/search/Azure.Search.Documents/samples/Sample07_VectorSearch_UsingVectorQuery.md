@@ -1,4 +1,4 @@
-# Vector Search Using RAW Vector Query
+# Vector Search Using Vector Query
 
 This sample demonstrates how to create a vector fields index, upload data into the index, and perform various types of vector searches using raw vector queries.
 
@@ -126,7 +126,7 @@ await searchClient.IndexDocumentsAsync(IndexDocumentsBatch.Upload(hotelDocuments
 
 ## Query Vector Data
 
-When using `RawVectorQuery`, the query for a vector field must also be a vector. To convert a text query string provided by a user into a vector representation, your application must call an embedding library that provides this capability. Use the same embedding library that you used to generate embeddings in the source documents. For more details on how to generate embeddings, please refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-generate-embeddings). In the sample codes below, we are using hardcoded embeddings to query vector field.
+When using `VectorQuery`, the query for a vector field must also be a vector. To convert a text query string provided by a user into a vector representation, your application must call an embedding library that provides this capability. Use the same embedding library that you used to generate embeddings in the source documents. For more details on how to generate embeddings, please refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-generate-embeddings). In the sample codes below, we are using hardcoded embeddings to query vector field.
 
 Let's query the index and make sure everything works as implemented. You can also refer to the [documentation](https://learn.microsoft.com/azure/search/vector-search-how-to-query) for more information on querying vector data.
 
