@@ -82,7 +82,7 @@ namespace Microsoft.Extensions.Hosting
                         options.MaxConcurrentSessions);
 
                     options.MaxMessageBatchSize = section.GetValue(
-                        "batchOptions:maxMessageCount",
+                        "BatchOptions:MaxMessageCount",
                         options.MaxConcurrentSessions);
 
                     var proxy = section.GetValue<string>("WebProxy");
