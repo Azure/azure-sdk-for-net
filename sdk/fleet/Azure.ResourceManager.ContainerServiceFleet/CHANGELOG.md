@@ -10,17 +10,13 @@
 
 ### Other Changes
 
-## 1.0.0-beta.3 (2023-10-24)
+## 1.0.0-beta.3 (2023-10-23)
 
 ### Features Added
 - Updated to Fleet GA API `2023-10-15`.
 
 ### Breaking Changes
 - Remove preview features (hubprofile, private fleet)
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.2 (2023-10-13)
 
