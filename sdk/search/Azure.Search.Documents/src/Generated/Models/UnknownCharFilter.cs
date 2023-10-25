@@ -5,11 +5,9 @@
 
 #nullable disable
 
-using Azure.Search.Documents.Indexes.Models;
-
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The UnknownCharFilter. </summary>
+    /// <summary> Unknown version of CharFilter. </summary>
     internal partial class UnknownCharFilter : CharFilter
     {
         /// <summary> Initializes a new instance of UnknownCharFilter. </summary>

@@ -6,22 +6,11 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    internal partial class UnknownLexicalNormalizer : IUtf8JsonSerializable
+    internal partial class UnknownLexicalNormalizer
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(ODataType);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WriteEndObject();
-        }
-
         internal static UnknownLexicalNormalizer DeserializeUnknownLexicalNormalizer(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

@@ -5,11 +5,9 @@
 
 #nullable disable
 
-using Azure.Search.Documents.Indexes.Models;
-
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The UnknownLexicalNormalizer. </summary>
+    /// <summary> Unknown version of LexicalNormalizer. </summary>
     internal partial class UnknownLexicalNormalizer : LexicalNormalizer
     {
         /// <summary> Initializes a new instance of UnknownLexicalNormalizer. </summary>

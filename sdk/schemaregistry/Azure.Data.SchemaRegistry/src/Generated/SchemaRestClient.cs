@@ -70,13 +70,12 @@ namespace Azure.Data.SchemaRegistry
 
             using var message = CreateGetByIdRequest(id);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new SchemaGetByIdHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -97,13 +96,12 @@ namespace Azure.Data.SchemaRegistry
 
             using var message = CreateGetByIdRequest(id);
             _pipeline.Send(message, cancellationToken);
-            var headers = new SchemaGetByIdHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -235,13 +233,12 @@ namespace Azure.Data.SchemaRegistry
 
             using var message = CreateGetSchemaVersionRequest(groupName, schemaName, schemaVersion);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            var headers = new SchemaGetSchemaVersionHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
@@ -268,13 +265,12 @@ namespace Azure.Data.SchemaRegistry
 
             using var message = CreateGetSchemaVersionRequest(groupName, schemaName, schemaVersion);
             _pipeline.Send(message, cancellationToken);
-            var headers = new SchemaGetSchemaVersionHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
                     {
                         var value = message.ExtractResponseContent();
-                        return ResponseWithHeaders.FromValue(value, headers, message.Response);
+                        return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);

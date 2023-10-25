@@ -5,11 +5,9 @@
 
 #nullable disable
 
-using Azure.Search.Documents.Indexes.Models;
-
-namespace Azure.Search.Documents.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The UnknownVectorSearchAlgorithmConfiguration. </summary>
+    /// <summary> Unknown version of VectorSearchAlgorithmConfiguration. </summary>
     internal partial class UnknownVectorSearchAlgorithmConfiguration : VectorSearchAlgorithmConfiguration
     {
         /// <summary> Initializes a new instance of UnknownVectorSearchAlgorithmConfiguration. </summary>
