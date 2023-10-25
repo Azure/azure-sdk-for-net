@@ -6,20 +6,11 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.MediaComposition
 {
-    internal partial class UnknownMediaOutput : IUtf8JsonSerializable
+    internal partial class UnknownMediaOutput
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            writer.WriteEndObject();
-        }
-
         internal static UnknownMediaOutput DeserializeUnknownMediaOutput(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
